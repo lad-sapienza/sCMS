@@ -11,9 +11,6 @@
 
 1.  **Create a Gatsby site.**
     npm install -g gatsby-cli
-
-    # create a new Gatsby site using the default starter boostrap 5 theme
-
     gatsby new gatsby-directus-ui https://github.com/r-ichard/gatsby-starter-bootstrap-5
 
 2.  **Start developing.**
