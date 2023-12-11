@@ -23,7 +23,7 @@
 3.  **Open the source code and start editing!**
 
     Your site is now running at `http://localhost:8000`
-    
+
     Graphql tool: `http://localhost:8000/___graphql`
 
 4.  **Install gatsby-source-directus**
@@ -54,8 +54,9 @@ depth: 2,
 
 Crea un file .env dove memorizzare le tue variabili di sistema
 
-es:
+
 DIRECTUS_URL=https://directus.example.com
+
 DIRECTUS_TOKEN=mysecrettoken123
 
 6.  **Install gatsby-plugin-env-variables**
