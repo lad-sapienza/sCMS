@@ -64,9 +64,9 @@ Crea un file .env dove memorizzare le tue variabili di sistema
 
 Il plugin gatsby-plugin-env-variables è progettato per consentire l'uso di variabili d'ambiente durante la fase di build di Gatsby.
 
-In gatsby-config.js
-Nella sezione plugin gatsby-plugin-env-variables nella opzione allowList si mettono i nomi delle variabili da considerare in fase di build.
-Per usare le variabili all'interno del sito si usa la dicitura process.env.NOME_VARIABILE
+In gatsby-config.js:
+- nella opzione allowList si mettono i nomi delle variabili da considerare in fase di build.
+- Per usare le variabili all'interno del sito si usa la dicitura process.env.NOME_VARIABILE
 
     plugins: [
     {
@@ -97,8 +97,8 @@ Per usare le variabili all'interno del sito si usa la dicitura process.env.NOME_
   - [x] Installazione plugin Env variables
   - [x] Creazione file Env 
   
-  - url del db 
-  - token di accesso
+  - [x] url del db 
+  - [x] token di accesso
   - filtro, in caso non si voglia pubblicare tutto il contenuto del db, a solo parte di esso
   - campi che devono essere ricercabili
   - campi da usare per la produzione della possibile mappa
