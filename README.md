@@ -68,6 +68,7 @@ In gatsby-config.js:
 - nella opzione allowList si mettono i nomi delle variabili da considerare in fase di build.
 - Per usare le variabili all'interno del sito si usa la dicitura process.env.NOME_VARIABILE
 
+```
     plugins: [
     {
     resolve: "gatsby-plugin-env-variables",
@@ -85,6 +86,8 @@ In gatsby-config.js:
     },
     // ... altri plugin ...
     ],
+  
+  ```
 
 ## STEP DI SVILUPPO
 
