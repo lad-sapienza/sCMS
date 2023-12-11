@@ -94,10 +94,10 @@ In gatsby-config.js:
 ### Backend
 
 - [x] Installazione
-
   - [x] Tema boostrap 5
   - [x] Installazione plugin Directus
   - [x] Installazione plugin Env variables
+  - [x] Configurazione gatsby-config
   - [x] Creazione file Env 
       - [x] url del db 
       - [x] token di accesso
@@ -105,8 +105,6 @@ In gatsby-config.js:
       - [] campi che devono essere ricercabili
       - [] campi da usare per la produzione della possibile mappa
       - [] campi che devono essere visibili nella pagina record 
-
-  - [x] Configurazione gatsby-config
 
 ### Frontend
 
