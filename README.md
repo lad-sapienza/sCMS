@@ -99,13 +99,12 @@ In gatsby-config.js:
   - [x] Installazione plugin Directus
   - [x] Installazione plugin Env variables
   - [x] Creazione file Env 
-  
-  - [x] url del db 
-  - [x] token di accesso
-  - filtro, in caso non si voglia pubblicare tutto il contenuto del db, a solo parte di esso
-  - campi che devono essere ricercabili
-  - campi da usare per la produzione della possibile mappa
-  - campi che devono essere visibili nella pagina record 
+      - [x] url del db 
+      - [x] token di accesso
+      - [] filtro, in caso non si voglia pubblicare tutto il contenuto del db, a solo parte di esso
+      - [] campi che devono essere ricercabili
+      - [] campi da usare per la produzione della possibile mappa
+      - [] campi che devono essere visibili nella pagina record 
 
   - [x] Configurazione gatsby-config
 
