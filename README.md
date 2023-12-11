@@ -12,7 +12,7 @@
 1.  **Create a Gatsby site.**
 
     npm install -g gatsby-cli
-    
+
     gatsby new gatsby-directus-ui https://github.com/r-ichard/gatsby-starter-bootstrap-5
 
 2.  **Start developing.**
@@ -23,14 +23,17 @@
 3.  **Open the source code and start editing!**
 
     Your site is now running at `http://localhost:8000`
+    
     Graphql tool: `http://localhost:8000/___graphql`
 
 4.  **Install gatsby-source-directus**
 
 npm i gatsby-source-directus -S
 
-In gatsby-config.js
-inserire
+In gatsby-config.js inserire
+
+  plugins: [
+    {
 {
 resolve: `gatsby-source-directus`,
 options: {
@@ -44,7 +47,8 @@ requestParams: { // fa una richiesta all'API con parametri di default
 depth: 2,
 },
 },
-},
+},}
+  ],
 
 5. **Create an .env file**
 
