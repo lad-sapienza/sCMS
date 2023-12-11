@@ -11,9 +11,8 @@
 
 1.  **Create a Gatsby site.**
 
-    npm install -g gatsby-cli
-
-    gatsby new gatsby-directus-ui https://github.com/r-ichard/gatsby-starter-bootstrap-5
+   -  npm install -g gatsby-cli
+   -  gatsby new gatsby-directus-ui https://github.com/r-ichard/gatsby-starter-bootstrap-5
 
 2.  **Start developing.**
 
@@ -22,16 +21,15 @@
 
 3.  **Open the source code and start editing!**
 
-    Your site is now running at `http://localhost:8000`
-
-    Graphql tool: `http://localhost:8000/___graphql`
+    - Your site is now running at `http://localhost:8000`
+    - Graphql tool: `http://localhost:8000/___graphql`
 
 4.  **Install gatsby-source-directus**
 
-npm i gatsby-source-directus -S
+- npm i gatsby-source-directus -S
+- In gatsby-config.js inserire
 
-In gatsby-config.js inserire
-
+```
   plugins: [
     {
 {
@@ -50,20 +48,19 @@ depth: 2,
 },}
   ],
 
+```
+
 5. **Create an .env file**
 
 Crea un file .env dove memorizzare le tue variabili di sistema
 
-
-DIRECTUS_URL=https://directus.example.com
-
-DIRECTUS_TOKEN=mysecrettoken123
+- DIRECTUS_URL=https://directus.example.com
+- DIRECTUS_TOKEN=mysecrettoken123
 
 6.  **Install gatsby-plugin-env-variables**
 
-npm install gatsby-plugin-env-variables
-
-npm install colors
+- npm install gatsby-plugin-env-variables
+- npm install colors
 
 Il plugin gatsby-plugin-env-variables è progettato per consentire l'uso di variabili d'ambiente durante la fase di build di Gatsby.
 
