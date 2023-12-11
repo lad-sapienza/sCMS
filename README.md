@@ -17,9 +17,8 @@
 
 2.  **Start developing.**
 
-    cd gatsby-directus-ui
-
-    gatsby develop
+   -  cd gatsby-directus-ui
+   -  gatsby develop
 
 3.  **Open the source code and start editing!**
 
