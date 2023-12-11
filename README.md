@@ -105,7 +105,7 @@ In gatsby-config.js:
       - [] campi che devono essere ricercabili
       - [] campi da usare per la produzione della possibile mappa
       - [] campi che devono essere visibili nella pagina record 
-
+ - [] Aggiornamento run time https://www.gatsbyjs.com/docs/conceptual/data-fetching/
 ### Frontend
 
  - [x] home page personalizzabile
