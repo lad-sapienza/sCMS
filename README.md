@@ -18,6 +18,7 @@
 2.  **Start developing.**
 
     cd gatsby-directus-ui
+
     gatsby develop
 
 3.  **Open the source code and start editing!**
@@ -62,6 +63,7 @@ DIRECTUS_TOKEN=mysecrettoken123
 6.  **Install gatsby-plugin-env-variables**
 
 npm install gatsby-plugin-env-variables
+
 npm install colors
 
 Il plugin gatsby-plugin-env-variables è progettato per consentire l'uso di variabili d'ambiente durante la fase di build di Gatsby.
@@ -97,18 +99,21 @@ Per usare le variabili all'interno del sito si usa la dicitura process.env.NOME_
   - [x] Tema boostrap 5
   - [x] Installazione plugin Directus
   - [x] Installazione plugin Env variables
-  - [x] Creazione file Env - url del db - token di accesso
-        filtro, in caso non si voglia pubblicare tutto il contenuto del db, a solo parte di esso
-        campi che devono essere ricercabili
-        campi da usare per la produzione della possibile mappa
-        campi che devono essere visibili nella pagina record (non per forza coincidenti con i campi ricercabili, anche se immagino nel 90% dei casi lo saranno)
+  - [x] Creazione file Env 
+  
+  - url del db 
+  - token di accesso
+  - filtro, in caso non si voglia pubblicare tutto il contenuto del db, a solo parte di esso
+  - campi che devono essere ricercabili
+  - campi da usare per la produzione della possibile mappa
+  - campi che devono essere visibili nella pagina record 
 
   - [x] Configurazione gatsby-config
 
 ### Frontend
 
-un home page che uno può personalizzare
-una seconda pagina ‘tipo’, che può essere personalizzata, ma anche duplicata n volte a creare altri contenuti statici
-una pagina di ricerca su database Directus, configurabile
-una pagina di elenco (o mappa) di risultati dalla ricerca sul database Directus configurabile
-una pagina di records configurabile
+ - [x] home page personalizzabile
+-  []  seconda pagina ‘tipo’, che può essere personalizzata, ma anche duplicata n volte a creare altri contenuti statici
+-  []  una pagina di ricerca su database Directus, configurabile
+-  []  una pagina di elenco (o mappa) di risultati dalla ricerca sul database Directus configurabile
+-  []  una pagina di records configurabile
