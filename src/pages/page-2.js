@@ -15,15 +15,14 @@ const SecondPage = () => {
 
   useEffect(() => {
     const token = process.env.GATSBY_DIRECTUS_TOKEN
+    const apiUrl = process.env.GATSBY_DIRECTUS_URL
     const headers = {
       Authorization: `Bearer ${token}`,
-      // Puoi aggiungere altre intestazioni qui, se necessario
     }
 
-    fetch("/db/items/cms_articles", {
+    fetch(apiUrl, {
       method: "GET",
       headers: headers,
-      // Rimuovi la modalità "no-cors" se non è necessaria
     })
       .then(response => {
         if (!response.ok) {
