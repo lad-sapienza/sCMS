@@ -1,9 +1,17 @@
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
+
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Boostrap 5 Sass Starter`,
-    description: `A simple bootstrap 5 and Sass starter for Gatsby. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@r-ichard`,
+    title: `Gatsby Directus UI`,
+    description: `A gatsby site project with Directus`,
+    author: `Julian Bogdani, Eleonora Iacopini`,
   },
+  // proxy: {
+  //   prefix: "/db/items/cms_articles",
+  //   url: "https://inrome.sns.it",
+  // },
   plugins: [
     `gatsby-plugin-image`,
     {
@@ -35,17 +43,14 @@ module.exports = {
         icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
       },
     },
+    `gatsby-plugin-styled-components`,
     {
-      resolve: `gatsby-source-directus`,
+      resolve: "@directus/gatsby-source-directus",
       options: {
-        url: `directus.example.com`, // base url
-        apiKey: "123456789",
-      },
-    },
-    {
-      resolve: "gatsby-plugin-env-variables",
-      options: {
-        allowList: ["DIRECTUS_URL", "DIRECTUS_TOKEN"],
+        url: process.env.GATSBY_DIRECTUS_URL, // Nuovo URL
+        auth: {
+          token: process.env.GATSBY_DIRECTUS_TOKEN, //token
+        },
       },
     },
     `gatsby-plugin-gatsby-cloud`,

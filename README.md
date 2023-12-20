@@ -7,87 +7,115 @@
   Gatsby's directus UI
 </h1>
 
-## 🚀 Quick start
+## 🚀 USER HOW TO
+
+## 🚀 DEVELOPER HOW TO
 
 1.  **Create a Gatsby site.**
 
-   -  npm install -g gatsby-cli
-   -  gatsby new gatsby-directus-ui https://github.com/r-ichard/gatsby-starter-bootstrap-5
+- npm install -g gatsby-cli
+- gatsby new gatsby-directus-ui https://github.com/r-ichard/gatsby-starter-bootstrap-5
 
 2.  **Start developing.**
 
-   -  cd gatsby-directus-ui
-   -  gatsby develop
+- cd gatsby-directus-ui
+- gatsby develop
 
 3.  **Open the source code and start editing!**
 
     - Your site is now running at `http://localhost:8000`
     - Graphql tool: `http://localhost:8000/___graphql`
 
-4.  **Install gatsby-source-directus**
+4.  **CREATE FILE .ENV**
 
-- npm i gatsby-source-directus -S
-- In gatsby-config.js inserire
+https://www.gatsbyjs.com/docs/how-to/local-development/environment-variables/
 
-```
-  plugins: [
-    {
-{
-resolve: `gatsby-source-directus`,
-options: {
-url: `directus.example.com`, // base url
-protocol: 'http', // protocollo
-apiKey: '123456789', // API key che si trova nella pagina settings di Directus
-nameExceptions: {
-posts: "Article", // cambiare nome alle tabelle
-},
-requestParams: { // fa una richiesta all'API con parametri di default
-depth: 2,
-},
-},
-},}
-  ],
+Gatsby ha il supporto integrato per il caricamento delle variabili di ambiente nel browser e nelle Funzioni. Il caricamento delle variabili di ambiente in Node.js richiede un piccolo snippet di codice.
 
-```
+In fase di sviluppo, Gatsby caricherà le variabili di ambiente da un file denominato .env.development.
+Per le build, verrà caricato da .env.production.
 
-5. **Create an .env file**
-
-Crea un file .env dove memorizzare le tue variabili di sistema
+- Create a .env.production file
 
 - DIRECTUS_URL=https://directus.example.com
 - DIRECTUS_TOKEN=mysecrettoken123
 
-6.  **Install gatsby-plugin-env-variables**
+- Create a .env.development file
 
-- npm install gatsby-plugin-env-variables
-- npm install colors
+- DIRECTUS_URL=https://directus.example.com
+- DIRECTUS_TOKEN=mysecrettoken123
 
-Il plugin gatsby-plugin-env-variables è progettato per consentire l'uso di variabili d'ambiente durante la fase di build di Gatsby.
-
-In gatsby-config.js:
-- nella opzione allowList si mettono i nomi delle variabili da considerare in fase di build.
-- Per usare le variabili all'interno del sito si usa la dicitura process.env.NOME_VARIABILE
+- Update gatsby-config.js
 
 ```
-    plugins: [
-    {
-    resolve: "gatsby-plugin-env-variables",
-    options: {
-    allowList: ["DIRECTUS_URL", "DIRECTUS_TOKEN"],
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
+
+```
+
+5.  **Install plugins**
+
+- A. Install gatsby-source-directus
+
+npm install --save gatsby-source-graphql@5 gatsby-source-filesystem@5
+
+npm install --save @directus/gatsby-source-directus
+
+- Update gatsby-config.js
+
+```
+ {
+      resolve: "@directus/gatsby-source-directus",
+      options: {
+        url: process.env.DIRECTUS_URL, // Usa le variabili del file env
+        auth: {
+          token: process.env.DIRECTUS_TOKEN, //Usa le variabili del file env
+        },
+      },
     },
+
+```
+
+- B. Install gatsby-source-graphql (Query runtime)
+
+- npm install gatsby-source-graphql
+
+- Update gatsby-config.js
+
+```
+
+{
+      resolve: `gatsby-source-graphql`,
+      options: {
+        typeName: `GitHub`,
+        fieldName: `github`,
+        url: `https://api.github.com/graphql`,
+        headers: {
+          Authorization: `Bearer your-github-token`,
+        },
+      },
     },
-    {
-    resolve: "gatsby-source-directus",
-    options: {
-    url: process.env.DIRECTUS_URL,
-    accessToken: process.env.DIRECTUS_TOKEN,
-    // Altre opzioni di configurazione Directus...
-    },
-    },
-    // ... altri plugin ...
-    ],
-  
-  ```
+
+```
+
+- B. Install Gatsby styled-component
+
+- npm install gatsby-plugin-styled-components styled-components babel-plugin-styled-components
+- Update gatsby-config.js
+
+```
+plugins: [`gatsby-plugin-styled-components`],
+
+```
+
+- C. install react-boostraps
+
+- npm install react-bootstrap bootstrap
+
+- D. Install gatsby-plugin-env-variables
+
+Questo plugin server per avere varibiali configurabili in run time
 
 ## STEP DI SVILUPPO
 
@@ -96,20 +124,20 @@ In gatsby-config.js:
 - [x] Installazione
   - [x] Tema boostrap 5
   - [x] Installazione plugin Directus
-  - [x] Installazione plugin Env variables
   - [x] Configurazione gatsby-config
-  - [x] Creazione file Env 
-      - [x] url del db 
-      - [x] token di accesso
-      - [] filtro, in caso non si voglia pubblicare tutto il contenuto del db, a solo parte di esso
-      - [] campi che devono essere ricercabili
-      - [] campi da usare per la produzione della possibile mappa
-      - [] campi che devono essere visibili nella pagina record 
- - [] Aggiornamento run time https://www.gatsbyjs.com/docs/conceptual/data-fetching/
+  - [x] Creazione file Env
+    - [x] url del db
+    - [x] token di accesso
+    - [] filtro, in caso non si voglia pubblicare tutto il contenuto del db, a solo parte di esso
+    - [] campi che devono essere ricercabili
+    - [] campi da usare per la produzione della possibile mappa
+    - [] campi che devono essere visibili nella pagina record
+- [] Aggiornamento run time https://www.gatsbyjs.com/docs/conceptual/data-fetching/
+
 ### Frontend
 
- - [x] home page personalizzabile
--  []  seconda pagina ‘tipo’, che può essere personalizzata, ma anche duplicata n volte a creare altri contenuti statici
--  []  una pagina di ricerca su database Directus, configurabile
--  []  una pagina di elenco (o mappa) di risultati dalla ricerca sul database Directus configurabile
--  []  una pagina di records configurabile
+- [x] home page personalizzabile
+- [] seconda pagina ‘tipo’, che può essere personalizzata, ma anche duplicata n volte a creare altri contenuti statici
+- [] una pagina di ricerca su database Directus, configurabile
+- [] una pagina di elenco (o mappa) di risultati dalla ricerca sul database Directus configurabile
+- [] una pagina di records configurabile
