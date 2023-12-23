@@ -99,7 +99,8 @@ This plugins makes availeble in Gatsby [Bootstrap's 5](https://getbootstrap.com/
 ```bash
 npm install --save react-bootstrap bootstrap
 ```
-@eiacopini valuare la coesistenza di questo con lo starter sopra. Non sono alternative? Probabilmente potremmo fare a meno dello starter
+
+> @eiacopini valuare la coesistenza di questo con lo starter sopra. Non sono alternative? Probabilmente potremmo fare a meno dello starter
 
 
 ### Install plugins `styled-components`, `gatsby-plugin-styled-components`, and `babel-plugin-styled-components`
@@ -109,28 +110,39 @@ This adds [styled-components](https://styled-components.com/) functionality to t
 - https://styled-components.com/
 
 ```bash
-npm install --save-dev styled-components gatsby-plugin-styled-components babel-plugin-styled-components
+npm install --save gatsby-plugin-styled-components styled-components babel-plugin-styled-componenst
 ```
 
-Update gatsby-config.js
+Update gatsby-config.js and add to the plugins array `gatsby-plugin-styled-components`:
 
-```json 
-plugins: [`gatsby-plugin-styled-components`],
-
+```js
+module.exports = {
+  // ... some gatsby configuration
+  plugins: [
+    // ... some gatsby plugins
+    `gatsby-plugin-styled-components`,
+  ]
+}
 ```
 
 ### Install plugin `gatsby-source-graphql`
 
-This plugin is used to connect to retrieve data in runtime by using GraphQL from the Directus database. For further information: [https://www.gatsbyjs.com/plugins/gatsby-source-graphql/](https://www.gatsbyjs.com/plugins/gatsby-source-graphql/)
+This plugin is used to connect to retrieve data in runtime by using GraphQL from the Directus database. 
+
+For further information: [https://www.gatsbyjs.com/plugins/gatsby-source-graphql/](https://www.gatsbyjs.com/plugins/gatsby-source-graphql/)
 
 ```bash
 npm install --save gatsby-source-graphql
 ```
 
-Update gatsby-config.js
+Update gatsby-config.js and add to the plugins array:
 
-```json
-{
+```js
+module.exports = {
+  // ... some gatsby configuration
+  plugins: [
+    // ... some gatsby plugins
+    {
       resolve: `gatsby-source-graphql`,
       options: {
         typeName: `GitHub`, @eiacopini: da cambiare immagino con variabile ENV
@@ -139,52 +151,90 @@ Update gatsby-config.js
         headers: {
           Authorization: `Bearer your-github-token`, @eiacopini: da cambiare immagino con variabile ENV
         },
-      },
+      }
     },
-
+  ],
+}
 ```
 
 
 ### Install plugin `gatsby-source-directus`
 
-The plugin makes it easy to connect Gatsby to a Directus instace in order to use
+The plugin makes it easy to connect Gatsby to a Directus instace.
 
-@eiacopini questo plugin serve se vogliamo usare Directus come fonte di contenuto, es. per le pagine statice, ma non è strettamente necessario per il primo fine dell'app. Forse lo aggiungerei come bonus, non come setup core. Invece aggiungerei il supporto per MD (e sempre come bonus per MDX). Nella versione più semplice l'app funziona con contenuti statici.
+> @eiacopini questo plugin serve se vogliamo usare Directus come fonte di contenuto, es. per le pagine statice, ma non è strettamente necessario per il primo fine dell'app. Forse lo aggiungerei come bonus, non come setup core. Invece aggiungerei il supporto per MD (e sempre come bonus per MDX). Nella versione più semplice l'app funziona con contenuti statici.
 
 ```bash
-npm install --save gatsby-source-graphql@5 gatsby-source-filesystem@5 @directus/gatsby-source-directus
+npm install --save gatsby-source-graphql@5 gatsby-source-filesystem@5
 ```
-Update gatsby-config.js with:
 
-```json
- {
+Update gatsby-config.js and add to the plugins array:
+
+```js
+module.exports = {
+  // ... some gatsby configuration
+  plugins: [
+    // ... some gatsby plugins
+    {
       resolve: "@directus/gatsby-source-directus",
       options: {
         url: process.env.DIRECTUS_URL,
         auth: {
           token: process.env.DIRECTUS_TOKEN
-        },
-      },
+        }
+      }
     },
-
+  ],
+}
 ```
 
 The variables `DIRECTUS_URL` and `DIRECTUS_TOKEN` must be defined in the `.env` file (see below) and will be injected in real time into the application.
 
 
+### Enable environmental vaiables
 
-6. **Plugin gatsby-plugin-env-variables**
+Gatsby has built-in support for loading environment variables into the browser and Functions. Loading environment variables into Node.js requires a small code snippet.
 
-```bash
-npm install --save-dev gatsby-plugin-env-variables
-```
+In development, Gatsby will load environment variables from a file named `.env.development`. For builds, it will load from `.env.production`.
 
-Update gatsby-config.js
+To load these into Node.js, add the following code snippet to the top of your gatsby-config.js file:
 
-```bash
+```js
 require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,
 })
+```
+
+Further information available at: [https://www.gatsbyjs.com/docs/how-to/local-development/environment-variables/](https://www.gatsbyjs.com/docs/how-to/local-development/environment-variables/)
+
+
+
+### Install plugin `gatsby-plugin-env-variables`
+
+> @eiacopini: ci serve davvero questo plugin? Loro dicono che Gatsby di default carica solo varibili env con prefisso GATSBY_ ma nella documentazione https://www.gatsbyjs.com/docs/how-to/local-development/environment-variables/ ufficiale vengono usare anche variabili senza quel prefisso. Se non serve lo eliminiamo.
+
+By default, Gatsby only makes system environment variables prefixed with `GATSBY_` available to client scripts. Using this plugin, you can make any arbitrary environment variable available at runtime.
+
+
+```bash
+npm install --save gatsby-plugin-env-variables
+```
+
+Update gatsby-config.js and add to the plugins array:
+
+```js
+module.exports = {
+  // ... some gatsby configuration
+  plugins: [
+    // ... some gatsby plugins
+    {
+      resolve: "gatsby-plugin-env-variables",
+      options: {
+        allowList: ["DIRECTUS_URL", "DIRECTUS_TOKEN"]
+      },
+    },
+  ],
+}
 
 ```
 
