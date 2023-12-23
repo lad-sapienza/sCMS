@@ -1,121 +1,196 @@
-<p align="center">
-  <a href="https://www.gatsbyjs.com">
-    <img alt="Gatsby" src="https://www.gatsbyjs.com/Gatsby-Monogram.svg" width="60" />
-  </a>
-</p>
 <h1 align="center">
-  Gatsby's directus UI
+  Gatsby & Directus UI
 </h1>
 
-## 🚀 USER HOW TO
+# User's guide
 
-## 🚀 DEVELOPER HOW TO
+## Environmente setup
+To succesfully run, edit and deploy Gatsby & Directus UI few dependencies are required. This guide does not cover their installation or setup.
 
-1.  **Create a Gatsby site.**
+- [Node.js](https://nodejs.org/en)
+- [Git](https://git-scm.com/)
+- A code editor, such as the free [Visual Studio Code](https://code.visualstudio.com/)
+- A [free Github](https://github.com/) account
 
-- npm install -g gatsby-cli
-- gatsby new gatsby-directus-ui https://github.com/r-ichard/gatsby-starter-bootstrap-5
 
-2.  **Start developing.**
+## Installation
 
-- cd gatsby-directus-ui
-- gatsby develop
+```bash
+git clone https://github.com/lab-archeologia-digitale/gatsby-directus-ui.git
+cd gatsby-directus-ui
+npm install
+```
 
-3.  **Open the source code and start editing!**
+After this, the main dependencieas are installed, but before running te site we need to do some base configuration.
 
-    - Your site is now running at `http://localhost:8000`
-    - Graphql tool: `http://localhost:8000/___graphql`
+We raccomend to use [Visual Studio Code](https://code.visualstudio.com/) or another code editor to edit the source code and customise the site. 
 
-4.  **CREATE FILE .ENV**
 
-https://www.gatsbyjs.com/docs/how-to/local-development/environment-variables/
+## Base configuration
+
+The base confuguratio  requires you to create a ENV file that contains main configuration that allows communication with the directus database. This file contains sensible data and should not be deployed in a typical production scenario.
+
+Info: [https://www.gatsbyjs.com/docs/how-to/local-development/environment-variables/](https://www.gatsbyjs.com/docs/how-to/local-development/environment-variables/)
 
 Gatsby ha il supporto integrato per il caricamento delle variabili di ambiente nel browser e nelle Funzioni. Il caricamento delle variabili di ambiente in Node.js richiede un piccolo snippet di codice.
 
 In fase di sviluppo, Gatsby caricherà le variabili di ambiente da un file denominato .env.development.
 Per le build, verrà caricato da .env.production.
 
-- Create a .env.production file
-
-- DIRECTUS_URL=https://directus.example.com
-- DIRECTUS_TOKEN=mysecrettoken123
-
-- Create a .env.development file
-
-- DIRECTUS_URL=https://directus.example.com
-- DIRECTUS_TOKEN=mysecrettoken123
-
-- Update gatsby-config.js
+Create a `.env.production` file:
 
 ```
+DIRECTUS_URL=https://directus.example.com
+DIRECTUS_TOKEN=mysecrettoken123
+```
+
+Create a `.env.development` file
+
+```
+DIRECTUS_URL=https://directus.example.com
+DIRECTUS_TOKEN=mysecrettoken123
+```
+
+## Run and test
+
+We are finally ready to run our site
+```bash
+npm run develop
+```
+If everything was successfull, your site shoud be runnin at `http://localhost:8000`. The GraphQL tool should be available at: `http://localhost:8000/___graphql`
+
+## Further customisation
+- come aggiungere una pagina statica
+- come modificare un menu
+- come ....?
+
+## Build
+
+## Deploy
+
+## Secure your application
+
+---
+
+
+
+
+---
+
+# What's inside: developers guide
+
+Gatsby & Directus UI is a custom Gatsby application, packed with specific plugins to allow runtime communication with a Directus database instance.
+
+Our aim is to keep it as simple as possible, but also provide means to further develop it. The following part of the guide explains the few steps we followed to put everything together, and some optinal further implementations.
+
+### Install `Gatsby Bootstrap 5 starter`
+
+Follow the instruction at https://github.com/r-ichard/gatsby-starter-bootstrap-5 to install a Gatsby starter built wth [Bootstrap 5](https://getbootstrap.com/)
+
+```bash
+git clone https://github.com/r-ichard/gatsby-starter-bootstrap-5.git
+cd gatsby-starter-bootstrap-5
+```
+
+### Install plugin `react-boostrap`
+
+This plugins makes availeble in Gatsby [Bootstrap's 5](https://getbootstrap.com/) components, rebuilt for [React.js](https://reactjs.org/).
+
+```bash
+npm install --save react-bootstrap bootstrap
+```
+@eiacopini valuare la coesistenza di questo con lo starter sopra. Non sono alternative? Probabilmente potremmo fare a meno dello starter
+
+
+### Install plugins `styled-components`, `gatsby-plugin-styled-components`, and `babel-plugin-styled-components`
+
+This adds [styled-components](https://styled-components.com/) functionality to the Gatsby site, to facilitate the CSS costimisation of the site within JavaScript. For further information:
+- https://www.gatsbyjs.com/docs/how-to/styling/styled-components/
+- https://styled-components.com/
+
+```bash
+npm install --save-dev styled-components gatsby-plugin-styled-components babel-plugin-styled-components
+```
+
+Update gatsby-config.js
+
+```json 
+plugins: [`gatsby-plugin-styled-components`],
+
+```
+
+### Install plugin `gatsby-source-graphql`
+
+This plugin is used to connect to retrieve data in runtime by using GraphQL from the Directus database. For further information: [https://www.gatsbyjs.com/plugins/gatsby-source-graphql/](https://www.gatsbyjs.com/plugins/gatsby-source-graphql/)
+
+```bash
+npm install --save gatsby-source-graphql
+```
+
+Update gatsby-config.js
+
+```json
+{
+      resolve: `gatsby-source-graphql`,
+      options: {
+        typeName: `GitHub`, @eiacopini: da cambiare immagino con variabile ENV
+        fieldName: `github`, @eiacopini: da cambiare immagino con variabile ENV
+        url: `https://api.github.com/graphql`, @eiacopini: da cambiare immagino con variabile ENV
+        headers: {
+          Authorization: `Bearer your-github-token`, @eiacopini: da cambiare immagino con variabile ENV
+        },
+      },
+    },
+
+```
+
+
+### Install plugin `gatsby-source-directus`
+
+The plugin makes it easy to connect Gatsby to a Directus instace in order to use
+
+@eiacopini questo plugin serve se vogliamo usare Directus come fonte di contenuto, es. per le pagine statice, ma non è strettamente necessario per il primo fine dell'app. Forse lo aggiungerei come bonus, non come setup core. Invece aggiungerei il supporto per MD (e sempre come bonus per MDX). Nella versione più semplice l'app funziona con contenuti statici.
+
+```bash
+npm install --save gatsby-source-graphql@5 gatsby-source-filesystem@5 @directus/gatsby-source-directus
+```
+Update gatsby-config.js with:
+
+```json
+ {
+      resolve: "@directus/gatsby-source-directus",
+      options: {
+        url: process.env.DIRECTUS_URL,
+        auth: {
+          token: process.env.DIRECTUS_TOKEN
+        },
+      },
+    },
+
+```
+
+The variables `DIRECTUS_URL` and `DIRECTUS_TOKEN` must be defined in the `.env` file (see below) and will be injected in real time into the application.
+
+
+
+6. **Plugin gatsby-plugin-env-variables**
+
+```bash
+npm install --save-dev gatsby-plugin-env-variables
+```
+
+Update gatsby-config.js
+
+```bash
 require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,
 })
 
 ```
 
-5.  **Install plugins**
 
-- A. Install gatsby-source-directus
 
-npm install --save gatsby-source-graphql@5 gatsby-source-filesystem@5
 
-npm install --save @directus/gatsby-source-directus
-
-- Update gatsby-config.js
-
-```
- {
-      resolve: "@directus/gatsby-source-directus",
-      options: {
-        url: process.env.DIRECTUS_URL, // Usa le variabili del file env
-        auth: {
-          token: process.env.DIRECTUS_TOKEN, //Usa le variabili del file env
-        },
-      },
-    },
-
-```
-
-- B. Install gatsby-source-graphql (Query runtime)
-
-- npm install gatsby-source-graphql
-
-- Update gatsby-config.js
-
-```
-
-{
-      resolve: `gatsby-source-graphql`,
-      options: {
-        typeName: `GitHub`,
-        fieldName: `github`,
-        url: `https://api.github.com/graphql`,
-        headers: {
-          Authorization: `Bearer your-github-token`,
-        },
-      },
-    },
-
-```
-
-- B. Install Gatsby styled-component
-
-- npm install gatsby-plugin-styled-components styled-components babel-plugin-styled-components
-- Update gatsby-config.js
-
-```
-plugins: [`gatsby-plugin-styled-components`],
-
-```
-
-- C. install react-boostraps
-
-- npm install react-bootstrap bootstrap
-
-- D. Install gatsby-plugin-env-variables
-
-Questo plugin server per avere varibiali configurabili in run time
 
 ## STEP DI SVILUPPO
 
