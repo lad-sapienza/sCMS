@@ -162,6 +162,22 @@ module.exports = {
 }
 ```
 
+### Enable environmental variables
+
+Gatsby has built-in support for loading environment variables into the browser and Functions. Loading environment variables into Node.js requires a small code snippet.
+
+In development, Gatsby will load environment variables from a file named `.env.development`. For builds, it will load from `.env.production`.
+
+To load these into Node.js, add the following code snippet to the top of your gatsby-config.js file:
+
+```js
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
+```
+
+Further information available at: [https://www.gatsbyjs.com/docs/how-to/local-development/environment-variables/](https://www.gatsbyjs.com/docs/how-to/local-development/environment-variables/)
+
 ### Install plugin `gatsby-source-graphql`
 
 This plugin is used to connect to retrieve data in runtime by using GraphQL from the Directus database.
@@ -194,79 +210,28 @@ module.exports = {
 }
 ```
 
-### Search engine
+### Add Search engine
 
 https://docs.directus.io/reference/filter-rules.html
 
-### Install plugin `gatsby-source-directus`
+### Install plugin Maplibre GL
 
-The plugin makes it easy to connect Gatsby to a Directus instace.
-
-> @eiacopini questo plugin serve se vogliamo usare Directus come fonte di contenuto, es. per le pagine statice, ma non è strettamente necessario per il primo fine dell'app. Forse lo aggiungerei come bonus, non come setup core. Invece aggiungerei il supporto per MD (e sempre come bonus per MDX). Nella versione più semplice l'app funziona con contenuti statici.
-
-```bash
-npm install --save gatsby-source-graphql@5 gatsby-source-filesystem@5
+```
+npm i maplibre-gl
 ```
 
-Update gatsby-config.js and add to the plugins array:
+### Install plugin MD
 
 ```js
 module.exports = {
   // ... some gatsby configuration
   plugins: [
-    // ... some gatsby plugins
+    // ... some gatsby plugin
     {
-      resolve: "@directus/gatsby-source-directus",
+      resolve: `gatsby-source-filesystem`,
       options: {
-        url: process.env.DIRECTUS_URL,
-        auth: {
-          token: process.env.DIRECTUS_TOKEN,
-        },
-      },
-    },
-  ],
-}
-```
-
-The variables `DIRECTUS_URL` and `DIRECTUS_TOKEN` must be defined in the `.env` file (see below) and will be injected in real time into the application.
-
-### Enable environmental vaiables
-
-Gatsby has built-in support for loading environment variables into the browser and Functions. Loading environment variables into Node.js requires a small code snippet.
-
-In development, Gatsby will load environment variables from a file named `.env.development`. For builds, it will load from `.env.production`.
-
-To load these into Node.js, add the following code snippet to the top of your gatsby-config.js file:
-
-```js
-require("dotenv").config({
-  path: `.env.${process.env.NODE_ENV}`,
-})
-```
-
-Further information available at: [https://www.gatsbyjs.com/docs/how-to/local-development/environment-variables/](https://www.gatsbyjs.com/docs/how-to/local-development/environment-variables/)
-
-### Install plugin `gatsby-plugin-env-variables`
-
-> @eiacopini: ci serve davvero questo plugin? Loro dicono che Gatsby di default carica solo varibili env con prefisso GATSBY\_ ma nella documentazione https://www.gatsbyjs.com/docs/how-to/local-development/environment-variables/ ufficiale vengono usare anche variabili senza quel prefisso. Se non serve lo eliminiamo.
-
-By default, Gatsby only makes system environment variables prefixed with `GATSBY_` available to client scripts. Using this plugin, you can make any arbitrary environment variable available at runtime.
-
-```bash
-npm install --save gatsby-plugin-env-variables
-```
-
-Update gatsby-config.js and add to the plugins array:
-
-```js
-module.exports = {
-  // ... some gatsby configuration
-  plugins: [
-    // ... some gatsby plugins
-    {
-      resolve: "gatsby-plugin-env-variables",
-      options: {
-        allowList: ["DIRECTUS_URL", "DIRECTUS_TOKEN"],
+        name: `content`,
+        path: `${__dirname}/src/content`,
       },
     },
   ],
@@ -278,9 +243,7 @@ module.exports = {
 ### Backend
 
 - [x] Installazione
-  - [x] Tema boostrap 5
-  - [x] Installazione plugin Directus
-  - [x] Configurazione gatsby-config
+
   - [x] Creazione file Env
     - [x] url del db
     - [x] token di accesso
@@ -288,12 +251,12 @@ module.exports = {
     - [] campi che devono essere ricercabili
     - [] campi da usare per la produzione della possibile mappa
     - [] campi che devono essere visibili nella pagina record
-- [] Aggiornamento run time https://www.gatsbyjs.com/docs/conceptual/data-fetching/
 
 ### Frontend
 
-- [x] home page personalizzabile
-- [] seconda pagina ‘tipo’, che può essere personalizzata, ma anche duplicata n volte a creare altri contenuti statici
-- [] una pagina di ricerca su database Directus, configurabile
+- [x] Home page personalizzabile
+- [x] seconda pagina ‘tipo’, che può essere personalizzata, ma anche duplicata n volte a creare altri contenuti statici
+- [x] pagina SSR per contenuti runtime
+- [x] una pagina di ricerca su database Directus, configurabile
 - [] una pagina di elenco (o mappa) di risultati dalla ricerca sul database Directus configurabile
 - [] una pagina di records configurabile
