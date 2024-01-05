@@ -1,19 +1,16 @@
 import React from "react"
-import Layout from "../components/layout"
 
-const SearchPage = ({ location }) => {
-  const queryParam = location.search ? location.search.split("=")[1] : ""
-  const query = decodeURIComponent(queryParam) // Decode the query parameter
-
+const SearchResult = ({ serverData }) => {
   return (
-    <Layout>
-      <div>
-        <h1>Risultati della ricerca</h1>
-        {query ? <p>Query: {query}</p> : <p>No search query provided.</p>}
-        {/* Qui puoi aggiungere la logica per mostrare i risultati della ricerca */}
-      </div>
-    </Layout>
+    <div>
+      {serverData.data.map(item => (
+        <div key={item.id}>
+          <h2>{item.title}</h2>
+          <p>{item.summary}</p>
+        </div>
+      ))}
+    </div>
   )
 }
 
-export default SearchPage
+export default SearchResult
