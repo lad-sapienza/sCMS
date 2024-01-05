@@ -5,44 +5,33 @@
   "version": "2.0.2",
   "author": "Julian Bogdani <julian.bogdani@uniroma1.it>",
   "dependencies": {
-    "@directus/gatsby-source-directus": "^2.3.0",
-    "@popperjs/core": "^2.11.6",
     "babel-plugin-styled-components": "^2.1.4",
     "bootstrap": "^5.3.2",
-    "colors": "^1.4.0",
-    "gatsby": "^5.1.0",
-    "gatsby-plugin-gatsby-cloud": "^5.1.0",
-    "gatsby-plugin-image": "^3.1.0",
-    "gatsby-plugin-manifest": "^5.1.0",
-    "gatsby-plugin-offline": "^6.1.0",
-    "gatsby-plugin-sass": "^6.1.0",
-    "gatsby-plugin-sharp": "^5.1.0",
+    "gatsby": "^5.13.1",
+    "gatsby-plugin-image": "^3.13.0",
+    "gatsby-plugin-manifest": "^5.13.0",
+    "gatsby-plugin-sass": "^6.13.0",
+    "gatsby-plugin-sharp": "^5.13.0",
     "gatsby-plugin-styled-components": "^6.13.0",
     "gatsby-source-filesystem": "^5.13.0",
-    "gatsby-source-graphql": "^5.13.0",
-    "gatsby-transformer-sharp": "^5.1.0",
-    "prop-types": "^15.8.1",
+    "gatsby-transformer-sharp": "^5.13.0",
     "react": "^18.2.0",
-    "react-bootstrap": "^2.9.1",
-    "react-dom": "^18.0.0",
-    "sass": "1.49.11",
-    "styled-components": "^6.1.1"
+    "react-bootstrap": "^2.9.2",
+    "react-dom": "^18.2.0",
+    "styled-components": "^6.1.6"
   },
   "devDependencies": {
-    "prettier": "2.5.1"
+    "prettier": "^2.8.8"
   },
   "keywords": [
-    "gatsby",
-    "starter",
-    "bootstrap",
-    "sass"
+    "gatsby"
   ],
   "license": "0BSD",
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",
-    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
-    "start": "npm run develop",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md,css}\"",
+    "start": "gatsby develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
