@@ -1,17 +1,23 @@
 require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,
 })
+/**
+ * Configure your Gatsby site with this file.
+ *
+ * See: https://www.gatsbyjs.com/docs/reference/config-files/gatsby-config/
+ */
+
+/**
+ * @type {import('gatsby').GatsbyConfig}
+ */
 
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Directus UI`,
-    description: `A gatsby site project with Directus`,
-    author: `Julian Bogdani, Eleonora Iacopini`,
+    title: `Gatsby Default Starter`,
+    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
+    author: `@gatsbyjs`,
+    siteUrl: `https://gatsbystarterdefaultsource.gatsbyjs.io/`,
   },
-  // proxy: {
-  //   prefix: "/db/items/cms_articles",
-  //   url: "https://inrome.sns.it",
-  // },
   plugins: [
     `gatsby-plugin-image`,
     {
@@ -25,34 +31,21 @@ module.exports = {
     `gatsby-plugin-sharp`,
     {
       resolve: `gatsby-plugin-sass`,
-      options: {
-        sassOptions: {
-          precision: 6,
-        },
-      },
+      options: { implementation: require("sass") },
     },
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `gatsby-starter-bootstrap-5`,
-        short_name: `gb5-starter`,
+        name: `gatsby-starter-default`,
+        short_name: `starter`,
         start_url: `/`,
         background_color: `#663399`,
-        theme_color: `#663399`,
-        display: `standalone`,
+        // This will impact how browsers show your PWA/website
+        // https://css-tricks.com/meta-theme-color-and-trickery/
+        // theme_color: `#663399`,
+        display: `minimal-ui`,
         icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
       },
     },
-    `gatsby-plugin-styled-components`,
-    {
-      resolve: "@directus/gatsby-source-directus",
-      options: {
-        url: process.env.GATSBY_DIRECTUS_URL, // Nuovo URL
-        auth: {
-          token: process.env.GATSBY_DIRECTUS_TOKEN, //token
-        },
-      },
-    },
-    `gatsby-plugin-gatsby-cloud`,
   ],
 }

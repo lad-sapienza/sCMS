@@ -1,54 +1,47 @@
 import * as React from "react"
-import PropTypes from "prop-types"
-import { Link } from "gatsby"
+import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap"
+import styled from "styled-components"
 
-const isActive = ({ isCurrent }) => {
-  return isCurrent ? { className: "nav-link active" } : {className: "nav-link"}
-}
-
-const ExactNavLink = props => (
-  <Link getProps={isActive} {...props} />
-)
-
-const Navbar = ({ siteTitle }) => {
+function Links() {
   return (
-    <nav className="navbar navbar-expand-md navbar-dark bg-primary">
-      <div className="container-fluid">
-        <Link to="/" className="navbar-brand" href="#">{siteTitle}</Link>
-        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-navbar"
-                aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
-        </button>
-
-        <div className="collapse navbar-collapse" id="main-navbar">
-          <ul className="navbar-nav me-auto mb-2 mb-md-0">
-            <li className="nav-item">
-              <ExactNavLink
-                to="/"
-              >
-                Home
-              </ExactNavLink>
-            </li>
-            <li className="nav-item">
-              <ExactNavLink
-                to="/about"
-              >
-                About
-              </ExactNavLink>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+    <Menu>
+      <Navbar expand="lg" className="bg-body-tertiary">
+        <Container>
+          <Navbar.Brand href="#home">Project-name</Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="me-auto">
+              <Nav.Link href="/home">Home</Nav.Link>
+              <Nav.Link href="/page-2">Page2</Nav.Link>
+              <Nav.Link href="/using-ssr">Server side content</Nav.Link>
+              <Nav.Link href="/directus-ssr">Directus SSR</Nav.Link>
+              <Nav.Link href="/searchPage">Search</Nav.Link>
+              <Nav.Link href="#">Maps</Nav.Link>
+              <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+                <NavDropdown.Item href="#action/3.2">
+                  Another action
+                </NavDropdown.Item>
+                <NavDropdown.Item href="#action/3.3">
+                  Something
+                </NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item href="#action/3.4">
+                  Separated link
+                </NavDropdown.Item>
+              </NavDropdown>
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+    </Menu>
   )
 }
 
-Navbar.propTypes = {
-  siteTitle: PropTypes.string,
-}
-
-Navbar.defaultProps = {
-  siteTitle: ``,
-}
-
-export default Navbar
+//style
+const Menu = styled.section`
+  .bg-body-tertiary {
+    background-color: #ececec !important;
+  }
+`
+export default Links
