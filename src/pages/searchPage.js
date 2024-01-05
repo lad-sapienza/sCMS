@@ -32,6 +32,11 @@ const SearchPage = () => {
         />
         <button type="submit">Cerca</button>
       </form>
+      <br />
+      <hr />
+      <h1>Risultati</h1>
+      <hr />
+      <br />
 
       {searchResults && (
         <ul>
@@ -43,7 +48,10 @@ const SearchPage = () => {
           ))}
         </ul>
       )}
-
+      <br />
+      <br />
+      <br />
+      <br />
       <Link to="/">Torna alla homepage</Link>
     </Layout>
   )
