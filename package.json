@@ -1,9 +1,9 @@
 {
-  "name": "@r-ichard/gatsby-starter-bootstrap-5",
+  "name": "@lab-archeologia-digitale/gatsby-directus-ui",
   "private": false,
   "description": "A simple starter to get up and developing quickly with Gatsby 5 and Bootstrap 5",
   "version": "2.0.2",
-  "author": "Richard Raduly <richard@raduly.fr>",
+  "author": "Julian Bogdani <julian.bogdani@uniroma1.it>",
   "dependencies": {
     "@directus/gatsby-source-directus": "^2.3.0",
     "@popperjs/core": "^2.11.6",
@@ -49,11 +49,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/r-ichard/gatsby-starter-bootstrap-5.git"
+    "url": "git+https://github.com/lab-archeologia-digitale/gatsby-directus-ui.git"
   },
   "bugs": {
-    "url": "https://github.com/gatsbyjs/gatsby/issues"
+    "url": "https://github.com/lab-archeologia-digitale/gatsby-directus-ui/issues"
   },
-  "homepage": "https://github.com/r-ichard/gatsby-starter-bootstrap-5#readme",
+  "homepage": "https://github.com/lab-archeologia-digitale/gatsby-directus-ui#readme",
   "main": "gatsby-browser.js"
 }
