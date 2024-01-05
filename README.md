@@ -194,6 +194,10 @@ module.exports = {
 }
 ```
 
+### Search engine
+
+https://docs.directus.io/reference/filter-rules.html
+
 ### Install plugin `gatsby-source-directus`
 
 The plugin makes it easy to connect Gatsby to a Directus instace.

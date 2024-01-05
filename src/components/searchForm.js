@@ -1,23 +1,23 @@
-import * as React from "react"
+import React, { useState } from "react"
 import { navigate } from "gatsby"
 
 const SearchForm = () => {
-  const [query, setQuery] = React.useState("")
+  const [query, setQuery] = useState("")
 
   const handleSubmit = e => {
     e.preventDefault()
-    navigate(`/searchResult/?query=${encodeURIComponent(query)}`)
+    navigate(`/searchResult/?query=${query}`)
   }
 
   return (
     <form onSubmit={handleSubmit}>
       <input
         type="text"
+        placeholder="Search..."
         value={query}
         onChange={e => setQuery(e.target.value)}
-        placeholder="Cerca..."
       />
-      <button type="submit">Cerca</button>
+      <button type="submit">Search</button>
     </form>
   )
 }
