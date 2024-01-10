@@ -2,12 +2,12 @@ import * as React from "react"
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap"
 import styled from "styled-components"
 
-function Links() {
+function MyNavbar(props) {
   return (
     <Menu>
       <Navbar expand="lg" className="bg-body-tertiary">
         <Container>
-          <Navbar.Brand href="#home">Project-name</Navbar.Brand>
+          <Navbar.Brand href="#home">{props.siteTitle}</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
@@ -44,4 +44,4 @@ const Menu = styled.section`
     background-color: #ececec !important;
   }
 `
-export default Links
+export default MyNavbar;

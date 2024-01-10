@@ -22,7 +22,7 @@ const Layout = ({ children }) => {
       <div className="container-fluid p-0">
         <Navbar siteTitle={data.site.siteMetadata?.title || `Title`} />
         <Slide />
-        <main>{children}</main>
+        <main className="my-5">{children}</main>
         <FooterPage />
       </div>
     </>
