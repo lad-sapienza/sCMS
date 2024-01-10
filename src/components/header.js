@@ -12,7 +12,7 @@ const Header = ({ siteTitle }) => (
     }}
   >
     <Link
-      to="/"
+      href="/"
       style={{
         fontSize: `var(--font-sm)`,
         textDecoration: `none`,

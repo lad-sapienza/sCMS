@@ -29,7 +29,7 @@ const UsingSSRDirectus = ({ serverData }) => {
         </a>
         .
       </p>
-      <Link to="/">Go back to the homepage</Link>
+      <Link href="/">Go back to the homepage</Link>
     </Layout>
   )
 }

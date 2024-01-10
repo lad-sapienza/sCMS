@@ -214,10 +214,23 @@ module.exports = {
 
 https://docs.directus.io/reference/filter-rules.html
 
-### Install plugin Maplibre GL
+### Install plugin Leaflet
 
 ```
-npm i maplibre-gl
+npm i --save gatsby-plugin-react-leaflet react-leaflet leaflet
+```
+
+```
+module.exports = {
+  plugins: [
+    {
+      resolve: 'gatsby-plugin-react-leaflet',
+      options: {
+        linkStyles: true // (default: true) Enable/disable loading stylesheets via CDN
+      }
+    }
+  ]
+}
 ```
 
 ### Install plugin MD

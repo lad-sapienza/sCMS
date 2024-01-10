@@ -16,7 +16,7 @@ function Links() {
               <Nav.Link href="/using-ssr">Server side content</Nav.Link>
               <Nav.Link href="/directus-ssr">Directus SSR</Nav.Link>
               <Nav.Link href="/searchPage">Search</Nav.Link>
-              <Nav.Link href="#">Maps</Nav.Link>
+              <Nav.Link href="/mappa">Maps</Nav.Link>
               <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2">
