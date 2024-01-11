@@ -1,0 +1,3471 @@
+{
+  "type": "FeatureCollection",
+  "name": "toponimi_CIL",
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+    }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 1,
+        "nome": "Acilia",
+        "comune": "Roma",
+        "frazione": "",
+        "altLabel": "",
+        "epigrafi": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.36431, 41.78543]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 2,
+        "nome": "Tenuta di Monte S. Paolo",
+        "comune": "Roma",
+        "frazione": "Acilia",
+        "altLabel": "Monti di S. Paolo",
+        "epigrafi": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.351634495140503, 41.79183638673766]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 3,
+        "nome": "Contrada Monte S. Paolo",
+        "comune": "Roma",
+        "frazione": "Acilia",
+        "altLabel": "Monti di S. Paolo",
+        "epigrafi": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.368405935371966, 41.77994108746238]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 4,
+        "nome": "Prati di Monte S. Paolo",
+        "comune": "Roma",
+        "frazione": "Acilia",
+        "altLabel": "Monti di S. Paolo",
+        "epigrafi": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.365888594523435, 41.7976679649058]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 5,
+        "nome": "Tenuta di Dragoncello",
+        "comune": "Roma",
+        "frazione": "Acilia",
+        "altLabel": "Dragoncello",
+        "epigrafi": [
+          {
+            "title": "EDR072148",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR072148",
+            "discovery": "Roma, fuori Porta S. Paolo, tenuta Dragoncello"
+          },
+          {
+            "title": "EDR093389",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR093389",
+            "discovery": "Roma, fuori porta S. Paolo, tenuta Dragoncello"
+          }
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.34084509643905, 41.78908073052524]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 6,
+        "nome": "Casale di Dragoncello",
+        "comune": "Roma",
+        "frazione": "Acilia",
+        "altLabel": "",
+        "epigrafi": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.339065196949262, 41.79482637098351]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 7,
+        "nome": "Bagnoletto",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.331484377237334, 41.77357263494535]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 8,
+        "nome": "Casale Bruciato",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.332450923628983, 41.88069256590188]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 9,
+        "nome": "I Casaletti",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.330363377360364, 41.932051672098964]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 10,
+        "nome": "Accorrabone",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.557931583066484, 41.982241039417616]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 11,
+        "nome": "Villa Achillino",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.417077318490229, 41.8870829218704]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 12,
+        "nome": "Acqua Acetosa",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.619120694634283, 41.79586173833452]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 13,
+        "nome": "Acqua Acetosa",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.627631465067338, 41.817446617094966]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 14,
+        "nome": "Acqua Acetosa",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.488434866667383, 41.931228037357286]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 15,
+        "nome": "Acquedotto dell'acqua Barbuta",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.585199544838767, 41.78654009232366]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 16,
+        "nome": "Acqua Bullicante",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": "scavi Del Drago, Tor de' Schiavi, via dell'Acqua Bullicante",
+        "epigrafi": [
+          {
+            "title": "EDR000843",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR000843",
+            "discovery": "Roma, via Prenestina, presso Tor de' Schiavi"
+          },
+          {
+            "title": "EDR001665",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR001665",
+            "discovery": "Roma, Via Prenestina, presso Tor de' Schiavi"
+          },
+          {
+            "title": "EDR001666",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR001666",
+            "discovery": "Roma, Via Prenestina, presso Tor de' Schiavi"
+          },
+          {
+            "title": "EDR001667",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR001667",
+            "discovery": "Roma, Via Prenestina, presso Tor de' Schiavi"
+          },
+          {
+            "title": "EDR001668",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR001668",
+            "discovery": "Roma, Via Prenestina, presso Tor de' Schiavi"
+          },
+          {
+            "title": "EDR001669",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR001669",
+            "discovery": "Roma, Via Prenestina, presso Tor de' Schiavi"
+          },
+          {
+            "title": "EDR001670",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR001670",
+            "discovery": "Roma, Via Prenestina, presso Tor de' Schiavi"
+          },
+          {
+            "title": "EDR001671",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR001671",
+            "discovery": "Roma, Via Prenestina, presso Tor de' Schiavi"
+          },
+          {
+            "title": "EDR001672",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR001672",
+            "discovery": "Roma, Via Prenestina, presso Tor de' Schiavi"
+          },
+          {
+            "title": "EDR001673",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR001673",
+            "discovery": "Roma, Via Prenestina, presso Tor de' Schiavi"
+          },
+          {
+            "title": "EDR001674",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR001674",
+            "discovery": "Roma, Via Prenestina, presso Tor de' Schiavi"
+          },
+          {
+            "title": "EDR001675",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR001675",
+            "discovery": "Roma, Via Prenestina, presso Tor de' Schiavi"
+          },
+          {
+            "title": "EDR001676",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR001676",
+            "discovery": "Roma, Via Prenestina, presso Tor de' Schiavi"
+          },
+          {
+            "title": "EDR001677",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR001677",
+            "discovery": "Roma, Via Prenestina, presso Tor de' Schiavi"
+          },
+          {
+            "title": "EDR001678",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR001678",
+            "discovery": "Roma, Via Prenestina, presso Tor de' Schiavi"
+          },
+          {
+            "title": "EDR001679",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR001679",
+            "discovery": "Roma, via Prenestina, presso Tor de' Schiavi"
+          },
+          {
+            "title": "EDR001680",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR001680",
+            "discovery": "Roma, Via Prenestina, presso Tor de' Schiavi"
+          },
+          {
+            "title": "EDR001682",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR001682",
+            "discovery": "Roma, Via Prenestina, presso Tor de' Schiavi"
+          },
+          {
+            "title": "EDR001683",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR001683",
+            "discovery": "Roma, Via Prenestina, presso Tor de' Schiavi"
+          },
+          {
+            "title": "EDR001684",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR001684",
+            "discovery": "Roma, via Prenestina, locali? Tor de' Schiavi"
+          },
+          {
+            "title": "EDR001685",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR001685",
+            "discovery": "Roma, Via Prenestina, (localit? Tor de' Schiavi)."
+          },
+          {
+            "title": "EDR001686",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR001686",
+            "discovery": "Roma, Via Prenestina, presso Tor de' Schiavi"
+          },
+          {
+            "title": "EDR001687",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR001687",
+            "discovery": "Roma, Via Prenestina, presso Tor de' Schiavi"
+          },
+          {
+            "title": "EDR001688",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR001688",
+            "discovery": "Roma, Via Prenestina, presso Tor de' Schiavi"
+          },
+          {
+            "title": "EDR001689",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR001689",
+            "discovery": "Roma, Via Prenestina, presso Tor de' Schiavi"
+          },
+          {
+            "title": "EDR001697",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR001697",
+            "discovery": "Roma, via Prenestina, Tor de' Schiavi, nei pressi"
+          },
+          {
+            "title": "EDR004924",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR004924",
+            "discovery": "Roma, via Prenestina, poco prima di Tor de' Schiavi"
+          },
+          {
+            "title": "EDR006535",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR006535",
+            "discovery": "Roma, via Prenestina presso Tor de' Schiavi"
+          },
+          {
+            "title": "EDR029203",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR029203",
+            "discovery": "Roma,  Via Prenestina, Fondo di Tor de' Schiavi."
+          },
+          {
+            "title": "EDR029592",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR029592",
+            "discovery": "Roma, via Prenestina, presso Tor de' Schiavi"
+          },
+          {
+            "title": "EDR030396",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR030396",
+            "discovery": "Roma, via Prenestina, presso Tor de' Schiavi"
+          },
+          {
+            "title": "EDR030509",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR030509",
+            "discovery": "Roma, via Prenestina, localit? Tor de' Schiavi"
+          },
+          {
+            "title": "EDR030514",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR030514",
+            "discovery": "Roma, via Prenestina, localit? Tor de' Schiavi"
+          },
+          {
+            "title": "EDR030642",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR030642",
+            "discovery": "Roma, via Prenestina, localit? Acqua Bullicante"
+          },
+          {
+            "title": "EDR074893",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR074893",
+            "discovery": "Roma, via Prenestina, Tor de' Schiavi, nei pressi"
+          },
+          {
+            "title": "EDR079206",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR079206",
+            "discovery": "Roma, via Prenestina, Tor de' Schiavi, nei pressi"
+          },
+          {
+            "title": "EDR079207",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR079207",
+            "discovery": "Roma, via Prenestina, Tor de' Schiavi, nei pressi"
+          },
+          {
+            "title": "EDR081050",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR081050",
+            "discovery": "Roma, Via Prenestina, presso Tor de' Schiavi"
+          },
+          {
+            "title": "EDR100514",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR100514",
+            "discovery": "Roma, via Prenestina, localit? Acqua Bullicante"
+          },
+          {
+            "title": "EDR116640",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR116640",
+            "discovery": "Roma, via Prenestina, Tor de' Schiavi, nei pressi"
+          },
+          {
+            "title": "EDR121903",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR121903",
+            "discovery": "Roma, via Prenestina, necropoli presso Tor de' Schiavi, nei possedimenti del principe Del Drago (a. 1881)"
+          },
+          {
+            "title": "EDR122064",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR122064",
+            "discovery": "Roma, via Prenestina, loc. Acqua Bullicante (a. 1881)"
+          },
+          {
+            "title": "EDR129824",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR129824",
+            "discovery": "Roma, via Prenestina, presso Tor de' Schiavi, poi nella collez. F. Capranesi (18? sec.)"
+          },
+          {
+            "title": "EDR132576",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR132576",
+            "discovery": "Roma, via Prenestina, localit? Acqua Bullicante"
+          },
+          {
+            "title": "EDR137293",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR137293",
+            "discovery": "Roma, via Prenestina, Tor de' Schiavi"
+          },
+          {
+            "title": "EDR137323",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR137323",
+            "discovery": "Roma, via Prenestina, Tor de' Schiavi"
+          },
+          {
+            "title": "EDR137325",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR137325",
+            "discovery": "Roma, via Prenestina, Tor de' Schiavi"
+          },
+          {
+            "title": "EDR137327",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR137327",
+            "discovery": "Roma, via Prenestina, Tor de' Schiavi"
+          },
+          {
+            "title": "EDR137335",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR137335",
+            "discovery": "Roma, via Prenestina, Tor de' Schiavi"
+          },
+          {
+            "title": "EDR137336",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR137336",
+            "discovery": "Roma, via Prenestina, Tor de' Schiavi"
+          },
+          {
+            "title": "EDR137337",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR137337",
+            "discovery": "Roma, via Prenestina, Tor de' Schiavi"
+          },
+          {
+            "title": "EDR137338",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR137338",
+            "discovery": "Roma, via Prenestina, Tor de' Schiavi"
+          },
+          {
+            "title": "EDR137340",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR137340",
+            "discovery": "Roma, via Prenestina, Tor de' Schiavi"
+          },
+          {
+            "title": "EDR137406",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR137406",
+            "discovery": "Roma, via Prenestina, Tor de' Schiavi"
+          },
+          {
+            "title": "EDR137407",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR137407",
+            "discovery": "Roma, via Prenestina, Tor de' Schiavi"
+          },
+          {
+            "title": "EDR137429",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR137429",
+            "discovery": "Roma, via Prenestina, Tor de' Schiavi, localit? Acqua Bullicante"
+          },
+          {
+            "title": "EDR137432",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR137432",
+            "discovery": "Roma, via Prenestina, Tor de' Schiavi, localit? Acqua Bullicante"
+          },
+          {
+            "title": "EDR137433",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR137433",
+            "discovery": "Roma, via Prenestina, Tor de' Schiavi"
+          },
+          {
+            "title": "EDR137434",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR137434",
+            "discovery": "Roma, via Prenestina, Tor de' Schiavi"
+          },
+          {
+            "title": "EDR137437",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR137437",
+            "discovery": "Roma, via Prenestina, Tor de' Schiavi"
+          },
+          {
+            "title": "EDR137438",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR137438",
+            "discovery": "Roma, via Prenestina, Tor de' Schiavi"
+          },
+          {
+            "title": "EDR137440",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR137440",
+            "discovery": "Roma, via Prenestina, Tor de' Schiavi"
+          },
+          {
+            "title": "EDR137575",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR137575",
+            "discovery": "Roma, via Prenestina, Tor de' Schiavi"
+          },
+          {
+            "title": "EDR137578",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR137578",
+            "discovery": "Roma, via Prenestina, Tor de' Schiavi"
+          },
+          {
+            "title": "EDR137580",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR137580",
+            "discovery": "Roma, via Prenestina, Tor de' Schiavi"
+          },
+          {
+            "title": "EDR137583",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR137583",
+            "discovery": "Roma, via Prenestina, Tor de' Schiavi"
+          },
+          {
+            "title": "EDR137587",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR137587",
+            "discovery": "Roma, via Prenestina, Tor de' Schiavi"
+          },
+          {
+            "title": "EDR137588",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR137588",
+            "discovery": "Roma, via Prenestina, Tor de' Schiavi"
+          },
+          {
+            "title": "EDR137589",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR137589",
+            "discovery": "Roma, via Prenestina, Tor de' Schiavi"
+          },
+          {
+            "title": "EDR137660",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR137660",
+            "discovery": "Roma, via Prenestina, Tor de' Schiavi"
+          },
+          {
+            "title": "EDR137709",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR137709",
+            "discovery": "Roma, via Prenestina, Tor de' Schiavi"
+          },
+          {
+            "title": "EDR137710",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR137710",
+            "discovery": "Roma, via Prenestina, Tor de' Schiavi"
+          },
+          {
+            "title": "EDR137840",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR137840",
+            "discovery": "Roma, via Prenestina, localit? Acqua Bullicante (a. 1881)"
+          },
+          {
+            "title": "EDR137843",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR137843",
+            "discovery": "Roma, via Prenestina, localit? Acqua Bullicante (a. 1881)"
+          },
+          {
+            "title": "EDR137845",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR137845",
+            "discovery": "Roma, via Prenestina, Tor de' Schiavi"
+          },
+          {
+            "title": "EDR137848",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR137848",
+            "discovery": "Roma, via Prenestina, Tor de' Schiavi"
+          },
+          {
+            "title": "EDR145094",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR145094",
+            "discovery": "Roma, nei pressi della via Prenestina, localit? Acqua Bullicante, scavi Del Drago, a. 1881"
+          },
+          {
+            "title": "EDR149486",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR149486",
+            "discovery": "Roma, via Prenestina,Tor de' Schiavi"
+          }
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.543676319743126, 41.89165984566146]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 17,
+        "nome": "Acqua Mariana",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": [
+          {
+            "title": "EDR030466",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR030466",
+            "discovery": "Roma, via Latina, vicolo dell' Acqua Mariana"
+          },
+          {
+            "title": "EDR030516",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR030516",
+            "discovery": "Roma, via Latina, gallerie cimiteriali tra il vicolo dell'Acqua Mariana e via Acaia"
+          },
+          {
+            "title": "EDR033747",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR033747",
+            "discovery": "Roma, vicolo dell'Acqua Mariana, galleria cimiteriale"
+          },
+          {
+            "title": "EDR102248",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR102248",
+            "discovery": "Roma, via Latina, angolo via dell'Acqua Mariana"
+          },
+          {
+            "title": "EDR102262",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR102262",
+            "discovery": "Roma, via Latina, angolo via dell'Acqua Mariana, catacombe, galleria 7, prima fila a destra"
+          }
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.543678154970138, 41.85774637819378]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 18,
+        "nome": "Marrana dell'Acqua Mariana",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.568066589462301, 41.84019041110446]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 19,
+        "nome": "Marrana dell'Acqua Mariana",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.585437269300025, 41.82143007687972]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 20,
+        "nome": "Marrana dell'Acqua Mariana",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.621775165955007, 41.80960811233324]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 21,
+        "nome": "Torre dell'acqua Sotterra",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.62479643941353, 41.801792379181734]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 22,
+        "nome": "via dell'acqua Vergine",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.624364579889503, 41.900580085985574]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 23,
+        "nome": "Fosso di Acqua Acetosa",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.465548126663336, 41.81122957819348]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 24,
+        "nome": "Sorgente dell'Acquacetosa",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.474912954895661, 41.80428147982756]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 25,
+        "nome": "Tenuta Acquacetosa",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.458352862742899, 41.79650949627991]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 26,
+        "nome": "Acquafredda",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.397668309178991, 41.88657652056819]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 27,
+        "nome": "Casale Acquafredda",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.38826967609398, 41.8831127050885]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 28,
+        "nome": "Fosso di Acquafredda",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.392549804775886, 41.88368633058195]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 29,
+        "nome": "Torre di Acquafredda",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.388004925866232, 41.89109933695887]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 30,
+        "nome": "Forte di Acquasanta",
+        "comune": null,
+        "frazione": null,
+        "altLabel": "Acquasanta",
+        "epigrafi": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.529945430884483, 41.85194863279381]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 31,
+        "nome": "Fosso dell'Acquasona",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.366862743758928, 41.94717593649094]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 32,
+        "nome": "Acquatraversa",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": [
+          {
+            "title": "EDR005013",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR005013",
+            "discovery": "Roma, via Cassia, localit? Acquatraversa"
+          },
+          {
+            "title": "EDR005021",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR005021",
+            "discovery": "Roma, via Cassia, localit? Acquatraversa"
+          },
+          {
+            "title": "EDR102430",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR102430",
+            "discovery": "Roma, via Cassia, localit? Acquatraversa"
+          },
+          {
+            "title": "EDR102454",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR102454",
+            "discovery": "Roma, via Cassia, fosso Acquatraversa"
+          },
+          {
+            "title": "EDR102546",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR102546",
+            "discovery": "Roma, via Cassia, localit? Acquatraversa tomba di Nerone"
+          }
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.429326448381, 41.95188320767589]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 33,
+        "nome": "Fosso di Acquatraversa",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.434495445693418, 41.964805700956944]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 34,
+        "nome": "Macchia di Acquatraversa",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.440837030737063, 41.94762977718201]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 35,
+        "nome": "Casale Acquaviva I",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.361394577089957, 41.995092716132106]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 36,
+        "nome": "Casale Acquaviva II",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.352022106365197, 41.99119481942881]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 37,
+        "nome": "Fosso dell'Acquaviva",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.339583874188412, 41.97120167510241]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 38,
+        "nome": "Casale Acquedotti",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.589409847941841, 41.878878405929804]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 39,
+        "nome": "Ruderi dell'acquedotto Alessandrino",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": "acquedotto alessandrino",
+        "epigrafi": [
+          {
+            "title": "EDR000019",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR000019",
+            "discovery": "Roma, all'incrocio tra l'acquedotto alessandrino e il fosso di Valle Lunga circa 1 Km a sud della via Prenestina (km 11)"
+          }
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.60064624356191, 41.88085037515452]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 40,
+        "nome": "Ruderi dell'acquedotto claudio",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.561280407315891, 41.84571870444856]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 41,
+        "nome": "Villa Ada",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.502701078526874, 41.932048292073965]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 42,
+        "nome": "Fosso di Acquatraversa",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.480541544907753, 41.95315388350141]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 43,
+        "nome": "Aereoporto dell'Urbe",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.496820971737357, 41.95613008096217]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 44,
+        "nome": "Villino Agnese",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.419258692081321, 41.8623361251951]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 45,
+        "nome": "Casa Agostinelli",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.596153880551851, 41.81754542145762]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 46,
+        "nome": "Casale Vecchio di Aguzzano",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": "Aguzzano",
+        "epigrafi": [
+          {
+            "title": "EDR001104",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR001104",
+            "discovery": "Roma, tra via Nomentana e via Tiburtina, tenuta di Aguzzano"
+          },
+          {
+            "title": "EDR030529",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR030529",
+            "discovery": "Roma, via Tiburtina, V miglio, localit? Aguzzano"
+          },
+          {
+            "title": "EDR030530",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR030530",
+            "discovery": "Roma, via Tiburtina, V miglio, localit? Aguzzano"
+          },
+          {
+            "title": "EDR071622",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR071622",
+            "discovery": "Roma, via Tiburtina, parco di Aguzzano"
+          },
+          {
+            "title": "EDR073777",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR073777",
+            "discovery": "Roma, via Tiburtina (km 6), localit? Aguzzano (a. 1912)"
+          },
+          {
+            "title": "EDR077630",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR077630",
+            "discovery": "Roma, via Tiburtina, contrada Aguzzano"
+          },
+          {
+            "title": "EDR079558",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR079558",
+            "discovery": "Roma, via Tiburtina, ponte Mammolo, localit? Aguzzano"
+          },
+          {
+            "title": "EDR093527",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR093527",
+            "discovery": "Roma, tra via Tiburtina e via Nomentana, localit? Aguzzano"
+          },
+          {
+            "title": "EDR093544",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR093544",
+            "discovery": "Roma, via Nomentana, localit? Aguzzano"
+          },
+          {
+            "title": "EDR093545",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR093545",
+            "discovery": "Roma, via Nomentana, localit? Aguzzano."
+          },
+          {
+            "title": "EDR102176",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR102176",
+            "discovery": "Roma, via Tiburtina, localit? Aguzzano"
+          },
+          {
+            "title": "EDR148630",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR148630",
+            "discovery": "Roma, via Tiburtina, localit? Aguzzano"
+          },
+          {
+            "title": "EDR149368",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR149368",
+            "discovery": "Roma, via Tiburtina, localit? Aguzzano"
+          }
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.559410988833205, 41.93889061615785]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 47,
+        "nome": "Riva dell'Albaceta",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": "Albaceto",
+        "epigrafi": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.342619013342166, 41.884819356721415]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 48,
+        "nome": "Casa Albanese",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.613662521877336, 41.909128348962206]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 49,
+        "nome": "Villa Albani",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": [
+          {
+            "title": "EDR102466",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR102466",
+            "discovery": "Roma, via Salaria, villa Albani"
+          },
+          {
+            "title": "EDR114623",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR114623",
+            "discovery": "Roma, via Salaria, villa Albani."
+          },
+          {
+            "title": "EDR114847",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR114847",
+            "discovery": "Roma?, a Villa Albani dal 18? sec."
+          },
+          {
+            "title": "EDR118365",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR118365",
+            "discovery": "Roma, via Salaria, villa Albani, nei pressi"
+          },
+          {
+            "title": "EDR131544",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR131544",
+            "discovery": "Roma, fuori porta Salari, villa Albani, nei pressi"
+          }
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.49847722034043, 41.914749069253226]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 50,
+        "nome": "Borgata Alessandrina",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": [
+          {
+            "title": "EDR033723",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR033723",
+            "discovery": "Roma, borgata Alessandrina"
+          }
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.579750617851262, 41.879050061320044]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 51,
+        "nome": "via dell'Almone",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.532101807634662, 41.857361323244554]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 52,
+        "nome": "Unità Anagnina",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.626455482041457, 41.84418945971307]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 53,
+        "nome": "via Anagnina",
+        "comune": null,
+        "frazione": null,
+        "altLabel": "Casale di Gregna",
+        "epigrafi": [
+          {
+            "title": "EDR000844",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR000844",
+            "discovery": "Roma, via Anagnina (km 2,7)"
+          },
+          {
+            "title": "EDR001084",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR001084",
+            "discovery": "Roma, via Anagnina (km 2), Casale di Gregna"
+          },
+          {
+            "title": "EDR033720",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR033720",
+            "discovery": "Roma, via Anagnina, km 2,700"
+          },
+          {
+            "title": "EDR077275",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR077275",
+            "discovery": "Roma, via Latina, km 2,7 dalla moderna via Anagnina"
+          },
+          {
+            "title": "EDR102043",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR102043",
+            "discovery": "Roma, via Anagnina, km. 2,700"
+          }
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.599459679210609, 41.82862435447721]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 54,
+        "nome": "Casale Angelini",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.420416374763073, 41.79478251365679]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 55,
+        "nome": "La Annunziatella",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": "L'Annunziatella, Annunziatella, chiesa dell'Annunziatella",
+        "epigrafi": [
+          {
+            "title": "EDR100436",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR100436",
+            "discovery": "Roma, via Ardeatina, II miglio, localit? L'Annunziatella"
+          },
+          {
+            "title": "EDR103429",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR103429",
+            "discovery": "Roma, Via Ardeatina, nei pressi della chiesa dell'Annunziatella"
+          }
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.514520124611515, 41.83588479798557]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 56,
+        "nome": "Torre Annunziatella",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.457525759443149, 41.97759231427475]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 57,
+        "nome": "Forte Antenne",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": "Monte Antenne, Antenne",
+        "epigrafi": [
+          {
+            "title": "EDR005033",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR005033",
+            "discovery": "Roma, Forte Antenne, reimpiegata in epoca tarda per lavori di restauro di una villa"
+          },
+          {
+            "title": "EDR144714",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR144714",
+            "discovery": "Roma, Forte Antenne (a. 1958-60)"
+          }
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.500605867273698, 41.93801546397551]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 58,
+        "nome": "Villa Anziani",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": "Villa Leopardi-Dittajuti, Coemeterium Maius",
+        "epigrafi": [
+          {
+            "title": "EDR001074",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR001074",
+            "discovery": "Roma, Coemeterium Maius"
+          },
+          {
+            "title": "EDR001132",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR001132",
+            "discovery": "Roma, Coemeterium Maius"
+          },
+          {
+            "title": "EDR006539",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR006539",
+            "discovery": "Roma,  Coemeterium Maius"
+          },
+          {
+            "title": "EDR030182",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR030182",
+            "discovery": "Roma, Coemeterium Maius, a destra della scala maggiore"
+          },
+          {
+            "title": "EDR030419",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR030419",
+            "discovery": "Roma, Coemeterium Maius"
+          },
+          {
+            "title": "EDR033379",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR033379",
+            "discovery": "Roma, Coemeterium Maius?"
+          },
+          {
+            "title": "EDR033395",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR033395",
+            "discovery": "Roma, Coemeterium Maius"
+          },
+          {
+            "title": "EDR033401",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR033401",
+            "discovery": "Roma, Coemeterium Maius"
+          },
+          {
+            "title": "EDR033469",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR033469",
+            "discovery": "Roma, Coemeterium Maius"
+          },
+          {
+            "title": "EDR033495",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR033495",
+            "discovery": "Roma, Coemeterium Maius"
+          },
+          {
+            "title": "EDR033715",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR033715",
+            "discovery": "Roma, Coemeterium Maius"
+          },
+          {
+            "title": "EDR074386",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR074386",
+            "discovery": "Roma,Coemeterium Maius, in reimpiego (a. 1852)"
+          },
+          {
+            "title": "EDR074387",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR074387",
+            "discovery": "Roma, Coemeterium Maius"
+          },
+          {
+            "title": "EDR078806",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR078806",
+            "discovery": "Via Nomentana, Coemeterium Maius"
+          },
+          {
+            "title": "EDR078807",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR078807",
+            "discovery": "Roma, Coemeterium Maius"
+          },
+          {
+            "title": "EDR078808",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR078808",
+            "discovery": "Roma, Coemeterium Maius"
+          },
+          {
+            "title": "EDR100601",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR100601",
+            "discovery": "Roma, Coemeterium Maius"
+          },
+          {
+            "title": "EDR100603",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR100603",
+            "discovery": "Roma, Coemeterium Maius, ambulacro B"
+          },
+          {
+            "title": "EDR100862",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR100862",
+            "discovery": "Roma, Coemeterium Maius"
+          },
+          {
+            "title": "EDR100999",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR100999",
+            "discovery": "Roma, Coemeterium Maius"
+          },
+          {
+            "title": "EDR101363",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR101363",
+            "discovery": "Roma, Coemeterium Maius"
+          },
+          {
+            "title": "EDR101980",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR101980",
+            "discovery": "Roma, Coemeterium Maius"
+          },
+          {
+            "title": "EDR102265",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR102265",
+            "discovery": "Roma, Coemeterium Maius, scala d'accesso, parete sinistra"
+          },
+          {
+            "title": "EDR102656",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR102656",
+            "discovery": "Roma, Coemeterium Maius"
+          },
+          {
+            "title": "EDR102768",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR102768",
+            "discovery": "Roma, Coemeterium Maius "
+          },
+          {
+            "title": "EDR102790",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR102790",
+            "discovery": "Roma, Coemeterium Maius"
+          },
+          {
+            "title": "EDR103103",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR103103",
+            "discovery": "Roma, Coemeterium Maius"
+          },
+          {
+            "title": "EDR103158",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR103158",
+            "discovery": "Roma, Coemeterium Maius"
+          },
+          {
+            "title": "EDR103241",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR103241",
+            "discovery": "Roma, Coemeterium Maius"
+          },
+          {
+            "title": "EDR114027",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR114027",
+            "discovery": "Roma, Coemeterium Maius."
+          },
+          {
+            "title": "EDR132291",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR132291",
+            "discovery": "Roma, via Nomentana, area  Villa Anziani - Villa Leopardi-Dittajuti, sopra catacombe Cimitero Maggiore"
+          },
+          {
+            "title": "EDR132865",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR132865",
+            "discovery": "Roma, via Nomentana, area Villa Anziani - Villa Leopardi-Dittajuti, sopra catacombe Cimitero maggiore"
+          },
+          {
+            "title": "EDR132868",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR132868",
+            "discovery": "Roma, via Nomentana, area Villa Anziani - Villa Leopardi-Dittajuti, sopra catacombe Cimitero Maggiore"
+          },
+          {
+            "title": "EDR132871",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR132871",
+            "discovery": "Roma, via Nomentana, area Villa Anziani - Villa Leopardi-Dittajuti, sopra catacombe Cimitero Maggiore"
+          },
+          {
+            "title": "EDR145308",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR145308",
+            "discovery": "Roma, via Nomentana, Coemeterium Maius"
+          }
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.520035370706179, 41.927358546417096]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 59,
+        "nome": "Lo Apollinare",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.629141404503223, 41.77820883769036]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 60,
+        "nome": "Catacombe di San Callisto",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": "S. Callisto, Callisto",
+        "epigrafi": [
+          {
+            "title": "EDR000832",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR000832",
+            "discovery": "Roma, via Appia Antica, S. Callisto, presso"
+          },
+          {
+            "title": "EDR004959",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR004959",
+            "discovery": "Roma, catacombe di S. Callisto"
+          },
+          {
+            "title": "EDR006036",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR006036",
+            "discovery": "Roma, via Appia Antica, S. Callisto, presso"
+          },
+          {
+            "title": "EDR006037",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR006037",
+            "discovery": "Roma, via Appia Antica, S. Callisto, presso"
+          },
+          {
+            "title": "EDR006038",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR006038",
+            "discovery": "Roma, via Appia Antica, S. Callisto, presso"
+          },
+          {
+            "title": "EDR006039",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR006039",
+            "discovery": "Roma, via Appia Antica, S. Callisto, presso"
+          },
+          {
+            "title": "EDR020726",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR020726",
+            "discovery": "Roma, catacombe di S. Callisto, nei pressi (a. 1858)"
+          },
+          {
+            "title": "EDR032624",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR032624",
+            "discovery": "Roma, catacombe di S. Callisto"
+          },
+          {
+            "title": "EDR032628",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR032628",
+            "discovery": "Roma, catacombe di S. Callisto"
+          },
+          {
+            "title": "EDR032635",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR032635",
+            "discovery": "Roma, catacombe di Callisto"
+          },
+          {
+            "title": "EDR074734",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR074734",
+            "discovery": "Roma, tra via del Casale di S. Pio V e via Aurelia antica, murato nell'ingresso del sepolcro di S. Callisto (in reimpiego)"
+          },
+          {
+            "title": "EDR074742",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR074742",
+            "discovery": "Roma, tra via del Casale di S. Pio V e via Aurelia antica, murato nell'ingresso del sepolcro di S. Callisto (in reimpiego)"
+          },
+          {
+            "title": "EDR075894",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR075894",
+            "discovery": "Roma, catacombe di S. Callisto"
+          },
+          {
+            "title": "EDR075896",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR075896",
+            "discovery": "Roma, catacombe di S. Callisto"
+          },
+          {
+            "title": "EDR075898",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR075898",
+            "discovery": "Roma, catacombe di S. Callisto"
+          },
+          {
+            "title": "EDR076401",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR076401",
+            "discovery": "Roma, catacombe di S. Callisto"
+          },
+          {
+            "title": "EDR076402",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR076402",
+            "discovery": "Roma, catacombe di S. Callisto"
+          },
+          {
+            "title": "EDR076403",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR076403",
+            "discovery": "Roma, catacombe di S. Callisto"
+          },
+          {
+            "title": "EDR076404",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR076404",
+            "discovery": "Roma, catacombe di S. Callisto"
+          },
+          {
+            "title": "EDR076405",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR076405",
+            "discovery": "Roma, catacombe di S. Callisto"
+          },
+          {
+            "title": "EDR076406",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR076406",
+            "discovery": "Roma, catacombe di S. Callisto"
+          },
+          {
+            "title": "EDR076407",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR076407",
+            "discovery": "Roma, catacombe di S. Callisto"
+          },
+          {
+            "title": "EDR078058",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR078058",
+            "discovery": "S. Callisto, Katakombe"
+          },
+          {
+            "title": "EDR078811",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR078811",
+            "discovery": "S. Callisto, Katakombe; via Appia (vigna Amendola)"
+          },
+          {
+            "title": "EDR079160",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR079160",
+            "discovery": "S. Callisto, Katakombe"
+          },
+          {
+            "title": "EDR079161",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR079161",
+            "discovery": "S. Callisto, Katakombe"
+          },
+          {
+            "title": "EDR079162",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR079162",
+            "discovery": "S. Callisto, Katakombe, Grab 53"
+          },
+          {
+            "title": "EDR079163",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR079163",
+            "discovery": "S. Callisto, Katakombe, ?ber, Grab 53"
+          },
+          {
+            "title": "EDR079164",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR079164",
+            "discovery": "S. Callisto, Katakombe"
+          },
+          {
+            "title": "EDR079165",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR079165",
+            "discovery": "S. Callisto, Katakombe"
+          },
+          {
+            "title": "EDR079166",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR079166",
+            "discovery": "S. Callisto, Katakombe"
+          },
+          {
+            "title": "EDR079541",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR079541",
+            "discovery": "Roma, catacombe di S. Callisto, dal sopraterra"
+          },
+          {
+            "title": "EDR093086",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR093086",
+            "discovery": "Roma, catacombe di S. Callisto"
+          },
+          {
+            "title": "EDR093092",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR093092",
+            "discovery": "Roma, catacombe di S. Callisto"
+          },
+          {
+            "title": "EDR093426",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR093426",
+            "discovery": "Roma, catacombe di S. Callisto"
+          },
+          {
+            "title": "EDR093435",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR093435",
+            "discovery": "Roma, catacombe di S. Callisto"
+          },
+          {
+            "title": "EDR093446",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR093446",
+            "discovery": "Roma, catacombe di S. Callisto"
+          },
+          {
+            "title": "EDR093484",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR093484",
+            "discovery": "Roma, catacombe di S. Callisto"
+          },
+          {
+            "title": "EDR093496",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR093496",
+            "discovery": "Roma, catacombe di S. Callisto"
+          },
+          {
+            "title": "EDR093499",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR093499",
+            "discovery": "Roma, catacombe di S. Callisto, cripta di papa Cornelio"
+          },
+          {
+            "title": "EDR093503",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR093503",
+            "discovery": "Roma, catacombe di S. Callisto"
+          },
+          {
+            "title": "EDR098275",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR098275",
+            "discovery": "Roma, catacombe di S. Callisto (a. 1693)"
+          },
+          {
+            "title": "EDR100540",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR100540",
+            "discovery": "Roma, catacombe di S. Callisto?"
+          },
+          {
+            "title": "EDR102460",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR102460",
+            "discovery": "Roma, catacombe di S. Callisto"
+          },
+          {
+            "title": "EDR103052",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR103052",
+            "discovery": "Roma, catacombe di S. Callisto"
+          },
+          {
+            "title": "EDR103155",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR103155",
+            "discovery": "Roma, catacombe di S. Callisto"
+          },
+          {
+            "title": "EDR105713",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR105713",
+            "discovery": "Roma, catacombe di S. Callisto"
+          },
+          {
+            "title": "EDR106016",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR106016",
+            "discovery": "Roma, catacombe di S. Callisto"
+          },
+          {
+            "title": "EDR109042",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR109042",
+            "discovery": "Roma, catacombe di S. Callisto, presso le scale di accesso"
+          },
+          {
+            "title": "EDR109913",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR109913",
+            "discovery": "Roma, catacombe di S. Callisto"
+          },
+          {
+            "title": "EDR110128",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR110128",
+            "discovery": "Roma, catacombe di S. Callisto"
+          },
+          {
+            "title": "EDR110129",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR110129",
+            "discovery": "Roma, catacombe di S. Callisto"
+          },
+          {
+            "title": "EDR111333",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR111333",
+            "discovery": "Roma, catacombe di S. Callisto (fr. a: a. 1853; fr. b: a. 1858)"
+          },
+          {
+            "title": "EDR111453",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR111453",
+            "discovery": "Roma, catacombe di Callisto, reimpiegata"
+          },
+          {
+            "title": "EDR111576",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR111576",
+            "discovery": "Roma, catacombe di Callisto, nei pressi"
+          },
+          {
+            "title": "EDR111878",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR111878",
+            "discovery": "Roma, reimpiegato nelle catacombe di S. Callisto"
+          },
+          {
+            "title": "EDR111980",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR111980",
+            "discovery": "Roma, catacombe di Callisto"
+          },
+          {
+            "title": "EDR112057",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR112057",
+            "discovery": "Roma, catacombe di S. Callisto, nei pressi (reimpiego)"
+          },
+          {
+            "title": "EDR112289",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR112289",
+            "discovery": "Roma, catacombe di S. Callisto"
+          },
+          {
+            "title": "EDR112692",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR112692",
+            "discovery": "Roma, catacombe di S. Callisto"
+          },
+          {
+            "title": "EDR112694",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR112694",
+            "discovery": "Roma, catacombe di S. Callisto"
+          },
+          {
+            "title": "EDR112697",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR112697",
+            "discovery": "Roma, catacombe di S. Callisto"
+          },
+          {
+            "title": "EDR112785",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR112785",
+            "discovery": "Roma, catacombe di S. Callisto, vigna soprastante"
+          },
+          {
+            "title": "EDR113112",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR113112",
+            "discovery": "Roma, catacombe di S. Callisto"
+          },
+          {
+            "title": "EDR113593",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR113593",
+            "discovery": "Roma, catacombe di S. Callisto"
+          },
+          {
+            "title": "EDR114197",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR114197",
+            "discovery": "Roma, catacombe di S. Callisto"
+          },
+          {
+            "title": "EDR114239",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR114239",
+            "discovery": "Roma, catacombe di S. Callisto."
+          },
+          {
+            "title": "EDR114441",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR114441",
+            "discovery": "Roma, catacombe di S. Callisto"
+          },
+          {
+            "title": "EDR114705",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR114705",
+            "discovery": "Roma, catacombe di S. Callisto."
+          },
+          {
+            "title": "EDR114708",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR114708",
+            "discovery": "Roma, catacombe di S. Callisto."
+          },
+          {
+            "title": "EDR114731",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR114731",
+            "discovery": "Roma, catacombe di S. Callisto."
+          },
+          {
+            "title": "EDR115707",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR115707",
+            "discovery": "Roma, catacombe di S. Callisto (a. 1853)"
+          },
+          {
+            "title": "EDR115866",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR115866",
+            "discovery": "Roma, catacombe di S. Callisto"
+          },
+          {
+            "title": "EDR116687",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR116687",
+            "discovery": "Roma, catacombe di S. Callisto"
+          },
+          {
+            "title": "EDR116813",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR116813",
+            "discovery": "Roma, via Appia, catacombe di S. Callisto, primo piano"
+          },
+          {
+            "title": "EDR120124",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR120124",
+            "discovery": "Roma, catacombe di S. Callisto, nei pressi "
+          },
+          {
+            "title": "EDR121239",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR121239",
+            "discovery": "Roma, catacombe di S. Callisto"
+          },
+          {
+            "title": "EDR121528",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR121528",
+            "discovery": "Roma, catacombe di S. Callisto (a. 1744-45)"
+          },
+          {
+            "title": "EDR122397",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR122397",
+            "discovery": "Roma, via Appia Antica, catacombe di S. Callisto"
+          },
+          {
+            "title": "EDR125268",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR125268",
+            "discovery": "Roma, catacombe di S. Callisto"
+          },
+          {
+            "title": "EDR125602",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR125602",
+            "discovery": "Roma, via Appia, catacombe di Callisto e Pretestato o vigna di Antonio Bellotti (a. 1752) "
+          },
+          {
+            "title": "EDR126690",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR126690",
+            "discovery": "Roma, catacombe di S. Callisto [frg. a]; Roma, catacombe di Pretestato [frg. b]"
+          },
+          {
+            "title": "EDR129833",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR129833",
+            "discovery": "Roma, fra la catacomba di S. Callisto e la Cripta di Lucina, ca. a. 1876"
+          },
+          {
+            "title": "EDR134428",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR134428",
+            "discovery": "Roma, catacombe di S. Callisto (in reimpiego)"
+          },
+          {
+            "title": "EDR134429",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR134429",
+            "discovery": "Roma, catacombe di S. Callisto"
+          },
+          {
+            "title": "EDR136891",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR136891",
+            "discovery": "Roma, via Appia antica, catacombe di San Callisto "
+          },
+          {
+            "title": "EDR138517",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR138517",
+            "discovery": "Roma, catacombe di S. Callisto, reimpiegata come copertura di un loculo con incisione di un epitafio cristiano  "
+          },
+          {
+            "title": "EDR139396",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR139396",
+            "discovery": "Roma, via Appia, in un sepolcro nell'area delle catacombe di S. Callisto; probabilmente asportata in antico dal Monumentum Liviae"
+          },
+          {
+            "title": "EDR140568",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR140568",
+            "discovery": "Roma, via Appia antica, catacombe di S. Callisto (o di Pretestato?), ante a. 1740"
+          },
+          {
+            "title": "EDR140861",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR140861",
+            "discovery": "Roma, cimitero di Callisto, via Ardeatina"
+          },
+          {
+            "title": "EDR141297",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR141297",
+            "discovery": "Roma, catacombe di S. Callisto (in reimpiego)"
+          },
+          {
+            "title": "EDR144271",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR144271",
+            "discovery": "Roma, via Appia Antica, catacombe di S. Callisto, regione Liberiana"
+          },
+          {
+            "title": "EDR144812",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR144812",
+            "discovery": "Roma, catacombe di S. Callisto, a. 1661, poi nel palazzo Chigi ai SS. Apostoli, a. 1666"
+          },
+          {
+            "title": "EDR144814",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR144814",
+            "discovery": "Roma, via Appia, catacombe di Callisto, regione cd. di Sotere"
+          },
+          {
+            "title": "EDR147622",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR147622",
+            "discovery": "Roma, Trastevere, tra piazza S. Callisto e vicolo della Cisterna (a. 1886)"
+          },
+          {
+            "title": "EDR149008",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR149008",
+            "discovery": "Roma, catacombe di Callisto (in reimpiego) (a. 1744)"
+          }
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.512829944972154, 41.85855488558099]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 61,
+        "nome": "Catacombe di Domitilla",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": [
+          {
+            "title": "EDR000132",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR000132",
+            "discovery": "Roma, catacombe di Domitilla"
+          },
+          {
+            "title": "EDR000798",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR000798",
+            "discovery": "Roma, catacombe di Domitilla"
+          },
+          {
+            "title": "EDR000831",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR000831",
+            "discovery": "Roma, catacombe di Domitilla"
+          },
+          {
+            "title": "EDR000883",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR000883",
+            "discovery": "Roma, catacombe di Domitilla, I piano, cubicolo Ah"
+          },
+          {
+            "title": "EDR000894",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR000894",
+            "discovery": "Roma, catacombe di Domitilla, galleria A"
+          },
+          {
+            "title": "EDR000916",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR000916",
+            "discovery": "Roma, catacombe di Domitilla, basilica"
+          },
+          {
+            "title": "EDR000956",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR000956",
+            "discovery": "Roma, catacombe di Domitilla, secondo piano, sterro della galleria S"
+          },
+          {
+            "title": "EDR000959",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR000959",
+            "discovery": "Roma, catacombe di Domitilla, cubicolo di Diogene"
+          },
+          {
+            "title": "EDR000976",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR000976",
+            "discovery": "Roma, catacombe di Domitilla"
+          },
+          {
+            "title": "EDR001008",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR001008",
+            "discovery": "Roma, catacombe di Domitilla"
+          },
+          {
+            "title": "EDR001022",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR001022",
+            "discovery": "Roma, catacombe di Domitilla"
+          },
+          {
+            "title": "EDR030106",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR030106",
+            "discovery": "Roma, catacombe di Domitilla"
+          },
+          {
+            "title": "EDR030154",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR030154",
+            "discovery": "Roma, catacombe di Domitilla, primo piano, sterro della scala della galleria A8"
+          },
+          {
+            "title": "EDR030224",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR030224",
+            "discovery": "Roma, catacombe di Domitilla"
+          },
+          {
+            "title": "EDR030236",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR030236",
+            "discovery": "Roma, catacombe di Domitilla, scala della galleria A8, sterro"
+          },
+          {
+            "title": "EDR030238",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR030238",
+            "discovery": "Roma, catacombe di Domitilla"
+          },
+          {
+            "title": "EDR030337",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR030337",
+            "discovery": "Roma, catacombe di Domitilla, basilica, sotterraneo"
+          },
+          {
+            "title": "EDR030346",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR030346",
+            "discovery": "Roma, catacombe di Domitilla"
+          },
+          {
+            "title": "EDR030348",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR030348",
+            "discovery": "Roma, catacombe di Domitilla"
+          },
+          {
+            "title": "EDR030428",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR030428",
+            "discovery": "Roma, catacombe di Domitilla, secondo piano, galleria S2"
+          },
+          {
+            "title": "EDR030429",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR030429",
+            "discovery": "Roma, catacombe di Domitilla, secondo piano, galleria S2"
+          },
+          {
+            "title": "EDR030441",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR030441",
+            "discovery": "Roma, catacombe di Domitilla"
+          },
+          {
+            "title": "EDR030852",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR030852",
+            "discovery": "Roma, catacombe di Domitilla"
+          },
+          {
+            "title": "EDR030896",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR030896",
+            "discovery": "Roma, catacombe di Domitilla"
+          },
+          {
+            "title": "EDR030954",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR030954",
+            "discovery": "Roma, catacombe di Domitilla, galleria D"
+          },
+          {
+            "title": "EDR030958",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR030958",
+            "discovery": "Roma, catacombe di Domitilla, galleria A8"
+          },
+          {
+            "title": "EDR030990",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR030990",
+            "discovery": "Roma, catacombe di Domitilla, II piano"
+          },
+          {
+            "title": "EDR033377",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR033377",
+            "discovery": "Roma, catacombe di Domitilla"
+          },
+          {
+            "title": "EDR033380",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR033380",
+            "discovery": "Roma, catacombe di Domitilla"
+          },
+          {
+            "title": "EDR033403",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR033403",
+            "discovery": "Roma, catacombe di Domitilla"
+          },
+          {
+            "title": "EDR033461",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR033461",
+            "discovery": "Roma, catacombe di Domitilla, secondo piano, galleria E6"
+          },
+          {
+            "title": "EDR033473",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR033473",
+            "discovery": "Roma, catacombe di Domitilla"
+          },
+          {
+            "title": "EDR033478",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR033478",
+            "discovery": "Roma, catacombe di Domitilla"
+          },
+          {
+            "title": "EDR033487",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR033487",
+            "discovery": "Roma, catacombe di Domitilla"
+          },
+          {
+            "title": "EDR033748",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR033748",
+            "discovery": "Roma, catacombe di Domitilla, basilica (a. 1874)"
+          },
+          {
+            "title": "EDR033759",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR033759",
+            "discovery": "Roma, catacombe di Domitilla, II piano"
+          },
+          {
+            "title": "EDR078425",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR078425",
+            "discovery": "Roma, catacombe di Domitilla (in reimpiego)"
+          },
+          {
+            "title": "EDR078426",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR078426",
+            "discovery": "Roma, catacombe di Domitilla (in reimpiego)"
+          },
+          {
+            "title": "EDR078427",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR078427",
+            "discovery": "Roma, catacombe di Domitilla, galleria S' (in reimpiego)"
+          },
+          {
+            "title": "EDR078428",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR078428",
+            "discovery": "Roma, catacombe di Domitilla, galleria Q, I (in reimpiego)"
+          },
+          {
+            "title": "EDR078429",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR078429",
+            "discovery": "Roma, catacombe di Domitilla, scala della galleria T, 9 (in reimpiego)"
+          },
+          {
+            "title": "EDR078430",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR078430",
+            "discovery": "Roma, catacombe di Domitilla, cubicolo Ti (in reimpiego)"
+          },
+          {
+            "title": "EDR078431",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR078431",
+            "discovery": "Roma, catacombe di Domitilla, galleria Q, 2 (in reimpiego)"
+          },
+          {
+            "title": "EDR078432",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR078432",
+            "discovery": "Roma, catacombe di Domitilla, nei pressi?"
+          },
+          {
+            "title": "EDR078433",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR078433",
+            "discovery": "Roma, catacombe di Domitilla, nei pressi"
+          },
+          {
+            "title": "EDR078434",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR078434",
+            "discovery": "Roma, catacombe di Domitilla, nei pressi"
+          },
+          {
+            "title": "EDR078435",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR078435",
+            "discovery": "Roma, catacombe di Domitilla, nei pressi"
+          },
+          {
+            "title": "EDR078436",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR078436",
+            "discovery": "Roma, catacombe di Domitilla"
+          },
+          {
+            "title": "EDR078437",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR078437",
+            "discovery": "Roma, catacombe di Domitilla, galleria E, 1"
+          },
+          {
+            "title": "EDR078438",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR078438",
+            "discovery": "Roma, catacombe di Domitilla, galleria H, 2 (in reimpiego)"
+          },
+          {
+            "title": "EDR078439",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR078439",
+            "discovery": "Roma, catacombe di Domitilla, nei pressi"
+          },
+          {
+            "title": "EDR078440",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR078440",
+            "discovery": "Roma, catacombe di Domitilla"
+          },
+          {
+            "title": "EDR078442",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR078442",
+            "discovery": "Roma, catacombe di Domitilla, nei pressi"
+          },
+          {
+            "title": "EDR078443",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR078443",
+            "discovery": "Roma, catacombe di Domitilla, galleria T (a. 1873)"
+          },
+          {
+            "title": "EDR078444",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR078444",
+            "discovery": "Roma, catacombe di Domitilla, cubicolo Ta (a. 1875)"
+          },
+          {
+            "title": "EDR078445",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR078445",
+            "discovery": "Roma, catacombe di Domitilla, galleria C"
+          },
+          {
+            "title": "EDR078752",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR078752",
+            "discovery": "Roma, catacombe di Domitilla"
+          },
+          {
+            "title": "EDR093513",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR093513",
+            "discovery": "Roma, catacombe di Domitilla, secondo piano, cubicolo "
+          },
+          {
+            "title": "EDR099108",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR099108",
+            "discovery": "Roma, Catacombe di Domitilla, luogo incerto"
+          },
+          {
+            "title": "EDR100709",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR100709",
+            "discovery": "Roma, catacombe di Domitilla, secondo piano, galleria S"
+          },
+          {
+            "title": "EDR100711",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR100711",
+            "discovery": "Roma, catacombe di Domitilla, secondo piano, galleria S, 2"
+          },
+          {
+            "title": "EDR100714",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR100714",
+            "discovery": "Roma, catacombe di Domitilla, primo piano, galleria A'"
+          },
+          {
+            "title": "EDR101887",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR101887",
+            "discovery": "Roma, catacombe di Domitilla, primo piano, galleria C6"
+          },
+          {
+            "title": "EDR102008",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR102008",
+            "discovery": "Roma, catacombe di Domitilla"
+          },
+          {
+            "title": "EDR102089",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR102089",
+            "discovery": "Roma, catacombe di Domitilla"
+          },
+          {
+            "title": "EDR102231",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR102231",
+            "discovery": "Roma, catacombe di Domitilla, basilica (a. 1874)"
+          },
+          {
+            "title": "EDR102233",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR102233",
+            "discovery": "Roma, catacombe di Domitilla, II piano, galleria B"
+          },
+          {
+            "title": "EDR102236",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR102236",
+            "discovery": "Roma, catacombe di Domitilla"
+          },
+          {
+            "title": "EDR102249",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR102249",
+            "discovery": "Roma, catacombe di Domitilla, piano II, galleria A2"
+          },
+          {
+            "title": "EDR102268",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR102268",
+            "discovery": "Roma, catacombe di Domitilla, piano II, galleria A4"
+          },
+          {
+            "title": "EDR102415",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR102415",
+            "discovery": "Roma, catacombe di Domitilla, cubicolo di Ampliato"
+          },
+          {
+            "title": "EDR102416",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR102416",
+            "discovery": "Roma, catacombe di Domitilla, cubicolo di Ampliato"
+          },
+          {
+            "title": "EDR102448",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR102448",
+            "discovery": "Roma, catacombe di Domitilla"
+          },
+          {
+            "title": "EDR102450",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR102450",
+            "discovery": "Roma, catacombe di Domitilla, basilica, scala antica"
+          },
+          {
+            "title": "EDR102606",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR102606",
+            "discovery": "Roma, catacombe di Domitilla, piano I, cubicolo VA"
+          },
+          {
+            "title": "EDR102680",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR102680",
+            "discovery": "Roma, catacombe di Domitilla"
+          },
+          {
+            "title": "EDR102770",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR102770",
+            "discovery": "Roma, catacombe di Domitilla"
+          },
+          {
+            "title": "EDR102798",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR102798",
+            "discovery": "Roma, catacombe di Domitilla"
+          },
+          {
+            "title": "EDR102823",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR102823",
+            "discovery": "Roma, catacombe di Domitilla, secondo piano, scalone I"
+          },
+          {
+            "title": "EDR102825",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR102825",
+            "discovery": "Roma, catacombe di Domitilla"
+          },
+          {
+            "title": "EDR102855",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR102855",
+            "discovery": "Roma, catacombe di Domitilla, II piano, cubicolo AG"
+          },
+          {
+            "title": "EDR102951",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR102951",
+            "discovery": "Roma, catacombe di Domitilla, secondo piano, galleria T"
+          },
+          {
+            "title": "EDR103008",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR103008",
+            "discovery": "Roma, catacombe di Domitilla"
+          },
+          {
+            "title": "EDR103009",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR103009",
+            "discovery": "Roma, catacombe di Domitilla, sepolcro della basilica, a destra dell'abside"
+          },
+          {
+            "title": "EDR103010",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR103010",
+            "discovery": "Roma, catacombe di Domitilla"
+          },
+          {
+            "title": "EDR103011",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR103011",
+            "discovery": "Roma, catacombe di Domitilla, primo piano, galleria G2, scala"
+          },
+          {
+            "title": "EDR103022",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR103022",
+            "discovery": "Roma, catacombe di Domitilla, piano II, galleria F9"
+          },
+          {
+            "title": "EDR103029",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR103029",
+            "discovery": "Roma, catacombe di Domitilla"
+          },
+          {
+            "title": "EDR103033",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR103033",
+            "discovery": "Roma, catacombe di Domitilla, piano I, cubicolo AE"
+          },
+          {
+            "title": "EDR103102",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR103102",
+            "discovery": "Roma, catacombe di Domitilla"
+          },
+          {
+            "title": "EDR103168",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR103168",
+            "discovery": "Roma, catacombe di Domitilla"
+          },
+          {
+            "title": "EDR103169",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR103169",
+            "discovery": "Roma, catacombe di Domitilla"
+          },
+          {
+            "title": "EDR103175",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR103175",
+            "discovery": "Roma, catacombe di Domitilla, I piano, galleria A"
+          },
+          {
+            "title": "EDR103253",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR103253",
+            "discovery": "Roma, catacombe di Domitilla"
+          },
+          {
+            "title": "EDR103267",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR103267",
+            "discovery": "Roma, catacombe di Domitilla, primo piano, cubicolo Ai"
+          },
+          {
+            "title": "EDR103269",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR103269",
+            "discovery": "Roma, catacombe di Domitilla, secondo piano, galleria B"
+          },
+          {
+            "title": "EDR103273",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR103273",
+            "discovery": "Roma, catacombe di Domitilla"
+          },
+          {
+            "title": "EDR104313",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR104313",
+            "discovery": "Roma, catacombe di Domitilla"
+          },
+          {
+            "title": "EDR110963",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR110963",
+            "discovery": "Roma, catacombe di Domitilla"
+          },
+          {
+            "title": "EDR111876",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR111876",
+            "discovery": "Roma, via Ardeatina, catacombe di Domitilla  (a. 1879)"
+          },
+          {
+            "title": "EDR112156",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR112156",
+            "discovery": "Roma, catacombe di Domitilla (reimpiego)"
+          },
+          {
+            "title": "EDR112204",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR112204",
+            "discovery": "Roma, parte nelle catacombe di Domitilla (a. 1878), parte nella zona di Tor Marancia, nei pressi delle catacombe"
+          },
+          {
+            "title": "EDR114209",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR114209",
+            "discovery": "Roma, catacombe di Domitilla."
+          },
+          {
+            "title": "EDR114702",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR114702",
+            "discovery": "Roma, catacombe di Domitilla, ipogeo dei Flavi."
+          },
+          {
+            "title": "EDR114732",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR114732",
+            "discovery": "Roma, catacombe di Domitilla."
+          },
+          {
+            "title": "EDR116005",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR116005",
+            "discovery": "Roma, catacombe di Domitilla, in reimpiego"
+          },
+          {
+            "title": "EDR125370",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR125370",
+            "discovery": "Roma, catacombe di Domitilla (in reimpiego), dal monumentum Bruttiorum"
+          },
+          {
+            "title": "EDR125374",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR125374",
+            "discovery": "Roma, catacombe di Domitilla (in reimpiego), dal monumentum Bruttiorum"
+          },
+          {
+            "title": "EDR128799",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR128799",
+            "discovery": "Roma, via Ardeatina, catacombe di Domitilla"
+          },
+          {
+            "title": "EDR129266",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR129266",
+            "discovery": "Roma, via Ardeatina, catacombe di Domitilla"
+          },
+          {
+            "title": "EDR137045",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR137045",
+            "discovery": "Roma, catacombe di Domitilla"
+          },
+          {
+            "title": "EDR137208",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR137208",
+            "discovery": "Roma, catacombe di Domitilla, secondo piano, dietro la basilica"
+          },
+          {
+            "title": "EDR137209",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR137209",
+            "discovery": "Roma, catacombe di Domitilla, primo piano, cubicolo Ai (a. 1882)"
+          },
+          {
+            "title": "EDR137217",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR137217",
+            "discovery": "Roma, catacombe di Domitilla, basilica"
+          },
+          {
+            "title": "EDR137271",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR137271",
+            "discovery": "Roma, catacombe di Domitilla, nei pressi"
+          },
+          {
+            "title": "EDR137274",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR137274",
+            "discovery": "Roma, catacombe di Domitilla, basilica (a. 1874)"
+          },
+          {
+            "title": "EDR137284",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR137284",
+            "discovery": "Roma, catacombe di Domitilla, basilica (a. 1874)"
+          },
+          {
+            "title": "EDR137287",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR137287",
+            "discovery": "Roma, catacombe di Domitilla, nei pressi?"
+          },
+          {
+            "title": "EDR137331",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR137331",
+            "discovery": "Roma, catacombe di Domitilla"
+          },
+          {
+            "title": "EDR137557",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR137557",
+            "discovery": "Roma, catacombe di Domitilla, nei pressi"
+          },
+          {
+            "title": "EDR137730",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR137730",
+            "discovery": "Roma, catacombe di Domitilla, secondo piano, galleria F2"
+          },
+          {
+            "title": "EDR139827",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR139827",
+            "discovery": "Roma, catacombe di Domitilla, luogo incerto"
+          },
+          {
+            "title": "EDR143938",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR143938",
+            "discovery": "Roma, catacombe di Domitilla (in reimpiego)"
+          },
+          {
+            "title": "EDR144700",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR144700",
+            "discovery": "Roma, via Ardeatina, catacombe di Domitilla"
+          },
+          {
+            "title": "EDR149362",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR149362",
+            "discovery": "Roma, catacombe di Domitilla, nelle scale dietro l'abside della basilica (probabilmente in reimpiego) (a. 1874)"
+          }
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.505645520659765, 41.85881519080969]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 63,
+        "nome": "Casale dell'Ara",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.47227673368351, 41.801963079352205]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 64,
+        "nome": "Casalotti",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": [
+          {
+            "title": "EDR000030",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR000030",
+            "discovery": "Roma, via di Casalotti (a. 1930)"
+          },
+          {
+            "title": "EDR077533",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR077533",
+            "discovery": "Roma, via Boccea-Casalotti, localit? Selva Candida"
+          }
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.371235379986633, 41.919341165253236]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 65,
+        "nome": "Casalotti Nuovi",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.371713524241079, 41.91447656718626]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 66,
+        "nome": "Tor tre teste",
+        "comune": null,
+        "frazione": null,
+        "altLabel": "T. di tre teste, Tor di tre teste",
+        "epigrafi": [
+          {
+            "title": "EDR000034",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR000034",
+            "discovery": "Roma,Tor Tre Teste"
+          },
+          {
+            "title": "EDR000947",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR000947",
+            "discovery": "Roma, via Prenestina, Tor tre Teste"
+          },
+          {
+            "title": "EDR072891",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR072891",
+            "discovery": "Roma, via Prenestina, localit? Pedica di Tor Tre Teste"
+          },
+          {
+            "title": "EDR075075",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR075075",
+            "discovery": "Roma, via Prenestina, km 9,5, localit? Tor Tre Teste"
+          },
+          {
+            "title": "EDR075094",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR075094",
+            "discovery": "Roma, via Prenestina, km. 9,6, localit? Tor Tre Teste"
+          },
+          {
+            "title": "EDR122840",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR122840",
+            "discovery": "Roma, via Casilina, Tor Tre Teste, nei pressi"
+          }
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.59467245315507, 41.89265367312405]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 62,
+        "nome": "Tomba di Cecilia Metella",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": "Cecilia Metella",
+        "epigrafi": [
+          {
+            "title": "EDR000943",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR000943",
+            "discovery": "Roma, via Appia Antica, Tomba di Cecilia Metella"
+          },
+          {
+            "title": "EDR000944",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR000944",
+            "discovery": "Roma, via Appia Antica, Tomba di Cecilia Metella"
+          },
+          {
+            "title": "EDR001065",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR001065",
+            "discovery": "Roma, via Appia Antica, Tomba di Cecilia Metella."
+          },
+          {
+            "title": "EDR004985",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR004985",
+            "discovery": "Roma, via Appia Antica, presso il mausoleo di Cecilia Metella?"
+          },
+          {
+            "title": "EDR004998",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR004998",
+            "discovery": "Roma, via Appia, presso il mausoleo di Cecilia Metella?"
+          },
+          {
+            "title": "EDR020715",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR020715",
+            "discovery": "Roma, La Magliana (lucus deae Diae), luogo imprecisato (frg. a, a. 1868), presso la catacomba (frgg. b-c, a. 1869); via Appia Antica, vigna presso il sepolcro di Cecilia Metella (frg. d, a. 1898)."
+          },
+          {
+            "title": "EDR029325",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR029325",
+            "discovery": "Roma, La Magliana (lucus deae Diae), presso la catacomba (frgg. a-c, aa. 1868/69),  vigna Ceccarelli (frg. d, a. 1858); via Appia Antica, presso la tomba di Cecilia Metella (frg. g, a. 1898); via dei Baullari (frg. e, a. 1884)."
+          },
+          {
+            "title": "EDR029327",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR029327",
+            "discovery": "Roma, via Appia?, vigna vicino alla tomba di Cecilia Metella"
+          },
+          {
+            "title": "EDR029343",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR029343",
+            "discovery": "Roma, via Appia Antica, vigna presso la tomba di Cecilia Metella"
+          },
+          {
+            "title": "EDR030105",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR030105",
+            "discovery": "Roma, via Appia Antica, Tomba di Cecilia Metella, nei pressi"
+          },
+          {
+            "title": "EDR030250",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR030250",
+            "discovery": "Roma, via Appia, tra la Basilica di S. Sebastiano e la tomba di Cecilia Metella"
+          },
+          {
+            "title": "EDR030286",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR030286",
+            "discovery": "Roma, via Appia Antica, fra la basilica di S. Sebastiano e la tomba di Cecilia Metella."
+          },
+          {
+            "title": "EDR030287",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR030287",
+            "discovery": "Roma, via Appia Antica, fra la basilica di S. Sebastiano e la tomba di Cecilia Metella."
+          },
+          {
+            "title": "EDR078411",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR078411",
+            "discovery": "Roma, via Appia Antica, Tomba di Cecilia Metella, nei pressi (a. 1824)"
+          },
+          {
+            "title": "EDR100970",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR100970",
+            "discovery": "Roma, via Appia Antica, Tomba di Cecilia Metella."
+          },
+          {
+            "title": "EDR101342",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR101342",
+            "discovery": "Roma, via Appia antica, tra la basilica di S. Sebastiano e la tomba di Cecilia Metella"
+          },
+          {
+            "title": "EDR102653",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR102653",
+            "discovery": "Roma, via Appia, tra la basilica di S. Sebastiano e la tomba di Cecilia Metella."
+          },
+          {
+            "title": "EDR102894",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR102894",
+            "discovery": "Roma, via Appia Antica, Tomba di Cecilia Metella."
+          },
+          {
+            "title": "EDR103077",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR103077",
+            "discovery": "Roma, via Appia Antica, Tomba di Cecilia Metella."
+          },
+          {
+            "title": "EDR103233",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR103233",
+            "discovery": "Roma, via Appia, tra S. Sebastiano e la tomba di Cecilia Metella"
+          },
+          {
+            "title": "EDR103260",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR103260",
+            "discovery": "Roma, via Appia Antica, Tomba di Cecilia Metella."
+          },
+          {
+            "title": "EDR103467",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR103467",
+            "discovery": "Roma, via Appia antica, Capo di Bove, tomba di Cecilia Metella, nei pressi"
+          },
+          {
+            "title": "EDR108916",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR108916",
+            "discovery": "Roma, via Appia Antica, Tomba di Cecilia Metella"
+          },
+          {
+            "title": "EDR111171",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR111171",
+            "discovery": "Roma, via Appia, tomba di Cecilia Metella, nei pressi (vinea Profiliorum)"
+          },
+          {
+            "title": "EDR112232",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR112232",
+            "discovery": "Roma, via Appia Antica, nei pressi della tomba di Cecilia Metella"
+          },
+          {
+            "title": "EDR121933",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR121933",
+            "discovery": "Roma, via Appia, tomba di Cecilia Metella, nei pressi (a. 1819)"
+          },
+          {
+            "title": "EDR123487",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR123487",
+            "discovery": "Roma, via Appia, fuori Porta San Sebastiano, sepolcro di Cecilia Metella, nei pressi (a. 1640)"
+          },
+          {
+            "title": "EDR123488",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR123488",
+            "discovery": "Roma, via Appia, tomba di Cecilia Metella, nei pressi (a. 1640)"
+          },
+          {
+            "title": "EDR123728",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR123728",
+            "discovery": "Roma, via Appia, fuori Porta San Sebastiano, tomba di Cecilia Metella, nei pressi (a. 1640)"
+          },
+          {
+            "title": "EDR123930",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR123930",
+            "discovery": "Roma, via Appia, tomba di Cecilia Metella, nei pressi (a. 1640)"
+          },
+          {
+            "title": "EDR124028",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR124028",
+            "discovery": "Roma, via Appia, fuori Porta San Sebastiano, tomba di Cecilia Metella, nei pressi (a. 1640)"
+          },
+          {
+            "title": "EDR125327",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR125327",
+            "discovery": "Roma, via Appia Antica, Tomba di Cecilia Metella, nei pressi?"
+          },
+          {
+            "title": "EDR125354",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR125354",
+            "discovery": "Roma, via Appia Antica, Tomba di Cecilia Metella, nei pressi?"
+          },
+          {
+            "title": "EDR125564",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR125564",
+            "discovery": "Roma, nei pressi del sepolcro di Cecilia Metella, poi nella villa Borghese (17? sec.)"
+          },
+          {
+            "title": "EDR130186",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR130186",
+            "discovery": "Roma, via Appia Antica, Tomba di Cecilia Metella, nei pressi"
+          },
+          {
+            "title": "EDR130200",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR130200",
+            "discovery": "Roma, via Appia Antica, Tomba di Cecilia Metella, nei pressi"
+          },
+          {
+            "title": "EDR135430",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR135430",
+            "discovery": "Roma, via Appia Antica, Tomba di Cecilia Metella, nei pressi"
+          },
+          {
+            "title": "EDR135431",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR135431",
+            "discovery": "Roma, via Appia Antica, Tomba di Cecilia Metella, nei pressi"
+          },
+          {
+            "title": "EDR135671",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR135671",
+            "discovery": "Roma, via Appia Antica, Tomba di Cecilia Metella, nei pressi (in reimpiego)"
+          },
+          {
+            "title": "EDR135701",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR135701",
+            "discovery": "Roma, via Appia Antica, Tomba di Cecilia Metella, nei pressi"
+          }
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.520886391800719, 41.85193011751033]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 67,
+        "nome": "Forte Appia",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": [
+          {
+            "title": "EDR120347",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR120347",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia (a. 1878)"
+          },
+          {
+            "title": "EDR130201",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR130201",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia"
+          },
+          {
+            "title": "EDR130204",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR130204",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia"
+          },
+          {
+            "title": "EDR130228",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR130228",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia, nei pressi"
+          },
+          {
+            "title": "EDR132373",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR132373",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia, nei pressi"
+          },
+          {
+            "title": "EDR132651",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR132651",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia"
+          },
+          {
+            "title": "EDR132652",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR132652",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia"
+          },
+          {
+            "title": "EDR132653",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR132653",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia"
+          },
+          {
+            "title": "EDR132935",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR132935",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia"
+          },
+          {
+            "title": "EDR132937",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR132937",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia"
+          },
+          {
+            "title": "EDR132938",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR132938",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia"
+          },
+          {
+            "title": "EDR132939",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR132939",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia"
+          },
+          {
+            "title": "EDR133826",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR133826",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia"
+          },
+          {
+            "title": "EDR133829",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR133829",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia"
+          },
+          {
+            "title": "EDR133831",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR133831",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia"
+          },
+          {
+            "title": "EDR133833",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR133833",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia"
+          },
+          {
+            "title": "EDR133834",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR133834",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia"
+          },
+          {
+            "title": "EDR133836",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR133836",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia"
+          },
+          {
+            "title": "EDR133843",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR133843",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia"
+          },
+          {
+            "title": "EDR133844",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR133844",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia"
+          },
+          {
+            "title": "EDR133846",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR133846",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia"
+          },
+          {
+            "title": "EDR133849",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR133849",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia"
+          },
+          {
+            "title": "EDR133851",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR133851",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia"
+          },
+          {
+            "title": "EDR133853",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR133853",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia"
+          },
+          {
+            "title": "EDR133854",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR133854",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia"
+          },
+          {
+            "title": "EDR133856",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR133856",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia"
+          },
+          {
+            "title": "EDR133857",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR133857",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia"
+          },
+          {
+            "title": "EDR133885",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR133885",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia"
+          },
+          {
+            "title": "EDR133887",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR133887",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia"
+          },
+          {
+            "title": "EDR133888",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR133888",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia"
+          },
+          {
+            "title": "EDR133889",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR133889",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia"
+          },
+          {
+            "title": "EDR133890",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR133890",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia"
+          },
+          {
+            "title": "EDR133891",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR133891",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia"
+          },
+          {
+            "title": "EDR133894",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR133894",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia"
+          },
+          {
+            "title": "EDR133895",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR133895",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia"
+          },
+          {
+            "title": "EDR133897",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR133897",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia"
+          },
+          {
+            "title": "EDR133898",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR133898",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia"
+          },
+          {
+            "title": "EDR138524",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR138524",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia"
+          },
+          {
+            "title": "EDR138525",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR138525",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia"
+          },
+          {
+            "title": "EDR138526",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR138526",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia"
+          },
+          {
+            "title": "EDR138528",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR138528",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia"
+          },
+          {
+            "title": "EDR138530",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR138530",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia"
+          },
+          {
+            "title": "EDR138533",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR138533",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia"
+          },
+          {
+            "title": "EDR138540",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR138540",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia"
+          },
+          {
+            "title": "EDR140571",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR140571",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia"
+          },
+          {
+            "title": "EDR140572",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR140572",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia"
+          },
+          {
+            "title": "EDR140573",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR140573",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia"
+          },
+          {
+            "title": "EDR140576",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR140576",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia"
+          },
+          {
+            "title": "EDR143734",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR143734",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia"
+          },
+          {
+            "title": "EDR144143",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR144143",
+            "discovery": "Roma, via Appia Antica, IV miglio, Forte Appia (a.1878)"
+          }
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.529021932911135, 41.84144692372436]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 68,
+        "nome": "Capo di Bove",
+        "comune": "Roma",
+        "frazione": null,
+        "altLabel": null,
+        "epigrafi": [
+          {
+            "title": "EDR103467",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR103467",
+            "discovery": "Roma, via Appia antica, Capo di Bove, tomba di Cecilia Metella, nei pressi"
+          },
+          {
+            "title": "EDR107264",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR107264",
+            "discovery": "Roma, via Appia, a Capo di Bove"
+          },
+          {
+            "title": "EDR114955",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR114955",
+            "discovery": "Roma, via Appia antica, localit? Capo di Bove, in una vigna"
+          },
+          {
+            "title": "EDR123834",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR123834",
+            "discovery": "Roma, via Appia Antica, localit? Capo di Bove, poi nella casa del cardinale P.P. Crescenzi (dopo l'a. 1611), indi nella collez. Arundel (Oxford)"
+          },
+          {
+            "title": "EDR125623",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR125623",
+            "discovery": "Roma, via Appia Antica, nei terreni di S. Francesca Romana, oltre il Capo di Bove (a. 1823)"
+          },
+          {
+            "title": "EDR126776",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR126776",
+            "discovery": "Roma, via Appia antica 222, localit? Capo di Bove, reimpiegata nel pavimento di un edificio termale  (a. 2004)"
+          },
+          {
+            "title": "EDR138531",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR138531",
+            "discovery": "Roma, via Appia Antica, IV miglio, presso Capo di Bove"
+          },
+          {
+            "title": "EDR138535",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR138535",
+            "discovery": "Roma, via Appia Antica, IV miglio, Capo di Bove"
+          },
+          {
+            "title": "EDR138537",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR138537",
+            "discovery": "Roma, via Appia Antica, IV miglio, presso Capo di Bove"
+          },
+          {
+            "title": "EDR138538",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR138538",
+            "discovery": "Roma, via Appia Antica, IV miglio, Capo di Bove"
+          },
+          {
+            "title": "EDR144237",
+            "url": "http://edr.let.uniroma1.it/panciera__new/scheda/EDR144237",
+            "discovery": "Roma, via Appia Antica, Capo di Bove"
+          }
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.527408712162451, 41.84795555781879]
+      }
+    }
+  ]
+}

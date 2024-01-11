@@ -1,26 +1,47 @@
 import * as React from "react"
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet"
+import { MapContainer, TileLayer, GeoJSON } from "react-leaflet"
+// aggiungere a import react-leaft Marker, Popup,
+//import L, { divIcon } from "leaflet"
 
 import Layout from "../components/layout"
 import Seo from "../components/seo"
+import datiMappa from "../dati/toponimi.json"
+
+// const setIcon = ({ properties }, latlng) => {
+//   return L.marker(latlng, { icon: customMarkerIcon(properties.nome) })
+// }
+// const customMarkerIcon = nome =>
+//   divIcon({
+//     html: nome,
+//     className: "icon",
+//   })
+
+//pointToLayer={setIcon}
+
+function onEachFeature(feature, layer) {
+  let popupContent =
+    "<pre>" + JSON.stringify(feature.properties.nome, null, " ") + "</pre>"
+  layer.bindPopup(popupContent)
+}
 
 const Mappa = () => (
   <Layout>
     <MapContainer
       style={{ height: "400px" }}
-      center={[51.505, -0.09]}
-      zoom={13}
+      center={[41.78543, 12.38431]}
+      zoom={10}
       scrollWheelZoom={false}
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <Marker position={[51.505, -0.09]}>
+      <GeoJSON data={datiMappa} onEachFeature={onEachFeature} />
+      {/* <Marker position={[41.78543, 12.38431]}>
         <Popup>
           A pretty CSS3 popup. <br /> Easily customizable.
         </Popup>
-      </Marker>
+      </Marker> */}
     </MapContainer>
   </Layout>
 )
