@@ -27,9 +27,9 @@ function onEachFeature(feature, layer) {
 const Mappa = () => (
   <Layout>
     <MapContainer
-      style={{ height: "400px" }}
-      center={[41.78543, 12.38431]}
-      zoom={10}
+      style={{ height: "800px" }}
+      center={[41.90224270877692, 12.473489727658315]}
+      zoom={9}
       scrollWheelZoom={false}
     >
       <TileLayer
