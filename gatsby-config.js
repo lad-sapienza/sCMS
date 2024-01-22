@@ -14,12 +14,20 @@ require("dotenv").config({
 module.exports = {
   siteMetadata: {
     title: `Directus Gatsby UI`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
-    siteUrl: `https://gatsbystarterdefaultsource.gatsbyjs.io/`,
+    description: `A simple starter to get up and developing quickly with Gatsby 5 and Bootstrap 5. `,
+    author: `Julian Bogdani <julian.bogdani@uniroma1.it>`,
+    siteUrl: `https://github.com/lab-archeologia-digitale/gatsby-directus-ui#readme`,
   },
   plugins: [
     `gatsby-plugin-image`,
+    `gatsby-plugin-mdx`,
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `pages`,
+        path: `${__dirname}/src/pages`,
+      },
+    },
     {
       resolve: `gatsby-source-filesystem`,
       options: {

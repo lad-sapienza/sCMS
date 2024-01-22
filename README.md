@@ -240,18 +240,24 @@ npm install react-data-table-component
 
 ```
 
-### Install plugin MD
+### Install plugin MDX
+
+```
+npm install gatsby-plugin-mdx gatsby-source-filesystem @mdx-js/react
+
+```
 
 ```js
 module.exports = {
   // ... some gatsby configuration
   plugins: [
     // ... some gatsby plugin
+    `gatsby-plugin-mdx`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `content`,
-        path: `${__dirname}/src/content`,
+        name: `pages`,
+        path: `${__dirname}/src/pages`,
       },
     },
   ],
