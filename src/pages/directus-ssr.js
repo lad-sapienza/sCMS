@@ -5,6 +5,7 @@ import Layout from "../components/layout"
 import Seo from "../components/seo"
 
 const UsingSSRDirectus = ({ serverData }) => {
+  console.log(serverData)
   return (
     <Layout>
       <h1>
@@ -29,7 +30,7 @@ const UsingSSRDirectus = ({ serverData }) => {
         </a>
         .
       </p>
-      <Link href="/">Go back to the homepage</Link>
+      <Link to="/">Go back to the homepage</Link>
     </Layout>
   )
 }

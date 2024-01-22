@@ -233,6 +233,13 @@ module.exports = {
 }
 ```
 
+### Install dataTable
+
+```
+npm install react-data-table-component
+
+```
+
 ### Install plugin MD
 
 ```js

@@ -1,14 +1,9 @@
 import React, { useState, useEffect } from "react"
 import Layout from "../components/layout"
-import { MapContainer, TileLayer, GeoJSON } from "react-leaflet"
+import DataTable from "react-data-table-component"
+import { Container } from "react-bootstrap"
 
-function onEachFeature(feature, layer) {
-  let popupContent =
-    "<pre>" + JSON.stringify(feature.properties.nome, null, " ") + "</pre>"
-  layer.bindPopup(popupContent)
-}
-
-const MappaDirectus = () => {
+const MappaPage2 = () => {
   // Client-side Runtime Data Fetching
   // Stato per memorizzare i dati ottenuti dall'API
   // in dati viene salvato il risultato di impostaDati
@@ -26,41 +21,17 @@ const MappaDirectus = () => {
         impostaCaricamento(true)
         // Ottieni i dati dall'API
         const risposta = await fetch(
-          `https://landscapearchaeology.eu/db/${process.env.GATSBY_DIRECTUS_MAP_ENDPOINT}`,
+          `https://inrome.sns.it/db/${process.env.GATSBY_DIRECTUS_ENDPOINT}`,
           {
             headers: {
-              Authorization: `Bearer ${process.env.GATSBY_DIRECTUS_MAP_TOKEN}`, // Aggiungi il token all'header
+              Authorization: `Bearer ${process.env.GATSBY_DIRECTUS_TOKEN}`, // Aggiungi il token all'header
             },
           }
         )
         // Parsa la risposta JSON
         const risultato = await risposta.json()
         // Aggiorna lo stato con i dati ottenuti
-        // Converti i dati in formato GeoJSON
-        const geojsonData = {
-          type: "FeatureCollection",
-          features: risultato.data.map(item => ({
-            type: "Feature",
-            properties: {
-              id: item.id,
-              // Add other properties as needed
-              toponimo: item.toponimo,
-              provincia: item.provincia,
-              comune: item.comune,
-              // Add more properties here
-            },
-            geometry: {
-              type: "Point",
-              coordinates: [
-                item.coordinates.coordinates[0], // longitude
-                item.coordinates.coordinates[1], // latitude
-              ],
-            },
-          })),
-        }
-
-        // Aggiorna lo stato con i dati ottenuti
-        impostaDati(geojsonData)
+        impostaDati(risultato.data || [])
       } catch (errore) {
         // Se si verifica un errore, aggiorna lo stato di errore
         impostaErrore(errore)
@@ -83,23 +54,35 @@ const MappaDirectus = () => {
     return <div>Errore: {errore.message}</div>
   }
 
+  const colonne = [
+    {
+      name: "ID",
+      selector: "id",
+      sortable: true,
+    },
+    {
+      name: "Titolo",
+      selector: "title",
+      sortable: true,
+    },
+    {
+      name: "Riassunto",
+      selector: "summary",
+      sortable: true,
+    },
+  ]
+
   // Renderizza il componente con i dati ottenuti
   return (
     <Layout>
-      <MapContainer
-        style={{ height: "800px" }}
-        center={[42.977538253858064, 13.35383086262221]}
-        zoom={9}
-        scrollWheelZoom={false}
-      >
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        <GeoJSON data={dati} onEachFeature={onEachFeature} />
-      </MapContainer>
+      <Container>
+        <div>
+          <h1>Dati dall'API organizzate in datatable:</h1>
+          <DataTable columns={colonne} data={dati} pagination />
+        </div>
+      </Container>
     </Layout>
   )
 }
 
-export default MappaDirectus
+export default MappaPage2
