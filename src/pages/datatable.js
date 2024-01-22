@@ -21,10 +21,10 @@ const MappaPage2 = () => {
         impostaCaricamento(true)
         // Ottieni i dati dall'API
         const risposta = await fetch(
-          `https://inrome.sns.it/db/${process.env.GATSBY_DIRECTUS_ENDPOINT}`,
+          `https://landscapearchaeology.eu/db/${process.env.GATSBY_DIRECTUS_MAP_ENDPOINT}`,
           {
             headers: {
-              Authorization: `Bearer ${process.env.GATSBY_DIRECTUS_TOKEN}`, // Aggiungi il token all'header
+              Authorization: `Bearer ${process.env.GATSBY_DIRECTUS_MAP_TOKEN}`, // Aggiungi il token all'header
             },
           }
         )
@@ -62,14 +62,13 @@ const MappaPage2 = () => {
     },
     {
       name: "Titolo",
-      selector: "title",
+      selector: "toponimo",
       sortable: true,
-      cell: row => <a href={`/${row.slug}`}>{row.title}</a>,
-    },
-    {
-      name: "Riassunto",
-      selector: "summary",
-      sortable: true,
+      cell: row => (
+        <a href={`/articles?toponimo=${encodeURIComponent(row.toponimo)}`}>
+          {row.toponimo}
+        </a>
+      ),
     },
   ]
 
