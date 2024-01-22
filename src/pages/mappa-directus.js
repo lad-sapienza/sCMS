@@ -4,7 +4,7 @@ import { MapContainer, TileLayer, GeoJSON } from "react-leaflet"
 
 function onEachFeature(feature, layer) {
   let popupContent =
-    "<pre>" + JSON.stringify(feature.properties.nome, null, " ") + "</pre>"
+    "<pre>" + JSON.stringify(feature.properties.toponimo, null, " ") + "</pre>"
   layer.bindPopup(popupContent)
 }
 
