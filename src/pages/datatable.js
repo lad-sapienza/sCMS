@@ -64,6 +64,7 @@ const MappaPage2 = () => {
       name: "Titolo",
       selector: "title",
       sortable: true,
+      cell: row => <a href={`/${row.slug}`}>{row.title}</a>,
     },
     {
       name: "Riassunto",
