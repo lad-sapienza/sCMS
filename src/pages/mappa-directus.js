@@ -26,6 +26,7 @@ const MappaDirectus = () => {
         impostaCaricamento(true)
         // Ottieni i dati dall'API
         const risposta = await fetch(
+          // @eiacopini: l'URL deve essere parametrizzata
           `https://landscapearchaeology.eu/db/${process.env.GATSBY_DIRECTUS_MAP_ENDPOINT}`,
           {
             headers: {
@@ -88,6 +89,7 @@ const MappaDirectus = () => {
     <Layout>
       <MapContainer
         style={{ height: "800px" }}
+        // @eiacopini: il centro e zoom può esere calcolato dai dati, forse
         center={[42.977538253858064, 13.35383086262221]}
         zoom={9}
         scrollWheelZoom={false}
