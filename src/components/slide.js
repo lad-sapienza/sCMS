@@ -62,12 +62,10 @@ function Slide() {
 
 //style
 const Slider = styled.section`
-  .slide {
-    min-height: auto;
-    border-bottom: #3e281c solid 10px;
-  }
+  margin-bottom: 3rem; 
+  border-bottom: #3e281c solid .5rem;
+  
   .subTitle {
-    text-align: center;
   }
   .btn-primary {
     background-color: #8b5a40 !important;
