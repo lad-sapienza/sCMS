@@ -52,7 +52,7 @@ const SearchPage = () => {
       <br />
       <br />
       <br />
-      <Link href="/">Torna alla homepage</Link>
+      <Link to="/">Torna alla homepage</Link>
     </Layout>
   )
 }
