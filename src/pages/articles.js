@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import Layout from "../components/layout"
 
-const ToponimoPage = ({ location }) => {
+const ArticlesPage = ({ location }) => {
   const [filteredData, setFilteredData] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -15,12 +15,11 @@ const ToponimoPage = ({ location }) => {
 
         // Verifica se il parametro è presente
         if (!toponimo) {
-          throw new Error("Parametro toponimo mancante")
+          throw new Error("Parametro filter mancante")
         }
 
-        // @eiacopini: l'URL deve essere parametrizzata
         const response = await fetch(
-          `https://landscapearchaeology.eu/db/${process.env.GATSBY_DIRECTUS_MAP_ENDPOINT}?filter[toponimo][_icontains]=${toponimo}`,
+          `https://${process.env.GATSBY_DIRECTUS_URL}/${process.env.GATSBY_DIRECTUS_MAP_ENDPOINT}?filter[toponimo][_icontains]=${toponimo}`,
 
           {
             headers: {
@@ -64,4 +63,4 @@ const ToponimoPage = ({ location }) => {
   )
 }
 
-export default ToponimoPage
+export default ArticlesPage

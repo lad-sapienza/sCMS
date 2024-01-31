@@ -21,8 +21,7 @@ const MappaPage2 = () => {
         impostaCaricamento(true)
         // Ottieni i dati dall'API
         const risposta = await fetch(
-          // @eiacopini: l'URL deve essere parametrizzata
-          `https://landscapearchaeology.eu/db/${process.env.GATSBY_DIRECTUS_MAP_ENDPOINT}`,
+          `https://${process.env.GATSBY_DIRECTUS_URL}/${process.env.GATSBY_DIRECTUS_MAP_ENDPOINT}`,
           {
             headers: {
               Authorization: `Bearer ${process.env.GATSBY_DIRECTUS_MAP_TOKEN}`, // Aggiungi il token all'header
