@@ -91,7 +91,6 @@ const Mappa = (props) => {
   }
 
   const extent = bbox(dati);
-  console.log(extent);
 
   // Renderizza il componente con i dati ottenuti
   return (
