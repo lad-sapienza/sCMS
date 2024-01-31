@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import DataTable from "react-data-table-component"
 import { Container } from "react-bootstrap"
 
-const DataTb = () => {
+const DataTb = props => {
   // Client-side Runtime Data Fetching
   // Stato per memorizzare i dati ottenuti dall'API
   // in dati viene salvato il risultato di impostaDati
@@ -12,6 +12,18 @@ const DataTb = () => {
   // Stato per gestire lo stato di errore
   const [errore, impostaErrore] = useState(null)
 
+  // Dependency check
+  if (!props.dTable) {
+    impostaErrore({
+      message:
+        "Error in building data table. No source found for the data: dTable parameter is required",
+    })
+  }
+
+  if (props.dTable && !props.dToken) {
+    impostaErrore({ message: "Directus token is missing" })
+  }
+
   // useEffect per ottenere dati quando il componente viene montato
   useEffect(() => {
     const ottieniDati = async () => {
@@ -19,14 +31,11 @@ const DataTb = () => {
         // Imposta lo stato di caricamento a true durante il recupero dei dati
         impostaCaricamento(true)
         // Ottieni i dati dall'API
-        const risposta = await fetch(
-          `https://${process.env.GATSBY_DIRECTUS_URL}/${process.env.GATSBY_DIRECTUS_MAP_ENDPOINT}`,
-          {
-            headers: {
-              Authorization: `Bearer ${process.env.GATSBY_DIRECTUS_MAP_TOKEN}`, // Aggiungi il token all'header
-            },
-          }
-        )
+        const risposta = await fetch(props.dTable, {
+          headers: {
+            Authorization: `Bearer ${props.dToken}`, // Aggiungi il token all'header
+          },
+        })
         // Parsa la risposta JSON
         const risultato = await risposta.json()
         // Aggiorna lo stato con i dati ottenuti
@@ -42,7 +51,7 @@ const DataTb = () => {
 
     // Chiama la funzione ottieniDati quando il componente viene montato
     ottieniDati()
-  }, []) // L'array di dipendenze vuoto assicura che questo effetto venga eseguito solo una volta, simile a componentDidMount
+  }, [props, errore]) // L'array di dipendenze vuoto assicura che questo effetto venga eseguito solo una volta, simile a componentDidMount
 
   // Renderizza il componente in base agli stati di caricamento ed errore
   if (caricamento) {
@@ -53,29 +62,10 @@ const DataTb = () => {
     return <div>Errore: {errore.message}</div>
   }
 
-  // @eiacopini: parametrizzare oppure chiedere agli utenti di creare un componente
-  const colonne = [
-    {
-      name: "ID",
-      selector: "id",
-      sortable: true,
-    },
-    {
-      name: "Titolo",
-      selector: "toponimo",
-      sortable: true,
-      cell: row => (
-        <a href={`/articles?toponimo=${encodeURIComponent(row.toponimo)}`}>
-          {row.toponimo}
-        </a>
-      ),
-    },
-  ]
-
   // Renderizza il componente con i dati ottenuti
   return (
     <Container>
-      <DataTable columns={colonne} data={dati} pagination />
+      <DataTable columns={props.dColumns} data={dati} pagination />
     </Container>
   )
 }
