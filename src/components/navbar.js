@@ -12,7 +12,7 @@ function MyNavbar(props) {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               <Nav.Link href="/">Home</Nav.Link>
-              <Nav.Link href="/src/contents/test.mdx">Page MDX</Nav.Link>
+              <Nav.Link href="/introduction-to-gatsby">Page MDX</Nav.Link>
               <Nav.Link href="/searchPage">Search</Nav.Link>
               <Nav.Link href="/datatable">Datatable</Nav.Link>
               <Nav.Link href="/mappa-json">Map GeoJson data</Nav.Link>
