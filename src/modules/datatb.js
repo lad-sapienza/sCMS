@@ -75,13 +75,14 @@ const DataTb = props => {
 
 //style
 const Table = styled.section`
-  a {
-    color: #0000;
+  a,
+  a:visited {
+    color: #000000;
     text-decoration: none;
   }
 
   a:hover {
-    color: #ececec;
+    color: red;
     text-decoration: none;
   }
 `
