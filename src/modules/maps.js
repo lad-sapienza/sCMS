@@ -1,5 +1,6 @@
 import React, { useState, useEffect, Fragment } from "react"
 import { MapContainer, TileLayer, GeoJSON, LayersControl } from "react-leaflet"
+import bbox from "geojson-bbox"
 
 const Mappa = (props) => {
 
@@ -20,80 +21,91 @@ const Mappa = (props) => {
   if (props.dTable && !props.dToken){
     impostaErrore({"message": "Directus token is missing"});
   }
-  if(!props.baseMaps){
-    props.baseMaps = [];
-  }
 
 
   // useEffect per ottenere dati quando il componente viene montato
   useEffect(() => {
     
+    // TODO: rendere il codice spra una funziona staccata
+    //    aggiungere la funziona che carica il GeoJSON statico
+    //    aggiungere qui condizione che esegua l'una o l'altra funzione in base ai props
     const getRemoteData = async () => {
       try {
         // Imposta lo stato di isLoading a true durante il recupero dei dati
         setIsLoading(true)
+        
         // Ottieni i dati dall'API
-        const risposta = await fetch(
-          props.dTable,
-          {
-            headers: {
-              Authorization: `Bearer ${props.dToken}`, // Aggiungi il token all'header
-            },
+        let geoJSON;
+
+        if (props.dTable){
+
+          const risposta = await fetch(
+            props.dTable,
+            {
+              headers: {
+                Authorization: `Bearer ${props.dToken}`, // Aggiungi il token all'header
+              },
+            }
+          )
+          const risultato = await risposta.json()
+          geoJSON = {
+            type: "FeatureCollection",
+            features: risultato.data.map(item => ({
+              type: "Feature",
+              properties: item,
+              geometry: {
+                type: "Point",
+                coordinates: [
+                  item.coordinates.coordinates[0], // longitude
+                  item.coordinates.coordinates[1], // latitude
+                ],
+              },
+            })),
           }
-        )
-        // Parsa la risposta JSON
-        const risultato = await risposta.json()
-        // Aggiorna lo stato con i dati ottenuti
-        // Converti i dati in formato GeoJSON
-        const geojsonData = {
-          type: "FeatureCollection",
-          features: risultato.data.map(item => ({
-            type: "Feature",
-            properties: item,
-            geometry: {
-              type: "Point",
-              coordinates: [
-                item.coordinates.coordinates[0], // longitude
-                item.coordinates.coordinates[1], // latitude
-              ],
-            },
-          })),
+        } else if (props.path2geojson){
+          const response = await import("../dati/toponimi.json");
+          geoJSON = response.default;
         }
 
         // Aggiorna lo stato con i dati ottenuti
-        impostaDati(geojsonData)
-      } catch (errore) {
-        // Se si verifica un errore, aggiorna lo stato di errore
-        impostaErrore(errore)
+        impostaDati(geoJSON)
+      } catch (err) {
+        impostaErrore(err)
       } finally {
         // Imposta lo stato di isLoading a false quando il recupero è completato
         setIsLoading(false)
       }
     }
 
-    if(!errore){
       // Chiama la funzione getRemoteData quando il componente viene montato
       getRemoteData()
-    }
-  }, [props, errore]) // L'array di dipendenze vuoto assicura che questo effetto venga eseguito solo una volta, simile a componentDidMount
+  }, [props]) // L'array di dipendenze vuoto assicura che questo effetto venga eseguito solo una volta, simile a componentDidMount
 
   // Renderizza il componente in base agli stati di isLoading ed errore
   if (isLoading) {
-    return <div>Loading...</div>
+    return <div className="text-info">Loading...</div>
   }
 
   if (errore) {
     return <div className="text-danger">{errore.message}</div>
   }
 
+  const extent = bbox(dati);
+  console.log(extent);
+
   // Renderizza il componente con i dati ottenuti
   return (
     <MapContainer
       style={{ height: "800px" }}
-      // @eiacopini: il centro e zoom può esere calcolato dai dati, forse
-      center={[42.977538253858064, 13.35383086262221]}
-      zoom={9}
       scrollWheelZoom={false}
+      center={[0,0]}
+      zoom={8}
+      whenReady={ e => {
+        e.target.fitBounds([
+          [extent[1],extent[0]],
+          [extent[3], extent[2]]
+        ]);
+      }}
     >
       <LayersControl position="topright">
 
@@ -106,7 +118,7 @@ const Mappa = (props) => {
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          { props.baseMaps.map( (el, i) => {
+          { props.baseMaps && props.baseMaps.map( (el, i) => {
             return <Fragment key={i}>
               <LayersControl.BaseLayer checked name={el.name}>
                 <TileLayer
