@@ -11,7 +11,7 @@ const FooterPage = () => {
         <Row className="px-5 pt-5">
           <Col sm={6} xs={12} className="d-flex ">
             <div>
-              <Link href="/">
+              <Link to="/">
                 <StaticImage
                   src="../images/lad.png"
                   width={100}

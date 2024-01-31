@@ -70,7 +70,8 @@ const SearchPage = props => {
       <br />
       <br />
       <br />
-    </Container>
+      <Link href="/">Torna alla homepage</Link>
+    </Layout>
   )
 }
 
