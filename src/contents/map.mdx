@@ -22,4 +22,17 @@ voluptas nulla pariatur?
 
 import Mappa from '../modules/maps.js'
 
-{<Mappa />}
+{<Mappa 
+  dTable="toponimi" 
+  dToken="sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E"
+  popupTemplate={(feature) => {
+    return `<p><strong>${feature.properties.toponimo}</strong>`;
+  }}
+  baseMaps={[
+    {
+      "name": "Anche io sono OSM",
+      "url": "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+      "attribution": `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors`
+  }
+  ]}
+   />}

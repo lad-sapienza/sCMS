@@ -286,3 +286,34 @@ module.exports = {
 - [x] una pagina di ricerca su database Directus, configurabile
 - [] una pagina di elenco (o mappa) di risultati dalla ricerca sul database Directus configurabile
 - [] una pagina di records configurabile
+
+# Tags documentation
+
+## Map
+
+**Parameters**
+- `path2geojson` (required if `dTable` id not provided): relative or full path to a geojson file to use for the map creation
+- `dTable` (required, if `path2geojson` is not provided): name of the Directus table containing geographical data
+- `dToken` (optional):  Directus access token, required if table is not public. If not proved GATSBY_DIRECTUS_TOKEN environment variable will be used
+- `dFilter` (optional): Directus filter to apply to dTable
+- `popupTemplate` (optional): function that accepts as a paramater an object with a GeoJson feature and returns an HTML string to use as text for the map popup.
+Example: ```
+(feature) => {
+  return `<p>
+    <strong>${feature.properties.name}</strong>
+    <br>
+    ${feature.properties.type}</p>
+    <hr />
+    <a href="${feature.properties.url}">Info</a>`;
+}
+```
+- `baseMaps` (optional): Array of baselayers to add to the map, other than OpenStreetMap. Each element should be provided as an object, containing the url and the attributtion keys.
+Example: ```
+baseMaps={[
+  {
+    "name": "Open Street Map",
+    "url": "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    "attribution": `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors`
+  },
+]}
+```

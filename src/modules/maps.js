@@ -1,35 +1,44 @@
 import React, { useState, useEffect } from "react"
-import { MapContainer, TileLayer, GeoJSON } from "react-leaflet"
+import { MapContainer, TileLayer, GeoJSON, LayersControl } from "react-leaflet"
 
-function onEachFeature(feature, layer) {
-  let popupContent =
-    "<pre>" + JSON.stringify(feature.properties.toponimo, null, " ") + "</pre>"
-  layer.bindPopup(popupContent)
-}
+const Mappa = (props) => {
 
-const Mappa = () => {
   // Client-side Runtime Data Fetching
   // Stato per memorizzare i dati ottenuti dall'API
   // in dati viene salvato il risultato di impostaDati
-  const [dati, impostaDati] = useState([])
+  const [dati, impostaDati] = useState([]);
   // Stato per gestire lo stato di caricamento
-  const [caricamento, impostaCaricamento] = useState(true)
+  const [isLoading, setIsLoading] = useState(true);
   // Stato per gestire lo stato di errore
-  const [errore, impostaErrore] = useState(null)
+  const [errore, impostaErrore] = useState(null);
+
+  // Dependency check
+  if (!props.path2geojson && !props.dTable) {
+    impostaErrore({"message": "Error in building map. No source found for the data: either dTable or path2geojson parameters are required"});
+  }
+
+  if (props.dTable && !props.dToken){
+    impostaErrore({"message": "Directus token is missing"});
+  }
+  if(!props.baseMaps){
+    props.baseMaps = [];
+  }
+
 
   // useEffect per ottenere dati quando il componente viene montato
   useEffect(() => {
-    const ottieniDati = async () => {
+    
+    const getRemoteData = async () => {
       try {
-        // Imposta lo stato di caricamento a true durante il recupero dei dati
-        impostaCaricamento(true)
+        // Imposta lo stato di isLoading a true durante il recupero dei dati
+        setIsLoading(true)
         // Ottieni i dati dall'API
         const risposta = await fetch(
           // @eiacopini: l'URL deve essere parametrizzata
-          `https://landscapearchaeology.eu/db/${process.env.GATSBY_DIRECTUS_MAP_ENDPOINT}`,
+          `https://landscapearchaeology.eu/db/items/${props.dTable}`,
           {
             headers: {
-              Authorization: `Bearer ${process.env.GATSBY_DIRECTUS_MAP_TOKEN}`, // Aggiungi il token all'header
+              Authorization: `Bearer ${props.dToken}`, // Aggiungi il token all'header
             },
           }
         )
@@ -65,22 +74,24 @@ const Mappa = () => {
         // Se si verifica un errore, aggiorna lo stato di errore
         impostaErrore(errore)
       } finally {
-        // Imposta lo stato di caricamento a false quando il recupero è completato
-        impostaCaricamento(false)
+        // Imposta lo stato di isLoading a false quando il recupero è completato
+        setIsLoading(false)
       }
     }
 
-    // Chiama la funzione ottieniDati quando il componente viene montato
-    ottieniDati()
-  }, []) // L'array di dipendenze vuoto assicura che questo effetto venga eseguito solo una volta, simile a componentDidMount
+    if(!errore){
+      // Chiama la funzione getRemoteData quando il componente viene montato
+      getRemoteData()
+    }
+  }, [props, errore]) // L'array di dipendenze vuoto assicura che questo effetto venga eseguito solo una volta, simile a componentDidMount
 
-  // Renderizza il componente in base agli stati di caricamento ed errore
-  if (caricamento) {
-    return <div>Caricamento...</div>
+  // Renderizza il componente in base agli stati di isLoading ed errore
+  if (isLoading) {
+    return <div>Loading...</div>
   }
 
   if (errore) {
-    return <div>Errore: {errore.message}</div>
+    return <div className="text-danger">{errore.message}</div>
   }
 
   // Renderizza il componente con i dati ottenuti
@@ -92,11 +103,29 @@ const Mappa = () => {
       zoom={9}
       scrollWheelZoom={false}
     >
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
-      <GeoJSON data={dati} onEachFeature={onEachFeature} />
+      <LayersControl position="topright">
+
+        <LayersControl.Overlay name="Cambiare nome!!!" checked>
+          <GeoJSON data={dati} onEachFeature={(feature, layer) =>  layer.bindPopup(props.popupTemplate(feature)) } />
+        </LayersControl.Overlay>
+        
+        <LayersControl.BaseLayer checked name="Open Street Map">
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          { props.baseMaps.map( el => {
+            return <>
+              <LayersControl.BaseLayer checked name={el.name}>
+                <TileLayer
+                attribution={el.attribution}
+                url={el.url}
+              />
+              </LayersControl.BaseLayer>
+            </>
+          })}
+        </LayersControl.BaseLayer>
+      </LayersControl>
     </MapContainer>
   )
 }
