@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, Fragment } from "react"
 import { MapContainer, TileLayer, GeoJSON, LayersControl } from "react-leaflet"
 
 const Mappa = (props) => {
@@ -34,8 +34,7 @@ const Mappa = (props) => {
         setIsLoading(true)
         // Ottieni i dati dall'API
         const risposta = await fetch(
-          // @eiacopini: l'URL deve essere parametrizzata
-          `https://landscapearchaeology.eu/db/items/${props.dTable}`,
+          props.dTable,
           {
             headers: {
               Authorization: `Bearer ${props.dToken}`, // Aggiungi il token all'header
@@ -50,14 +49,7 @@ const Mappa = (props) => {
           type: "FeatureCollection",
           features: risultato.data.map(item => ({
             type: "Feature",
-            properties: {
-              id: item.id,
-              // Add other properties as needed
-              toponimo: item.toponimo,
-              provincia: item.provincia,
-              comune: item.comune,
-              // Add more properties here
-            },
+            properties: item,
             geometry: {
               type: "Point",
               coordinates: [
@@ -105,7 +97,7 @@ const Mappa = (props) => {
     >
       <LayersControl position="topright">
 
-        <LayersControl.Overlay name="Cambiare nome!!!" checked>
+        <LayersControl.Overlay name={props.name} checked>
           <GeoJSON data={dati} onEachFeature={(feature, layer) =>  layer.bindPopup(props.popupTemplate(feature)) } />
         </LayersControl.Overlay>
         
@@ -114,15 +106,15 @@ const Mappa = (props) => {
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          { props.baseMaps.map( el => {
-            return <>
+          { props.baseMaps.map( (el, i) => {
+            return <Fragment key={i}>
               <LayersControl.BaseLayer checked name={el.name}>
                 <TileLayer
                 attribution={el.attribution}
                 url={el.url}
               />
               </LayersControl.BaseLayer>
-            </>
+            </Fragment>
           })}
         </LayersControl.BaseLayer>
       </LayersControl>

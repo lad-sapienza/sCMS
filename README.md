@@ -294,6 +294,7 @@ module.exports = {
 **Parameters**
 - `path2geojson` (required if `dTable` id not provided): relative or full path to a geojson file to use for the map creation
 - `dTable` (required, if `path2geojson` is not provided): name of the Directus table containing geographical data
+- `name` (required): Name of layer to show in the Layer Control
 - `dToken` (optional):  Directus access token, required if table is not public. If not proved GATSBY_DIRECTUS_TOKEN environment variable will be used
 - `dFilter` (optional): Directus filter to apply to dTable
 - `popupTemplate` (optional): function that accepts as a paramater an object with a GeoJson feature and returns an HTML string to use as text for the map popup.

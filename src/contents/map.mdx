@@ -23,11 +23,12 @@ voluptas nulla pariatur?
 import Mappa from '../modules/maps.js'
 
 {<Mappa 
-  dTable="toponimi" 
+  dTable="https://landscapearchaeology.eu/db/items/toponimi"
+  name="Toponimi" 
   dToken="sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E"
-  popupTemplate={(feature) => {
-    return `<p><strong>${feature.properties.toponimo}</strong>`;
-  }}
+  popupTemplate={
+    (feature) => { return `<p><strong>${feature.properties.toponimo}</strong>`; }
+  }
   baseMaps={[
     {
       "name": "Anche io sono OSM",
