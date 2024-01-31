@@ -3,9 +3,9 @@ import { graphql } from "gatsby"
 import Layout from "../components/layout"
 import { Container } from "react-bootstrap"
 import { MDXProvider } from "@mdx-js/react"
-import { Link } from "gatsby"
+//import { Mappa } from "../components/maps"
 
-const shortcodes = { Link } // Provide common components here
+const shortcodes = {} // Provide common components here
 
 export default function PageTemplate({ data, children }) {
   return (

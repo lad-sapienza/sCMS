@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react"
-import Layout from "../components/layout"
-import DataTable from "react-data-table-component"
-import { Container } from "react-bootstrap"
+import { MapContainer, TileLayer, GeoJSON } from "react-leaflet"
 
-const MappaPage2 = () => {
+function onEachFeature(feature, layer) {
+  let popupContent =
+    "<pre>" + JSON.stringify(feature.properties.toponimo, null, " ") + "</pre>"
+  layer.bindPopup(popupContent)
+}
+
+const Mappa = () => {
   // Client-side Runtime Data Fetching
   // Stato per memorizzare i dati ottenuti dall'API
   // in dati viene salvato il risultato di impostaDati
@@ -21,7 +25,8 @@ const MappaPage2 = () => {
         impostaCaricamento(true)
         // Ottieni i dati dall'API
         const risposta = await fetch(
-          `https://${process.env.GATSBY_DIRECTUS_URL}/${process.env.GATSBY_DIRECTUS_MAP_ENDPOINT}`,
+          // @eiacopini: l'URL deve essere parametrizzata
+          `https://landscapearchaeology.eu/db/${process.env.GATSBY_DIRECTUS_MAP_ENDPOINT}`,
           {
             headers: {
               Authorization: `Bearer ${process.env.GATSBY_DIRECTUS_MAP_TOKEN}`, // Aggiungi il token all'header
@@ -31,7 +36,31 @@ const MappaPage2 = () => {
         // Parsa la risposta JSON
         const risultato = await risposta.json()
         // Aggiorna lo stato con i dati ottenuti
-        impostaDati(risultato.data || [])
+        // Converti i dati in formato GeoJSON
+        const geojsonData = {
+          type: "FeatureCollection",
+          features: risultato.data.map(item => ({
+            type: "Feature",
+            properties: {
+              id: item.id,
+              // Add other properties as needed
+              toponimo: item.toponimo,
+              provincia: item.provincia,
+              comune: item.comune,
+              // Add more properties here
+            },
+            geometry: {
+              type: "Point",
+              coordinates: [
+                item.coordinates.coordinates[0], // longitude
+                item.coordinates.coordinates[1], // latitude
+              ],
+            },
+          })),
+        }
+
+        // Aggiorna lo stato con i dati ottenuti
+        impostaDati(geojsonData)
       } catch (errore) {
         // Se si verifica un errore, aggiorna lo stato di errore
         impostaErrore(errore)
@@ -54,36 +83,22 @@ const MappaPage2 = () => {
     return <div>Errore: {errore.message}</div>
   }
 
-  // @eiacopini: parametrizzare oppure chiedere agli utenti di creare un componente
-  const colonne = [
-    {
-      name: "ID",
-      selector: "id",
-      sortable: true,
-    },
-    {
-      name: "Titolo",
-      selector: "toponimo",
-      sortable: true,
-      cell: row => (
-        <a href={`/articles?toponimo=${encodeURIComponent(row.toponimo)}`}>
-          {row.toponimo}
-        </a>
-      ),
-    },
-  ]
-
   // Renderizza il componente con i dati ottenuti
   return (
-    <Layout>
-      <Container>
-        <div>
-          <h1>Dati dall'API organizzate in datatable:</h1>
-          <DataTable columns={colonne} data={dati} pagination />
-        </div>
-      </Container>
-    </Layout>
+    <MapContainer
+      style={{ height: "800px" }}
+      // @eiacopini: il centro e zoom può esere calcolato dai dati, forse
+      center={[42.977538253858064, 13.35383086262221]}
+      zoom={9}
+      scrollWheelZoom={false}
+    >
+      <TileLayer
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+      <GeoJSON data={dati} onEachFeature={onEachFeature} />
+    </MapContainer>
   )
 }
 
-export default MappaPage2
+export default Mappa
