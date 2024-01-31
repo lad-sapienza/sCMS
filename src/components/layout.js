@@ -3,7 +3,7 @@ import { useStaticQuery, graphql } from "gatsby"
 
 import Navbar from "./navbar"
 import Slide from "./slide"
-import FooterPage from "./footer"
+import Footer from "./footer"
 import "./layout.scss"
 
 const Layout = ({ children }) => {
@@ -23,7 +23,7 @@ const Layout = ({ children }) => {
         <Navbar siteTitle={data.site.siteMetadata?.title || `Title`} />
         <Slide />
         <main>{children}</main>
-        <FooterPage />
+        <Footer />
       </div>
     </>
   )

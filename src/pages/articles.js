@@ -10,6 +10,7 @@ const ToponimoPage = ({ location }) => {
     const getFilteredData = async () => {
       try {
         // Ottieni il parametro toponimo dalla query string
+        // @eiacopini: `toponimo` deve essere parametrizzato
         const toponimo = new URLSearchParams(location.search).get("toponimo")
 
         // Verifica se il parametro è presente
@@ -17,6 +18,7 @@ const ToponimoPage = ({ location }) => {
           throw new Error("Parametro toponimo mancante")
         }
 
+        // @eiacopini: l'URL deve essere parametrizzata
         const response = await fetch(
           `https://landscapearchaeology.eu/db/${process.env.GATSBY_DIRECTUS_MAP_ENDPOINT}?filter[toponimo][_icontains]=${toponimo}`,
 

@@ -21,6 +21,7 @@ const MappaPage2 = () => {
         impostaCaricamento(true)
         // Ottieni i dati dall'API
         const risposta = await fetch(
+          // @eiacopini: l'URL deve essere parametrizzata
           `https://landscapearchaeology.eu/db/${process.env.GATSBY_DIRECTUS_MAP_ENDPOINT}`,
           {
             headers: {
@@ -54,6 +55,7 @@ const MappaPage2 = () => {
     return <div>Errore: {errore.message}</div>
   }
 
+  // @eiacopini: parametrizzare oppure chiedere agli utenti di creare un componente
   const colonne = [
     {
       name: "ID",

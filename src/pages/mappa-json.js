@@ -20,6 +20,7 @@ import datiMappa from "../dati/toponimi.json"
 
 function onEachFeature(feature, layer) {
   let popupContent =
+    // @eiacopini: invece di mettere `nome`, forse ofireri una impostazione per specificare i campi che si voglioni in popup
     "<pre>" + JSON.stringify(feature.properties.nome, null, " ") + "</pre>"
   layer.bindPopup(popupContent)
 }
@@ -28,6 +29,7 @@ const Mappa = () => (
   <Layout>
     <MapContainer
       style={{ height: "800px" }}
+      // @eiacopini: il centro e zoom può esere calcolato dai dati, forse
       center={[41.90224270877692, 12.473489727658315]}
       zoom={9}
       scrollWheelZoom={false}
