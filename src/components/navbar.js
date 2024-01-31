@@ -1,8 +1,23 @@
 import * as React from "react"
 import { Container, Nav, Navbar } from "react-bootstrap"
+import { withPrefix } from "gatsby"
 import styled from "styled-components"
+import { useStaticQuery, graphql } from "gatsby"
 
 function MyNavbar(props) {
+  const data = useStaticQuery(graphql`
+    {
+      allMdx {
+        nodes {
+          id
+          frontmatter {
+            slug
+            title
+          }
+        }
+      }
+    }
+  `)
   return (
     <Menu>
       <Navbar expand="lg" className="bg-body-tertiary">
@@ -11,12 +26,31 @@ function MyNavbar(props) {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link href="/">Home</Nav.Link>
-              <Nav.Link href="/introduction-to-gatsby">Page MDX</Nav.Link>
-              <Nav.Link href="/searchPage">Search</Nav.Link>
-              <Nav.Link href="/datatable">Datatable</Nav.Link>
-              <Nav.Link href="/mappa-json">Map GeoJson data</Nav.Link>
-              <Nav.Link href="/mappa-directus">Map Directus data</Nav.Link>
+              <Nav.Link href="/" className="nav-item my-2">
+                Home
+              </Nav.Link>
+              {data.allMdx.nodes.map((menuItem, index) => (
+                <div className="containerLink" key={index}>
+                  <Nav.Link
+                    href={withPrefix(`/${menuItem.frontmatter.slug}`)}
+                    className="nav-item my-2"
+                  >
+                    {menuItem.frontmatter.title}
+                  </Nav.Link>
+                </div>
+              ))}
+              {/* <Nav.Link href="/searchPage" className="nav-item my-2">
+                Search
+              </Nav.Link>
+              <Nav.Link href="/datatable" className="nav-item my-2">
+                Datatable
+              </Nav.Link>
+              <Nav.Link href="/mappa-json" className="nav-item my-2">
+                Map GeoJson data
+              </Nav.Link>
+              <Nav.Link href="/mappa-directus" className="nav-item my-2">
+                Map Directus data
+              </Nav.Link> */}
             </Nav>
           </Navbar.Collapse>
         </Container>
