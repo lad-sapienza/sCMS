@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import DataTable from "react-data-table-component"
 import { Container } from "react-bootstrap"
+import styled from "styled-components"
 
 const DataTb = props => {
   // Client-side Runtime Data Fetching
@@ -65,9 +66,23 @@ const DataTb = props => {
   // Renderizza il componente con i dati ottenuti
   return (
     <Container>
-      <DataTable columns={props.dColumns} data={dati} pagination />
+      <Table>
+        <DataTable columns={props.dColumns} data={dati} pagination />
+      </Table>
     </Container>
   )
 }
 
+//style
+const Table = styled.section`
+  a {
+    color: #0000;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: #ececec;
+    text-decoration: none;
+  }
+`
 export default DataTb

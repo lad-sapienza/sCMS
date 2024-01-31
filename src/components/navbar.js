@@ -8,12 +8,7 @@ function MyNavbar(props) {
   const data = useStaticQuery(graphql`
     {
       allMdx(
-        filter: {
-          frontmatter: {
-            menu_position: { gt: 0 }
-            publish_in_menu: { eq: true }
-          }
-        }
+        filter: { frontmatter: { menu_position: { gt: 0 } } }
         sort: { frontmatter: { menu_position: ASC } }
       ) {
         nodes {
