@@ -26,7 +26,7 @@ import Mappa from "../modules/maps.js"
   <Mappa
     path2geojson="../dati/toponimi.json"
     popupTemplate={
-      (feature) => { return `<p><strong>${feature.properties.toponimo}</strong>`; }
+      (feature) => { return `<p><strong>${feature.properties.nome}</strong><br />(${feature.properties.comune})`; }
     }
 
   />

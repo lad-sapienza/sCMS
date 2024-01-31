@@ -109,7 +109,7 @@ const Mappa = (props) => {
       <LayersControl position="topright">
 
         <LayersControl.Overlay name={props.name} checked>
-          <GeoJSON data={dati} onEachFeature={(feature, layer) =>  layer.bindPopup(props.popupTemplate(feature)) } />
+          <GeoJSON data={dati} onEachFeature={(feature, layer) => layer.bindPopup(props.popupTemplate(feature)) } />
         </LayersControl.Overlay>
         
         <LayersControl.BaseLayer checked name="Open Street Map">
