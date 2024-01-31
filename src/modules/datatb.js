@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react"
-import Layout from "../components/layout"
 import DataTable from "react-data-table-component"
 import { Container } from "react-bootstrap"
 
-const MappaPage2 = () => {
+const DataTb = () => {
   // Client-side Runtime Data Fetching
   // Stato per memorizzare i dati ottenuti dall'API
   // in dati viene salvato il risultato di impostaDati
@@ -75,15 +74,10 @@ const MappaPage2 = () => {
 
   // Renderizza il componente con i dati ottenuti
   return (
-    <Layout>
-      <Container>
-        <div>
-          <h1>Dati dall'API organizzate in datatable:</h1>
-          <DataTable columns={colonne} data={dati} pagination />
-        </div>
-      </Container>
-    </Layout>
+    <Container>
+      <DataTable columns={colonne} data={dati} pagination />
+    </Container>
   )
 }
 
-export default MappaPage2
+export default DataTb

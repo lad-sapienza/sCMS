@@ -7,9 +7,14 @@ import { useStaticQuery, graphql } from "gatsby"
 function MyNavbar(props) {
   const data = useStaticQuery(graphql`
     {
-      allMdx (
-        filter: {frontmatter: {menu_position: {gt: 0}}}
-        sort: {frontmatter: {menu_position: ASC}}
+      allMdx(
+        filter: {
+          frontmatter: {
+            menu_position: { gt: 0 }
+            publish_in_menu: { eq: true }
+          }
+        }
+        sort: { frontmatter: { menu_position: ASC } }
       ) {
         nodes {
           id
@@ -39,18 +44,6 @@ function MyNavbar(props) {
                   </Nav.Link>
                 </div>
               ))}
-              {/* <Nav.Link href="/searchPage" className="nav-item my-2">
-                Search
-              </Nav.Link>
-              <Nav.Link href="/datatable" className="nav-item my-2">
-                Datatable
-              </Nav.Link>
-              <Nav.Link href="/mappa-json" className="nav-item my-2">
-                Map GeoJson data
-              </Nav.Link>
-              <Nav.Link href="/mappa-directus" className="nav-item my-2">
-                Map Directus data
-              </Nav.Link> */}
             </Nav>
           </Navbar.Collapse>
         </Container>

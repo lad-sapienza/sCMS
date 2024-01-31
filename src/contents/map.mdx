@@ -4,6 +4,7 @@ date: "2023-10-01"
 slug: "modulo-mappa"
 description: "Learn the basics of Gatsby and its features."
 menu_position: 2
+publish_in_menu: true
 ---
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
@@ -20,20 +21,20 @@ ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptat
 velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo
 voluptas nulla pariatur?
 
-import Mappa from '../modules/maps.js'
+import Mappa from "../modules/maps.js"
 
-{<Mappa 
-  dTable="https://landscapearchaeology.eu/db/items/toponimi"
-  name="Toponimi" 
-  dToken="sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E"
-  popupTemplate={
-    (feature) => { return `<p><strong>${feature.properties.toponimo}</strong>`; }
-  }
-  baseMaps={[
-    {
-      "name": "Anche io sono OSM",
-      "url": "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-      "attribution": `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors`
-  }
-  ]}
-   />}
+{<Mappa
+dTable="https://landscapearchaeology.eu/db/items/toponimi"
+name="Toponimi"
+dToken="sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E"
+popupTemplate={
+(feature) => { return `<p><strong>${feature.properties.toponimo}</strong>`; }
+}
+baseMaps={[
+{
+"name": "Anche io sono OSM",
+"url": "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+"attribution": `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors`
+}
+]}
+/>}
