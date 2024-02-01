@@ -50,13 +50,10 @@ const SearchPage = props => {
         />
         <button type="submit">Search</button>
       </form>
-      <br />
-      <hr />
-      <h1>Risultati</h1>
-      <hr />
-      <br />
-
+      
       {searchResults && (
+        <>
+        <h1>Risultati</h1>
         <ul>
           {searchResults.data.map((result, index) => (
             <li key={index}>
@@ -65,6 +62,7 @@ const SearchPage = props => {
             </li>
           ))}
         </ul>
+        </>
       )}
       <br />
       <br />

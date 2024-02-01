@@ -2,10 +2,10 @@ import React, { useState, useEffect, Fragment } from "react"
 import { MapContainer, TileLayer, GeoJSON, LayersControl } from "react-leaflet"
 import bbox from "geojson-bbox"
 
-const getRemoteData = async (endPoint, token) => {
+const getDirectusData = async (endPoint, token) => {
   const response = await fetch(endPoint, {
     headers: {
-      Authorization: `Bearer ${token}`, // Aggiungi il token all'header
+      Authorization: `Bearer ${token}`,
     },
   })
   const result = await response.json()
@@ -29,8 +29,8 @@ const getRemoteData = async (endPoint, token) => {
 
 const getLocalGeoJSON = async path2geojson => {
   try {
-    const risposta = await fetch(path2geojson)
-    const geoJSON = await risposta.json()
+    const response = await fetch(path2geojson)
+    const geoJSON = await response.json()
     return geoJSON  
   } catch (error) {
     throw Error('Error getting local JSON file');
@@ -39,7 +39,7 @@ const getLocalGeoJSON = async path2geojson => {
 }
 
 const MyMap = props => {
-  const [dati, impostaDati] = useState()
+  const [geojsonData, setGeojson] = useState()
   const [extent, setExtent] = useState([0, 0, 0, 0])
   const [isLoading, setIsLoading] = useState(false)
   const [errore, impostaErrore] = useState(false)
@@ -50,7 +50,7 @@ const MyMap = props => {
     if (props.path2geojson) {
       getLocalGeoJSON(props.path2geojson)
         .then(geoJSON => {
-          impostaDati(geoJSON)
+          setGeojson(geoJSON)
           setExtent(bbox(geoJSON))
           setIsLoading(false)
         })
@@ -88,16 +88,16 @@ const MyMap = props => {
         setIsLoading(false)
         return
       }
-      getRemoteData(endPoint, token)
+      getDirectusData(endPoint, token)
         .then(geoJSON => {
-          impostaDati(geoJSON)
+          setGeojson(geoJSON)
           setExtent(bbox(geoJSON))
           setIsLoading(false)
         })
         .catch(err => {
           setIsLoading(false)
           impostaErrore({ message: "Error getting remote data", stack: err })
-        })
+        });
     }
   }, [props]) // L'array di dipendenze vuoto assicura che questo effetto venga eseguito solo una volta, simile a componentDidMount
 
@@ -111,7 +111,6 @@ const MyMap = props => {
     return <div className="text-danger">{errore.message}</div>
   }
 
-  // Renderizza il componente con i dati ottenuti
   return (
     <MapContainer
       style={{ height: "800px" }}
@@ -128,7 +127,7 @@ const MyMap = props => {
       <LayersControl position="topright">
         <LayersControl.Overlay name={props.name} checked>
           <GeoJSON
-            data={dati}
+            data={geojsonData}
             onEachFeature={(feature, layer) =>
               layer.bindPopup(props.popupTemplate(feature.properties))
             }

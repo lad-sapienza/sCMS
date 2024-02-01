@@ -2,31 +2,43 @@ import * as React from "react"
 import { StaticImage } from "gatsby-plugin-image"
 import styled from "styled-components"
 import { Link } from "gatsby"
-import { Col, Container, Row } from "react-bootstrap"
+import { Container } from "react-bootstrap"
 
 const FooterPage = () => {
   return (
     <Footer>
-      <Container fluid>
-        <Row className="px-5 pt-5">
-          <Col sm={6} xs={12} className="d-flex ">
-            <div>
-              <Link to="/">
-                <StaticImage
-                  src="../images/lad.png"
-                  width={100}
-                  quality={30}
-                  formats={["AUTO", "WEBP"]}
-                  alt="LAD: Laboratorio di Archeologia Digitale alla Sapienza"
-                  className="img-fluid"
-                />
-              </Link>
-              <p>Laboratorio di Archeologia Digitale alla Sapienza</p>
-            </div>
-          </Col>
-
-          
-        </Row>
+      <Container>
+        <div class="d-flex flex-row align-items-center mb-3">
+          <div class="p-3">
+            <Link to="/">
+              <StaticImage
+                src="../images/scms-lad.png"
+                width={100}
+                quality={80}
+                formats={["AUTO", "WEBP"]}
+                alt="LAD: Laboratorio di Archeologia Digitale alla Sapienza"
+                className="img-fluid"
+              />
+            </Link>
+          </div>
+          <div class="p-3 border-start border-primary">
+            <p className="p-s-3">
+              <strong>s:CMS</strong> è un progetto ideato e svuluppato dal{" "}
+              <br />
+              <a href="https://lad.saras.uniroma1.it" target="_blank" rel="noreferrer">
+                LAD: Laboratorio di Archeologia Digitale alla Sapienza
+              </a>
+              <br />
+              <a href="https://github.com/lab-archeologia-digitale/gatsby-directus-ui" target="_blank" rel="noreferrer">
+                Code
+              </a>
+              &nbsp;|&nbsp;
+              <a href="https://github.com/lab-archeologia-digitale/gatsby-directus-ui/issues" target="_blank" rel="noreferrer">
+                Issues
+              </a>
+            </p>
+          </div>
+        </div>
       </Container>
     </Footer>
   )
@@ -35,23 +47,11 @@ const FooterPage = () => {
 //style
 const Footer = styled.section`
   background-color: #ececec;
-  border-top: #000 solid .5rem;
+  border-top: #000 solid 0.5rem;
   min-height: auto;
   margin-top: 3rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
-  
-  a {
-    color: #000;
-    text-decoration: none;
-    font-size: 0.7rem;
-  
-    &:hover {
-      color: #ddd;
-      text-decoration: none;
-      font-size: 0.7rem;
-    }
-  }
 `
 
 export default FooterPage

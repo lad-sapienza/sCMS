@@ -13,8 +13,8 @@ require("dotenv").config({
 
 module.exports = {
   siteMetadata: {
-    title: `Directus Gatsby UI`,
-    description: `A simple starter to get up and developing quickly with Gatsby 5 and Bootstrap 5. `,
+    title: `s:CMS`,
+    description: `A simple-to-use content management system for static sites, based on Gatsby 5 and Bootstrap 5. `,
     author: `Julian Bogdani <julian.bogdani@uniroma1.it>`,
     siteUrl: `https://github.com/lab-archeologia-digitale/gatsby-directus-ui#readme`,
   },
@@ -52,7 +52,7 @@ module.exports = {
         // https://css-tricks.com/meta-theme-color-and-trickery/
         // theme_color: `#663399`,
         display: `minimal-ui`,
-        icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
+        icon: `src/images/scms.png`, // This path is relative to the root of the site.
       },
     },
     {
