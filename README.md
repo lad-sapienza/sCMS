@@ -297,15 +297,15 @@ module.exports = {
 - `name` (required): Name of layer to show in the Layer Control
 - `dToken` (optional):  Directus access token, required if table is not public. If not proved GATSBY_DIRECTUS_TOKEN environment variable will be used
 - `dFilter` (optional): Directus filter to apply to dTable
-- `popupTemplate` (optional): function that accepts as a paramater an object with a GeoJson feature and returns an HTML string to use as text for the map popup.
+- `popupTemplate` (optional): function that accepts as a paramater an object with a GeoJson feature properties or a plain object with key:value attributes and returns an HTML string to use as text for the map popup.
 Example: ```
-(feature) => {
+(attribs) => {
   return `<p>
-    <strong>${feature.properties.name}</strong>
+    <strong>${attribs.name}</strong>
     <br>
     ${feature.properties.type}</p>
     <hr />
-    <a href="${feature.properties.url}">Info</a>`;
+    <a href="${attribs.url}">Info</a>`;
 }
 ```
 - `baseMaps` (optional): Array of baselayers to add to the map, other than OpenStreetMap. Each element should be provided as an object, containing the url and the attributtion keys.

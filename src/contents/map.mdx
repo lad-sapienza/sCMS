@@ -26,7 +26,7 @@ import Mappa from "../modules/maps.js"
   <Mappa
     path2geojson="../dati/toponimi.json"
     popupTemplate={
-      (feature) => { return `<p><strong>${feature.properties.nome}</strong><br />(${feature.properties.comune})`; }
+      (attribs) => { return `<p><strong>${attribs.nome}</strong><br />(${attribs.comune})`; }
     }
 
   />
@@ -41,7 +41,7 @@ import Mappa from "../modules/maps.js"
   name="Toponimi"
   dToken="sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E"
   popupTemplate={
-    (feature) => { return `<p><strong>${feature.properties.toponimo}</strong>`; }
+    (attribs) => { return `<p><strong>${attribs.toponimo}</strong>`; }
   }
   baseMaps={[
     {
