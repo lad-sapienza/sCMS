@@ -20,26 +20,11 @@ ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptat
 velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo
 voluptas nulla pariatur?
 
-Esempio di creazione mappa da un file statico
-```
-import Mappa from "../modules/maps.js"
+import MyMap from "../modules/MyMap.js"
 
 {
-  <Mappa
-    path2geojson="../data/toponimi.json"
-    popupTemplate={
-      (attribs) => { return `<p><strong>${attribs.nome}</strong><br />(${attribs.comune})`; }
-    }
-
-  />
-}
-```
-
-import Mappa from "../modules/maps.js"
-
-{
-  <Mappa
-    path2geojson="../data/toponimi.json"
+  <MyMap
+    path2geojson="../data/toponimi.geojson"
     popupTemplate={
       (attribs) => { return `<p><strong>${attribs.nome}</strong><br />(${attribs.comune})`; }
     }
@@ -49,12 +34,10 @@ import Mappa from "../modules/maps.js"
 
 ---
 
-Esempio di creazione mappa da una tabella directus
-```
-<Mappa
-  dTable="https://landscapearchaeology.eu/db/items/toponimi"
+{
+<MyMap
+  dTable="toponimi"
   name="Toponimi"
-  dToken="sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E"
   popupTemplate={
     (attribs) => { return `<p><strong>${attribs.toponimo}</strong>`; }
   }
@@ -66,13 +49,15 @@ Esempio di creazione mappa da una tabella directus
     }
   ]}
 />
-```
+}
+
+---
 
 {
-<Mappa
-  dTable="https://landscapearchaeology.eu/db/items/toponimi"
-  name="Toponimi"
+<MyMap
+  dEndPoint="https://landscapearchaeology.eu/db/items/toponimi"
   dToken="sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E"
+  name="Toponimi"
   popupTemplate={
     (attribs) => { return `<p><strong>${attribs.toponimo}</strong>`; }
   }
