@@ -45,7 +45,7 @@ const FooterPage = () => {
 }
 
 //style
-const Footer = styled.section`
+const Footer = styled.div`
   background-color: #ececec;
   border-top: #000 solid 0.5rem;
   min-height: auto;
