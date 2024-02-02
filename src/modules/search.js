@@ -1,8 +1,7 @@
-import React, { useState } from "react"
+import React, { Fragment, useState } from "react"
 import Seo from "../components/seo"
-import { Container } from "react-bootstrap"
 
-const SearchPage = props => {
+const Search = props => {
   const [query, setQuery] = useState("")
   const [searchResults, setSearchResults] = useState(null)
   // Stato per gestire lo stato di errore
@@ -39,21 +38,30 @@ const SearchPage = props => {
     }
   }
   return (
-    <Container>
+    <Fragment>
       <Seo title="Ricerca" />
-      <form onSubmit={handleSubmit} className="mt-5">
-        <input
-          type="text"
-          value={query}
-          onChange={e => setQuery(e.target.value)}
-          placeholder="Enter your search query"
-        />
-        <button type="submit">Search</button>
+      <form onSubmit={handleSubmit} className="mt-5 row">
+        <div class="col-auto">
+          <label htmlFor="search_input" class="visually-hidden">Search</label>
+          <input
+            id="search_input"
+            type="text"
+            className="form-control"
+            value={query}
+            onChange={e => setQuery(e.target.value)}
+            placeholder="Search the database for something"
+          />
+        </div>
+
+        <div class="col-auto">
+          <button type="submit" className="btn btn-primary">Search</button>
+        </div>
+        
       </form>
       
       {searchResults && (
-        <>
-        <h1>Risultati</h1>
+        <Fragment>
+        <h1 className="mt-5">Risultati</h1>
         <ul>
           {searchResults.data.map((result, index) => (
             <li key={index}>
@@ -62,14 +70,10 @@ const SearchPage = props => {
             </li>
           ))}
         </ul>
-        </>
+        </Fragment>
       )}
-      <br />
-      <br />
-      <br />
-      <br />
-    </Container>
+    </Fragment>
   )
 }
 
-export default SearchPage
+export default Search
