@@ -76,6 +76,9 @@ const MyMap = props => {
         setIsLoading(false)
         return
       }
+      if (props.dFilter){
+        endPoint += `?${props.dFilter}`;
+      }
       // Define Directus token
       const token = props.dToken
         ? props.dToken
