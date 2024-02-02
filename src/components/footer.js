@@ -8,8 +8,8 @@ const FooterPage = () => {
   return (
     <Footer>
       <Container>
-        <div class="d-flex flex-row align-items-center mb-3">
-          <div class="p-3">
+        <div className="d-flex flex-row align-items-center mb-3">
+          <div className="p-3">
             <Link to="/">
               <StaticImage
                 src="../images/scms-lad.png"
@@ -21,7 +21,7 @@ const FooterPage = () => {
               />
             </Link>
           </div>
-          <div class="p-3 border-start border-primary">
+          <div className="p-3 border-start border-primary">
             <p className="p-s-3">
               <strong>s:CMS</strong> è un progetto ideato e svuluppato dal{" "}
               <br />
