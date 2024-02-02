@@ -61,7 +61,7 @@ function Slide() {
 }
 
 //style
-const Slider = styled.section`
+const Slider = styled.div`
   margin-bottom: 3rem; 
   border-bottom: #3e281c solid .5rem;
   

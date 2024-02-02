@@ -48,7 +48,7 @@ function MyNavbar(props) {
 }
 
 //style
-const Menu = styled.section`
+const Menu = styled.div`
   .bg-body-tertiary {
     background-color: #ececec !important;
   }

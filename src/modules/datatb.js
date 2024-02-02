@@ -74,7 +74,7 @@ const DataTb = props => {
 }
 
 //style
-const Table = styled.section`
+const Table = styled.div`
   a,
   a:visited {
     color: #000000;
