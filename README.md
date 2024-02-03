@@ -301,6 +301,8 @@ or
 - `dTable` (required, if `path2geojson` or `dEndPoint` are not provided): name of the Directus table containing geographical data
 
 - `name` (required): Name of layer to show in the Layer Control
+- `height` (optional): Map element height, default value: 800px
+
 - `dFilter` (optional): Directus filter to apply to dTable
 - `popupTemplate` (optional): function that accepts as a paramater an object with a GeoJson feature properties or a plain object with key:value attributes and returns an HTML string to use as text for the map popup.
 Example: ```

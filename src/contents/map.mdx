@@ -1,41 +1,65 @@
 ---
-title: "Modulo Mappa"
+title: "MyMap component"
 date: "2023-10-01"
 slug: "modulo-mappa"
-description: "An example of a map module."
+description: "An easy to use component for building powerful and fully customizable maps"
 menu_position: 2
 ---
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi
-architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas
-sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione
-voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor
-sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt
-ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam,
-quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex
-ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate
-velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo
-voluptas nulla pariatur?
+# MyMap component
+
+`<MyMap />` component can be used in MDX pages to display a dynamic maps, which are fully customisable.
+
+Geodata can be retrieved form a Directus database or any other JSON API, a statically hosted geoJSON file or any GeoJSON file publically available on the Web. The component can be customised via the following parameters.
+
+## Parameters
+
+- `path2geojson` (**required** if `dTable` id not provided): relative or full path to a geojson file to use for the map creation  
+- `dEndPoint` (**required** is `path2geojson` or `dTable` are not defined): full path to a Directus endpoint, complete with table name
+- `dToken` (**required** if `dEndPoint` is provided):  Directus access token, required if table is not public. If not proved GATSBY_DIRECTUS_TOKEN environment variable will be used
+- `dTable` (**required**, if `path2geojson` or `dEndPoint` are not provided): name of the Directus table containing geographical data
+- `name` (**required**): Name of layer containing the vector data shown in the Layer Control
+- `popupTemplate` (**required**): function that accepts as a paramater an object with a GeoJson feature properties or a plain object with key:value attributes and returns an HTML string to use as text for the map popup.
+- `height` (**optional**): Map element height, default value: `800px`
+- `dFilter` (**optional**): Directus filter to apply to dTable
+- `baseMaps` (**optional**): Array of base-layers to add to the map, other than OpenStreetMap which is added by default. Each element should be provided as an object, containing the `name` of the layer, the `url` and the `attributtion` string.
+
+## Examples
 
 import MyMap from "../modules/MyMap.js"
 
-{
-  <MyMap
+<div class="row">
+  <div class="col-sm-4">
+  A map with geogata sourced from a geojson file hosted in the same server: only a (public) local path is needed:
+```html
+<MyMap
+    height="400px"
     path2geojson="../data/toponimi.geojson"
     popupTemplate={
       (attribs) => { return `<p><strong>${attribs.nome}</strong><br />(${attribs.comune})`; }
     }
-
   />
-}
+```
+  </div>
+  <div class="col-sm-8">
+  <MyMap
+    height="400px"
+    path2geojson="../data/toponimi.geojson"
+    popupTemplate={
+      (attribs) => { return `<p><strong>${attribs.nome}</strong><br />(${attribs.comune})`; }
+    }
+  />
+  </div>
+</div>
 
 ---
 
-{
+<div class="row">
+  <div class="col-sm-4">
+```
 <MyMap
+  height="400px"
   dTable="toponimi"
   name="Toponimi"
   popupTemplate={
@@ -49,12 +73,34 @@ import MyMap from "../modules/MyMap.js"
     }
   ]}
 />
-}
+```
+  </div>
+  <div class="col-sm-8">
+<MyMap
+  height="400px"
+  dTable="toponimi"
+  name="Toponimi"
+  popupTemplate={
+    (attribs) => { return `<p><strong>${attribs.toponimo}</strong>`; }
+  }
+  baseMaps={[
+    {
+      "name": "Anche io sono OSM",
+      "url": "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+      "attribution": `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors`
+    }
+  ]}
+/>
+  </div>
+</div>
 
 ---
 
-{
+<div class="row">
+  <div class="col-sm-4">
+```
 <MyMap
+  height="400px"
   dEndPoint="https://landscapearchaeology.eu/db/items/toponimi"
   dToken="sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E"
   name="Toponimi"
@@ -70,4 +116,25 @@ import MyMap from "../modules/MyMap.js"
     }
   ]}
 />
-}
+```
+  </div>
+  <div class="col-sm-8">
+  <MyMap
+  height="400px"
+  dEndPoint="https://landscapearchaeology.eu/db/items/toponimi"
+  dToken="sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E"
+  name="Toponimi"
+  dFilter="filter[provincia][_eq]=Macerata"
+  popupTemplate={
+    (attribs) => { return `<p><strong>${attribs.toponimo}</strong>`; }
+  }
+  baseMaps={[
+    {
+      "name": "Anche io sono OSM",
+      "url": "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+      "attribution": `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors`
+    }
+  ]}
+/>
+  </div>
+</div>

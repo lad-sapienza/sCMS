@@ -83,7 +83,7 @@ const MyMap = props => {
 
   return (
     <MapContainer
-      style={{ height: "800px" }}
+      style={{ height: props.height ? props.height : `800px` }}
       scrollWheelZoom={false}
       center={[0, 0]}
       zoom={8}
