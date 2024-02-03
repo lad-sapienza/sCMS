@@ -27,7 +27,7 @@ selector: (row, i) => row.toponimi,
 sortable: true,
 cell: row => (
 
-<a href={`${window.location.origin}${process.env.NODE_ENV === 'development' ? '' : window.location.pathname}/articles?toponimo=${encodeURIComponent(row.toponimo)}`}>
+<a href={`${window.location.origin}${process.env.NODE_ENV === 'development' ? '' : window.location.pathname}articles?id=${encodeURIComponent(row.id)}`}>
     {row.toponimo}
   </a>
 ),
