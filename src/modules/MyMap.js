@@ -1,42 +1,8 @@
-import React, { useState, useEffect, Fragment } from "react"
-import { MapContainer, TileLayer, GeoJSON, LayersControl } from "react-leaflet"
-import bbox from "geojson-bbox"
+import React, { useState, useEffect, Fragment } from "react";
+import { MapContainer, TileLayer, GeoJSON, LayersControl } from "react-leaflet";
+import bbox from "geojson-bbox";
 
-const getDirectusData = async (endPoint, token) => {
-  const response = await fetch(endPoint, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  })
-  const result = await response.json()
-
-  const geoJSON = {
-    type: "FeatureCollection",
-    features: result.data.map(item => ({
-      type: "Feature",
-      properties: item,
-      geometry: {
-        type: "Point",
-        coordinates: [
-          item.coordinates.coordinates[0], // longitude
-          item.coordinates.coordinates[1], // latitude
-        ],
-      },
-    })),
-  }
-  return geoJSON
-}
-
-const getLocalGeoJSON = async path2geojson => {
-  try {
-    const response = await fetch(path2geojson)
-    const geoJSON = await response.json()
-    return geoJSON  
-  } catch (error) {
-    throw Error('Error getting local JSON file');
-  }
-  
-}
+import getData from "../services/getData";
 
 const MyMap = props => {
   const [geojsonData, setGeojson] = useState()
@@ -48,13 +14,14 @@ const MyMap = props => {
     setIsLoading(true)
 
     if (props.path2geojson) {
-      getLocalGeoJSON(props.path2geojson)
+      getData(props.path2geojson, null, 'json')
         .then(geoJSON => {
           setGeojson(geoJSON)
           setExtent(bbox(geoJSON))
           setIsLoading(false)
         })
         .catch(err => {
+          console.log()
           impostaErrore({
             message: "Error getting remote data from static file",
             stack: err,
@@ -91,7 +58,7 @@ const MyMap = props => {
         setIsLoading(false)
         return
       }
-      getDirectusData(endPoint, token)
+      getData(endPoint, token, 'geojson')
         .then(geoJSON => {
           setGeojson(geoJSON)
           setExtent(bbox(geoJSON))
