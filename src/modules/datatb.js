@@ -4,28 +4,13 @@ import { Container } from "react-bootstrap"
 import styled from "styled-components"
 
 const DataTb = props => {
-  // Client-side Runtime Data Fetching
-  // Stato per memorizzare i dati ottenuti dall'API
-  // in dati viene salvato il risultato di impostaDati
   const [dati, impostaDati] = useState([])
-  // Stato per gestire lo stato di caricamento
-  const [caricamento, impostaCaricamento] = useState(true)
-  // Stato per gestire lo stato di errore
+  const [isLoading, setIsLoading] = useState(false)
   const [errore, impostaErrore] = useState(null)
   const [searchText, setSearchText] = useState("")
   const [debounceTimer, setDebounceTimer] = useState(null)
 
-  // Dependency check
-  if (!props.dEndPoint) {
-    impostaErrore({
-      message:
-        "Error in building data table. No source found for the data: dEndPoint parameter is required",
-    })
-  }
-
-  if (props.dEndPoint && !props.dToken) {
-    impostaErrore({ message: "Directus token is missing" })
-  }
+  // SEARCH BOX
   const handleSearch = e => {
     const searchTerm = e.target.value
     setSearchText(searchTerm)
@@ -55,7 +40,7 @@ const DataTb = props => {
         try {
           // Esegui la ricerca solo quando il timer di debounce è scaduto
           // Imposta lo stato di caricamento a true durante il recupero dei dati
-          impostaCaricamento(true)
+          setIsLoading(true)
           // Ottieni i dati dall'API
           const risposta = await fetch(`${props.dEndPoint}`, {
             headers: {
@@ -71,7 +56,7 @@ const DataTb = props => {
           impostaErrore(errore)
         } finally {
           // Imposta lo stato di caricamento a false quando il recupero è completato
-          impostaCaricamento(false)
+          setIsLoading(false)
         }
       }
     }
@@ -88,7 +73,7 @@ const DataTb = props => {
   )
 
   // Renderizza il componente in base agli stati di caricamento ed errore
-  if (caricamento) {
+  if (isLoading) {
     return <div>Caricamento...</div>
   }
 
