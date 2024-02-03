@@ -27,9 +27,9 @@ selector: (row, i) => row.toponimi,
 sortable: true,
 cell: row => (
 
-<a href={`${window.location.origin}${process.env.NODE_ENV === 'development' ? '' : window.location.pathname}/articles?toponimo=${encodeURIComponent(row.toponimo)}`}>
-    {row.toponimo}
-  </a>
+<a href={`${process.env.GATSBY_BASE_PATH}/articles?toponimo=${encodeURIComponent(row.toponimo)}`}>
+{row.toponimo}
+</a>
 ),
 },
 {
@@ -41,9 +41,8 @@ sortable: true,
 name: "Comune",
 selector: (row, i) => row.comune,
 sortable: true,
-}
+},
 ]}
-
 />}
 
 Example with CSV data source
