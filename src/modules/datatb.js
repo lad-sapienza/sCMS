@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react"
 import DataTable from "react-data-table-component"
 import { Container } from "react-bootstrap"
 import styled from "styled-components"
+import getData from "../services/getData"
 
 const DataTb = props => {
+  const [csvData, setCsvData] = useState()
   const [dati, impostaDati] = useState([])
   const [isLoading, setIsLoading] = useState(false)
-  const [errore, impostaErrore] = useState(null)
+  const [errore, impostaErrore] = useState(false)
   const [searchText, setSearchText] = useState("")
   const [debounceTimer, setDebounceTimer] = useState(null)
 
@@ -33,36 +35,71 @@ const DataTb = props => {
     setSearchText(searchTerm)
   }
 
+  console.log("path2csv:", props.path2csv)
   // useEffect per ottenere dati quando il componente viene montato
   useEffect(() => {
-    const ottieniDati = async () => {
-      if (!debounceTimer) {
-        try {
-          // Esegui la ricerca solo quando il timer di debounce è scaduto
-          // Imposta lo stato di caricamento a true durante il recupero dei dati
-          setIsLoading(true)
-          // Ottieni i dati dall'API
-          const risposta = await fetch(`${props.dEndPoint}`, {
-            headers: {
-              Authorization: `Bearer ${props.dToken}`, // Aggiungi il token all'header
-            },
-          })
-          // Parsa la risposta JSON
-          const risultato = await risposta.json()
-          // Aggiorna lo stato con i dati ottenuti
-          impostaDati(risultato.data || [])
-        } catch (errore) {
-          // Se si verifica un errore, aggiorna lo stato di errore
-          impostaErrore(errore)
-        } finally {
-          // Imposta lo stato di caricamento a false quando il recupero è completato
+    setIsLoading(true)
+
+    if (props.path2csv) {
+      getData(props.path2csv, null, "csv2json")
+        .then(csvData => {
+          setCsvData(csvData)
           setIsLoading(false)
-        }
+        })
+        .catch(err => {
+          console.log()
+          impostaErrore({
+            message: "Error getting remote data from static file",
+            stack: err,
+          })
+          setIsLoading(false)
+        })
+    } else {
+      // Define Drectus endpoint anche check all dependencies
+      let endPoint
+      if (props.dEndPoint) {
+        endPoint = props.dEndPoint
+      } else if (process.env.GATSBY_DIRECTUS_ENDPOINT && props.dTable) {
+        endPoint = `${process.env.GATSBY_DIRECTUS_ENDPOINT}items/${props.dTable}`
+      } else {
+        impostaErrore({
+          message:
+            "Cannont calculate Directus enpoint. Please provide a full endpoint as a MyMap attribute or provide dTable attribute and set GATSBY_DIRECTUS_ENDPOINT environmental variable",
+        })
+        setIsLoading(false)
+        return
       }
+      if (props.dFilter) {
+        endPoint += `?${props.dFilter}`
+      }
+      // Define Directus token
+      const token = props.dToken
+        ? props.dToken
+        : process.env.GATSBY_DIRECTUS_TOKEN
+      if (!token) {
+        impostaErrore({
+          mesage:
+            "Cannot calculate Directus token. Please provide it as an attribute of the MyMap component or define it as the environmnetal variable GATSBY_DIRECTUS_TOKEN",
+        })
+        setIsLoading(false)
+        return
+      }
+      getData(endPoint, token, "json")
+        .then(risultato => {
+          impostaDati(risultato.data || [])
+          setIsLoading(false)
+        })
+        .catch(err => {
+          setIsLoading(false)
+          impostaErrore({ message: "Error getting remote data", stack: err })
+        })
     }
-    // Chiama la funzione ottieniDati quando il componente viene montato e inserisci il valore iniziale della pagina
-    ottieniDati(1)
-  }, [props, errore, searchText]) // L'array di dipendenze vuoto assicura che questo effetto venga eseguito solo una volta, simile a componentDidMount
+  }, [props]) // L'array di dipendenze vuoto assicura che questo effetto venga eseguito solo una volta, simile a componentDidMount
+
+  console.log(csvData)
+  console.log(dati)
+  // Determine which data to use based on the existence of props.path2csv
+  // const dataToUse = props.path2csv ? csvData : dati
 
   const filteredData = dati.filter(item =>
     Object.values(item).some(

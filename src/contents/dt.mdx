@@ -56,3 +56,37 @@ sortable: true,
 />}
 
 Example with CSV data source
+
+#Directus data source
+
+{<DataTb
+path2csv="../data/UT_toponimi.csv"
+dColumns={[
+{
+name: "ID luogo",
+selector: (row, i) => row.id,
+sortable: true,
+},
+{
+name: "Toponimo",
+selector: (row, i) => row.toponimi,
+sortable: true,
+cell: row => (
+
+<a href={`${process.env.GATSBY_BASE_PATH}/articles?toponimo=${encodeURIComponent(row.toponimo)}`}>
+{row.toponimo}
+</a>
+),
+},
+{
+name: "Provincia",
+selector: (row, i) => row.provincia,
+sortable: true,
+},
+{
+name: "Comune",
+selector: (row, i) => row.comune,
+sortable: true,
+},
+]}
+/>}
