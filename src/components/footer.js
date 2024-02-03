@@ -23,7 +23,7 @@ const FooterSection = () => {
           </div>
           <div className="p-3 border-start border-primary">
             <p className="p-s-3">
-              <strong>s:CMS</strong> è un progetto ideato e svuluppato dal{" "}
+              <strong>s:CMS</strong> è un progetto ideato e sviluppato dal{" "}
               <br />
               <a href="https://lad.saras.uniroma1.it" target="_blank" rel="noreferrer">
                 LAD: Laboratorio di Archeologia Digitale alla Sapienza
