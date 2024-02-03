@@ -14,17 +14,16 @@ const DataTb = props => {
   const [errore, impostaErrore] = useState(null)
   const [searchText, setSearchText] = useState("")
   const [debounceTimer, setDebounceTimer] = useState(null)
-  const [dataLimit] = useState(props.dLimit || 100)
 
   // Dependency check
-  if (!props.dTable) {
+  if (!props.dEndPoint) {
     impostaErrore({
       message:
-        "Error in building data table. No source found for the data: dTable parameter is required",
+        "Error in building data table. No source found for the data: dEndPoint parameter is required",
     })
   }
 
-  if (props.dTable && !props.dToken) {
+  if (props.dEndPoint && !props.dToken) {
     impostaErrore({ message: "Directus token is missing" })
   }
   const handleSearch = e => {
@@ -51,22 +50,18 @@ const DataTb = props => {
 
   // useEffect per ottenere dati quando il componente viene montato
   useEffect(() => {
-    const ottieniDati = async page => {
+    const ottieniDati = async () => {
       if (!debounceTimer) {
-        const offset = (page - 1) * dataLimit
         try {
           // Esegui la ricerca solo quando il timer di debounce è scaduto
           // Imposta lo stato di caricamento a true durante il recupero dei dati
           impostaCaricamento(true)
           // Ottieni i dati dall'API
-          const risposta = await fetch(
-            `${props.dTable}?limit=${dataLimit}&offset=${offset}`,
-            {
-              headers: {
-                Authorization: `Bearer ${props.dToken}`, // Aggiungi il token all'header
-              },
-            }
-          )
+          const risposta = await fetch(`${props.dEndPoint}`, {
+            headers: {
+              Authorization: `Bearer ${props.dToken}`, // Aggiungi il token all'header
+            },
+          })
           // Parsa la risposta JSON
           const risultato = await risposta.json()
           // Aggiorna lo stato con i dati ottenuti
@@ -82,7 +77,7 @@ const DataTb = props => {
     }
     // Chiama la funzione ottieniDati quando il componente viene montato e inserisci il valore iniziale della pagina
     ottieniDati(1)
-  }, [props, dataLimit, errore, searchText]) // L'array di dipendenze vuoto assicura che questo effetto venga eseguito solo una volta, simile a componentDidMount
+  }, [props, errore, searchText]) // L'array di dipendenze vuoto assicura che questo effetto venga eseguito solo una volta, simile a componentDidMount
 
   const filteredData = dati.filter(item =>
     Object.values(item).some(
