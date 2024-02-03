@@ -107,10 +107,10 @@ const DataTb = props => {
       <Table>
         <input
           type="text"
+          className="form-control mb-5"
           value={searchText}
           placeholder="Search..."
           onChange={handleSearch}
-          className="mb-5"
         />
         <DataTable columns={props.dColumns} data={filteredData} pagination />
       </Table>

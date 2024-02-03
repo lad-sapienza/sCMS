@@ -14,6 +14,7 @@ Example with Directus data source
 dTable="https://landscapearchaeology.eu/db/items/toponimi"
 name="Toponimi"
 dToken="sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E"
+site_base_url="https://lab-archeologia-digitale.github.io/sCMS"
 dLimit="1000"
 dColumns={[
 {
@@ -27,7 +28,7 @@ selector: (row, i) => row.toponimi,
 sortable: true,
 cell: row => (
 
-<a href={`${process.env.NODE_ENV === 'development' ? '' : GATSBY_BASE_PATH}/articles?toponimo=${encodeURIComponent(row.toponimo)}`}>
+<a href={`${process.env.NODE_ENV === 'development' ? '' : process.env.GATSBY_BASE_PATH}/articles?toponimo=${encodeURIComponent(row.toponimo)}`}>
     {row.toponimo}
   </a>
 ),
