@@ -6,9 +6,12 @@ description: ""
 menu_position: 3
 ---
 
-import DataTb from "../modules/datatb.js"
+import MyDataTb from "../modules/datatb.js"
 
-Example with Directus data source
+<MyDataTb /> component can be used in MDX pages to display a dynamic maps, which
+are fully customisable.
+
+Geodata can be retrieved form a Directus database or any other JSON API, a statically hosted geoJSON file or any GeoJSON file publically available on the Web. The component can be customised via the following parameters.
 
 ## Parameters
 
@@ -19,7 +22,7 @@ Example with Directus data source
 - `dColumns (**required**): list of database columns and fields`
 - `dLimit  (not required, if the number are not provided is 100 by default): limit number of records extracted from API`
 
-{<DataTb
+{<MyDataTb
 dEndPoint="https://landscapearchaeology.eu/db/items/toponimi"
 dToken="sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E"
 dLimit="1000"
@@ -55,7 +58,7 @@ sortable: true,
 
 #Example with CSV data source
 
-{<DataTb
+{<MyDataTb
 path2cvs ="../data/UT_toponimi.csv"
 dLimit="1000"
 dColumns={[

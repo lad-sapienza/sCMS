@@ -3,64 +3,47 @@ import DataTable from "react-data-table-component"
 import { Container } from "react-bootstrap"
 import styled from "styled-components"
 
-const DataTb = props => {
-  // Client-side Runtime Data Fetching
-  // Stato per memorizzare i dati ottenuti dall'API
-  // in dati viene salvato il risultato di impostaDati
+const MyDataTb = props => {
   const [dati, impostaDati] = useState([])
-  // Stato per gestire lo stato di caricamento
-  const [caricamento, impostaCaricamento] = useState(true)
-  // Stato per gestire lo stato di errore
+  const [isLoading, setIsLoading] = useState(false)
   const [errore, impostaErrore] = useState(null)
   const [searchText, setSearchText] = useState("")
   const [debounceTimer, setDebounceTimer] = useState(null)
   const [dataLimit] = useState(props.dLimit || 100)
 
-  // Dependency check
-  if (!props.dTable) {
-    impostaErrore({
-      message:
-        "Error in building data table. No source found for the data: dTable parameter is required",
-    })
-  }
-
-  if (props.dTable && !props.dToken) {
-    impostaErrore({ message: "Directus token is missing" })
-  }
+  // Search box
   const handleSearch = e => {
     const searchTerm = e.target.value
     setSearchText(searchTerm)
-
-    // Cancella il timer precedente
     if (debounceTimer) {
       clearTimeout(debounceTimer)
     }
-
     // Imposta un nuovo timer per eseguire la ricerca dopo 300 millisecondi
     const newDebounceTimer = setTimeout(() => {
       setDebounceTimer(null)
       handleDebouncedSearch(searchTerm)
     }, 300)
-
     setDebounceTimer(newDebounceTimer)
   }
-
   const handleDebouncedSearch = searchTerm => {
     setSearchText(searchTerm)
   }
 
   // useEffect per ottenere dati quando il componente viene montato
   useEffect(() => {
+    setIsLoading(true)
+
     const ottieniDati = async page => {
       if (!debounceTimer) {
         const offset = (page - 1) * dataLimit
+
         try {
           // Esegui la ricerca solo quando il timer di debounce è scaduto
           // Imposta lo stato di caricamento a true durante il recupero dei dati
-          impostaCaricamento(true)
+          setIsLoading(true)
           // Ottieni i dati dall'API
           const risposta = await fetch(
-            `${props.dTable}?limit=${dataLimit}&offset=${offset}`,
+            `${props.dEndPoint}?limit=${dataLimit}&offset=${offset}`,
             {
               headers: {
                 Authorization: `Bearer ${props.dToken}`, // Aggiungi il token all'header
@@ -76,7 +59,7 @@ const DataTb = props => {
           impostaErrore(errore)
         } finally {
           // Imposta lo stato di caricamento a false quando il recupero è completato
-          impostaCaricamento(false)
+          setIsLoading(false)
         }
       }
     }
@@ -93,7 +76,7 @@ const DataTb = props => {
   )
 
   // Renderizza il componente in base agli stati di caricamento ed errore
-  if (caricamento) {
+  if (isLoading) {
     return <div>Caricamento...</div>
   }
 
@@ -131,4 +114,4 @@ const Table = styled.div`
     text-decoration: none;
   }
 `
-export default DataTb
+export default MyDataTb
