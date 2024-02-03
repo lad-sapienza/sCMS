@@ -4,7 +4,7 @@ import styled from "styled-components"
 import { Link } from "gatsby"
 import { Container } from "react-bootstrap"
 
-const FooterPage = () => {
+const FooterSection = () => {
   return (
     <Footer>
       <Container>
@@ -45,7 +45,7 @@ const FooterPage = () => {
 }
 
 //style
-const Footer = styled.div`
+const Footer = styled.footer`
   background-color: #ececec;
   border-top: #000 solid 0.5rem;
   min-height: auto;
@@ -54,4 +54,4 @@ const Footer = styled.div`
   padding-bottom: 1rem;
 `
 
-export default FooterPage
+export default FooterSection
