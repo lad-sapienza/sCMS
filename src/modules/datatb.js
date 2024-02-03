@@ -12,6 +12,8 @@ const DataTb = props => {
   const [caricamento, impostaCaricamento] = useState(true)
   // Stato per gestire lo stato di errore
   const [errore, impostaErrore] = useState(null)
+  const [searchText, setSearchText] = useState("")
+  const [dataLimit] = useState(props.dLimit || 100)
 
   // Dependency check
   if (!props.dTable) {
@@ -28,13 +30,13 @@ const DataTb = props => {
   // useEffect per ottenere dati quando il componente viene montato
   useEffect(() => {
     const ottieniDati = async page => {
-      const offset = (page - 1) * props.dLimit
+      const offset = (page - 1) * dataLimit
       try {
         // Imposta lo stato di caricamento a true durante il recupero dei dati
         impostaCaricamento(true)
         // Ottieni i dati dall'API
         const risposta = await fetch(
-          `${props.dTable}?limit=${props.dLimit}&offset=${offset}`,
+          `${props.dTable}?limit=${dataLimit}&offset=${offset}`,
           {
             headers: {
               Authorization: `Bearer ${props.dToken}`, // Aggiungi il token all'header
@@ -56,7 +58,20 @@ const DataTb = props => {
 
     // Chiama la funzione ottieniDati quando il componente viene montato e inserisci il valore iniziale della pagina
     ottieniDati(1)
-  }, [props, errore]) // L'array di dipendenze vuoto assicura che questo effetto venga eseguito solo una volta, simile a componentDidMount
+  }, [props, dataLimit, errore, searchText]) // L'array di dipendenze vuoto assicura che questo effetto venga eseguito solo una volta, simile a componentDidMount
+
+  const handleSearch = e => {
+    const searchTerm = e.target.value
+    setSearchText(searchTerm)
+  }
+
+  const filteredData = dati.filter(item =>
+    Object.values(item).some(
+      value =>
+        value &&
+        value.toString().toLowerCase().includes(searchText.toLowerCase())
+    )
+  )
 
   // Renderizza il componente in base agli stati di caricamento ed errore
   if (caricamento) {
@@ -71,7 +86,14 @@ const DataTb = props => {
   return (
     <Container>
       <Table>
-        <DataTable columns={props.dColumns} data={dati} pagination />
+        <input
+          type="text"
+          value={searchText}
+          placeholder="Search..."
+          onChange={handleSearch}
+          className="mb-5"
+        />
+        <DataTable columns={props.dColumns} data={filteredData} pagination />
       </Table>
     </Container>
   )
