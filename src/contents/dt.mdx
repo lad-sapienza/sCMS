@@ -27,7 +27,7 @@ selector: (row, i) => row.toponimi,
 sortable: true,
 cell: row => (
 
-<a href={`/articles?toponimo=${encodeURIComponent(row.toponimo)}`}>
+<a href={`${process.env.GATSBY_BASE_PATH}/articles?toponimo=${encodeURIComponent(row.toponimo)}`}>
 {row.toponimo}
 </a>
 ),
