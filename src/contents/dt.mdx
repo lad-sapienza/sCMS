@@ -10,6 +10,15 @@ import DataTb from "../modules/datatb.js"
 
 Example with Directus data source
 
+## Parameters
+
+- `path2cvs` (**required** if `dTable` id not provided): relative or full path to a csv file to use for the data Table creation
+- `dEndPoint` (**required** is `path2csv` or `dTable` are not defined): full path to a Directus endpoint, complete with table name
+- `dToken` (**required** if `dEndPoint` is provided): Directus access token, required if table is not public. If not proved GATSBY_DIRECTUS_TOKEN environment variable will be used
+- `dTable` (**required**, if `path2csv` or `dEndPoint` are not provided): name of the Directus table containing geographical data
+- `dColumns (**required**): list of database columns and fields`
+- `dLimit  (not required, if the number are not provided is 100 by default): limit number of records extracted from API`
+
 {<DataTb
 dTable="https://landscapearchaeology.eu/db/items/toponimi"
 name="Toponimi"
