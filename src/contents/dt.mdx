@@ -6,9 +6,9 @@ description: ""
 menu_position: 3
 ---
 
-import MyDataTb from "../modules/datatb.js"
+import DataTb from "../modules/datatb.js"
 
-`<MyDataTb />` component can be used in MDX pages to display a dynamic data table, which are fully customisable.
+`<DataTb />` component can be used in MDX pages to display a dynamic data table, which are fully customisable.
 
 ## Parameters
 
@@ -18,43 +18,14 @@ import MyDataTb from "../modules/datatb.js"
 - `dTable` (**required**, if `path2csv` or `dEndPoint` are not provided): name of the Directus table containing geographical data
 - `dColumns` (**required**): list of database columns and fields
 
-{<MyDataTb
-dEndPoint="https://landscapearchaeology.eu/db/items/toponimi?limit=1000&offset=0"
+## Examples
+
+#Directus data source
+
+{<DataTb
+dTable="https://landscapearchaeology.eu/db/items/toponimi"
+name="Toponimi"
 dToken="sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E"
-dColumns={[
-{
-name: "ID luogo",
-selector: (row, i) => row.id,
-sortable: true,
-},
-{
-name: "Toponimo",
-selector: (row, i) => row.toponimi,
-sortable: true,
-cell: row => (
-
-<a href={`${process.env.GATSBY_BASE_PATH}/articles?toponimo=${encodeURIComponent(row.toponimo)}`}>
-{row.toponimo}
-</a>
-),
-},
-{
-name: "Provincia",
-selector: (row, i) => row.provincia,
-sortable: true,
-},
-{
-name: "Comune",
-selector: (row, i) => row.comune,
-sortable: true,
-},
-]}
-/>}
-
-#Example with CSV data source
-
-{<MyDataTb
-path2cvs ="../data/UT_toponimi.csv"
 dLimit="1000"
 dColumns={[
 {
@@ -85,3 +56,5 @@ sortable: true,
 },
 ]}
 />}
+
+Example with CSV data source

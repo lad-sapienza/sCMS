@@ -3,48 +3,70 @@ import DataTable from "react-data-table-component"
 import { Container } from "react-bootstrap"
 import styled from "styled-components"
 
-const MyDataTb = props => {
+const DataTb = props => {
+  // Client-side Runtime Data Fetching
+  // Stato per memorizzare i dati ottenuti dall'API
+  // in dati viene salvato il risultato di impostaDati
   const [dati, impostaDati] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
+  // Stato per gestire lo stato di caricamento
+  const [caricamento, impostaCaricamento] = useState(true)
+  // Stato per gestire lo stato di errore
   const [errore, impostaErrore] = useState(null)
   const [searchText, setSearchText] = useState("")
   const [debounceTimer, setDebounceTimer] = useState(null)
   const [dataLimit] = useState(props.dLimit || 100)
 
-  // Search box
+  // Dependency check
+  if (!props.dTable) {
+    impostaErrore({
+      message:
+        "Error in building data table. No source found for the data: dTable parameter is required",
+    })
+  }
+
+  if (props.dTable && !props.dToken) {
+    impostaErrore({ message: "Directus token is missing" })
+  }
   const handleSearch = e => {
     const searchTerm = e.target.value
     setSearchText(searchTerm)
+
+    // Cancella il timer precedente
     if (debounceTimer) {
       clearTimeout(debounceTimer)
     }
+
     // Imposta un nuovo timer per eseguire la ricerca dopo 300 millisecondi
     const newDebounceTimer = setTimeout(() => {
       setDebounceTimer(null)
       handleDebouncedSearch(searchTerm)
     }, 300)
+
     setDebounceTimer(newDebounceTimer)
   }
+
   const handleDebouncedSearch = searchTerm => {
     setSearchText(searchTerm)
   }
 
   // useEffect per ottenere dati quando il componente viene montato
   useEffect(() => {
-    setIsLoading(true)
-
-    const ottieniDati = async () => {
+    const ottieniDati = async page => {
       if (!debounceTimer) {
+        const offset = (page - 1) * dataLimit
         try {
           // Esegui la ricerca solo quando il timer di debounce è scaduto
           // Imposta lo stato di caricamento a true durante il recupero dei dati
-          setIsLoading(true)
+          impostaCaricamento(true)
           // Ottieni i dati dall'API
-          const risposta = await fetch(`${props.dEndPoint}`, {
-            headers: {
-              Authorization: `Bearer ${props.dToken}`, // Aggiungi il token all'header
-            },
-          })
+          const risposta = await fetch(
+            `${props.dTable}?limit=${dataLimit}&offset=${offset}`,
+            {
+              headers: {
+                Authorization: `Bearer ${props.dToken}`, // Aggiungi il token all'header
+              },
+            }
+          )
           // Parsa la risposta JSON
           const risultato = await risposta.json()
           // Aggiorna lo stato con i dati ottenuti
@@ -54,7 +76,7 @@ const MyDataTb = props => {
           impostaErrore(errore)
         } finally {
           // Imposta lo stato di caricamento a false quando il recupero è completato
-          setIsLoading(false)
+          impostaCaricamento(false)
         }
       }
     }
@@ -71,7 +93,7 @@ const MyDataTb = props => {
   )
 
   // Renderizza il componente in base agli stati di caricamento ed errore
-  if (isLoading) {
+  if (caricamento) {
     return <div>Caricamento...</div>
   }
 
@@ -109,4 +131,4 @@ const Table = styled.div`
     text-decoration: none;
   }
 `
-export default MyDataTb
+export default DataTb
