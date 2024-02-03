@@ -33,23 +33,18 @@ const MyDataTb = props => {
   useEffect(() => {
     setIsLoading(true)
 
-    const ottieniDati = async page => {
+    const ottieniDati = async () => {
       if (!debounceTimer) {
-        const offset = (page - 1) * dataLimit
-
         try {
           // Esegui la ricerca solo quando il timer di debounce è scaduto
           // Imposta lo stato di caricamento a true durante il recupero dei dati
           setIsLoading(true)
           // Ottieni i dati dall'API
-          const risposta = await fetch(
-            `${props.dEndPoint}?limit=${dataLimit}&offset=${offset}`,
-            {
-              headers: {
-                Authorization: `Bearer ${props.dToken}`, // Aggiungi il token all'header
-              },
-            }
-          )
+          const risposta = await fetch(`${props.dEndPoint}`, {
+            headers: {
+              Authorization: `Bearer ${props.dToken}`, // Aggiungi il token all'header
+            },
+          })
           // Parsa la risposta JSON
           const risultato = await risposta.json()
           // Aggiorna lo stato con i dati ottenuti
