@@ -23,14 +23,11 @@ const Search = props => {
     }
 
     try {
-      const res = await fetch(
-        `${props.dTable}?filter[${props.Filter}][${props.FilterType}]=${query}`,
-        {
-          headers: {
-            Authorization: `Bearer ${props.dToken}`, // Aggiungi il token all'header
-          },
-        }
-      )
+      const res = await fetch(`${props.dTable}?${props.dFilter}=${query}`, {
+        headers: {
+          Authorization: `Bearer ${props.dToken}`, // Aggiungi il token all'header
+        },
+      })
       const data = await res.json()
       setSearchResults(data)
     } catch (errore) {
@@ -42,7 +39,9 @@ const Search = props => {
       <Seo title="Ricerca" />
       <form onSubmit={handleSubmit} className="mt-5 row">
         <div class="col-auto">
-          <label htmlFor="search_input" class="visually-hidden">Search</label>
+          <label htmlFor="search_input" class="visually-hidden">
+            Search
+          </label>
           <input
             id="search_input"
             type="text"
@@ -54,22 +53,23 @@ const Search = props => {
         </div>
 
         <div class="col-auto">
-          <button type="submit" className="btn btn-primary">Search</button>
+          <button type="submit" className="btn btn-primary">
+            Search
+          </button>
         </div>
-        
       </form>
-      
+
       {searchResults && (
         <Fragment>
-        <h1 className="mt-5">Risultati</h1>
-        <ul>
-          {searchResults.data.map((result, index) => (
-            <li key={index}>
-              <h2>{result.title}</h2>
-              <p>{result.summary}</p>
-            </li>
-          ))}
-        </ul>
+          <h1 className="mt-5">Risultati</h1>
+          <ul>
+            {searchResults.data.map((result, index) => (
+              <li key={index}>
+                <h2>{result.title}</h2>
+                <p>{result.summary}</p>
+              </li>
+            ))}
+          </ul>
         </Fragment>
       )}
     </Fragment>

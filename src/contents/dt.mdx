@@ -18,12 +18,12 @@ dLimit= "1000"
 dColumns={[
 {
 name: "ID luogo",
-selector: "id",
+selector: (row, i) => row.id,
 sortable: true,
 },
 {
 name: "Toponimo",
-selector: "toponimo",
+selector: (row, i) => row.toponimi,
 sortable: true,
 cell: row => (
 
@@ -34,12 +34,12 @@ cell: row => (
 },
 {
 name: "Provincia",
-selector: "provincia",
+selector: (row, i) => row.provincia,
 sortable: true,
 },
 {
 name: "Comune",
-selector: "comune",
+selector: (row, i) => row.comune,
 sortable: true,
 },
 ]}
