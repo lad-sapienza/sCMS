@@ -14,7 +14,7 @@ require("dotenv").config({
 module.exports = {
   siteMetadata: {
     title: `s:CMS`,
-    description: `A simple-to-use content management system for static sites, based on Gatsby 5 and Bootstrap 5. `,
+    description: `S:CMS | Static site Content Managemt System is developend and maintained by LAD: Laboratorio di Archeologia Digitale alla Sapienza`,
     author: `Julian Bogdani <julian.bogdani@uniroma1.it>`,
     siteUrl: `https://github.com/lab-archeologia-digitale/gatsby-directus-ui#readme`,
   },
