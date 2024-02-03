@@ -20,8 +20,7 @@ Example with Directus data source
 - `dLimit  (not required, if the number are not provided is 100 by default): limit number of records extracted from API`
 
 {<DataTb
-dTable="https://landscapearchaeology.eu/db/items/toponimi"
-name="Toponimi"
+dEndPoint="https://landscapearchaeology.eu/db/items/toponimi"
 dToken="sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E"
 dLimit="1000"
 dColumns={[
@@ -54,4 +53,37 @@ sortable: true,
 ]}
 />}
 
-Example with CSV data source
+#Example with CSV data source
+
+{<DataTb
+path2cvs ="../data/toponimi.csv"
+dLimit="1000"
+dColumns={[
+{
+name: "ID luogo",
+selector: (row, i) => row.id,
+sortable: true,
+},
+{
+name: "Toponimo",
+selector: (row, i) => row.toponimi,
+sortable: true,
+cell: row => (
+
+<a href={`${process.env.GATSBY_BASE_PATH}/articles?toponimo=${encodeURIComponent(row.toponimo)}`}>
+{row.toponimo}
+</a>
+),
+},
+{
+name: "Provincia",
+selector: (row, i) => row.provincia,
+sortable: true,
+},
+{
+name: "Comune",
+selector: (row, i) => row.comune,
+sortable: true,
+},
+]}
+/>}
