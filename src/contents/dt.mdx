@@ -2,35 +2,47 @@
 title: "Modulo Datatable"
 date: "2023-10-01"
 slug: "modulo-datatable"
-description: "An example of a DataTable module"
+description: ""
 menu_position: 3
 ---
 
 import DataTb from "../modules/datatb.js"
 
-"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+Example with Directus data source
 
+{<DataTb
+dTable="https://landscapearchaeology.eu/db/items/toponimi"
+name="Toponimi"
+dToken="sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E"
+dLimit= "1000"
+dColumns={[
 {
-  <DataTb
-    dTable="https://landscapearchaeology.eu/db/items/toponimi"
-    name="Toponimi"
-    dToken="sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E"
-    dColumns={[
-      {
-        name: "ID luogo",
-        selector: "id",
-        sortable: true,
-      },
-      {
-        name: "Toponimo",
-        selector: "toponimo",
-        sortable: true,
-        cell: row => (
-          <a href={`/articles?toponimo=${encodeURIComponent(row.toponimo)}`}>
-            {row.toponimo}
-          </a>
-        ),
-      },
-    ]}
-  />
-}
+name: "ID luogo",
+selector: "id",
+sortable: true,
+},
+{
+name: "Toponimo",
+selector: "toponimo",
+sortable: true,
+cell: row => (
+
+<a href={`/articles?toponimo=${encodeURIComponent(row.toponimo)}`}>
+{row.toponimo}
+</a>
+),
+},
+{
+name: "Provincia",
+selector: "provincia",
+sortable: true,
+},
+{
+name: "Comune",
+selector: "comune",
+sortable: true,
+},
+]}
+/>}
+
+Example with CSV data source

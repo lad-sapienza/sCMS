@@ -27,16 +27,20 @@ const DataTb = props => {
 
   // useEffect per ottenere dati quando il componente viene montato
   useEffect(() => {
-    const ottieniDati = async () => {
+    const ottieniDati = async page => {
+      const offset = (page - 1) * props.dLimit
       try {
         // Imposta lo stato di caricamento a true durante il recupero dei dati
         impostaCaricamento(true)
         // Ottieni i dati dall'API
-        const risposta = await fetch(props.dTable, {
-          headers: {
-            Authorization: `Bearer ${props.dToken}`, // Aggiungi il token all'header
-          },
-        })
+        const risposta = await fetch(
+          `${props.dTable}?limit=${props.dLimit}&offset=${offset}`,
+          {
+            headers: {
+              Authorization: `Bearer ${props.dToken}`, // Aggiungi il token all'header
+            },
+          }
+        )
         // Parsa la risposta JSON
         const risultato = await risposta.json()
         // Aggiorna lo stato con i dati ottenuti
@@ -50,8 +54,8 @@ const DataTb = props => {
       }
     }
 
-    // Chiama la funzione ottieniDati quando il componente viene montato
-    ottieniDati()
+    // Chiama la funzione ottieniDati quando il componente viene montato e inserisci il valore iniziale della pagina
+    ottieniDati(1)
   }, [props, errore]) // L'array di dipendenze vuoto assicura che questo effetto venga eseguito solo una volta, simile a componentDidMount
 
   // Renderizza il componente in base agli stati di caricamento ed errore
