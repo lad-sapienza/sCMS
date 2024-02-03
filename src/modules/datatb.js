@@ -14,8 +14,7 @@ const DataTb = props => {
   const [errore, impostaErrore] = useState(null)
   const [searchText, setSearchText] = useState("")
   const [debounceTimer, setDebounceTimer] = useState(null)
-  const [dataLimit] = useState(1000)
-  const [offset] = useState(0)
+  const [dataLimit] = useState(props.dLimit || 100)
 
   // Dependency check
   if (!props.dTable) {
@@ -54,6 +53,7 @@ const DataTb = props => {
   useEffect(() => {
     const ottieniDati = async page => {
       if (!debounceTimer) {
+        const offset = (page - 1) * dataLimit
         try {
           // Esegui la ricerca solo quando il timer di debounce è scaduto
           // Imposta lo stato di caricamento a true durante il recupero dei dati
