@@ -8,7 +8,7 @@ const MyMap = props => {
   const [geojsonData, setGeojson] = useState()
   const [extent, setExtent] = useState([0, 0, 0, 0])
   const [isLoading, setIsLoading] = useState(false)
-  const [errore, impostaErrore] = useState(false)
+  const [error, setError] = useState(false)
 
   useEffect(() => {
     setIsLoading(true)
@@ -22,7 +22,7 @@ const MyMap = props => {
         })
         .catch(err => {
           console.log()
-          impostaErrore({
+          setError({
             message: "Error getting remote data from static file",
             stack: err,
           })
@@ -36,7 +36,7 @@ const MyMap = props => {
       } else if (process.env.GATSBY_DIRECTUS_ENDPOINT && props.dTable) {
         endPoint = `${process.env.GATSBY_DIRECTUS_ENDPOINT}items/${props.dTable}`
       } else {
-        impostaErrore({
+        setError({
           message:
             "Cannont calculate Directus enpoint. Please provide a full endpoint as a MyMap attribute or provide dTable attribute and set GATSBY_DIRECTUS_ENDPOINT environmental variable",
         })
@@ -51,7 +51,7 @@ const MyMap = props => {
         ? props.dToken
         : process.env.GATSBY_DIRECTUS_TOKEN
       if (!token) {
-        impostaErrore({
+        setError({
           mesage:
             "Cannot calculate Directus token. Please provide it as an attribute of the MyMap component or define it as the environmnetal variable GATSBY_DIRECTUS_TOKEN",
         })
@@ -66,7 +66,7 @@ const MyMap = props => {
         })
         .catch(err => {
           setIsLoading(false)
-          impostaErrore({ message: "Error getting remote data", stack: err })
+          setError({ message: "Error getting remote data", stack: err })
         });
     }
   }, [props]) // L'array di dipendenze vuoto assicura che questo effetto venga eseguito solo una volta, simile a componentDidMount
@@ -76,9 +76,8 @@ const MyMap = props => {
     return <div className="text-info">Loading...</div>
   }
 
-  if (errore) {
-    console.log(errore);
-    return <div className="text-danger">{errore.message}</div>
+  if (error) {
+    return <div className="text-danger">{error.message}</div>
   }
 
   return (

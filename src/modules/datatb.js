@@ -5,9 +5,9 @@ import styled from "styled-components"
 import getData from "../services/getData"
 
 const DataTb = props => {
-  const [dati, impostaDati] = useState([])
+  const [data, setData] = useState([])
   const [isLoading, setIsLoading] = useState(false)
-  const [errore, impostaErrore] = useState(false)
+  const [error, setError] = useState(false)
   const [searchText, setSearchText] = useState("")
   const [debounceTimer, setDebounceTimer] = useState(null)
 
@@ -41,11 +41,11 @@ const DataTb = props => {
     if (props.path2csv) {
       getData(props.path2csv, null, "csv2json")
         .then(jsonData => {
-          impostaDati(jsonData)
+          setData(jsonData)
           setIsLoading(false)
         })
         .catch(err => {
-          impostaErrore({
+          setError({
             message: "Error getting remote data from static file",
             stack: err,
           })
@@ -60,7 +60,7 @@ const DataTb = props => {
       } else if (process.env.GATSBY_DIRECTUS_ENDPOINT && props.dTable) {
         endPoint = `${process.env.GATSBY_DIRECTUS_ENDPOINT}items/${props.dTable}`
       } else {
-        impostaErrore({
+        setError({
           message:
             "Cannont calculate Directus enpoint. Please provide a full endpoint as a MyMap attribute or provide dTable attribute and set GATSBY_DIRECTUS_ENDPOINT environmental variable",
         })
@@ -75,7 +75,7 @@ const DataTb = props => {
         ? props.dToken
         : process.env.GATSBY_DIRECTUS_TOKEN
       if (!token) {
-        impostaErrore({
+        setError({
           mesage:
             "Cannot calculate Directus token. Please provide it as an attribute of the MyMap component or define it as the environmnetal variable GATSBY_DIRECTUS_TOKEN",
         })
@@ -84,17 +84,17 @@ const DataTb = props => {
       }
       getData(endPoint, token, "json")
         .then(risultato => {
-          impostaDati(risultato.data || [])
+          setData(risultato.data || [])
           setIsLoading(false)
         })
         .catch(err => {
           setIsLoading(false)
-          impostaErrore({ message: "Error getting remote data", stack: err })
+          setError({ message: "Error getting remote data", stack: err })
         })
     }
   }, [props]) // L'array di dipendenze vuoto assicura che questo effetto venga eseguito solo una volta, simile a componentDidMount
 
-  const filteredData = dati.filter(item =>
+  const filteredData = data.filter(item =>
     Object.values(item).some(
       value =>
         value &&
@@ -107,8 +107,8 @@ const DataTb = props => {
     return <div>Caricamento...</div>
   }
 
-  if (errore) {
-    return <div>Errore: {errore.message}</div>
+  if (error) {
+    return <div className="text-error">Error: {error.message}</div>
   }
 
   // Renderizza il componente con i dati ottenuti
