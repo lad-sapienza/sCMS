@@ -39,6 +39,11 @@ const Header = styled.header`
       padding-right: 1rem;
     }
   }
+  .cKwnzG {
+    background-color: #fe04fc;
+    color: #ffffff;
+    margin-bottom: 5rem;
+  }
 `
 
 export default HeaderSection
