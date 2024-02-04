@@ -39,22 +39,25 @@ const getData = async (source, token, transType) => {
   }
   try {
     const response = await fetch(source, options);
+
+
     switch (transType) {
       case 'json':
         output = await response.json();
         break;
 
       case 'geojson':
-        const result = await response.json();
-        output = json2GeoJson(result.data, 'coordinates');
+        const respgeoJson = await response.json();
+        output = json2GeoJson(respgeoJson.data, 'coordinates');
         break;
       
       case 'csv2json':
-        output = await csv().fromString(result.data);
+        const csvText = await response.text();
+        output = await csv().fromString(csvText);
         break;
     
       default:
-        output = result.data;
+        output = await response.text();
         break;
     }
 
