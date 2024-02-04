@@ -61,5 +61,10 @@ module.exports = {
         linkStyles: true, // (default: true) Enable/disable loading stylesheets via CDN
       },
     },
+    "babel-plugin-styled-components",
+    {
+      ssr: false,
+      displayName: false,
+    },
   ],
 }
