@@ -27,8 +27,8 @@ const HeaderSection = ({ siteTitle }) => (
   </Header>
 )
 
-const Header = styled.header`
-  background-color: #fe04fc !important;
+const Header = styled.section`
+  background-color: #fe04fc;
   color: #ffffff;
   margin-bottom: 5rem;
 
