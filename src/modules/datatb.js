@@ -5,7 +5,6 @@ import styled from "styled-components"
 import getData from "../services/getData"
 
 const DataTb = props => {
-  const [csvData, setCsvData] = useState()
   const [dati, impostaDati] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [errore, impostaErrore] = useState(false)
@@ -35,24 +34,23 @@ const DataTb = props => {
     setSearchText(searchTerm)
   }
 
-  console.log("path2csv:", props.path2csv)
   // useEffect per ottenere dati quando il componente viene montato
   useEffect(() => {
     setIsLoading(true)
 
     if (props.path2csv) {
       getData(props.path2csv, null, "csv2json")
-        .then(csvData => {
-          setCsvData(csvData)
+        .then(jsonData => {
+          impostaDati(jsonData)
           setIsLoading(false)
         })
         .catch(err => {
-          console.log()
           impostaErrore({
             message: "Error getting remote data from static file",
             stack: err,
           })
           setIsLoading(false)
+          return;
         })
     } else {
       // Define Drectus endpoint anche check all dependencies
@@ -95,11 +93,6 @@ const DataTb = props => {
         })
     }
   }, [props]) // L'array di dipendenze vuoto assicura che questo effetto venga eseguito solo una volta, simile a componentDidMount
-
-  console.log(csvData)
-  console.log(dati)
-  // Determine which data to use based on the existence of props.path2csv
-  // const dataToUse = props.path2csv ? csvData : dati
 
   const filteredData = dati.filter(item =>
     Object.values(item).some(
