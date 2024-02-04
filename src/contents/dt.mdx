@@ -20,83 +20,88 @@ import DataTb from "../modules/datatb.js"
 
 ## Examples
 
-###  Directus data source
+### Directus data source
 
 <div class="row">
   <div class="col-sm-4">
-```
-<DataTb
-  dEndPoint="https://landscapearchaeology.eu/db/items/toponimi?limit=1000&offset=0"
-  dToken="sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E"
-  dColumns={[
-    {
-      name: "ID luogo",
-      selector: (row, i) => row.id,
-      sortable: true,
-    },
-    {
-      name: "Toponimo",
-      selector: (row, i) => row.toponimi,
-      sortable: true,
-      cell: row => ( 
-        <a href={`${process.env.GATSBY_BASE_PATH}/articles?toponimo=${encodeURIComponent(row.toponimo)}`}>
-          {row.toponimo}
-        </a>
-      ),
-    },
-    {
-      name: "Provincia",
-      selector: (row, i) => row.provincia,
-      sortable: true,
-    },
-    {
-      name: "Comune",
-      selector: (row, i) => row.comune,
-      sortable: true,
-    },
-  ]}
-/>
-```
+    ```
+    <DataTb
+      dEndPoint="https://landscapearchaeology.eu/db/items/toponimi?limit=1000&offset=0"
+      dToken="sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E"
+      dColumns={[
+        {
+          name: "ID luogo",
+          selector: (row, i) => row.id,
+          sortable: true,
+        },
+        {
+          name: "Toponimo",
+          selector: (row, i) => row.toponimi,
+          sortable: true,
+          cell: row => (
+            <a
+              href={`${
+                process.env.GATSBY_BASE_PATH
+              }/articles?toponimo=${encodeURIComponent(row.toponimo)}`}
+            >
+              {row.toponimo}
+            </a>
+          ),
+        },
+        {
+          name: "Provincia",
+          selector: (row, i) => row.provincia,
+          sortable: true,
+        },
+        {
+          name: "Comune",
+          selector: (row, i) => row.comune,
+          sortable: true,
+        },
+      ]}
+    />
+    ```
   </div>
   <div class="col-sm-8">
-  <DataTb
-  dEndPoint="https://landscapearchaeology.eu/db/items/toponimi?limit=1000&offset=0"
-  dToken="sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E"
-  dColumns={[
-    {
-      name: "ID luogo",
-      selector: (row, i) => row.id,
-      sortable: true,
-    },
-    {
-      name: "Toponimo",
-      selector: (row, i) => row.toponimi,
-      sortable: true,
-      cell: row => ( 
-        <a href={`${process.env.GATSBY_BASE_PATH}/articles?toponimo=${encodeURIComponent(row.toponimo)}`}>
-          {row.toponimo}
-        </a>
-      ),
-    },
-    {
-      name: "Provincia",
-      selector: (row, i) => row.provincia,
-      sortable: true,
-    },
-    {
-      name: "Comune",
-      selector: (row, i) => row.comune,
-      sortable: true,
-    },
-  ]}
-/>
+    <DataTb
+      dEndPoint="https://landscapearchaeology.eu/db/items/toponimi?limit=1000&offset=0"
+      dToken="sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E"
+      dColumns={[
+        {
+          name: "ID luogo",
+          selector: (row, i) => row.id,
+          sortable: true,
+        },
+        {
+          name: "Toponimo",
+          selector: (row, i) => row.toponimi,
+          sortable: true,
+          cell: row => (
+            <a
+              href={`${
+                process.env.GATSBY_BASE_PATH
+              }/articles?toponimo=${encodeURIComponent(row.toponimo)}`}
+            >
+              {row.toponimo}
+            </a>
+          ),
+        },
+        {
+          name: "Provincia",
+          selector: (row, i) => row.provincia,
+          sortable: true,
+        },
+        {
+          name: "Comune",
+          selector: (row, i) => row.comune,
+          sortable: true,
+        },
+      ]}
+    />
   </div>
 </div>
 
-
-
 ### Example with CSV data source
-
 
 <div class="row">
   <div class="col-sm-4">
