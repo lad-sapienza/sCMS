@@ -19,7 +19,8 @@ const HeaderSection = ({ siteTitle }) => (
           />
         </Link>
         <div className="ms-3">
-          S:CMS | Static site Content Managemt System is developend and maintained by LAD: Laboratorio di Archeologia Digitale alla Sapienza
+          S:CMS | Static site Content Managemt System is developend and
+          maintained by LAD: Laboratorio di Archeologia Digitale alla Sapienza
         </div>
       </div>
     </Container>
@@ -27,13 +28,13 @@ const HeaderSection = ({ siteTitle }) => (
 )
 
 const Header = styled.header`
-  background-color: #FE04FC;
+  background-color: #fe04fc !important;
   color: #ffffff;
   margin-bottom: 5rem;
 
-  .gatsby-image-wrapper{
+  .gatsby-image-wrapper {
     background-color: #ffffff;
-    img{
+    img {
       padding-left: 1rem;
       padding-right: 1rem;
     }
