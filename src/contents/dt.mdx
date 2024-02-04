@@ -20,73 +20,72 @@ import DataTb from "../modules/datatb.js"
 
 ## Examples
 
-#Directus data source
+###  Directus data source
+
+{
+<DataTb
+  dEndPoint="https://landscapearchaeology.eu/db/items/toponimi?limit=1000&offset=0"
+  dToken="sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E"
+  dColumns={[
+    {
+      name: "ID luogo",
+      selector: (row, i) => row.id,
+      sortable: true,
+    },
+    {
+      name: "Toponimo",
+      selector: (row, i) => row.toponimi,
+      sortable: true,
+      cell: row => ( 
+        <a href={`${process.env.GATSBY_BASE_PATH}/articles?toponimo=${encodeURIComponent(row.toponimo)}`}>
+          {row.toponimo}
+        </a>
+      ),
+    },
+    {
+      name: "Provincia",
+      selector: (row, i) => row.provincia,
+      sortable: true,
+    },
+    {
+      name: "Comune",
+      selector: (row, i) => row.comune,
+      sortable: true,
+    },
+  ]}
+/>
+}
+
+### Example with CSV data source
+
 
 {<DataTb
-dEndPoint="https://landscapearchaeology.eu/db/items/toponimi?limit=1000&offset=0"
-dToken="sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E"
-dColumns={[
-{
-name: "ID luogo",
-selector: (row, i) => row.id,
-sortable: true,
-},
-{
-name: "Toponimo",
-selector: (row, i) => row.toponimi,
-sortable: true,
-cell: row => (
-
-<a href={`${process.env.GATSBY_BASE_PATH}/articles?toponimo=${encodeURIComponent(row.toponimo)}`}>
-{row.toponimo}
-</a>
-),
-},
-{
-name: "Provincia",
-selector: (row, i) => row.provincia,
-sortable: true,
-},
-{
-name: "Comune",
-selector: (row, i) => row.comune,
-sortable: true,
-},
-]}
-/>}
-
-Example with CSV data source
-
-#Directus data source
-
-{<DataTb
-path2csv="../data/UT_toponimi.csv"
-dColumns={[
-{
-name: "ID luogo",
-selector: (row, i) => row.id,
-sortable: true,
-},
-{
-name: "Toponimo",
-selector: (row, i) => row.toponimi,
-sortable: true,
-cell: row => (
-
-<a href={`${process.env.GATSBY_BASE_PATH}/articles?toponimo=${encodeURIComponent(row.toponimo)}`}>
-{row.toponimo}
-</a>
-),
-},
-{
-name: "Provincia",
-selector: (row, i) => row.provincia,
-sortable: true,
-},
-{
-name: "Comune",
-selector: (row, i) => row.comune,
-sortable: true,
-},
-]}
+  path2csv="../data/UT_toponimi.csv"
+  dColumns={[
+    {
+      name: "ID luogo",
+      selector: (row, i) => row.id,
+      sortable: true,
+    },
+    {
+      name: "Toponimo",
+      selector: (row, i) => row.toponimi,
+      sortable: true,
+      cell: row => (
+        <a href={`${process.env.GATSBY_BASE_PATH}/articles?toponimo=${encodeURIComponent(row.toponimo)}`}>
+          {row.toponimo}
+        </a>
+    ),
+    },
+    {
+      name: "Provincia",
+      selector: (row, i) => row.provincia,
+      sortable: true,
+    },
+    {
+      name: "Comune",
+      selector: (row, i) => row.comune,
+      sortable: true,
+    },
+  ]}
 />}
