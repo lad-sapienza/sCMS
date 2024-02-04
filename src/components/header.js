@@ -5,7 +5,7 @@ import styled from "styled-components"
 import { Container } from "react-bootstrap"
 
 const HeaderSection = ({ siteTitle }) => (
-  <Header>
+  <Header className="header">
     <Container>
       <div className="d-flex flex-row align-items-center mb-3">
         <Link to="/">
@@ -38,11 +38,6 @@ const Header = styled.header`
       padding-left: 1rem;
       padding-right: 1rem;
     }
-  }
-  .cKwnzG {
-    background-color: #fe04fc;
-    color: #ffffff;
-    margin-bottom: 5rem;
   }
 `
 
