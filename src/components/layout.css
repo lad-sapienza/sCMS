@@ -222,9 +222,3 @@ pre tt:before,
 pre tt:after {
   content: none;
 }
-
-.header {
-  background-color: #fe04fc;
-  color: #ffffff;
-  margin-bottom: 5rem;
-}

@@ -5,7 +5,7 @@ import styled from "styled-components"
 import { Container } from "react-bootstrap"
 
 const HeaderSection = ({ siteTitle }) => (
-  <Header className="header">
+  <Header>
     <Container>
       <div className="d-flex flex-row align-items-center mb-3">
         <Link to="/">
