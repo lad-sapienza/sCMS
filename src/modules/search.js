@@ -1,75 +1,94 @@
 import React, { Fragment, useState } from "react"
-import Seo from "../components/seo"
 
-const Search = props => {
+import getData from "../services/getData"
+
+const Search = ({
+  dTable,
+  dToken,
+  dFilter,
+  resultItemTemplate,
+  searchFields,
+}) => {
   const [query, setQuery] = useState("")
   const [searchResults, setSearchResults] = useState(null)
   // Stato per gestire lo stato di errore
-  const [impostaErrore] = useState(null)
+  const [error, setError] = useState(null)
 
   const handleSubmit = async event => {
     event.preventDefault()
 
     // Dependency check
-    if (!props.dTable) {
-      impostaErrore({
+    if (!dTable) {
+      setError({
         message:
           "Error in building map. No source found for the data: either dTable or path2geojson parameters are required",
       })
     }
 
-    if (props.dTable && !props.dToken) {
-      impostaErrore({ message: "Directus token is missing" })
+    if (!dToken) {
+      setError({ message: "Directus token is missing" })
     }
+    if (!searchFields) {
+      setError({ message: "searchFields parameter is mising" })
+    }
+    const query_parts = searchFields.split(",").map((fld, index) => {
+      // DA FINIRE
+      return `[${index}][${fld.trim()}][icontains]=${query}`
+    })
 
-    try {
-      const res = await fetch(`${props.dTable}?${props.dFilter}=${query}`, {
-        headers: {
-          Authorization: `Bearer ${props.dToken}`, // Aggiungi il token all'header
-        },
+    const final_query = `filter[_or]${query_parts.join(`&filter[_or]`)}`
+
+    getData(`${dTable}?${final_query}`, dToken, 'json')
+      .then(data => {
+        if (data.errors) {
+          setError({
+            message: "Error in querying getting remote data",
+            stack: data.errors,
+          })
+        } else {
+          setSearchResults(data)
+        }
       })
-      const data = await res.json()
-      setSearchResults(data)
-    } catch (errore) {
-      console.error("Errore nella ricerca:", errore)
-    }
+      .catch(err => {
+        setError({
+          message: "Error in querying getting remote data",
+          stack: err,
+        })
+      })
   }
+
   return (
     <Fragment>
-      <Seo title="Ricerca" />
-      <form onSubmit={handleSubmit} className="mt-5 row">
-        <div class="col-auto">
-          <label htmlFor="search_input" class="visually-hidden">
+      <form onSubmit={handleSubmit} className="mt-5 row searchForm">
+        <div className="col-auto labelContainer">
+          <label htmlFor="search_input" className="visually-hidden label">
             Search
           </label>
           <input
             id="search_input"
             type="text"
-            className="form-control"
+            className="form-control searchInput"
             value={query}
             onChange={e => setQuery(e.target.value)}
-            placeholder="Search the database for something"
+            placeholder="Search..."
           />
         </div>
 
-        <div class="col-auto">
+        <div className="col-auto">
           <button type="submit" className="btn btn-primary">
             Search
           </button>
         </div>
       </form>
 
-      {searchResults && (
+      {error && <div className="text-danger">{error.message}</div>}
+
+      {searchResults && !error && (
         <Fragment>
-          <h1 className="mt-5">Risultati</h1>
-          <ul>
-            {searchResults.data.map((result, index) => (
-              <li key={index}>
-                <h2>{result.title}</h2>
-                <p>{result.summary}</p>
-              </li>
-            ))}
-          </ul>
+          <h1 className="mt-5">Results</h1>
+          <div className="resultsContainer">
+            {searchResults.data.map(item => resultItemTemplate(item))}
+          </div>
         </Fragment>
       )}
     </Fragment>

@@ -12,7 +12,13 @@ import Search from "../modules/search.js"
 
 <Search
   dTable="https://inrome.sns.it/db/items/cms_articles"
-  dToken="NI0Wwfl94XnFuAxpg5aJMsp94Dclw1Fg"
-  dFilter="filter[title][_icontains]"
+  dToken="2OJcZXiwcQGsttST0Y5a5MN-MHyIrf0l"
+  searchFields="title,summary,text"
+  resultItemTemplate = { item => {
+    return <li key={item.id}>
+      <h3>{item.title}</h3>
+      <p>{item.summary}</p>
+    </li>
+  }}
 />
 }
