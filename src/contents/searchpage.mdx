@@ -10,11 +10,11 @@ import Search from "../modules/search.js"
 
 
 <div className="row">
-  <div class="col-sm-4">
+  <div className="col-sm-4">
   A map with geogata sourced from a geojson file hosted in the same server: only a (public) local path is needed:
 ```html
 <Search
-  dTable="https://inrome.sns.it/db/items/cms_articles"
+  dEndPoint="https://inrome.sns.it/db/items/cms_articles"
   dToken="I0pT7ozY0KuK8i-vtwLQGek36s0IhQ5e"
   searchFields="title_it,summary,text"
   resultItemTemplate = { item => {
@@ -31,7 +31,7 @@ import Search from "../modules/search.js"
   </div>
   <div className="col-sm-8">
   <Search
-  dTable="https://inrome.sns.it/db/items/cms_articles"
+  dEndPoint="https://inrome.sns.it/db/items/cms_articles"
   dToken="I0pT7ozY0KuK8i-vtwLQGek36s0IhQ5e"
   searchFields="title_it,summary,text"
   resultItemTemplate = { item => {
