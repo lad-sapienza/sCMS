@@ -33,7 +33,7 @@ const Search = ({
     }
     const query_parts = searchFields.split(",").map((fld, index) => {
       // DA FINIRE
-      return `[${index}][${fld.trim()}][icontains]=${query}`
+      return `[${index}][${fld.trim()}][_icontains]=${query}`
     })
 
     const final_query = `filter[_or]${query_parts.join(`&filter[_or]`)}`
