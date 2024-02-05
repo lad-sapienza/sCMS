@@ -43,7 +43,15 @@ const MyMap = ({
       let endPoint
       if (dEndPoint) {
         endPoint = dEndPoint
-      } else if (process.env.GATSBY_DIRECTUS_ENDPOINT && dTable) {
+      } else if (dTable) {
+        if (!process.env.GATSBY_DIRECTUS_ENDPOINT){
+          setError({
+            message:
+              "Cannot calculate API end-point. Parameter dTable requires the enc variable GATSBY_DIRECTUS_ENDPOINT to  be set",
+          })
+          setIsLoading(false)
+          return
+        }
         endPoint = `${process.env.GATSBY_DIRECTUS_ENDPOINT}items/${dTable}`
       } else {
         setError({
