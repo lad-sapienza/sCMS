@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Link } from "gatsby"
+import { Link, withPrefix } from "gatsby"
 import { StaticImage } from "gatsby-plugin-image"
 import styled from "styled-components"
 import { Container } from "react-bootstrap"
@@ -8,7 +8,7 @@ const HeaderSection = ({ siteTitle }) => (
   <Header>
     <Container>
       <div className="d-flex flex-row align-items-center mb-3">
-        <Link to="/">
+        <Link to={ withPrefix('/') }>
           <StaticImage
             src="../images/scms-lad.png"
             width={150}
