@@ -3,6 +3,7 @@ import React, { Fragment, useState } from "react"
 import getData from "../services/getData"
 
 const Search = ({
+  dEndPoint,
   dTable,
   dToken,
   dFilter,
@@ -15,45 +16,46 @@ const Search = ({
   const [error, setError] = useState(null)
 
   const handleSubmit = async event => {
-    event.preventDefault()
+    event.preventDefault();
 
-    // Dependency check
-    if (!dTable) {
-      setError({
-        message:
-          "Error in building map. No source found for the data: either dTable or path2geojson parameters are required",
-      })
+    let endPoint;
+
+    if (dEndPoint) {
+      endPoint = dEndPoint;
+    } else if (dTable) {
+      if (!process.env.GATSBY_DIRECTUS_ENDPOINT){
+        setError("Cannot calculate API end-point. Parameter dTable requires the enc variable GATSBY_DIRECTUS_ENDPOINT to  be set");
+      }
+      endPoint = `${process.env.GATSBY_DIRECTUS_ENDPOINT}items/${dTable}`
+    } else {
+      setError("Cannot calculate API end-point. dEndpoint or dTable parameter is missing" );
     }
 
-    if (!dToken) {
-      setError({ message: "Directus token is missing" })
+    const token = dToken ? dToken : process.env.GATSBY_DIRECTUS_TOKEN
+    if (!token) {
+      setError( "Directus token is missing. It should be provided as dToken parameter or as a GATSBY_DIRECTUS_TOKEN env variable")
     }
     if (!searchFields) {
-      setError({ message: "searchFields parameter is mising" })
+      setError( "searchFields parameter is mising" )
     }
     const query_parts = searchFields.split(",").map((fld, index) => {
-      // DA FINIRE
       return `[${index}][${fld.trim()}][_icontains]=${query}`
     })
 
     const final_query = `filter[_or]${query_parts.join(`&filter[_or]`)}`
 
-    getData(`${dTable}?${final_query}`, dToken, 'json')
+    getData(`${endPoint}?${final_query}`, dToken, 'json')
       .then(data => {
         if (data.errors) {
-          setError({
-            message: "Error in querying getting remote data",
-            stack: data.errors,
-          })
+          console.log(data.errors)
+          setError( "Error in querying getting remote data")
         } else {
           setSearchResults(data)
         }
       })
       .catch(err => {
-        setError({
-          message: "Error in querying getting remote data",
-          stack: err,
-        })
+        console.log(err)
+        setError( "Error in querying getting remote data" )
       })
   }
 
@@ -81,7 +83,7 @@ const Search = ({
         </div>
       </form>
 
-      {error && <div className="text-danger">{error.message}</div>}
+      {error && <div className="text-danger">{ error }</div>}
 
       {searchResults && !error && (
         <Fragment>
