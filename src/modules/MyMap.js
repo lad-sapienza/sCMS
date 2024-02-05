@@ -31,11 +31,8 @@ const MyMap = ({
           setIsLoading(false)
         })
         .catch(err => {
-          console.log()
-          setError({
-            message: "Error getting remote data from static file",
-            stack: err,
-          })
+          console.log(err);
+          setError( "Error getting remote data from static file" )
           setIsLoading(false)
         })
     } else {
@@ -45,19 +42,13 @@ const MyMap = ({
         endPoint = dEndPoint
       } else if (dTable) {
         if (!process.env.GATSBY_DIRECTUS_ENDPOINT){
-          setError({
-            message:
-              "Cannot calculate API end-point. Parameter dTable requires the enc variable GATSBY_DIRECTUS_ENDPOINT to  be set",
-          })
+          setError( "Cannot calculate API end-point. Parameter dTable requires the enc variable GATSBY_DIRECTUS_ENDPOINT to  be set" )
           setIsLoading(false)
           return
         }
         endPoint = `${process.env.GATSBY_DIRECTUS_ENDPOINT}items/${dTable}`
       } else {
-        setError({
-          message:
-            "Cannont calculate Directus enpoint. Please provide a full endpoint as a MyMap attribute or provide dTable attribute and set GATSBY_DIRECTUS_ENDPOINT environmental variable",
-        })
+        setError( "Cannont calculate Directus enpoint. Please provide a full endpoint as a MyMap attribute or provide dTable attribute and set GATSBY_DIRECTUS_ENDPOINT environmental variable" )
         setIsLoading(false)
         return
       }
@@ -67,10 +58,7 @@ const MyMap = ({
       // Define Directus token
       const token = dToken ? dToken : process.env.GATSBY_DIRECTUS_TOKEN
       if (!token) {
-        setError({
-          mesage:
-            "Cannot calculate Directus token. Please provide it as an attribute of the MyMap component or define it as the environmnetal variable GATSBY_DIRECTUS_TOKEN",
-        })
+        setError( "Cannot calculate Directus token. Please provide it as an attribute of the MyMap component or define it as the environmnetal variable GATSBY_DIRECTUS_TOKEN" )
         setIsLoading(false)
         return
       }
@@ -81,8 +69,9 @@ const MyMap = ({
           setIsLoading(false)
         })
         .catch(err => {
+          console.log(err)
           setIsLoading(false)
-          setError({ message: "Error getting remote data", stack: err })
+          setError( "Error getting remote data")
         })
     }
   }, [path2geojson, dEndPoint, dTable, dFilter, dToken]) // L'array di dipendenze vuoto assicura che questo effetto venga eseguito solo una volta, simile a componentDidMount
@@ -93,7 +82,7 @@ const MyMap = ({
   }
 
   if (error) {
-    return <div className="text-danger">{error.message}</div>
+    return <div className="text-danger">{error}</div>
   }
 
   return (
