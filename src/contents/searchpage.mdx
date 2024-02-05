@@ -15,10 +15,13 @@ import Search from "../modules/search.js"
   dToken="I0pT7ozY0KuK8i-vtwLQGek36s0IhQ5e"
   searchFields="title_it,summary,text"
   resultItemTemplate = { item => {
-    return <li key={item.id}>
-      <h3>{item.title}</h3>
-      <p>{item.summary}</p>
-    </li>
+    return  <div class="card my-3" key={item.id}>
+      <div class="card-body">
+        <h5 class="card-title">{item.title}</h5>
+        <p class="card-text">{item.summary}.</p>
+        <a href={`/articles/?tb=cms_articles&token=I0pT7ozY0KuK8i-vtwLQGek36s0IhQ5e&id=${item.id}`} class="btn btn-primary">View</a>
+      </div>
+    </div>
   }}
 />
 }
