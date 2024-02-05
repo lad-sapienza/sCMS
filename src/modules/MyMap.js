@@ -1,10 +1,20 @@
-import React, { useState, useEffect, Fragment } from "react";
-import { MapContainer, TileLayer, GeoJSON, LayersControl } from "react-leaflet";
-import bbox from "geojson-bbox";
+import React, { useState, useEffect, Fragment } from "react"
+import { MapContainer, TileLayer, GeoJSON, LayersControl } from "react-leaflet"
+import bbox from "geojson-bbox"
 
-import getData from "../services/getData";
+import getData from "../services/getData"
 
-const MyMap = props => {
+const MyMap = ({
+  path2geojson,
+  dEndPoint,
+  dTable,
+  dFilter,
+  dToken,
+  height,
+  name,
+  popupTemplate,
+  baseMaps,
+}) => {
   const [geojsonData, setGeojson] = useState()
   const [extent, setExtent] = useState([0, 0, 0, 0])
   const [isLoading, setIsLoading] = useState(false)
@@ -13,8 +23,8 @@ const MyMap = props => {
   useEffect(() => {
     setIsLoading(true)
 
-    if (props.path2geojson) {
-      getData(props.path2geojson, null, 'json')
+    if (path2geojson) {
+      getData(path2geojson, null, "json")
         .then(geoJSON => {
           setGeojson(geoJSON)
           setExtent(bbox(geoJSON))
@@ -31,10 +41,10 @@ const MyMap = props => {
     } else {
       // Define Drectus endpoint anche check all dependencies
       let endPoint
-      if (props.dEndPoint) {
-        endPoint = props.dEndPoint
-      } else if (process.env.GATSBY_DIRECTUS_ENDPOINT && props.dTable) {
-        endPoint = `${process.env.GATSBY_DIRECTUS_ENDPOINT}items/${props.dTable}`
+      if (dEndPoint) {
+        endPoint = dEndPoint
+      } else if (process.env.GATSBY_DIRECTUS_ENDPOINT && dTable) {
+        endPoint = `${process.env.GATSBY_DIRECTUS_ENDPOINT}items/${dTable}`
       } else {
         setError({
           message:
@@ -43,13 +53,11 @@ const MyMap = props => {
         setIsLoading(false)
         return
       }
-      if (props.dFilter){
-        endPoint += `?${props.dFilter}`;
+      if (dFilter) {
+        endPoint += `?${dFilter}`
       }
       // Define Directus token
-      const token = props.dToken
-        ? props.dToken
-        : process.env.GATSBY_DIRECTUS_TOKEN
+      const token = dToken ? dToken : process.env.GATSBY_DIRECTUS_TOKEN
       if (!token) {
         setError({
           mesage:
@@ -58,7 +66,7 @@ const MyMap = props => {
         setIsLoading(false)
         return
       }
-      getData(endPoint, token, 'geojson')
+      getData(endPoint, token, "geojson")
         .then(geoJSON => {
           setGeojson(geoJSON)
           setExtent(bbox(geoJSON))
@@ -67,9 +75,9 @@ const MyMap = props => {
         .catch(err => {
           setIsLoading(false)
           setError({ message: "Error getting remote data", stack: err })
-        });
+        })
     }
-  }, [props]) // L'array di dipendenze vuoto assicura che questo effetto venga eseguito solo una volta, simile a componentDidMount
+  }, [path2geojson, dEndPoint, dTable, dFilter, dToken]) // L'array di dipendenze vuoto assicura che questo effetto venga eseguito solo una volta, simile a componentDidMount
 
   // Renderizza il componente in base agli stati di isLoading ed errore
   if (isLoading) {
@@ -82,7 +90,7 @@ const MyMap = props => {
 
   return (
     <MapContainer
-      style={{ height: props.height ? props.height : `800px` }}
+      style={{ height: height ? height : `800px` }}
       scrollWheelZoom={false}
       center={[0, 0]}
       zoom={8}
@@ -94,11 +102,11 @@ const MyMap = props => {
       }}
     >
       <LayersControl position="topright">
-        <LayersControl.Overlay name={props.name} checked>
+        <LayersControl.Overlay name={name} checked>
           <GeoJSON
             data={geojsonData}
             onEachFeature={(feature, layer) =>
-              layer.bindPopup(props.popupTemplate(feature.properties))
+              layer.bindPopup(popupTemplate(feature.properties))
             }
           />
         </LayersControl.Overlay>
@@ -108,8 +116,8 @@ const MyMap = props => {
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          {props.baseMaps &&
-            props.baseMaps.map((el, i) => {
+          {baseMaps &&
+            baseMaps.map((el, i) => {
               return (
                 <Fragment key={i}>
                   <LayersControl.BaseLayer checked name={el.name}>
