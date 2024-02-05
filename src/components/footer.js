@@ -25,15 +25,27 @@ const FooterSection = () => {
             <p className="p-s-3">
               <strong>s:CMS</strong> è un progetto ideato e sviluppato dal{" "}
               <br />
-              <a href="https://lad.saras.uniroma1.it" target="_blank" rel="noreferrer">
+              <a
+                href="https://lad.saras.uniroma1.it"
+                target="_blank"
+                rel="noreferrer"
+              >
                 LAD: Laboratorio di Archeologia Digitale alla Sapienza
               </a>
               <br />
-              <a href="https://github.com/lab-archeologia-digitale/gatsby-directus-ui" target="_blank" rel="noreferrer">
+              <a
+                href="https://github.com/lab-archeologia-digitale/gatsby-directus-ui"
+                target="_blank"
+                rel="noreferrer"
+              >
                 Code
               </a>
               &nbsp;|&nbsp;
-              <a href="https://github.com/lab-archeologia-digitale/gatsby-directus-ui/issues" target="_blank" rel="noreferrer">
+              <a
+                href="https://github.com/lab-archeologia-digitale/gatsby-directus-ui/issues"
+                target="_blank"
+                rel="noreferrer"
+              >
                 Issues
               </a>
             </p>
