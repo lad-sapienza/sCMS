@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react"
 import DataTable from "react-data-table-component"
-import { Container } from "react-bootstrap"
 import styled from "styled-components"
 import getData from "../services/getData"
 
@@ -50,7 +49,7 @@ const DataTb = props => {
             stack: err,
           })
           setIsLoading(false)
-          return;
+          return
         })
     } else {
       // Define Drectus endpoint anche check all dependencies
@@ -113,18 +112,16 @@ const DataTb = props => {
 
   // Renderizza il componente con i dati ottenuti
   return (
-    <Container>
-      <Table>
-        <input
-          type="text"
-          className="form-control mb-5"
-          value={searchText}
-          placeholder="Search..."
-          onChange={handleSearch}
-        />
-        <DataTable columns={props.dColumns} data={filteredData} pagination />
-      </Table>
-    </Container>
+    <Table>
+      <input
+        type="text"
+        className="form-control mb-5"
+        value={searchText}
+        placeholder="Search..."
+        onChange={handleSearch}
+      />
+      <DataTable columns={props.dColumns} data={filteredData} pagination />
+    </Table>
   )
 }
 
