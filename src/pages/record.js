@@ -10,8 +10,6 @@ const RecordPage = ({ location }) => {
 
   useEffect(() => {
     try {
-      // Ottieni il parametro toponimo dalla query string
-      // @eiacopini: `toponimo` deve essere parametrizzato
       const urlParams = new URLSearchParams(location.search)
       const tb = urlParams.get("tb")
       const token = urlParams.get("token")
