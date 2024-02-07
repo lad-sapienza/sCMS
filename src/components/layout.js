@@ -1,6 +1,9 @@
 import * as React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 
+import { Container } from "react-bootstrap"
+
+
 import Navbar from "./navbar"
 // import Slide from "./slide"
 import Footer from "./footer"
@@ -25,7 +28,11 @@ const Layout = ({ children }) => {
         {/* <Slide /> */}
         {/* @eiacopini: Slide in home e Header nelle interne */}
         <Header siteTitle={data.site.siteMetadata?.title || `Title`} />
-        <main>{children}</main>
+        <main>
+          <Container>
+            {children}
+          </Container>
+          </main>
         <Footer />
       </div>
     </>

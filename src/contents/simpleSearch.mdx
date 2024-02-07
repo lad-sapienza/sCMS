@@ -1,12 +1,14 @@
 ---
 title: "Search component"
 date: "2023-10-01"
-slug: "search"
+slug: "simple-search"
 description: ""
 menu_position: 2
 ---
 
 import Search from "../modules/search.js"
+import { Link } from "gatsby"
+
 
 
 <div className="row">
@@ -22,7 +24,7 @@ import Search from "../modules/search.js"
       <div className="card-body">
         <h5 className="card-title">{item.title}</h5>
         <p className="card-text">{item.summary}.</p>
-        <a href={`/articles/?tb=cms_articles&token=I0pT7ozY0KuK8i-vtwLQGek36s0IhQ5e&id=${item.id}`} className="btn btn-primary">View</a>
+        <a href={`/record/?dEndPoint=${encodeURIComponent(`https://inrome.sns.it/db/items/cms_articles`)}&tb=cms_articles&token=I0pT7ozY0KuK8i-vtwLQGek36s0IhQ5e&id=${item.id}`} className="btn btn-primary">View</a>
       </div>
     </div>
   }}
@@ -39,7 +41,7 @@ import Search from "../modules/search.js"
       <div className="card-body">
         <h5 className="card-title">{item.title}</h5>
         <p className="card-text">{item.summary}.</p>
-        <a href={`/articles/?tb=cms_articles&token=I0pT7ozY0KuK8i-vtwLQGek36s0IhQ5e&id=${item.id}`} className="btn btn-primary">View</a>
+        <a href={`/record/?dEndPoint=${encodeURIComponent(`https://inrome.sns.it/db/items/cms_articles`)}&tb=cms_articles&token=I0pT7ozY0KuK8i-vtwLQGek36s0IhQ5e&id=${item.id}`} className="btn btn-primary">View</a>
       </div>
     </div>
   }}
