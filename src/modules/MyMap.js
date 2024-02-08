@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from "react"
+import React, { useState, useEffect } from "react"
 import { MapContainer, TileLayer, GeoJSON, LayersControl } from "react-leaflet"
 import bbox from "geojson-bbox"
 
@@ -14,6 +14,7 @@ const MyMap = ({
   name,
   popupTemplate,
   baseMaps,
+  pointToLayer,
 }) => {
   const [geojsonData, setGeojson] = useState()
   const [extent, setExtent] = useState([0, 0, 0, 0])
@@ -108,6 +109,7 @@ const MyMap = ({
         <LayersControl.Overlay name={name} checked>
           <GeoJSON
             data={geojsonData}
+            pointToLayer={pointToLayer ? pointToLayer : null}
             onEachFeature={(feature, layer) =>
               layer.bindPopup(popupTemplate(feature.properties))
             }
