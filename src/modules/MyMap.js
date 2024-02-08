@@ -31,8 +31,8 @@ const MyMap = ({
           setIsLoading(false)
         })
         .catch(err => {
-          console.log(err);
-          setError( "Error getting remote data from static file" )
+          console.log(err)
+          setError("Error getting remote data from static file")
           setIsLoading(false)
         })
     } else {
@@ -41,14 +41,18 @@ const MyMap = ({
       if (dEndPoint) {
         endPoint = dEndPoint
       } else if (dTable) {
-        if (!process.env.GATSBY_DIRECTUS_ENDPOINT){
-          setError( "Cannot calculate API end-point. Parameter dTable requires the enc variable GATSBY_DIRECTUS_ENDPOINT to  be set" )
+        if (!process.env.GATSBY_DIRECTUS_ENDPOINT) {
+          setError(
+            "Cannot calculate API end-point. Parameter dTable requires the enc variable GATSBY_DIRECTUS_ENDPOINT to  be set"
+          )
           setIsLoading(false)
           return
         }
         endPoint = `${process.env.GATSBY_DIRECTUS_ENDPOINT}items/${dTable}`
       } else {
-        setError( "Cannont calculate Directus enpoint. Please provide a full endpoint as a MyMap attribute or provide dTable attribute and set GATSBY_DIRECTUS_ENDPOINT environmental variable" )
+        setError(
+          "Cannont calculate Directus enpoint. Please provide a full endpoint as a MyMap attribute or provide dTable attribute and set GATSBY_DIRECTUS_ENDPOINT environmental variable"
+        )
         setIsLoading(false)
         return
       }
@@ -58,7 +62,9 @@ const MyMap = ({
       // Define Directus token
       const token = dToken ? dToken : process.env.GATSBY_DIRECTUS_TOKEN
       if (!token) {
-        setError( "Cannot calculate Directus token. Please provide it as an attribute of the MyMap component or define it as the environmnetal variable GATSBY_DIRECTUS_TOKEN" )
+        setError(
+          "Cannot calculate Directus token. Please provide it as an attribute of the MyMap component or define it as the environmnetal variable GATSBY_DIRECTUS_TOKEN"
+        )
         setIsLoading(false)
         return
       }
@@ -71,7 +77,7 @@ const MyMap = ({
         .catch(err => {
           console.log(err)
           setIsLoading(false)
-          setError( "Error getting remote data")
+          setError("Error getting remote data")
         })
     }
   }, [path2geojson, dEndPoint, dTable, dFilter, dToken]) // L'array di dipendenze vuoto assicura che questo effetto venga eseguito solo una volta, simile a componentDidMount
@@ -108,22 +114,30 @@ const MyMap = ({
           />
         </LayersControl.Overlay>
 
-        <LayersControl.BaseLayer checked name="Open Street Map">
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-          {baseMaps &&
-            baseMaps.map((el, i) => {
-              return (
-                <Fragment key={i}>
-                  <LayersControl.BaseLayer checked name={el.name}>
-                    <TileLayer attribution={el.attribution} url={el.url} />
-                  </LayersControl.BaseLayer>
-                </Fragment>
-              )
-            })}
-        </LayersControl.BaseLayer>
+        {!baseMaps && (
+          <LayersControl.BaseLayer checked name="Open Street Map">
+            <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+          </LayersControl.BaseLayer>
+        )}
+
+        {baseMaps &&
+          baseMaps.map((el, i) => {
+            return (
+              <LayersControl.BaseLayer
+                key={i}
+                checked={el.checked ? true : false}
+                name={el.name}
+              >
+                <TileLayer
+                  attribution={el.attribution ? el.attribution : ""}
+                  url={el.url}
+                />
+              </LayersControl.BaseLayer>
+            )
+          })}
       </LayersControl>
     </MapContainer>
   )

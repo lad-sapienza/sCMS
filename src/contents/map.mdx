@@ -23,7 +23,11 @@ Geodata can be retrieved form a Directus database or any other JSON API, a stati
 - `popupTemplate` (**required**): function that accepts as a paramater an object with a GeoJson feature properties or a plain object with key:value attributes and returns an HTML string to use as text for the map popup.
 - `height` (**optional**): Map element height, default value: `800px`
 - `dFilter` (**optional**): Directus filter to apply to dTable
-- `baseMaps` (**optional**): Array of base-layers to add to the map, other than OpenStreetMap which is added by default. Each element should be provided as an object, containing the `name` of the layer, the `url` and the `attributtion` string.
+- `baseMaps` (**optional**): Array of base-layers to add to the map. Each element should be provided as an object, containing the following properties:
+  - `name` of the layer
+  - `url` to the tiles
+  - an optional `attributtion` string
+  - and optional `checked` attribute; if `true` the layer will be turned on, otherwise (default) it will be off.
 
 ## Examples
 
@@ -31,11 +35,12 @@ import MyMap from "../modules/MyMap.js"
 
 <div className="row">
   <div className="col-sm-4">
-  A map with geogata sourced from a geojson file hosted in the same server: only a (public) local path is needed:
+  A map with geodata sourced from a GeoJSON file hosted in the same server: only a (public) local path is needed:
 ```html
 <MyMap
     height="400px"
     path2geojson="../data/toponimi.geojson"
+    name="Siti"
     popupTemplate={
       (attribs) => { return `<p><strong>${attribs.nome}</strong><br />(${attribs.comune})`; }
     }
@@ -46,6 +51,7 @@ import MyMap from "../modules/MyMap.js"
   <MyMap
     height="400px"
     path2geojson="../data/toponimi.geojson"
+    name="Siti"
     popupTemplate={
       (attribs) => { return `<p><strong>${attribs.nome}</strong><br />(${attribs.comune})`; }
     }
@@ -57,6 +63,7 @@ import MyMap from "../modules/MyMap.js"
 
 <div className="row">
   <div className="col-sm-4">
+  A map sourced from the default Directus database
 ```
 <MyMap
   height="400px"
@@ -67,10 +74,47 @@ import MyMap from "../modules/MyMap.js"
   }
   baseMaps={[
     {
-      "name": "Anche io sono OSM",
+      "name": "Open Street Map",
       "url": "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-      "attribution": `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors`
-    }
+      "attribution": '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    },
+    {
+      "name": "Esri Imagery/Satellite",
+      "url": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+      "checked": true
+    },
+    {
+      "name": "Esri Streets",
+      "url": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}"
+    },
+    {
+      "name": "Esri Topo",
+      "url": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}"
+    },
+    {
+      "name": "Google Satellite",
+      "url": "https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}"
+    },
+    {
+      "name": "Google Streets",
+      "url": "ps://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"
+    },
+    {
+      "name": "Carto DB",
+      "url": "https://cartodb-basemaps-a.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png"
+    },
+    {
+      "name": "Stamen Terrain",
+      "url": "http://a.tile.stamen.com/terrain/{z}/{x}/{y}.png"
+    },
+    {
+      "name": "OpenStreetMap Mapnick",
+      "url": "ttp://tile.openstreetmap.org/{z}/{x}/{y}.png"
+    },
+    {
+      "name": "OSM Cycle Map",
+      "url": "http://tile.thunderforest.com/cycle/{z}/{x}/{y}.png"
+    },
   ]}
 />
 ```
@@ -85,10 +129,47 @@ import MyMap from "../modules/MyMap.js"
   }
   baseMaps={[
     {
-      "name": "Anche io sono OSM",
+      "name": "Open Street Map",
       "url": "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-      "attribution": `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors`
-    }
+      "attribution": '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    },
+    {
+      "name": "Esri Imagery/Satellite",
+      "url": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+      "checked": true
+    },
+    {
+      "name": "Esri Streets",
+      "url": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}"
+    },
+    {
+      "name": "Esri Topo",
+      "url": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}"
+    },
+    {
+      "name": "Google Satellite",
+      "url": "https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}"
+    },
+    {
+      "name": "Google Streets",
+      "url": "ps://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"
+    },
+    {
+      "name": "Carto DB",
+      "url": "https://cartodb-basemaps-a.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png"
+    },
+    {
+      "name": "Stamen Terrain",
+      "url": "http://a.tile.stamen.com/terrain/{z}/{x}/{y}.png"
+    },
+    {
+      "name": "OpenStreetMap Mapnick",
+      "url": "ttp://tile.openstreetmap.org/{z}/{x}/{y}.png"
+    },
+    {
+      "name": "OSM Cycle Map",
+      "url": "http://tile.thunderforest.com/cycle/{z}/{x}/{y}.png"
+    },
   ]}
 />
   </div>
@@ -108,13 +189,6 @@ import MyMap from "../modules/MyMap.js"
   popupTemplate={
     (attribs) => { return `<p><strong>${attribs.toponimo}</strong>`; }
   }
-  baseMaps={[
-    {
-      "name": "Anche io sono OSM",
-      "url": "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-      "attribution": `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors`
-    }
-  ]}
 />
 ```
   </div>
@@ -128,13 +202,6 @@ import MyMap from "../modules/MyMap.js"
   popupTemplate={
     (attribs) => { return `<p><strong>${attribs.toponimo}</strong>`; }
   }
-  baseMaps={[
-    {
-      "name": "Anche io sono OSM",
-      "url": "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-      "attribution": `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors`
-    }
-  ]}
 />
   </div>
 </div>
