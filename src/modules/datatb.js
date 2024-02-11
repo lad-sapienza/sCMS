@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react"
 import DataTable from "react-data-table-component"
-import styled from "styled-components"
 import getData from "../services/getData"
 
 const DataTb = props => {
@@ -112,7 +111,7 @@ const DataTb = props => {
 
   // Renderizza il componente con i dati ottenuti
   return (
-    <Table>
+    <>
       <input
         type="text"
         className="form-control mb-5"
@@ -121,21 +120,8 @@ const DataTb = props => {
         onChange={handleSearch}
       />
       <DataTable columns={props.dColumns} data={filteredData} pagination />
-    </Table>
+    </>
   )
 }
 
-//style
-const Table = styled.div`
-  a,
-  a:visited {
-    color: #000000;
-    text-decoration: none;
-  }
-
-  a:hover {
-    color: red;
-    text-decoration: none;
-  }
-`
 export default DataTb
