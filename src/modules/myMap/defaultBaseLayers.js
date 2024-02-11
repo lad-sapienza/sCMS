@@ -47,14 +47,14 @@ export const defaultBaseLayers = {
   },
   StamenTerrain: {
     name: "Stamen Terrain",
-    url: "http://a.tile.stamen.com/terrain/{z}/{x}/{y}.png",
+    url: "https://a.tile.stamen.com/terrain/{z}/{x}/{y}.png",
   },
   OSMMapnick: {
     name: "OpenStreetMap Mapnick",
-    url: "http://tile.openstreetmap.org/{z}/{x}/{y}.png",
+    url: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
   },
   OSMCycle: {
     name: "OSM Cycle Map",
-    url: "http://tile.thunderforest.com/cycle/{z}/{x}/{y}.png",
+    url: "https://tile.thunderforest.com/cycle/{z}/{x}/{y}.png",
   },
 }
