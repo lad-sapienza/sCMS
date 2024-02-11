@@ -1,5 +1,5 @@
 ---
-title: "MyMap component"
+title: "MapComp component"
 date: "2023-10-01"
 slug: "modulo-mappa"
 description: "An easy to use component for building powerful and fully customizable maps"
@@ -7,87 +7,89 @@ menu_position: 1
 ---
 
 
-# MyMap component
+# MapComp: Map Component
 
-`<MyMap />` component can be used in MDX pages to display a dynamic maps, which are fully customisable.
+`<MapComp />` can be used in MDX pages to display a dynamic maps, which are fully customisable.
 
 Geodata can be retrieved form a Directus database or any other JSON API, a statically hosted geoJSON file or any GeoJSON file publically available on the Web. The component can be customised via the following parameters.
 
-## Parameters
-
-- `path2geojson` (**required** if `dTable` id not provided): relative or full path to a geojson file to use for the map creation  
-- `dEndPoint` (**required** is `path2geojson` or `dTable` are not defined): full path to a Directus endpoint, complete with table name
-- `dToken` (**required** if `dEndPoint` is provided):  Directus access token, required if table is not public. If not proved GATSBY_DIRECTUS_TOKEN environment variable will be used
-- `dTable` (**required**, if `path2geojson` or `dEndPoint` are not provided): name of the Directus table containing geographical data
-- `name` (**required**): Name of layer containing the vector data shown in the Layer Control
-- `popupTemplate` (**required**): function that accepts as a paramater an object with a GeoJson feature properties or a plain object with key:value attributes and returns an HTML string to use as text for the map popup.
-- `height` (**optional**): Map element height, default value: `800px`
-- `dFilter` (**optional**): Directus filter to apply to dTable
-- `baseMaps` (**optional**): Array of base-layers to add to the map. Each element should be provided as an object, containing the following properties:
-  - `name` of the layer
-  - `url` to the tiles
-  - an optional `attributtion` string
-  - and optional `checked` attribute; if `true` the layer will be turned on, otherwise (default) it will be off.
-
 ## Examples
 
-import MyMap from "../modules/MyMap.js"
+import { MapComp, BaseLayer, VectorLayer } from "../modules/myMap/myMap.js"
 
 <div className="row">
   <div className="col-sm-4">
   A map with geodata sourced from a GeoJSON file hosted in the same server: only a (public) local path is needed:
-```html
-<MyMap
+
+```
+<MapComp
     height="400px"
     path2geojson="../data/toponimi.geojson"
     name="Siti"
-    popupTemplate={
+    center= "41.88,12.44,10"
+    baseLayers="OSM,EsriSatellite">
+    
+    <VectorLayer 
+      name="Siti"
+      path2geojson="../data/toponimi.geojson"
+      popupTemplate={
       (attribs) => { return `<p><strong>${attribs.nome}</strong> ${attribs.comune}
         ${attribs.epigrafi.length > 0 
           ? 
           `<br /><strong>${attribs.epigrafi.length} epigrafi</strong><hr />${attribs.epigrafi.map(epi => epi.title).join(', ')}` 
           :
           ''}`; }
-    }
-    pointToLayer={
-      (f, ll) => {
-        return L.circleMarker(ll, {
-          radius: 4,
-          fillColor: f.properties.epigrafi.length > 0 ? "#FE04FC" : '#ebebeb',
-          color: "#000",
-          weight: 1,
-          opacity: 1,
-          fillOpacity: 0.8
-        });
-    }}
-  />
+      }
+      pointToLayer={
+        (f, ll) => {
+          return L.circleMarker(ll, {
+            radius: 4,
+            fillColor: f.properties.epigrafi.length > 0 ? "#FE04FC" : '#ebebeb',
+            color: "#000",
+            weight: 1,
+            opacity: 1,
+            fillOpacity: 0.8
+          });
+        }}
+    />
+    
+  </MapComp>
 ```
   </div>
   <div className="col-sm-8">
-  <MyMap
+  <MapComp
     height="400px"
     path2geojson="../data/toponimi.geojson"
     name="Siti"
-    popupTemplate={
+    center= "41.88,12.44,10"
+    baseLayers="OSM, EsriSatellite, EsriStreets, EsriTopo, GoogleSatellite,GoogleRoadmap,GoogleTerrain,GoogleAlteredRoadmap, GoogleTerrainOnly, GoogleHybrid, CartoDb, StamenTerrain, OSMMapnick, OSMCycle"
+    >
+    
+    <VectorLayer 
+      name="Siti"
+      path2geojson="../data/toponimi.geojson"
+      popupTemplate={
       (attribs) => { return `<p><strong>${attribs.nome}</strong> ${attribs.comune}
         ${attribs.epigrafi.length > 0 
           ? 
           `<br /><strong>${attribs.epigrafi.length} epigrafi</strong><hr />${attribs.epigrafi.map(epi => epi.title).join(', ')}` 
           :
           ''}`; }
-    }
-    pointToLayer={
-      (f, ll) => {
-        return L.circleMarker(ll, {
-          radius: 4,
-          fillColor: f.properties.epigrafi.length > 0 ? "#FE04FC" : '#ebebeb',
-          color: "#000",
-          weight: 1,
-          opacity: 1,
-          fillOpacity: 0.8
-        });
-    }}
-  />
+      }
+      pointToLayer={
+        (f, ll) => {
+          return L.circleMarker(ll, {
+            radius: 4,
+            fillColor: f.properties.epigrafi.length > 0 ? "#FE04FC" : '#ebebeb',
+            color: "#000",
+            weight: 1,
+            opacity: 1,
+            fillOpacity: 0.8
+          });
+        }}
+    />
+    
+  </MapComp>
   </div>
 </div>
 
@@ -97,113 +99,111 @@ import MyMap from "../modules/MyMap.js"
   <div className="col-sm-4">
   A map sourced from the default Directus database
 ```
-<MyMap
+<MapComp
   height="400px"
-  dTable="toponimi"
-  name="Toponimi"
-  popupTemplate={
-    (attribs) => { return `<p><strong>${attribs.toponimo}</strong>`; }
-  }
-  baseMaps={[
-    {
-      "name": "Open Street Map",
-      "url": "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-      "attribution": '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    },
-    {
-      "name": "Esri Imagery/Satellite",
-      "url": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-      "checked": true
-    },
-    {
-      "name": "Esri Streets",
-      "url": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}"
-    },
-    {
-      "name": "Esri Topo",
-      "url": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}"
-    },
-    {
-      "name": "Google Satellite",
-      "url": "https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}"
-    },
-    {
-      "name": "Google Streets",
-      "url": "ps://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"
-    },
-    {
-      "name": "Carto DB",
-      "url": "https://cartodb-basemaps-a.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png"
-    },
-    {
-      "name": "Stamen Terrain",
-      "url": "http://a.tile.stamen.com/terrain/{z}/{x}/{y}.png"
-    },
-    {
-      "name": "OpenStreetMap Mapnick",
-      "url": "ttp://tile.openstreetmap.org/{z}/{x}/{y}.png"
-    },
-    {
-      "name": "OSM Cycle Map",
-      "url": "http://tile.thunderforest.com/cycle/{z}/{x}/{y}.png"
-    },
-  ]}
-/>
+  center="43,13.32,11">
+    <VectorLayer 
+      name="Toponimi"
+      dTable="toponimi"
+      popupTemplate={
+        (attribs) => { return `<p><strong>${attribs.toponimo}</strong>`; }
+      }/>
+    <BaseLayer 
+      name="Open Street Map"
+      url = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      attribution= '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' />
+    
+    <BaseLayer 
+      name="Esri Imagery/Satellite"
+      url = "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+      checked={true} />
+    
+    <BaseLayer 
+      name="Esri Streets"
+      url = "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}" />
+    
+    <BaseLayer 
+      name="Esri Topo"
+      url = "https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}" />
+    
+    <BaseLayer 
+      name="Google Satellite"
+      url = "https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}" />
+    
+    <BaseLayer 
+      name="Google Roadmap"
+      url = "https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}" />
+    
+    <BaseLayer 
+      name="Carto DB"
+      url = "https://cartodb-basemaps-a.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png" />
+    
+    <BaseLayer 
+      name="Stamen Terrain"
+      url = "http://a.tile.stamen.com/terrain/{z}/{x}/{y}.png" />
+    
+    <BaseLayer 
+      name="OpenStreetMap Mapnick"
+      url = "http://tile.openstreetmap.org/{z}/{x}/{y}.png" />
+    
+    <BaseLayer 
+      name="OSM Cycle Map"
+      url = "http://tile.thunderforest.com/cycle/{z}/{x}/{y}.png" />
+  </MapComp>
 ```
   </div>
   <div className="col-sm-8">
-<MyMap
+<MapComp
   height="400px"
-  dTable="toponimi"
-  name="Toponimi"
-  popupTemplate={
-    (attribs) => { return `<p><strong>${attribs.toponimo}</strong>`; }
-  }
-  baseMaps={[
-    {
-      "name": "Open Street Map",
-      "url": "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-      "attribution": '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    },
-    {
-      "name": "Esri Imagery/Satellite",
-      "url": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-      "checked": true
-    },
-    {
-      "name": "Esri Streets",
-      "url": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}"
-    },
-    {
-      "name": "Esri Topo",
-      "url": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}"
-    },
-    {
-      "name": "Google Satellite",
-      "url": "https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}"
-    },
-    {
-      "name": "Google Streets",
-      "url": "ps://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"
-    },
-    {
-      "name": "Carto DB",
-      "url": "https://cartodb-basemaps-a.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png"
-    },
-    {
-      "name": "Stamen Terrain",
-      "url": "http://a.tile.stamen.com/terrain/{z}/{x}/{y}.png"
-    },
-    {
-      "name": "OpenStreetMap Mapnick",
-      "url": "ttp://tile.openstreetmap.org/{z}/{x}/{y}.png"
-    },
-    {
-      "name": "OSM Cycle Map",
-      "url": "http://tile.thunderforest.com/cycle/{z}/{x}/{y}.png"
-    },
-  ]}
-/>
+  center="43,13.32,11">
+    <VectorLayer 
+      name="Toponimi"
+      dTable="toponimi"
+      popupTemplate={
+        (attribs) => { return `<p><strong>${attribs.toponimo}</strong>`; }
+      }/>
+    <BaseLayer 
+      name="Open Street Map"
+      url = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      attribution= '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' />
+    
+    <BaseLayer 
+      name="Esri Imagery/Satellite"
+      url = "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+      checked={true} />
+    
+    <BaseLayer 
+      name="Esri Streets"
+      url = "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}" />
+    
+    <BaseLayer 
+      name="Esri Topo"
+      url = "https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}" />
+    
+    <BaseLayer 
+      name="Google Satellite"
+      url = "https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}" />
+    
+    <BaseLayer 
+      name="Google Roadmap"
+      url = "https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}" />
+    
+    <BaseLayer 
+      name="Carto DB"
+      url = "https://cartodb-basemaps-a.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png" />
+    
+    <BaseLayer 
+      name="Stamen Terrain"
+      url = "http://a.tile.stamen.com/terrain/{z}/{x}/{y}.png" />
+    
+    <BaseLayer 
+      name="OpenStreetMap Mapnick"
+      url = "http://tile.openstreetmap.org/{z}/{x}/{y}.png" />
+    
+    <BaseLayer 
+      name="OSM Cycle Map"
+      url = "http://tile.thunderforest.com/cycle/{z}/{x}/{y}.png" />
+  </MapComp>
   </div>
 </div>
 
@@ -212,28 +212,36 @@ import MyMap from "../modules/MyMap.js"
 <div className="row">
   <div className="col-sm-4">
 ```
-<MyMap
+<MapComp
   height="400px"
-  dEndPoint="https://landscapearchaeology.eu/db/items/toponimi"
-  dToken="sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E"
-  name="Toponimi"
-  dFilter="filter[provincia][_eq]=Macerata"
-  popupTemplate={
-    (attribs) => { return `<p><strong>${attribs.toponimo}</strong>`; }
-  }
-/>
+  center="43,13.32,11"
+  baseLayers="OSM,EsriSatellite">
+    <VectorLayer 
+      name="Toponimi"
+      dEndPoint="https://landscapearchaeology.eu/db/items/toponimi"
+      dToken="sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E"
+      dFilter="filter[provincia][_eq]=Macerata"
+      popupTemplate={
+        (attribs) => { return `<p><strong>${attribs.toponimo}</strong>`; }
+      }
+    />
+  </MapComp>
 ```
   </div>
   <div className="col-sm-8">
-  <MyMap
+  <MapComp
   height="400px"
-  dEndPoint="https://landscapearchaeology.eu/db/items/toponimi"
-  dToken="sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E"
-  name="Toponimi"
-  dFilter="filter[provincia][_eq]=Macerata"
-  popupTemplate={
-    (attribs) => { return `<p><strong>${attribs.toponimo}</strong>`; }
-  }
-/>
+  center="43,13.32,11"
+  baseLayers="OSM,EsriSatellite">
+    <VectorLayer 
+      name="Toponimi"
+      dEndPoint="https://landscapearchaeology.eu/db/items/toponimi"
+      dToken="sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E"
+      dFilter="filter[provincia][_eq]=Macerata"
+      popupTemplate={
+        (attribs) => { return `<p><strong>${attribs.toponimo}</strong>`; }
+      }
+    />
+  </MapComp>
   </div>
 </div>
