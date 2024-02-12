@@ -69,31 +69,27 @@ import DataTb from "../modules/datatb.js"
       dColumns={[
         {
           name: "ID luogo",
-          selector: (row, i) => row.id,
+          selector: (item, i) => item.id,
           sortable: true,
         },
         {
           name: "Toponimo",
-          selector: (row, i) => row.toponimi,
+          selector: (item, i) => item.toponimi,
           sortable: true,
-          cell: row => (
-            <a
-              href={`${
-                process.env.GATSBY_BASE_PATH
-              }/articles?toponimo=${encodeURIComponent(row.toponimo)}`}
-            >
-              {row.toponimo}
+          cell: item => (
+            <a href={`../record/?dEndPoint=${encodeURIComponent(`https://landscapearchaeology.eu/db/items/toponimi`)}&tb=toponimi&token=sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E&id=${item.id}`}>
+              {item.toponimo}
             </a>
           ),
         },
         {
           name: "Provincia",
-          selector: (row, i) => row.provincia,
+          selector: (item, i) => item.provincia,
           sortable: true,
         },
         {
           name: "Comune",
-          selector: (row, i) => row.comune,
+          selector: (item, i) => item.comune,
           sortable: true,
         },
       ]}
