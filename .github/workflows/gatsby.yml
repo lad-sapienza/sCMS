@@ -75,15 +75,6 @@ jobs:
             ${{ runner.os }}-gatsby-build-
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
-      - name: Save .env.production
-        env:
-          PREFIX_PATHS: 'true'
-          GATSBY_DIRECTUS_ENDPOINT: ${{ secrets.GATSBY_DIRECTUS_ENDPOINT }}
-          GATSBY_DIRECTUS_TOKEN: ${{ secrets.GATSBY_DIRECTUS_TOKEN }}
-        run: |
-          touch .env.production
-          echo 'GATSBY_DIRECTUS_ENDPOINT: ${{ secrets.GATSBY_DIRECTUS_ENDPOINT }}' >> .env.production
-          echo 'GATSBY_DIRECTUS_TOKEN: ${{ secrets.GATSBY_DIRECTUS_TOKEN }}' >> .env.production
       - name: Build with Gatsby
         env:
           PREFIX_PATHS: 'true'
