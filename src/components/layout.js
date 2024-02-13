@@ -4,7 +4,7 @@ import { useStaticQuery, graphql } from "gatsby"
 import { Container } from "react-bootstrap"
 
 
-import Navbar from "./navbar"
+import Navbar from "../modules/autoNavbar"
 // import Slide from "./slide"
 import Footer from "./footer"
 import Header from "./header"

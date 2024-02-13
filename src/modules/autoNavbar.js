@@ -4,7 +4,7 @@ import { withPrefix } from "gatsby"
 import styled from "styled-components"
 import { useStaticQuery, graphql } from "gatsby"
 
-function MyNavbar(props) {
+function AutoNavbar(props) {
   const data = useStaticQuery(graphql`
     {
       allMdx(
@@ -53,4 +53,4 @@ const Menu = styled.div`
     background-color: #ececec !important;
   }
 `
-export default MyNavbar
+export default AutoNavbar
