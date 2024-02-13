@@ -34,7 +34,7 @@ const VectorLayer = ({
       } else if (dTable) {
         if (!process.env.GATSBY_DIRECTUS_ENDPOINT) {
           setError(
-            "Cannot calculate API end-point. Parameter dTable requires the enc variable GATSBY_DIRECTUS_ENDPOINT to  be set"
+            "Cannot calculate API end-point. Parameter dTable requires the enc variable GATSBY_DIRECTUS_ENDPOINT to be set"
           )
           return
         }
