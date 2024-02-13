@@ -26,7 +26,6 @@ const Layout = ({ children }) => {
       <div className="container-fluid p-0">
         <Navbar siteTitle={data.site.siteMetadata?.title || `Title`} />
         {/* <Slide /> */}
-        {/* @eiacopini: Slide in home e Header nelle interne */}
         <Header siteTitle={data.site.siteMetadata?.title || `Title`} />
         <main>
           <Container>
