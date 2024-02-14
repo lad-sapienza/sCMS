@@ -25,7 +25,7 @@ const MapComp = ({ height, center, baseLayers, children }) => {
               name={ defaultBaseLayers[bl].name }
               url={ defaultBaseLayers[bl].url }
               attribution={ defaultBaseLayers[bl].attribution ?  defaultBaseLayers[bl].attribution :  null}
-              checked={true}
+              checked={(index === 0)}
             />
         })}
         {children}
