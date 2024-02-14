@@ -16,6 +16,7 @@ function AutoNavbar(props) {
           frontmatter {
             slug
             title
+            menu_position
           }
         }
       }
