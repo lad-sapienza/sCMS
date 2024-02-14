@@ -12,6 +12,7 @@ const VectorLayer = ({
   name,
   popupTemplate,
   pointToLayer,
+  filter
 }) => {
   const [geojsonData, setGeojson] = useState()
   const [error, setError] = useState(false)
@@ -81,6 +82,7 @@ const VectorLayer = ({
           onEachFeature={(feature, layer) =>
             layer.bindPopup(popupTemplate(feature.properties))
           }
+          filter={ filter ? filter : null}
         />
       </LayersControl.Overlay>
     )
