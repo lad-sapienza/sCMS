@@ -1,45 +1,30 @@
-import * as React from "react"
+import React from "react"
+import { graphql } from "gatsby"
 import Layout from "../components/layout"
-import { Container } from "react-bootstrap"
 
-const IndexPage = () => (
-  <Layout>
-    <Container>
-      <h1>
-        <b>Project Homepage</b>
-      </h1>
-      <p>
-        Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-        accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab
-        illo inventore veritatis et quasi architecto beatae vitae dicta sunt
-        explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut
-        odit aut fugit, sed quia consequuntur magni dolores eos qui ratione
-        voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum
-        quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam
-        eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat
-        voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam
-        corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?
-        Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse
-        quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo
-        voluptas nulla pariatur?
-      </p>
-      <p>
-        Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-        accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab
-        illo inventore veritatis et quasi architecto beatae vitae dicta sunt
-        explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut
-        odit aut fugit, sed quia consequuntur magni dolores eos qui ratione
-        voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum
-        quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam
-        eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat
-        voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam
-        corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?
-        Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse
-        quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo
-        voluptas nulla pariatur?
-      </p>
-    </Container>
-  </Layout>
-)
+const IndexPage = ({ data }) => {
+  const { mdx } = data
+
+  return (
+    <Layout>
+      <div>
+        <h1>{mdx.frontmatter.title}</h1>
+        {/* Render other content from mdx file */}
+        <div dangerouslySetInnerHTML={{ __html: mdx.body }} />
+      </div>
+    </Layout>
+  )
+}
+
+export const query = graphql`
+  query {
+    mdx(frontmatter: { slug: { eq: "home" } }) {
+      frontmatter {
+        title
+      }
+      body
+    }
+  }
+`
 
 export default IndexPage
