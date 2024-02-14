@@ -1,17 +1,13 @@
 import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
-
+import Seo from "../modules/seo"
 const IndexPage = ({ data }) => {
   const { mdx } = data
 
   return (
     <Layout>
-      <div>
-        <h1>{mdx.frontmatter.title}</h1>
-        {/* Render other content from mdx file */}
-        <div dangerouslySetInnerHTML={{ __html: mdx.body }} />
-      </div>
+      <div dangerouslySetInnerHTML={{ __html: mdx.body }} />
     </Layout>
   )
 }
@@ -28,3 +24,5 @@ export const query = graphql`
 `
 
 export default IndexPage
+
+export const Head = () => <Seo title="Benvenuti"/>
