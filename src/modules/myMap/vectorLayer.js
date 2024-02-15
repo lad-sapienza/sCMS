@@ -12,7 +12,8 @@ const VectorLayer = ({
   name,
   popupTemplate,
   pointToLayer,
-  filter
+  filter,
+  checked
 }) => {
   const [geojsonData, setGeojson] = useState()
   const [error, setError] = useState(false)
@@ -75,7 +76,7 @@ const VectorLayer = ({
     return <></>
   } else {
     return (
-      <LayersControl.Overlay name={name} checked>
+      <LayersControl.Overlay name={name} checked={checked}>
         <GeoJSON
           data={geojsonData}
           pointToLayer={pointToLayer ? pointToLayer : null}
