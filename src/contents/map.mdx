@@ -15,7 +15,7 @@ Geodata can be retrieved form a Directus database or any other JSON API, a stati
 
 ## Examples
 
-import { MapComp, BaseLayer, VectorLayer } from "../modules/myMap/myMap.js"
+import { MapComp, RasterLayer, VectorLayer } from "../modules/myMap/myMap.js"
 
 <div className="row">
   <div className="col-sm-4">
@@ -109,45 +109,45 @@ import { MapComp, BaseLayer, VectorLayer } from "../modules/myMap/myMap.js"
       popupTemplate={
         (attribs) => { return `<p><strong>${attribs.toponimo}</strong>`; }
       }/>
-    <BaseLayer 
+    <RasterLayer 
       name="Open Street Map"
       url = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       attribution= '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' />
     
-    <BaseLayer 
+    <RasterLayer 
       name="Esri Imagery/Satellite"
       url = "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
       checked={true} />
     
-    <BaseLayer 
+    <RasterLayer 
       name="Esri Streets"
       url = "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}" />
     
-    <BaseLayer 
+    <RasterLayer 
       name="Esri Topo"
       url = "https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}" />
     
-    <BaseLayer 
+    <RasterLayer 
       name="Google Satellite"
       url = "https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}" />
     
-    <BaseLayer 
+    <RasterLayer 
       name="Google Roadmap"
       url = "https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}" />
     
-    <BaseLayer 
+    <RasterLayer 
       name="Carto DB"
       url = "https://cartodb-basemaps-a.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png" />
     
-    <BaseLayer 
+    <RasterLayer 
       name="Stamen Terrain"
       url = "https://a.tile.stamen.com/terrain/{z}/{x}/{y}.png" />
     
-    <BaseLayer 
+    <RasterLayer 
       name="OpenStreetMap Mapnick"
       url = "https://tile.openstreetmap.org/{z}/{x}/{y}.png" />
     
-    <BaseLayer 
+    <RasterLayer 
       name="OSM Cycle Map"
       url = "https://tile.thunderforest.com/cycle/{z}/{x}/{y}.png" />
   </MapComp>
@@ -163,45 +163,45 @@ import { MapComp, BaseLayer, VectorLayer } from "../modules/myMap/myMap.js"
       popupTemplate={
         (attribs) => { return `<p><strong>${attribs.toponimo}</strong>`; }
       }/>
-    <BaseLayer 
+    <RasterLayer 
       name="Open Street Map"
       url = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       attribution= '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' />
     
-    <BaseLayer 
+    <RasterLayer 
       name="Esri Imagery/Satellite"
       url = "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
       checked={true} />
     
-    <BaseLayer 
+    <RasterLayer 
       name="Esri Streets"
       url = "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}" />
     
-    <BaseLayer 
+    <RasterLayer 
       name="Esri Topo"
       url = "https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}" />
     
-    <BaseLayer 
+    <RasterLayer 
       name="Google Satellite"
       url = "https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}" />
     
-    <BaseLayer 
+    <RasterLayer 
       name="Google Roadmap"
       url = "https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}" />
     
-    <BaseLayer 
+    <RasterLayer 
       name="Carto DB"
       url = "https://cartodb-basemaps-a.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png" />
     
-    <BaseLayer 
+    <RasterLayer 
       name="Stamen Terrain"
       url = "https://a.tile.stamen.com/terrain/{z}/{x}/{y}.png" />
     
-    <BaseLayer 
+    <RasterLayer 
       name="OpenStreetMap Mapnick"
       url = "https://tile.openstreetmap.org/{z}/{x}/{y}.png" />
     
-    <BaseLayer 
+    <RasterLayer 
       name="OSM Cycle Map"
       url = "https://tile.thunderforest.com/cycle/{z}/{x}/{y}.png" />
   </MapComp>
