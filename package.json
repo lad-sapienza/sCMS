@@ -19,6 +19,7 @@
     "gatsby-plugin-styled-components": "^6.13.0",
     "gatsby-source-filesystem": "^5.13.0",
     "gatsby-transformer-sharp": "^5.13.0",
+    "geojson-bbox": "^0.0.1",
     "leaflet": "^1.9.3",
     "react": "^18.2.0",
     "react-bootstrap": "^2.9.2",

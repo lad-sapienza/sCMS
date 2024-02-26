@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
-import { GeoJSON, LayersControl } from "react-leaflet"
+import { GeoJSON, LayersControl, useMap } from "react-leaflet"
+import * as bbox from "geojson-bbox"
 
 import getData from "../../services/getData"
 
@@ -13,10 +14,12 @@ const VectorLayer = ({
   popupTemplate,
   pointToLayer,
   filter,
-  checked
+  checked,
+  fitToContent,
 }) => {
   const [geojsonData, setGeojson] = useState()
   const [error, setError] = useState(false)
+  const map = useMap()
 
   useEffect(() => {
     if (path2geojson) {
@@ -75,6 +78,14 @@ const VectorLayer = ({
   } else if (!geojsonData) {
     return <></>
   } else {
+    if (fitToContent) {
+      const lBb = bbox(geojsonData)
+      map.fitBounds([
+        [lBb[1], lBb[0]],
+        [lBb[3], lBb[2]],
+      ])
+    }
+
     return (
       <LayersControl.Overlay name={name} checked={checked}>
         <GeoJSON
@@ -83,7 +94,7 @@ const VectorLayer = ({
           onEachFeature={(feature, layer) =>
             layer.bindPopup(popupTemplate(feature.properties))
           }
-          filter={ filter ? filter : null}
+          filter={filter ? filter : null}
         />
       </LayersControl.Overlay>
     )

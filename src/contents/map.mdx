@@ -26,13 +26,14 @@ import { MapComp, RasterLayer, VectorLayer } from "../modules/myMap/myMap.js"
     height="400px"
     path2geojson="../data/toponimi.geojson"
     name="Siti"
-    center= "41.88,12.44,10"
     baseLayers="OSM, EsriStreets, EsriTopo, GoogleSatellite,GoogleRoadmap,GoogleTerrain,GoogleAlteredRoadmap, GoogleTerrainOnly, GoogleHybrid, CartoDb, StamenTerrain, OSMMapnick, OSMCycle, EsriSatellite"
     >
     
     <VectorLayer 
       name="Siti"
       path2geojson="../data/toponimi.geojson"
+      fitToContent={true}
+      checked={true}
       popupTemplate={
       (attribs) => { return `<p><strong>${attribs.nome}</strong> ${attribs.comune}
         ${attribs.epigrafi.length > 0 
@@ -62,13 +63,14 @@ import { MapComp, RasterLayer, VectorLayer } from "../modules/myMap/myMap.js"
     height="400px"
     path2geojson="../data/toponimi.geojson"
     name="Siti"
-    center= "41.88,12.44,10"
     baseLayers="OSM, EsriStreets, EsriTopo, GoogleSatellite,GoogleRoadmap,GoogleTerrain,GoogleAlteredRoadmap, GoogleTerrainOnly, GoogleHybrid, CartoDb, StamenTerrain, OSMMapnick, OSMCycle, EsriSatellite"
     >
     
     <VectorLayer 
       name="Siti"
       path2geojson="../data/toponimi.geojson"
+      fitToContent={true}
+      checked={true}
       popupTemplate={
       (attribs) => { return `<p><strong>${attribs.nome}</strong> ${attribs.comune}
         ${attribs.epigrafi.length > 0 
@@ -106,7 +108,9 @@ import { MapComp, RasterLayer, VectorLayer } from "../modules/myMap/myMap.js"
     <VectorLayer 
       name="Toponimi"
       dTable="toponimi"
-      popupTemplate={
+      checked={true}
+      fitToContent={true}
+            popupTemplate={
         (attribs) => { return `<p><strong>${attribs.toponimo}</strong>`; }
       }/>
     <RasterLayer 
@@ -160,6 +164,8 @@ import { MapComp, RasterLayer, VectorLayer } from "../modules/myMap/myMap.js"
     <VectorLayer 
       name="Toponimi"
       dTable="toponimi"
+      checked={true}
+      fitToContent={true}
       popupTemplate={
         (attribs) => { return `<p><strong>${attribs.toponimo}</strong>`; }
       }/>
@@ -219,6 +225,8 @@ import { MapComp, RasterLayer, VectorLayer } from "../modules/myMap/myMap.js"
   baseLayers="OSM,EsriSatellite">
     <VectorLayer 
       name="Toponimi"
+      fitToContent={true}
+      checked={true}
       dEndPoint="https://landscapearchaeology.eu/db/items/toponimi"
       dToken="sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E"
       dFilter="filter[provincia][_eq]=Macerata"
@@ -232,10 +240,11 @@ import { MapComp, RasterLayer, VectorLayer } from "../modules/myMap/myMap.js"
   <div className="col-sm-8">
   <MapComp
   height="400px"
-  center="43,13.32,11"
   baseLayers="OSM,EsriSatellite">
     <VectorLayer 
       name="Toponimi"
+      fitToContent={true}
+      checked={true}
       dEndPoint="https://landscapearchaeology.eu/db/items/toponimi"
       dToken="sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E"
       dFilter="filter[provincia][_eq]=Macerata"
