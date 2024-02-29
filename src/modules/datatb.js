@@ -123,7 +123,7 @@ const DataTb = props => {
         columns={props.dColumns}
         data={filteredData}
         pagination
-        striped={props.striped}
+        {...props}
       />
     </>
   )
