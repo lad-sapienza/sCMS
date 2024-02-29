@@ -5,8 +5,8 @@ export const onInitialClientRender = () => {
   const currentPath = window.location.pathname
 
   // Replace "/path" with the actual path you want to redirect from
-  if (currentPath === "/sCMS/") {
+  if (currentPath === "/") {
     // Replace "/home" with the actual path you want to redirect to
-    window.location.replace("/sCMS/home")
+    window.location.replace("/home")
   }
 }
