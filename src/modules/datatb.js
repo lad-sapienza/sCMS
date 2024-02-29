@@ -120,7 +120,6 @@ const DataTb = props => {
         onChange={handleSearch}
       />
       <DataTable
-        columns={props.dColumns}
         data={filteredData}
         pagination
         {...props}
