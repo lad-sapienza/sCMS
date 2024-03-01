@@ -10,7 +10,7 @@ const IndexPage = ({ data }) => {
     <Layout>
       <Seo title={mdx.frontmatter.title} />
       <div>
-        <h1>{mdx.frontmatter.title}</h1>
+        <h1>index statica</h1>
         <MdxContent content={mdx.body} />
       </div>
     </Layout>

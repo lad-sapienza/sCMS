@@ -1,9 +1,3 @@
-/**
- * Implement Gatsby's Node APIs in this file.
- *
- * See: https://www.gatsbyjs.com/docs/reference/config-files/gatsby-node/
- */
-
 const path = require("path")
 const postTemplate = path.resolve(`./src/templates/contents.jsx`)
 
@@ -36,8 +30,11 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   const posts = result.data.allMdx.nodes
 
   posts.forEach(node => {
+    const pagePath =
+      node.frontmatter.slug === "home" ? "/" : node.frontmatter.slug
+
     createPage({
-      path: node.frontmatter.slug,
+      path: pagePath,
       component: `${postTemplate}?__contentFilePath=${node.internal.contentFilePath}`,
       context: { id: node.id },
     })
