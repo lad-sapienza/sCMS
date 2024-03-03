@@ -3,7 +3,6 @@ import { useStaticQuery, graphql } from "gatsby"
 
 import { Container } from "react-bootstrap"
 
-
 import Navbar from "../modules/autoNavbar"
 // import Slide from "./slide"
 import Footer from "./footer"
@@ -28,10 +27,8 @@ const Layout = ({ children }) => {
         {/* <Slide /> */}
         <Header siteTitle={data.site.siteMetadata?.title || `Title`} />
         <main>
-          <Container>
-            {children}
-          </Container>
-          </main>
+          <Container>{children}</Container>
+        </main>
         <Footer />
       </div>
     </>

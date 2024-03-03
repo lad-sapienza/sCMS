@@ -62,9 +62,9 @@ function Slide() {
 
 //style
 const Slider = styled.div`
-  margin-bottom: 3rem; 
-  border-bottom: #3e281c solid .5rem;
-  
+  margin-bottom: 3rem;
+  border-bottom: #3e281c solid 0.5rem;
+
   .subTitle {
   }
   .btn-primary {

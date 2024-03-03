@@ -119,11 +119,7 @@ const DataTb = props => {
         placeholder="Search..."
         onChange={handleSearch}
       />
-      <DataTable
-        data={filteredData}
-        pagination
-        {...props}
-      />
+      <DataTable data={filteredData} pagination {...props} />
     </>
   )
 }
