@@ -7,7 +7,7 @@ import { Container } from "react-bootstrap"
 const HeaderSection = ({ siteTitle }) => (
   <Header>
     <Container>
-      <div className="d-flex flex-row align-items-center mb-3">
+      <div className="d-sm-flex align-items-center text-center">
         <Link to={withPrefix("/")}>
           <StaticImage
             src="../images/scms-lad.png"
@@ -18,9 +18,10 @@ const HeaderSection = ({ siteTitle }) => (
             className="img-fluid"
           />
         </Link>
-        <div className="ms-3">
-          S:CMS | Static site Content Managemt System is developend and
-          maintained by LAD: Laboratorio di Archeologia Digitale alla Sapienza
+        <div className="text-start ms-3">
+          <h1>s:CMS</h1>
+          <p className="lead">Static site Content Management System is developend and
+          maintained by LAD: Laboratorio di Archeologia Digitale alla Sapienza</p>
         </div>
       </div>
     </Container>
