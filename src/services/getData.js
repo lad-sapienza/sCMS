@@ -24,7 +24,7 @@ const json2GeoJson = (json, geoDataField) => {
  * @param {String} transType Data transformation type. At present the following are supported: json, geojson, csv2json
  * @returns
  */
-const getData = async (source, token, transType) => {
+const getData = async (source, token, transType, geoField) => {
   let output
   let options = {}
 
@@ -45,7 +45,7 @@ const getData = async (source, token, transType) => {
 
       case "geojson":
         const respgeoJson = await response.json()
-        output = json2GeoJson(respgeoJson.data, "coordinates")
+        output = json2GeoJson(respgeoJson.data, geoField || "coordinates")
         break
 
       case "csv2json":

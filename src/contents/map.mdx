@@ -112,7 +112,9 @@ import { MapComp, RasterLayer, VectorLayer } from "../modules/myMap/myMap.js"
       fitToContent={true}
             popupTemplate={
         (attribs) => { return `<p><strong>${attribs.toponimo}</strong>`; }
-      }/>
+      }
+      geoField="coordinates"
+      />
     <RasterLayer 
       name="Open Street Map"
       url = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -168,7 +170,9 @@ import { MapComp, RasterLayer, VectorLayer } from "../modules/myMap/myMap.js"
       fitToContent={true}
       popupTemplate={
         (attribs) => { return `<p><strong>${attribs.toponimo}</strong>`; }
-      }/>
+      }
+      geoField="coordinates"
+      />
     <RasterLayer 
       name="Open Street Map"
       url = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -233,6 +237,7 @@ import { MapComp, RasterLayer, VectorLayer } from "../modules/myMap/myMap.js"
       popupTemplate={
         (attribs) => { return `<p><strong>${attribs.toponimo}</strong>`; }
       }
+      geoField="coordinates"
     />
   </MapComp>
 ```
@@ -251,6 +256,7 @@ import { MapComp, RasterLayer, VectorLayer } from "../modules/myMap/myMap.js"
       popupTemplate={
         (attribs) => { return `<p><strong>${attribs.toponimo}</strong>`; }
       }
+      geoField="coordinates"
     />
   </MapComp>
   </div>
