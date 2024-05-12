@@ -300,7 +300,7 @@ A map with geodata sourced from a GeoJSON file hosted in the same server: only a
 <SourceLayer
 id="my-layer"
 type="geojson"
-data="../data/toponimi.geojson"
+path2geojson="../data/toponimi.geojson"
 layerstyle={{
   id: "point",
   type: "circle",
@@ -317,7 +317,7 @@ layerstyle={{
 <SourceLayer
 id="my-layer"
 type="geojson"
-data="../data/toponimi.geojson"
+path2geojson="../data/toponimi.geojson"
 layerstyle={{
   id: "point",
   type: "circle",
@@ -330,4 +330,49 @@ layerstyle={{
 
   </div>
 </div>
+<div className="row">
+  <div className="col-sm-4">
+
+ A map sourced from the default Directus database with endpoint/dtoken/dfilter:
+
+```
+ <Map2>
+<SourceLayer
+id="my-layer"
+type="geojson"
+dEndPoint="https://landscapearchaeology.eu/db/items/toponimi"
+dToken="sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E"
+dFilter="filter[provincia][_eq]=Macerata"
+layerstyle={{
+  id: "point",
+  type: "circle",
+  paint: {
+    "circle-radius": 10,
+    "circle-color": "red",
+  },
+}}/>
+ </Map2>
+```
+</div>
+  <div className="col-sm-8"><br/>
+ <Map2>
+<SourceLayer
+id="my-layer"
+type="geojson"
+dEndPoint="https://landscapearchaeology.eu/db/items/toponimi"
+        dToken="sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E"
+        dFilter="filter[provincia][_eq]=Macerata"
+layerstyle={{
+  id: "point",
+  type: "circle",
+  paint: {
+    "circle-radius": 10,
+    "circle-color": "red",
+  },
+}}/>
+ </Map2>
+
+  </div>
+</div>
+
 ````
