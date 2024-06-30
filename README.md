@@ -71,7 +71,7 @@ By following these preliminary steps, you'll be ready to start developing with G
 
 This is the list of contents of the Gatsby project. To modify the example site the user will have to intervene in particular in the files contained in the first three folders (Components, Contents and Images).
 
-### COMPONENTS
+### COMPONENTS - CHANGE THE THE SITE'LAYOUT AND GRAPHIC
 
 In the components folder there are the files **to be able to change the site from a graphic point of view**, in particular it is possible to change the header, the footer and add a slide.
 
