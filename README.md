@@ -73,7 +73,7 @@ This is the list of contents of the Gatsby project. To modify the example site t
 
 ### COMPONENTS
 
-In the components folder there are the files to be able to change the site from a graphic point of view, in particular it is possible to change the header, the footer and add a slide.
+In the components folder there are the files **to be able to change the site from a graphic point of view**, in particular it is possible to change the header, the footer and add a slide.
 
 - footer.js
 - header.js
