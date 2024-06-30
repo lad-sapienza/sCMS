@@ -5,7 +5,7 @@ It is based on Gatsby and implements some data-oriented complements for connecti
 
 ## PRELIMINARY OPERATIONS
 
-Of course! Here are the preliminary steps to start working with Gatsby JS on your PC:
+Here are the preliminary steps to start working with Gatsby JS on your PC:
 
 ### 1. Installing Visual Studio Code (VS Code)
 
