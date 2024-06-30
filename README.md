@@ -179,8 +179,6 @@ After this block you can start writing the contents of the page using the format
 
 #### Example:
 
----
-
 title: "Page name"
 
 date: "2023-10-01"
