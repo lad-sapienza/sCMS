@@ -89,18 +89,15 @@ This is the list of contents of the Gatsby project. To modify the example site t
    It is possible to change the header graphics by modifying this file. The code to change is the one contained within the <Container> tag. Through html code it is possible to insert divs, images and links.
 
 - div: As for divs you can use bootstrap classes
-- images: here is an example of the <staticImage> tag
+- images: here is an example of the <staticImage> tag. The images must be contained in the images folder.
   `<StaticImage
-            src="../images/scms-lad.png"
-            width={150}
-            quality={80}
-            formats={["AUTO", "WEBP"]}
-            alt={siteTitle}
-            className="img-fluid"
-          />`
-
-The images must be contained in the images folder.
-
+          src="../images/scms-lad.png"
+          width={150}
+          quality={80}
+          formats={["AUTO", "WEBP"]}
+          alt={siteTitle}
+          className="img-fluid"
+        />`
 - link: here is an example of the <Link> tag
 
 `<Link to={withPrefix("/")}> Somethings </Link>`
