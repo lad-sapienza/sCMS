@@ -108,25 +108,28 @@ In the components folder there are the files **to be able to change the site fro
 
 - style: At the bottom of the page inside the Header constant there is the possibility to add the CSS rules directly
 
+```javascript
 const Header = styled.header`
-background-color: #fe04fc;
-color: #ffffff;
-margin-bottom: 5rem;
+  background-color: #fe04fc;
+  color: #ffffff;
+  margin-bottom: 5rem;
 
-.gatsby-image-wrapper {
-background-color: #ffffff;
-img {
-padding-left: 1rem;
-padding-right: 1rem;
-}
-}
+  .gatsby-image-wrapper {
+    background-color: #ffffff;
+    img {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+  }
 `
+```
 
 3. **footer.js**
    It is possible to change the footer graphics by modifying this file. The code to change is the one contained within the <Container> tag. Through html code it is possible to insert divs, images and links.
 
 - div: As for divs you can use bootstrap classes
 - images: here is an example of the <staticImage> tag. The images must be contained in the images folder.
+
   `<StaticImage
   src="../images/scms-lad.png"
   width={150}
@@ -135,6 +138,7 @@ padding-right: 1rem;
   alt={siteTitle}
   className="img-fluid"
 />`
+
 - link: here is an example of the <Link> tag for the interal page and <a></a> to external links
 
 `<Link to={withPrefix("/")}> Somethings </Link>`
@@ -143,16 +147,21 @@ padding-right: 1rem;
 
 - style: At the bottom of the page inside the Footer constant there is the possibility to add the CSS rules directly
 
-const Footer = styled.footer`  background-color: #ececec;
+```javascript
+const Footer = styled.footer`
+  background-color: #ececec;
   border-top: #000 solid 0.5rem;
   min-height: auto;
   margin-top: 3rem;
   padding-top: 1rem;
-  padding-bottom: 1rem;`
+  padding-bottom: 1rem;
+`
+```
 
 4. **slide.js**
 
 On the slide page you can edit the StaticImage inside CarouselItems or add a new CarouselItems element. The images also in this case must be saved in the images folder.
+
 `<Carousel.Item>
           <StaticImage
             src="../images/slide_1.jpg"
@@ -168,7 +177,7 @@ On the slide page you can edit the StaticImage inside CarouselItems or add a new
             <br></br>
             <button className="btn btn-primary m-4">LINK</button>
           </Carousel.Caption> */}
-        </Carousel.Item> `
+        </Carousel.Item>`
 
 `Documentation to be completed`
 
