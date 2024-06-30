@@ -16,7 +16,7 @@ Here are the preliminary steps to start working with Gatsby JS on your PC:
    - Run the downloaded file and follow the instructions to complete the installation.
 3. **Configure Visual Studio Code**:
    - Open VS Code.
-   - Install useful extensions like "Prettier - Code formatter", "ESLint", and "Gatsby Snippets" via the extensions marketplace.
+   - Install useful extensions like "Prettier - Code formatter", "ESLint", "MDX" and "Gatsby Snippets" via the extensions marketplace.
 
 ### 2. Installing Node.js
 
