@@ -73,6 +73,8 @@ This is the list of contents of the Gatsby project. To modify the example site t
 
 ### COMPONENTS
 
+In the components folder there are the files to be able to change the site from a graphic point of view, in particular it is possible to change the header, the footer and add a slide.
+
 - footer.js
 - header.js
 - index.modules.css
@@ -91,13 +93,13 @@ This is the list of contents of the Gatsby project. To modify the example site t
 - div: As for divs you can use bootstrap classes
 - images: here is an example of the <staticImage> tag. The images must be contained in the images folder.
   `<StaticImage
-          src="../images/scms-lad.png"
-          width={150}
-          quality={80}
-          formats={["AUTO", "WEBP"]}
-          alt={siteTitle}
-          className="img-fluid"
-        />`
+        src="../images/scms-lad.png"
+        width={150}
+        quality={80}
+        formats={["AUTO", "WEBP"]}
+        alt={siteTitle}
+        className="img-fluid"
+      />`
 - link: here is an example of the <Link> tag
 
 `<Link to={withPrefix("/")}> Somethings </Link>`
