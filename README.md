@@ -93,20 +93,24 @@ In the components folder there are the files **to be able to change the site fro
 - div: As for divs you can use bootstrap classes
 - images: here is an example of the <staticImage> tag. The images must be contained in the images folder.
 
+```javascript
 <StaticImage
-src="../images/scms-lad.png"
-width={150}
-quality={80}
-formats={["AUTO", "WEBP"]}
-alt={siteTitle}
-className="img-fluid"
+  src="../images/scms-lad.png"
+  width={150}
+  quality={80}
+  formats={["AUTO", "WEBP"]}
+  alt={siteTitle}
+  className="img-fluid"
 />
+```
 
 - link: here is an example of the <Link> tag for the interal page and <a></a> to external links
 
+```javascript
 <Link to={withPrefix("/")}> Somethings </Link>
+```
 
-<a href="https://github.com/lab-archeologia-digitale/gatsby-directus-ui/issues" target="_blank" rel="noreferrer">Issues</a>
+`<a href="https://github.com/lab-archeologia-digitale/gatsby-directus-ui/issues" target="_blank" rel="noreferrer">Issues</a>`
 
 - style: At the bottom of the page inside the Header constant there is the possibility to add the CSS rules directly
 
@@ -132,18 +136,21 @@ const Header = styled.header`
 - div: As for divs you can use bootstrap classes
 - images: here is an example of the <staticImage> tag. The images must be contained in the images folder.
 
-  `<StaticImage
+````javascript
+<StaticImage
   src="../images/scms-lad.png"
   width={150}
   quality={80}
   formats={["AUTO", "WEBP"]}
   alt={siteTitle}
   className="img-fluid"
-/>`
+/>```
 
 - link: here is an example of the <Link> tag for the interal page and <a></a> to external links
 
-`<Link to={withPrefix("/")}> Somethings </Link>`
+```javascript
+<Link to={withPrefix("/")}> Somethings </Link>
+````
 
 `<a href="https://github.com/lab-archeologia-digitale/gatsby-directus-ui/issues" target="_blank" rel="noreferrer">Issues</a>`
 
@@ -164,7 +171,8 @@ const Footer = styled.footer`
 
 On the slide page you can edit the StaticImage inside CarouselItems or add a new CarouselItems element. The images also in this case must be saved in the images folder.
 
-`<Carousel.Item>
+````javascript
+<Carousel.Item>
           <StaticImage
             src="../images/slide_1.jpg"
             className="d-block w-100"
@@ -179,8 +187,10 @@ On the slide page you can edit the StaticImage inside CarouselItems or add a new
             <br></br>
             <button className="btn btn-primary m-4">LINK</button>
           </Carousel.Caption> */}
-        </Carousel.Item>`
+        </Carousel.Item>
+        ```
 
 `Documentation to be completed`
 
 # Maplibre
+````
