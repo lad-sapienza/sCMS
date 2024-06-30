@@ -174,6 +174,15 @@ On the slide page you can edit the StaticImage inside CarouselItems or add a new
 
 ### CONTENTS - MANAGE THE PAGES OF THE WEB SITE
 
-```
+Inside the contents folder you can find the default pages of the site and create new ones. The pages are in mdx format. At the top of the page you will find the essential fields, which are contained in three solid lines at the top and bottom. The title refers to the title of the page, the date to the date of the content, the slug for the url, the description of the content and menu position is for the position within the navbar.
+After this block you can start writing the contents of the page using the formatting of the [md file](https://www.markdownguide.org/basic-syntax/)
 
-```
+#### Example:
+
+title: "Page name"  
+date: "2023-10-01"
+slug: "page-name"
+description: "Lore ipsum"
+menu_position: 4
+
+---
