@@ -189,9 +189,7 @@ On the slide page you can edit the StaticImage inside CarouselItems or add a new
             <button className="btn btn-primary m-4">LINK</button>
           </Carousel.Caption> */}
         </Carousel.Item>
-        ```
+```
 
-`Documentation to be completed`
-
-# Maplibre
+### CONTENTS
 ````
