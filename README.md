@@ -78,10 +78,32 @@ This is the list of contents of the Gatsby project. To modify the example site t
 - index.modules.css
 - layout.css
 - layout.css.map
-- layout.js
+- layout.js (MAIN PAGE)
 - layout.scss
 - slide.js
 - viewRecord.js
+
+1. layout.js
+   The main structure of the site consists of the layout.js page. On this page, the header and footer of the site are declared and there is the possibility of activating the slide by changing the tag from {/_ <Slide /> _/} in <Slide />
+2. header.js
+   It is possible to change the header graphics by modifying this file. The code to change is the one contained within the <Container> tag. Through html code it is possible to insert divs, images and links.
+
+- div: As for divs you can use bootstrap classes
+- images: here is an example of the <staticImage> tag
+  `<StaticImage
+            src="../images/scms-lad.png"
+            width={150}
+            quality={80}
+            formats={["AUTO", "WEBP"]}
+            alt={siteTitle}
+            className="img-fluid"
+          />`
+
+The images must be contained in the images folder.
+
+- link: here is an example of the <Link> tag
+
+`<Link to={withPrefix("/")}> Somethings </Link>`
 
 `Documentation to be completed`
 
