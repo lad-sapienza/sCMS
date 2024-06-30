@@ -179,6 +179,8 @@ After this block you can start writing the contents of the page using the format
 
 #### Example:
 
+---
+
 title: "Page name"
 
 date: "2023-10-01"
@@ -190,3 +192,7 @@ description: "Lore ipsum"
 menu_position: 4
 
 ---
+
+#### ADD NEW PAGES
+
+to create a new page just create one inside the contents folder, for example newpage.mdx
