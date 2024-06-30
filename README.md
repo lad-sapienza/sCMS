@@ -59,6 +59,10 @@ By following these preliminary steps, you'll be ready to start developing with G
 - Select `File` > `Open Folder` and navigate to your Gatsby project folder.
 - Use VS Code to edit the files of your Gatsby project and see the changes in real-time thanks to the development server.
 
+## SETTINGS - ENV FILE
+
+`Documentation to be completed`
+
 ## TABLE OF CONTENTS
 
 - COMPONENTS
@@ -223,6 +227,7 @@ The colum property is valid for both options and it indicates which columns of t
 - **name**: the column name that appears on the table
 - **selector**: original name of the column on the source table preceded by "row."
 - **sortable**: true or false. indicates whether the field is sortable.
+- **striped**: common display option in tabular management systems, which allows you to chromatically differentiate the even columns from the odd ones;
 - **cell**: in this field it is possible to insert a link to a detail sheet if you click on a value in the table
 
 ---
@@ -263,7 +268,11 @@ The colum property is valid for both options and it indicates which columns of t
 
 ## Collect data from Directus
 
-From table managed in directus. In this second case, it will be possible to choose whether to specify URL (endpoint) and access token or (recommended choice) whether to define only the name of the reference table (dTable). In this case, the path and token information will be automatically imported from the .env file (see introduction).
+In this second case, it will be possible to choose whether to specify URL (endpoint) and access token or (recommended choice) whether to define only the name of the reference table (dTable). In this case, the path and token information will be automatically imported from the .env file.
+
+- **dEndPoint**: full path to a Directus endpoint, complete with table name
+- **dToken**: Directus access token, required if table is not public. If not proved GATSBY_DIRECTUS_TOKEN environment variable will be used
+- **dTable**: name of the Directus table containing geographical data. The indication of only the table is possible if the .env file has been set.
 
 `Documentation to be completed`
 
