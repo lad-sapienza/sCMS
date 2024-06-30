@@ -210,4 +210,8 @@ To change the contents of the homepage you need to modify the contents of the ho
 
 ### MANAGE A DATATABLE
 
+`Documentation to be completed`
+
 ### MANAGE A MAP
+
+`Documentation to be completed`
