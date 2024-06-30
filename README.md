@@ -93,17 +93,34 @@ In the components folder there are the files to be able to change the site from 
 - div: As for divs you can use bootstrap classes
 - images: here is an example of the <staticImage> tag. The images must be contained in the images folder.
   `<StaticImage
-    src="../images/scms-lad.png"
-    width={150}
-    quality={80}
-    formats={["AUTO", "WEBP"]}
-    alt={siteTitle}
-    className="img-fluid"
-  />`
+  src="../images/scms-lad.png"
+  width={150}
+  quality={80}
+  formats={["AUTO", "WEBP"]}
+  alt={siteTitle}
+  className="img-fluid"
+/>`
 - link: here is an example of the <Link> tag for the interal page and <a></a> to external links
 
 `<Link to={withPrefix("/")}> Somethings </Link>`
+
 `<a href="https://github.com/lab-archeologia-digitale/gatsby-directus-ui/issues" target="_blank" rel="noreferrer">Issues</a>`
+
+- style: At the bottom of the page inside the Header constant there is the possibility to add the CSS rules directly
+
+const Header = styled.header`
+background-color: #fe04fc;
+color: #ffffff;
+margin-bottom: 5rem;
+
+.gatsby-image-wrapper {
+background-color: #ffffff;
+img {
+padding-left: 1rem;
+padding-right: 1rem;
+}
+}
+`
 
 3. **footer.js**
    It is possible to change the footer graphics by modifying this file. The code to change is the one contained within the <Container> tag. Through html code it is possible to insert divs, images and links.
@@ -111,18 +128,27 @@ In the components folder there are the files to be able to change the site from 
 - div: As for divs you can use bootstrap classes
 - images: here is an example of the <staticImage> tag. The images must be contained in the images folder.
   `<StaticImage
-    src="../images/scms-lad.png"
-    width={150}
-    quality={80}
-    formats={["AUTO", "WEBP"]}
-    alt={siteTitle}
-    className="img-fluid"
-  />`
+  src="../images/scms-lad.png"
+  width={150}
+  quality={80}
+  formats={["AUTO", "WEBP"]}
+  alt={siteTitle}
+  className="img-fluid"
+/>`
 - link: here is an example of the <Link> tag for the interal page and <a></a> to external links
 
 `<Link to={withPrefix("/")}> Somethings </Link>`
 
 `<a href="https://github.com/lab-archeologia-digitale/gatsby-directus-ui/issues" target="_blank" rel="noreferrer">Issues</a>`
+
+- style: At the bottom of the page inside the Footer constant there is the possibility to add the CSS rules directly
+
+const Footer = styled.footer`  background-color: #ececec;
+  border-top: #000 solid 0.5rem;
+  min-height: auto;
+  margin-top: 3rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;`
 
 4. **slide.js**
 
