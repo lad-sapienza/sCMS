@@ -217,12 +217,12 @@ Table data can be collected either from a locally saved csv file or from a Direc
 Based on the two options chosen, the <DataTb> tag will have different properties for the data connection.
 The colum property is valid for both options and it indicates which columns of the table must be displayed.
 
-**column property:**
+**Columns property:**
 
-**name**: the column name that appears on the table
-**selector**: original name of the column on the source table preceded by "row."
-**sortable**: true or false. indicates whether the field is sortable.
-**cell**: in this field it is possible to insert a link to a detail sheet if you click on a value in the table
+- **name**: the column name that appears on the table
+- **selector**: original name of the column on the source table preceded by "row."
+- **sortable**: true or false. indicates whether the field is sortable.
+- **cell**: in this field it is possible to insert a link to a detail sheet if you click on a value in the table
 
 1. From file .csv (path2cvs);
 
