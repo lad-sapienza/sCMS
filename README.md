@@ -174,8 +174,17 @@ On the slide page you can edit the StaticImage inside CarouselItems or add a new
 
 ### CONTENTS - MANAGE THE PAGES OF THE WEB SITE
 
-Inside the contents folder you can find the default pages of the site and create new ones. The pages are in mdx format. At the top of the page you will find the essential fields, which are contained in three solid lines at the top and bottom. The title refers to the title of the page, the date to the date of the content, the slug for the url, the description of the content and menu position is for the position within the navbar.
-After this block you can start writing the contents of the page using the formatting of the [md file](https://www.markdownguide.org/basic-syntax/)
+Inside the contents folder you can find the default pages of the site and create new ones.
+
+Default pages:
+
+- credits.mdx
+- dt.mdx
+- home.mdx
+- map.mdx
+- simpleSearch.mdx
+
+The pages are in mdx format. At the top of the page you will find the essential fields, which are contained in three solid lines at the top and bottom. The title refers to the title of the page, the date to the date of the content, the slug for the url, the description of the content and menu position is for the position within the navbar. After this block you can start writing the contents of the page using the formatting of the [md file](https://www.markdownguide.org/basic-syntax/).
 
 #### Example:
 
@@ -194,3 +203,13 @@ menu_position: 4
 #### ADD NEW PAGES
 
 to create a new page just create one inside the contents folder, for example newpage.mdx
+
+#### CHANGE HOMEPAGE CONTENTS
+
+To change the contents of the homepage you need to modify the contents of the home.mdx file
+
+## MANAGE DATATABLE AND MAP
+
+### MANAGE A DATATABLE
+
+### MANAGE A MAP
