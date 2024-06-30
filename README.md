@@ -144,7 +144,8 @@ const Header = styled.header`
   formats={["AUTO", "WEBP"]}
   alt={siteTitle}
   className="img-fluid"
-/>```
+/>
+```
 
 - link: here is an example of the <Link> tag for the interal page and <a></a> to external links
 
