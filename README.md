@@ -136,7 +136,7 @@ const Header = styled.header`
 - div: As for divs you can use bootstrap classes
 - images: here is an example of the <staticImage> tag. The images must be contained in the images folder.
 
-````javascript
+```javascript
 <StaticImage
   src="../images/scms-lad.png"
   width={150}
@@ -151,7 +151,7 @@ const Header = styled.header`
 
 ```javascript
 <Link to={withPrefix("/")}> Somethings </Link>
-````
+```
 
 `<a href="https://github.com/lab-archeologia-digitale/gatsby-directus-ui/issues" target="_blank" rel="noreferrer">Issues</a>`
 
