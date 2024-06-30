@@ -59,7 +59,7 @@ By following these preliminary steps, you'll be ready to start developing with G
 - Select `File` > `Open Folder` and navigate to your Gatsby project folder.
 - Use VS Code to edit the files of your Gatsby project and see the changes in real-time thanks to the development server.
 
-## TABLE OF CONTENT
+## TABLE OF CONTENTS
 
 - COMPONENTS
 - CONTENTS
