@@ -59,6 +59,30 @@ By following these preliminary steps, you'll be ready to start developing with G
 - Select `File` > `Open Folder` and navigate to your Gatsby project folder.
 - Use VS Code to edit the files of your Gatsby project and see the changes in real-time thanks to the development server.
 
+## TABLE OF CONTENT
+
+- COMPONENTS
+- CONTENTS
+- IMAGES
+- MODULES
+- PAGES
+- SERVICES
+- TEMPLATES
+
+This is the list of contents of the Gatsby project. To modify the example site the user will have to intervene in particular in the files contained in the first three folders (Components, Contents and Images).
+
+### COMPONENTS
+
+- footer.js
+- header.js
+- index.modules.css
+- layout.css
+- layout.css.map
+- layout.js
+- layout.scss
+- slide.js
+- viewRecord.js
+
 `Documentation to be completed`
 
 # Maplibre
