@@ -93,13 +93,13 @@ In the components folder there are the files to be able to change the site from 
 - div: As for divs you can use bootstrap classes
 - images: here is an example of the <staticImage> tag. The images must be contained in the images folder.
   `<StaticImage
-      src="../images/scms-lad.png"
-      width={150}
-      quality={80}
-      formats={["AUTO", "WEBP"]}
-      alt={siteTitle}
-      className="img-fluid"
-    />`
+    src="../images/scms-lad.png"
+    width={150}
+    quality={80}
+    formats={["AUTO", "WEBP"]}
+    alt={siteTitle}
+    className="img-fluid"
+  />`
 - link: here is an example of the <Link> tag for the interal page and <a></a> to external links
 
 `<Link to={withPrefix("/")}> Somethings </Link>`
@@ -111,16 +111,17 @@ In the components folder there are the files to be able to change the site from 
 - div: As for divs you can use bootstrap classes
 - images: here is an example of the <staticImage> tag. The images must be contained in the images folder.
   `<StaticImage
-      src="../images/scms-lad.png"
-      width={150}
-      quality={80}
-      formats={["AUTO", "WEBP"]}
-      alt={siteTitle}
-      className="img-fluid"
-    />`
+    src="../images/scms-lad.png"
+    width={150}
+    quality={80}
+    formats={["AUTO", "WEBP"]}
+    alt={siteTitle}
+    className="img-fluid"
+  />`
 - link: here is an example of the <Link> tag for the interal page and <a></a> to external links
 
 `<Link to={withPrefix("/")}> Somethings </Link>`
+
 `<a href="https://github.com/lab-archeologia-digitale/gatsby-directus-ui/issues" target="_blank" rel="noreferrer">Issues</a>`
 
 4. **slide.js**
