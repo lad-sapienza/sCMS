@@ -191,5 +191,5 @@ On the slide page you can edit the StaticImage inside CarouselItems or add a new
         </Carousel.Item>
 ```
 
-### CONTENTS  - MANAGE THE PAGE OF THE WEB SITE
+### CONTENTS  - MANAGE THE PAGES OF THE WEB SITE
 ````
