@@ -179,10 +179,14 @@ After this block you can start writing the contents of the page using the format
 
 #### Example:
 
-title: "Page name"  
+title: "Page name"
+
 date: "2023-10-01"
+
 slug: "page-name"
+
 description: "Lore ipsum"
+
 menu_position: 4
 
 ---
