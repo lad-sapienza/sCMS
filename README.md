@@ -213,6 +213,7 @@ To change the contents of the homepage you need to modify the contents of the ho
 This page allows the creation and management of a tabular form useful for viewing the data coming from one of the tables in our reference database. The module is also equipped, by default, with a generic search setting, the customization of which will not be discussed here.
 
 **DATA SOURCES**
+
 Table data can be collected either from a locally saved csv file or from a Directus database.
 Based on the two options chosen, the <DataTb> tag will have different properties for the data connection.
 The colum property is valid for both options and it indicates which columns of the table must be displayed.
