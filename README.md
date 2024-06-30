@@ -210,6 +210,52 @@ To change the contents of the homepage you need to modify the contents of the ho
 
 ### MANAGE A DATATABLE
 
+This page allows the creation and management of a tabular form useful for viewing the data coming from one of the tables in our reference database. The module is also equipped, by default, with a generic search setting, the customization of which will not be discussed here.
+
+**DATA SOURCES**
+Table data can be collected either from a locally saved csv file or from a Directus database.
+Based on the two options chosen, the <DataTb> tag will have different properties for the data connection.
+The colum property is valid for both options and it indicates which columns of the table must be displayed.
+
+**column property:**
+
+**name**: the column name that appears on the table
+**selector**: original name of the column on the source table preceded by "row."
+**sortable**: true or false. indicates whether the field is sortable.
+**cell**: in this field it is possible to insert a link to a detail sheet if you click on a value in the table
+
+1. From file .csv (path2cvs);
+
+**Example**
+
+<DataTb
+path2csv="../data/UT_toponimi.csv"
+columns={[
+{
+name: "ID luogo",
+selector: row => row.id,
+sortable: true,
+},
+{
+name: "Toponimo",
+selector: row => row.toponimo,
+sortable: true,
+},
+{
+name: "Provincia",
+selector: row => row.provincia,
+sortable: true,
+},
+{
+name: "Comune",
+selector: row => row.comune,
+sortable: true,
+},
+]}
+/>
+
+2. From table managed in directus. In this second case, it will be possible to choose whether to specify URL (endpoint) and access token or (recommended choice) whether to define only the name of the reference table (dTable). In this case, the path and token information will be automatically imported from the .env file (see introduction).
+
 `Documentation to be completed`
 
 ### MANAGE A MAP
