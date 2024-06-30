@@ -172,24 +172,8 @@ const Footer = styled.footer`
 
 On the slide page you can edit the StaticImage inside CarouselItems or add a new CarouselItems element. The images also in this case must be saved in the images folder.
 
-````javascript
-<Carousel.Item>
-          <StaticImage
-            src="../images/slide_1.jpg"
-            className="d-block w-100"
-            formats={["AUTO", "WEBP"]}
-            alt="slide1"
-          />
-          {/*  <Carousel.Caption>
-            <h3>LORE IPSUM DOLOR SIT AMET</h3>
-            <span className="subTitle">
-              Nulla vitae elit libero, a pharetra augue mollis interdum.
-            </span>
-            <br></br>
-            <button className="btn btn-primary m-4">LINK</button>
-          </Carousel.Caption> */}
-        </Carousel.Item>
+### CONTENTS - MANAGE THE PAGES OF THE WEB SITE
+
 ```
 
-### CONTENTS  - MANAGE THE PAGES OF THE WEB SITE
-````
+```
