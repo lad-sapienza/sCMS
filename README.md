@@ -231,31 +231,33 @@ The colum property is valid for both options and it indicates which columns of t
 
 **Example**
 
+```javascript
 <DataTb
-path2csv="../data/UT_toponimi.csv"
-columns={[
-{
-name: "ID luogo",
-selector: row => row.id,
-sortable: true,
-},
-{
-name: "Toponimo",
-selector: row => row.toponimo,
-sortable: true,
-},
-{
-name: "Provincia",
-selector: row => row.provincia,
-sortable: true,
-},
-{
-name: "Comune",
-selector: row => row.comune,
-sortable: true,
-},
-]}
+  path2csv="../data/UT_toponimi.csv"
+  columns={[
+    {
+      name: "ID luogo",
+      selector: row => row.id,
+      sortable: true,
+    },
+    {
+      name: "Toponimo",
+      selector: row => row.toponimo,
+      sortable: true,
+    },
+    {
+      name: "Provincia",
+      selector: row => row.provincia,
+      sortable: true,
+    },
+    {
+      name: "Comune",
+      selector: row => row.comune,
+      sortable: true,
+    },
+  ]}
 />
+```
 
 ---
 
