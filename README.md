@@ -225,7 +225,9 @@ The colum property is valid for both options and it indicates which columns of t
 - **sortable**: true or false. indicates whether the field is sortable.
 - **cell**: in this field it is possible to insert a link to a detail sheet if you click on a value in the table
 
-1. From file .csv (path2cvs);
+---
+
+## Collect data from file .csv (path2cvs);
 
 **Example**
 
@@ -255,7 +257,11 @@ sortable: true,
 ]}
 />
 
-2. From table managed in directus. In this second case, it will be possible to choose whether to specify URL (endpoint) and access token or (recommended choice) whether to define only the name of the reference table (dTable). In this case, the path and token information will be automatically imported from the .env file (see introduction).
+---
+
+## Collect data from Directus
+
+From table managed in directus. In this second case, it will be possible to choose whether to specify URL (endpoint) and access token or (recommended choice) whether to define only the name of the reference table (dTable). In this case, the path and token information will be automatically imported from the .env file (see introduction).
 
 `Documentation to be completed`
 
