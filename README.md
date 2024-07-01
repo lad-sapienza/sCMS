@@ -270,12 +270,59 @@ The colum property is valid for both options and it indicates which columns of t
 
 In this second case, it will be possible to choose whether to specify URL (endpoint) and access token or (recommended choice) whether to define only the name of the reference table (dTable). In this case, the path and token information will be automatically imported from the .env file.
 
-- **dEndPoint**: full path to a Directus endpoint, complete with table name
+- **dEndPoint**: full path to a Directus endpoint, complete with table name (es: toponimi)
+
+es:
+dEndPoint="https://landscapearchaeology.eu/db/items/toponimi?limit=1000&offset=0"
+
+The URL entered must obviously refer to the table you intend to view, while the use of a limiter at the end (?limit=1000&offset=0") can be useful for speeding up loading times in the case of tables comprising more than 1000 voices.
+
 - **dToken**: Directus access token, required if table is not public. If not proved GATSBY_DIRECTUS_TOKEN environment variable will be used
+
 - **dTable**: name of the Directus table containing geographical data. The indication of only the table is possible if the .env file has been set.
 
-`Documentation to be completed`
+- **cell**: The cell value is a function that takes an item argument (arrow function with item argument). The URL is composed of the parameters endpoint, tb (table), token and the id with a value dynamically generated using the values ​​of the item object.
+  The url begins with ../record/ recalling the **record.js** page saved in pages
+  In this page an API call is made based on the parameters passed by the URL and returns a react component called <Record> imported from **../components/viewRecord** to which the item property is passed with the results of the API call to the database <Record item ={recordData} />
+  In the viewRecord.js page saved in the components folder, the Record component is defined as a function that receives item as a prop. item represents the record data. This component returns a Fragment that will contain the child elements. This avoids adding extra nodes in the DOM.
+  Use Object.entries(item) to get an array of [key, value] pairs from item objects. Then, map to this array to create a new array of React elements.
+
+````javascript
+ <DataTb
+      striped={true}
+      dEndPoint="https://landscapearchaeology.eu/db/items/toponimi?limit=1000&offset=0"
+      dToken="sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E"
+      columns={[
+        {
+          name: "ID luogo",
+          selector: (item, i) => item.id,
+          sortable: true,
+        },
+        {
+          name: "Toponimo",
+          selector: (item, i) => item.toponimi,
+          sortable: true,
+          cell: item => (
+            <a href={`../record/?dEndPoint=${encodeURIComponent(`https://landscapearchaeology.eu/db/items/toponimi`)}&tb=toponimi&token=sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E&id=${item.id}`}>
+              {item.toponimo}
+            </a>
+          ),
+        },
+        {
+          name: "Provincia",
+          selector: (item, i) => item.provincia,
+          sortable: true,
+        },
+        {
+          name: "Comune",
+          selector: (item, i) => item.comune,
+          sortable: true,
+        },
+      ]}
+    />
+    ```
 
 ### MANAGE A MAP
 
 `Documentation to be completed`
+````
