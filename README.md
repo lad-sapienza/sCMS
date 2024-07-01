@@ -334,7 +334,23 @@ The map.mdx page contains examples using both the leaflet and maplibre libraries
 
 ### Geodata sourced from a GeoJSON file hosted in the same server
 
-A map with geodata sourced from a GeoJSON file hosted in the same server: only a (public) local path is needed:
+A map with geodata sourced from a GeoJSON file hosted in the same server: only a (public) local path is needed.
+
+**MapComp properties:**
+
+- height: map's height on the screen
+- path2ogejson: path to source file
+- name: map's name
+- baselayers: base maps already preset in the system
+
+**VectorLayer properties:**
+
+- name: Layer's name
+- path2geojson: path to source file
+- fitToContent: options true or false
+- checked: options true or false
+- popupTemplate: point click popup settings
+- pointToLayer: graphic setting of the point and any filters for values
 
 ```javascript
 <MapComp
