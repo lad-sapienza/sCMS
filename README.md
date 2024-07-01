@@ -336,6 +336,44 @@ The map.mdx page contains examples using both the leaflet and maplibre libraries
 
 A map with geodata sourced from a GeoJSON file hosted in the same server: only a (public) local path is needed:
 
+```javascript
+<MapComp
+  height="400px"
+  path2geojson="../data/toponimi.geojson"
+  name="Siti"
+  baseLayers="OSM, EsriStreets, EsriTopo, GoogleSatellite,GoogleRoadmap,GoogleTerrain,GoogleAlteredRoadmap, GoogleTerrainOnly, GoogleHybrid, CartoDb, StamenTerrain, OSMMapnick, OSMCycle, EsriSatellite"
+>
+  <VectorLayer
+    name="Siti"
+    path2geojson="../data/toponimi.geojson"
+    fitToContent={true}
+    checked={true}
+    popupTemplate={attribs => {
+      return `<p><strong>${attribs.nome}</strong> ${attribs.comune}
+        ${
+          attribs.epigrafi.length > 0
+            ? `<br /><strong>${
+                attribs.epigrafi.length
+              } epigrafi</strong><hr />${attribs.epigrafi
+                .map(epi => epi.title)
+                .join(", ")}`
+            : ""
+        }`
+    }}
+    pointToLayer={(f, ll) => {
+      return L.circleMarker(ll, {
+        radius: 4,
+        fillColor: f.properties.epigrafi.length > 0 ? "#FE04FC" : "#ebebeb",
+        color: "#000",
+        weight: 1,
+        opacity: 1,
+        fillOpacity: 0.8,
+      })
+    }}
+  />
+</MapComp>
+```
+
 ### Geodata sourced from the default Directus database
 
 `Documentation to be completed`
