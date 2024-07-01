@@ -287,42 +287,59 @@ The URL entered must obviously refer to the table you intend to view, while the 
   In the viewRecord.js page saved in the components folder, the Record component is defined as a function that receives item as a prop. item represents the record data. This component returns a Fragment that will contain the child elements. This avoids adding extra nodes in the DOM.
   Use Object.entries(item) to get an array of [key, value] pairs from item objects. Then, map to this array to create a new array of React elements.
 
-````javascript
- <DataTb
-      striped={true}
-      dEndPoint="https://landscapearchaeology.eu/db/items/toponimi?limit=1000&offset=0"
-      dToken="sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E"
-      columns={[
-        {
-          name: "ID luogo",
-          selector: (item, i) => item.id,
-          sortable: true,
-        },
-        {
-          name: "Toponimo",
-          selector: (item, i) => item.toponimi,
-          sortable: true,
-          cell: item => (
-            <a href={`../record/?dEndPoint=${encodeURIComponent(`https://landscapearchaeology.eu/db/items/toponimi`)}&tb=toponimi&token=sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E&id=${item.id}`}>
-              {item.toponimo}
-            </a>
-          ),
-        },
-        {
-          name: "Provincia",
-          selector: (item, i) => item.provincia,
-          sortable: true,
-        },
-        {
-          name: "Comune",
-          selector: (item, i) => item.comune,
-          sortable: true,
-        },
-      ]}
-    />
-    ```
+```javascript
+<DataTb
+  striped={true}
+  dEndPoint="https://landscapearchaeology.eu/db/items/toponimi?limit=1000&offset=0"
+  dToken="sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E"
+  columns={[
+    {
+      name: "ID luogo",
+      selector: (item, i) => item.id,
+      sortable: true,
+    },
+    {
+      name: "Toponimo",
+      selector: (item, i) => item.toponimi,
+      sortable: true,
+      cell: item => (
+        <a
+          href={`../record/?dEndPoint=${encodeURIComponent(
+            `https://landscapearchaeology.eu/db/items/toponimi`
+          )}&tb=toponimi&token=sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E&id=${item.id}`}
+        >
+          {item.toponimo}
+        </a>
+      ),
+    },
+    {
+      name: "Provincia",
+      selector: (item, i) => item.provincia,
+      sortable: true,
+    },
+    {
+      name: "Comune",
+      selector: (item, i) => item.comune,
+      sortable: true,
+    },
+  ]}
+/>
+```
 
 ### MANAGE A MAP
 
+The page **map.mdx** allows the creation and management of a WebGis plan composed of multiple layers, both in RASTER and vector format. In addition to them, the default settings include the application of a zoom in/zoom out tool and a layer display manager. These and other settings are defined in the various javascript files that make up the mymap module.
+Geodata can be retrieved form a Directus database or any other JSON API, a statically hosted geoJSON file or any GeoJSON file publically available on the Web. The component can be customised via the following parameters.
+The map.mdx page contains examples using both the leaflet and maplibre libraries.
+
+### Geodata sourced from a GeoJSON file hosted in the same server
+
+A map with geodata sourced from a GeoJSON file hosted in the same server: only a (public) local path is needed:
+
+### Geodata sourced from the default Directus database
+
 `Documentation to be completed`
-````
+
+```
+
+```
