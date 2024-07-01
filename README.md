@@ -232,7 +232,7 @@ The colum property is valid for both options and it indicates which columns of t
 
 ---
 
-## Collect data from file .csv (path2cvs);
+## Collect data from file .csv (path2cvs)
 
 **Example**
 
