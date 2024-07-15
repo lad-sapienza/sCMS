@@ -43,17 +43,16 @@ By following these preliminary steps, you'll be ready to start developing with G
 
 1. **Create a new sCMS project**:
 
-- Open the terminal or command prompt and type `npx gatsby new my-new-site https://github.com/lab-archeologia-digitale/sCMS` in the terminal replacing `my-new-site` with your desired project name.
-- This command will create a new folder with the specified name and download the necessary example files.
+Open the terminal or command prompt and type `npx gatsby new my-new-site https://github.com/lab-archeologia-digitale/sCMS` in the terminal replacing `my-new-site` with your desired project name. The command will create a new folder with the specified name and download the necessary example files.
 
 2. **Navigate to the project folder**:
 
 - Run the command `cd my-new-site` to enter the directory of your new project.
-- Run the command `npm i` Installs all the dependencies listed in the package.json file of your project.
-- Run the command `npm start` Starts the development server
+- Run the command `npm i` to install all the dependencies listed in the package.json file of your project.
+- Run the command `npm start` to start the development server.
 - Once started, the project will be available at `http://localhost:8000`.
 
-## Editing the project with VS Code
+## Editing the project
 
 - Open Visual Studio Code.
 - Select `File` > `Open Folder` and navigate to your sCMS project folder.
