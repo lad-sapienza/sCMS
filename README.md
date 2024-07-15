@@ -1,22 +1,22 @@
 # s:CMS
 
 `s:CMS` is an easy to use content management system to generate static sites.
-It is based on Gatsby and implements some data-oriented complements for connecting to remote databases and display maps and tables.
+It is based on [Gatsby.js](https://www.gatsbyjs.com/) and implements some data-oriented components for connecting to databases and display data as maps and/or tables.
 
-## PRELIMINARY OPERATIONS
+## Preliminary operations
 
-Here are the preliminary steps to start working with Gatsby JS on your PC:
+The following preliminary operations are meant to help to be productive from scratch. Feel free to skip, if you have already a delevoping-orineted environment based on node.js, and Gatsby.js on your computer.
 
 ### 1. Installing Visual Studio Code (VS Code)
 
 1. **Download Visual Studio Code**:
    - Go to the official Visual Studio Code website: [https://code.visualstudio.com/](https://code.visualstudio.com/)
-   - Download the appropriate version for your operating system (Windows, macOS, Linux).
+   - Download the appropriate version for your operating system (Windows, mMcOS, Linux).
 2. **Install Visual Studio Code**:
    - Run the downloaded file and follow the instructions to complete the installation.
 3. **Configure Visual Studio Code**:
    - Open VS Code.
-   - Install useful extensions like "Prettier - Code formatter", "ESLint", "MDX" and "Gatsby Snippets" via the extensions marketplace.
+   - Install few useful extensions like `Prettier - Code formatter`, `ESLint`, `MDX` and `Gatsby Snippets` via the extensions marketplace.
 
 ### 2. Installing Node.js
 
@@ -34,16 +34,16 @@ Here are the preliminary steps to start working with Gatsby JS on your PC:
 ### 3. Installing Gatsby CLI
 
 - Open a terminal or command prompt.
-- Run the command `npm install -g gatsby-cli` to install Gatsby CLI globally.
+- Run the command `npm install -g gatsby-cli` to install Gatsby CLI **globally**.
 - Run the command `gatsby --version` to ensure Gatsby CLI is installed correctly.
 
-By following these preliminary steps, you'll be ready to start developing with Gatsby JS on your PC.
+By following these preliminary steps, you'll be ready to start developing with Gatsby JS on your computer.
 
-## CREATING A NEW GTSBY PROJECT
+## Creating a new sCMS project
 
-1. **Create a new Gatsby project**:
+1. **Create a new sCMS project**:
 
-- Run the command `npx gatsby new my-new-site https://github.com/lab-archeologia-digitale/sCMS` in the terminal replacing `my-new-site` with your desired project name.
+- Open the terminal or command prompt and type `npx gatsby new my-new-site https://github.com/lab-archeologia-digitale/sCMS` in the terminal replacing `my-new-site` with your desired project name.
 - This command will create a new folder with the specified name and download the necessary example files.
 
 2. **Navigate to the project folder**:
@@ -53,10 +53,10 @@ By following these preliminary steps, you'll be ready to start developing with G
 - Run the command `npm start` Starts the development server
 - Once started, the project will be available at `http://localhost:8000`.
 
-## EDITING THE PROJECT WITH VISUAL STUDIO CODE
+## Editing the project with VS Code
 
 - Open Visual Studio Code.
-- Select `File` > `Open Folder` and navigate to your Gatsby project folder.
+- Select `File` > `Open Folder` and navigate to your sCMS project folder.
 - Use VS Code to edit the files of your Gatsby project and see the changes in real-time thanks to the development server.
 
 ## SETTINGS - ENV FILE
@@ -90,7 +90,7 @@ In the components folder there are the files **to be able to change the site fro
 - viewRecord.js
 
 1. **layout.js**
-   The main structure of the site consists of the layout.js page. On this page, the header and footer of the site are declared and there is the possibility of activating the slide by changing the tag from {/_ <Slide /> _/} in <Slide />
+   The main structure of the site consists of the layout.js page. On this page, the header and footer of the site are declared and there is the possibility of activating the slide by changing the tag from `{/_ <Slide /> _/}` in `<Slide />`
 2. **header.js**
    It is possible to change the header graphics by modifying this file. The code to change is the one contained within the <Container> tag. Through html code it is possible to insert divs, images and links.
 
