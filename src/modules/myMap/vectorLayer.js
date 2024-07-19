@@ -8,7 +8,7 @@ const VectorLayer = ({
   path2geojson,
   dEndPoint,
   dTable,
-  dFilter,
+  dQueryString,
   dToken,
   name,
   popupTemplate,
@@ -51,8 +51,8 @@ const VectorLayer = ({
         )
         return
       }
-      if (dFilter) {
-        endPoint += `?${dFilter}`
+      if (dQueryString) {
+        endPoint += `?${dQueryString}`
       }
       // Define Directus token
       const token = dToken ? dToken : process.env.GATSBY_DIRECTUS_TOKEN
@@ -71,7 +71,7 @@ const VectorLayer = ({
           setError("Error getting remote data")
         })
     }
-  }, [path2geojson, dEndPoint, dTable, dFilter, dToken, geoField]) // L'array di dipendenze vuoto assicura che questo effetto venga eseguito solo una volta, simile a componentDidMount
+  }, [path2geojson, dEndPoint, dTable, dQueryString, dToken, geoField]) // L'array di dipendenze vuoto assicura che questo effetto venga eseguito solo una volta, simile a componentDidMount
 
   if (error) {
     console.log(error)

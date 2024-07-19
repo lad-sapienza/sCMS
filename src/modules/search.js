@@ -6,7 +6,7 @@ const Search = ({
   dEndPoint,
   dTable,
   dToken,
-  dFilter,
+  dQueryString,
   resultItemTemplate,
   searchFields,
 }) => {

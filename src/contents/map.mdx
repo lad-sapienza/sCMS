@@ -252,7 +252,7 @@ import { Map } from "../modules/myMap/mapLibre.js"
         checked={true}
         dEndPoint="https://landscapearchaeology.eu/db/items/toponimi"
         dToken="sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E"
-        dFilter="filter[provincia][_eq]=Macerata"
+        dQueryString="filter[provincia][_eq]=Macerata"
         popupTemplate={attribs => {
           return `<p><strong>${attribs.toponimo}</strong>`
         }}
@@ -269,7 +269,7 @@ import { Map } from "../modules/myMap/mapLibre.js"
         checked={true}
         dEndPoint="https://landscapearchaeology.eu/db/items/toponimi"
         dToken="sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E"
-        dFilter="filter[provincia][_eq]=Macerata"
+        dQueryString="filter[provincia][_eq]=Macerata"
         popupTemplate={attribs => {
           return `<p><strong>${attribs.toponimo}</strong>`
         }}
@@ -333,7 +333,7 @@ layerstyle={{
 <div className="row">
   <div className="col-sm-4">
 
- A map sourced from the default Directus database with endpoint/dtoken/dfilter:
+ A map sourced from the default Directus database with endpoint/dtoken/dQueryString:
 
 ```
  <Map2>
@@ -342,7 +342,7 @@ id="my-layer"
 type="geojson"
 dEndPoint="https://landscapearchaeology.eu/db/items/toponimi"
 dToken="sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E"
-dFilter="filter[provincia][_eq]=Macerata"
+dQueryString="filter[provincia][_eq]=Macerata"
 layerstyle={{
   id: "point",
   type: "circle",
@@ -361,7 +361,7 @@ id="my-layer"
 type="geojson"
 dEndPoint="https://landscapearchaeology.eu/db/items/toponimi"
         dToken="sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E"
-        dFilter="filter[provincia][_eq]=Macerata"
+        dQueryString="filter[provincia][_eq]=Macerata"
 layerstyle={{
   id: "point",
   type: "circle",

@@ -37,7 +37,7 @@ const DataTb = props => {
     setIsLoading(true)
 
     if (props.path2csv) {
-      getData(props.path2csv, null, "csv2json")
+      getData(props.path2v, null, "csv2json")
         .then(jsonData => {
           setData(jsonData)
           setIsLoading(false)
@@ -65,8 +65,8 @@ const DataTb = props => {
         setIsLoading(false)
         return
       }
-      if (props.dFilter) {
-        endPoint += `?${props.dFilter}`
+      if (props.dQueryString) {
+        endPoint += `?${props.dQueryString}`
       }
       // Define Directus token
       const token = props.dToken
