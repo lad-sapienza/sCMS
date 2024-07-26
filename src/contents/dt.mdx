@@ -27,70 +27,84 @@ import DataTb from "../modules/datatb.js"
     ```
     <DataTb
       striped={true}
-      dEndPoint="https://landscapearchaeology.eu/db/items/toponimi?limit=1000&offset=0"
-      dToken="sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E"
+      dEndPoint="https://db.lad-sapienza.it/curry/items/scms_ksa?limit=1000&offset=0"
+      dToken="TzwQYgn4PSk5czDvQsT39gx8EByfBdiN"
       columns={[
-        {
-          name: "ID luogo",
-          selector: (item, i) => item.id,
-          sortable: true,
-        },
-        {
-          name: "Toponimo",
-          selector: (item, i) => item.toponimi,
-          sortable: true,
-          cell: item => (
-            <a href={`../record/?dEndPoint=${encodeURIComponent(`https://landscapearchaeology.eu/db/items/toponimi`)}&tb=toponimi&token=sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E&id=${item.id}`}>
-              {item.toponimo}
+    {
+      name: "Item_Label",
+      sortable: true,
+      cell: item => (
+            <a href={item["URI"]} target="_blank">
+              {item["Item_Label"]}
             </a>
           ),
-        },
-        {
-          name: "Provincia",
-          selector: (item, i) => item.provincia,
-          sortable: true,
-        },
-        {
-          name: "Comune",
-          selector: (item, i) => item.comune,
-          sortable: true,
-        },
-      ]}
+    },
+    {
+      name: "Site_Name",
+      selector: row => row["Site_Name"],
+      sortable: true,
+    },
+    {
+      name: "Thumbnail",
+      cell: item => (
+            <img src={item["Thumbnail"]} />
+          ),
+      sortable: true,
+    },
+    {
+      name: "Date",
+      selector: row => `${row["Early"]} — ${row["Late"]}`,
+      sortable: true,
+    },
+    {
+      name: "Collection_Summary",
+      selector: row => row["Collection_Summary"],
+      sortable: true,
+    },
+    
+  ]}
     />
     ```
   </div>
   <div className="col-sm-8">
     <DataTb
       striped={true}
-      dEndPoint="https://landscapearchaeology.eu/db/items/toponimi?limit=1000&offset=0"
-      dToken="sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E"
+      dEndPoint="https://db.lad-sapienza.it/curry/items/scms_ksa?limit=1000&offset=0"
+      dToken="TzwQYgn4PSk5czDvQsT39gx8EByfBdiN"
       columns={[
-        {
-          name: "ID luogo",
-          selector: (item, i) => item.id,
-          sortable: true,
-        },
-        {
-          name: "Toponimo",
-          selector: (item, i) => item.toponimi,
-          sortable: true,
-          cell: item => (
-            <a href={`../record/?dEndPoint=${encodeURIComponent(`https://landscapearchaeology.eu/db/items/toponimi`)}&tb=toponimi&token=sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E&id=${item.id}`}>
-              {item.toponimo}
+    {
+      name: "Item_Label",
+      sortable: true,
+      cell: item => (
+            <a href={item["URI"]} target="_blank">
+              {item["Item_Label"]}
             </a>
           ),
-        },
-        {
-          name: "Provincia",
-          selector: (item, i) => item.provincia,
-          sortable: true,
-        },
-        {
-          name: "Comune",
-          selector: (item, i) => item.comune,
-          sortable: true,
-        },
-      ]}
+    },
+    {
+      name: "Site_Name",
+      selector: row => row["Site_Name"],
+      sortable: true,
+    },
+    {
+      name: "Thumbnail",
+      cell: item => (
+            <img src={item["Thumbnail"]} />
+          ),
+      sortable: true,
+    },
+    {
+      name: "Date",
+      selector: row => `${row["Early"]} — ${row["Late"]}`,
+      sortable: true,
+    },
+    {
+      name: "Collection_Summary",
+      selector: row => row["Collection_Summary"],
+      sortable: true,
+    },
+    
+  ]}
     />
   </div>
 </div>
