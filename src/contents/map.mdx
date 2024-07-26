@@ -170,14 +170,15 @@ import {
   <div className="col-sm-8">
     <MapComp height="400px" center="43,13.32,11">
       <VectorLayer
-        name="Toponimi"
-        dTable="toponimi"
+        name="Hellenistic and Roman Sites"
+        dTable="scms_ksa"
         checked={true}
         fitToContent={true}
+        dQueryString="filter[Hellenistic_Roman][_eq]=true"
         popupTemplate={attribs => {
-          return `<p><strong>${attribs.toponimo}</strong>`
+          return `<p><strong>${attribs.Item_Label}</strong>`
         }}
-        geoField="coordinates"
+        geoField="geometry"
       />
       <RasterLayer
         name="Open Street Map"
@@ -238,35 +239,43 @@ import {
 <div className="row">
   <div className="col-sm-4">
     ```
-    <MapComp height="400px" center="43,13.32,11" baseLayers="OSM,EsriSatellite">
+    <MapComp
+      height="400px"
+      baseLayers="OSM,EsriSatellite"
+      fitToContent={true}
+      >
       <VectorLayer
-        name="Toponimi"
+        name="Sites"
         fitToContent={true}
         checked={true}
-        dEndPoint="https://landscapearchaeology.eu/db/items/toponimi"
-        dToken="sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E"
-        dQueryString="filter[provincia][_eq]=Macerata"
+        dEndPoint="https://db.lad-sapienza.it/curry/items/scms_ksa"
+        dToken="TzwQYgn4PSk5czDvQsT39gx8EByfBdiN"
+        dQueryString="filter[Iron_Age][_eq]=true"
         popupTemplate={attribs => {
-          return `<p><strong>${attribs.toponimo}</strong>`
+          return `<p><strong>${attribs.Item_Label}</strong>`
         }}
-        geoField="coordinates"
+        geoField="geometry"
       />
     </MapComp>
     ```
   </div>
   <div className="col-sm-8">
-    <MapComp height="400px" baseLayers="OSM,EsriSatellite">
+    <MapComp
+      height="400px"
+      baseLayers="OSM,EsriSatellite"
+      fitToContent={true}
+      >
       <VectorLayer
-        name="Toponimi"
+        name="Iron Age Sites"
         fitToContent={true}
         checked={true}
-        dEndPoint="https://landscapearchaeology.eu/db/items/toponimi"
-        dToken="sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E"
-        dQueryString="filter[provincia][_eq]=Macerata"
+        dEndPoint="https://db.lad-sapienza.it/curry/items/scms_ksa"
+        dToken="TzwQYgn4PSk5czDvQsT39gx8EByfBdiN"
+        dQueryString="filter[Iron_Age][_eq]=true"
         popupTemplate={attribs => {
-          return `<p><strong>${attribs.toponimo}</strong>`
+          return `<p><strong>${attribs.Item_Label}</strong>`
         }}
-        geoField="coordinates"
+        geoField="geometry"
       />
     </MapComp>
   </div>
