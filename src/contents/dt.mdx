@@ -163,17 +163,14 @@ import DataTb from "../modules/datatb.js"
       cell: item => (
             <img src={item["Thumbnail"]} />
           ),
-      sortable: true,
     },
     {
       name: "Date",
       selector: row => `${row["Early BCE/CE"]} — ${row["Late BCE/CE"]}`,
-      sortable: true,
     },
     {
       name: "Collection Summary",
       selector: row => row["Collection Summary"],
-      sortable: true,
     },
     
   ]}
