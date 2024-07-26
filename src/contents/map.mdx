@@ -45,7 +45,7 @@ import {
       (f, ll) => {
         return L.circleMarker(ll, {
           radius: 4,
-          fillColor: f.properties["Late BCE/CE"] > 0 ? "#FE04FC" : '#ebebeb',
+          fillColor: !Object.hasOwn(f.properties, "Late BCE/CE") ? '#ebebeb' : (f.properties["Late BCE/CE"] < 0 ? "#FE04FC" : '#1B64F7'),
           color: "#000",
           weight: 1,
           opacity: 1,
@@ -78,7 +78,7 @@ import {
         (f, ll) => {
           return L.circleMarker(ll, {
             radius: 4,
-            fillColor: f.properties["Late BCE/CE"] > 0 ? "#FE04FC" : '#ebebeb',
+            fillColor: !Object.hasOwn(f.properties, "Late BCE/CE") ? '#ebebeb' : (f.properties["Late BCE/CE"] < 0 ? "#FE04FC" : '#1B64F7'),
             color: "#000",
             weight: 1,
             opacity: 1,
