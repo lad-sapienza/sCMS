@@ -35,7 +35,11 @@ const Search = ({
       )
     }
 
-    const token = dToken ? dToken : process.env.GATSBY_DIRECTUS_TOKEN
+    const token = dToken
+        ? dToken
+        : process.env.GATSBY_DIRECTUS_TOKEN;
+    
+
     if (!token) {
       setError(
         "Directus token is missing. It should be provided as dToken parameter or as a GATSBY_DIRECTUS_TOKEN env variable"
@@ -50,18 +54,18 @@ const Search = ({
 
     const final_query = `filter[_or]${query_parts.join(`&filter[_or]`)}`
 
-    getData(`${endPoint}?${final_query}`, dToken, "json")
+    getData(`${endPoint}?${final_query}`, token, "json")
       .then(data => {
         if (data.errors) {
           console.log(data.errors)
-          setError("Error in querying getting remote data")
+          setError("Error in querying getting remote data 1")
         } else {
           setSearchResults(data)
         }
       })
       .catch(err => {
         console.log(err)
-        setError("Error in querying getting remote data")
+        setError("Error in querying getting remote data 2")
       })
   }
 
