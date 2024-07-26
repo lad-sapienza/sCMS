@@ -16,15 +16,26 @@ import { Link } from "gatsby"
   A map with geogata sourced from a geojson file hosted in the same server: only a (public) local path is needed:
 ```html
 <Search
-  dEndPoint="https://inrome.sns.it/db/items/cms_articles"
-  dToken="I0pT7ozY0KuK8i-vtwLQGek36s0IhQ5e"
-  searchFields="title_it,summary,text"
+  dEndPoint="https://db.lad-sapienza.it/curry/items/scms_ksa"
+  dToken="TzwQYgn4PSk5czDvQsT39gx8EByfBdiN"
+  searchFields="Item_Label,Site_Name,Site_Description"
   resultItemTemplate = { item => {
     return  <div className="card my-3" key={item.id}>
+      
       <div className="card-body">
-        <h5 className="card-title">{item.title}</h5>
-        <p className="card-text">{item.summary}.</p>
-        <a href={`../record/?dEndPoint=${encodeURIComponent(`https://inrome.sns.it/db/items/cms_articles`)}&tb=cms_articles&token=I0pT7ozY0KuK8i-vtwLQGek36s0IhQ5e&id=${item.id}`} className="btn btn-primary">View</a>
+        <h5 className="card-title">{item.Item_Label} — {item.Site_Name}</h5>
+        <div className="card-text">
+        <div className="row">
+          <div class="col-3">
+            <img src={item.Thumbnail} class="card-img-top img-fluid" alt={item.Site_Name} style={{maxWidth: 200}} />
+          </div>
+          <div class="col-9">
+            {item.Site_Description}
+            <hr />
+            <a href={`../record/?dEndPoint=${encodeURIComponent(`https://db.lad-sapienza.it/curry/items/scms_ksa`)}&tb=cms_articles&token=I0pT7ozY0KuK8i-vtwLQGek36s0IhQ5e&id=${item.id}`} className="btn btn-primary">View</a>
+          </div>
+        </div>
+        </div>
       </div>
     </div>
   }}
@@ -33,17 +44,27 @@ import { Link } from "gatsby"
   </div>
   <div className="col-sm-8">
   <Search
-  dEndPoint="https://inrome.sns.it/db/items/cms_articles"
-  dToken="I0pT7ozY0KuK8i-vtwLQGek36s0IhQ5e"
-  searchFields="title_it,summary,text"
+  dEndPoint="https://db.lad-sapienza.it/curry/items/scms_ksa"
+  dToken="TzwQYgn4PSk5czDvQsT39gx8EByfBdiN"
+  searchFields="Item_Label,Site_Name,Site_Description"
   resultItemTemplate = { item => {
     return  <div className="card my-3" key={item.id}>
       <div className="card-body">
-        <h5 className="card-title">{item.title}</h5>
-        <p className="card-text">{item.summary}.</p>
-        <a href={`../record/?dEndPoint=${encodeURIComponent(`https://inrome.sns.it/db/items/cms_articles`)}&tb=cms_articles&token=I0pT7ozY0KuK8i-vtwLQGek36s0IhQ5e&id=${item.id}`} className="btn btn-primary">View</a>
+        <h5 className="card-title">{item.Item_Label} — {item.Site_Name}</h5>
+        <div className="card-text">
+        <div className="row">
+          <div class="col-3">
+            <img src={item.Thumbnail} class="card-img-top img-fluid" alt={item.Site_Name} style={{maxWidth: 200}} />
+          </div>
+          <div class="col-9">
+            {item.Site_Description}
+            <hr />
+            <a href={`../record/?dEndPoint=${encodeURIComponent(`https://db.lad-sapienza.it/curry/items/scms_ksa`)}&tb=cms_articles&token=I0pT7ozY0KuK8i-vtwLQGek36s0IhQ5e&id=${item.id}`} className="btn btn-primary">View</a>
+          </div>
+        </div>
       </div>
     </div>
+  </div>
   }}
 />
   </div>
