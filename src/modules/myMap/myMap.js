@@ -1,5 +1,3 @@
 export { MapComp } from "./mapComp.js"
 export { RasterLayer } from "./rasterLayer.js"
 export { VectorLayer } from "./vectorLayer.js"
-export { Map2 } from "./reactMap.js"
-export { SourceLayer } from "./sourceLayer.js"

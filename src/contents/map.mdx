@@ -17,11 +17,8 @@ Geodata can be retrieved form a Directus database or any other JSON API, a stati
 import {
   MapComp,
   RasterLayer,
-  VectorLayer,
-  Map2,
-  SourceLayer,
+  VectorLayer
 } from "../modules/myMap/myMap.js"
-import { Map } from "../modules/myMap/mapLibre.js"
 
 <div className="row">
   <div className="col-sm-4">
@@ -278,101 +275,3 @@ import { Map } from "../modules/myMap/mapLibre.js"
     </MapComp>
   </div>
 </div>
-
-<div className="row">
-  <div className="col-sm-4">
-  Maplibre
-  Esempio libreria maplibre-gl
-  </div>
-  <div className="col-sm-8"><br/>
-    <Map />
-  </div>
-</div>
-<div className="row">
-  <div className="col-sm-4">
- Esempio libreria react-map-gl
-
-A map with geodata sourced from a GeoJSON file hosted in the same server: only a (public) local path is needed:
-
-```
-
-<Map2>
-<SourceLayer
-id="my-layer"
-type="geojson"
-path2geojson="../data/toponimi.geojson"
-layerstyle={{
-  id: "point",
-  type: "circle",
-  paint: {
-    "circle-radius": 10,
-    "circle-color": "#007cbf",
-  },
-}}/>
- </Map2>
-```
-</div>
-  <div className="col-sm-8"><br/>
- <Map2>
-<SourceLayer
-id="my-layer"
-type="geojson"
-path2geojson="../data/toponimi.geojson"
-layerstyle={{
-  id: "point",
-  type: "circle",
-  paint: {
-    "circle-radius": 10,
-    "circle-color": "#007cbf",
-  },
-}}/>
- </Map2>
-
-  </div>
-</div>
-<div className="row">
-  <div className="col-sm-4">
-
- A map sourced from the default Directus database with endpoint/dtoken/dQueryString:
-
-```
- <Map2>
-<SourceLayer
-id="my-layer"
-type="geojson"
-dEndPoint="https://landscapearchaeology.eu/db/items/toponimi"
-dToken="sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E"
-dQueryString="filter[provincia][_eq]=Macerata"
-layerstyle={{
-  id: "point",
-  type: "circle",
-  paint: {
-    "circle-radius": 10,
-    "circle-color": "red",
-  },
-}}/>
- </Map2>
-```
-</div>
-  <div className="col-sm-8"><br/>
- <Map2>
-<SourceLayer
-id="my-layer"
-type="geojson"
-dEndPoint="https://landscapearchaeology.eu/db/items/toponimi"
-        dToken="sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E"
-        dQueryString="filter[provincia][_eq]=Macerata"
-layerstyle={{
-  id: "point",
-  type: "circle",
-  paint: {
-    "circle-radius": 10,
-    "circle-color": "red",
-  },
-}}/>
- </Map2>
-
-  </div>
-</div>
-
-````

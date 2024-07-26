@@ -329,7 +329,7 @@ The URL entered must obviously refer to the table you intend to view, while the 
 
 The page **map.mdx** allows the creation and management of a WebGis plan composed of multiple layers, both in RASTER and vector format. In addition to them, the default settings include the application of a zoom in/zoom out tool and a layer display manager. These and other settings are defined in the various javascript files that make up the mymap module.
 Geodata can be retrieved form a Directus database or any other JSON API, a statically hosted geoJSON file or any GeoJSON file publically available on the Web. The component can be customised via the following parameters.
-The map.mdx page contains examples using both the leaflet and maplibre libraries.
+The map.mdx page contains examples using both leaflet.js web mapping library.
 
 ### Geodata sourced from a GeoJSON file hosted in the same server
 
