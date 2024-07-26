@@ -103,14 +103,15 @@ import {
 ```
     <MapComp height="400px" center="43,13.32,11">
       <VectorLayer
-        name="Toponimi"
-        dTable="toponimi"
+        name="Hellenistic and Roman Sites"
+        dTable="scms_ksa"
         checked={true}
         fitToContent={true}
+        dQueryString="filter[Hellenistic_Roman][_eq]=true"
         popupTemplate={attribs => {
-          return `<p><strong>${attribs.toponimo}</strong>`
+          return `<p><strong>${attribs.Item_Label}</strong>`
         }}
-        geoField="coordinates"
+        geoField="geometry"
       />
       <RasterLayer
         name="Open Street Map"
