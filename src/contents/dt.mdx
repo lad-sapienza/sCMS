@@ -101,28 +101,40 @@ import DataTb from "../modules/datatb.js"
   <div className="col-sm-4">
 ```
 <DataTb
-  path2csv="../data/UT_toponimi.csv"
+  path2csv="../../data/ksa.csv"
   columns={[
     {
-      name: "ID luogo",
-      selector: row => row.id,
+      name: "Item Label",
+      sortable: true,
+      cell: item => (
+            <a href={item["URI"]} target="_blank">
+              {item["Item Label"]}
+            </a>
+          ),
+    },
+    {
+      name: "Site Name",
+      selector: row => row["Site Name"],
       sortable: true,
     },
     {
-      name: "Toponimo",
-      selector: row => row.toponimo,
+      name: "Thumbnail",
+      cell: item => (
+            <img src={item["Thumbnail"]} />
+          ),
       sortable: true,
     },
     {
-      name: "Provincia",
-      selector: row => row.provincia,
+      name: "Date",
+      selector: row => `${row["Early BCE/CE"]} — ${row["Late BCE/CE"]}`,
       sortable: true,
     },
     {
-      name: "Comune",
-      selector: row => row.comune,
+      name: "Collection Summary",
+      selector: row => row["Collection Summary"],
       sortable: true,
     },
+    
   ]}
 />
 ```
@@ -130,29 +142,45 @@ import DataTb from "../modules/datatb.js"
   <div className="col-sm-8">
 
 <DataTb
-  path2csv="../data/UT_toponimi.csv"
+  path2csv="../../data/ksa.csv"
   columns={[
     {
-      name: "ID luogo",
-      selector: row => row.id,
+      name: "Item Label",
+      sortable: true,
+      cell: item => (
+            <a href={item["URI"]} target="_blank">
+              {item["Item Label"]}
+            </a>
+          ),
+    },
+    {
+      name: "Site Name",
+      selector: row => row["Site Name"],
       sortable: true,
     },
     {
-      name: "Toponimo",
-      selector: row => row.toponimo,
+      name: "Thumbnail",
+      cell: item => (
+            <img src={item["Thumbnail"]} />
+          ),
       sortable: true,
     },
     {
-      name: "Provincia",
-      selector: row => row.provincia,
+      name: "Date",
+      selector: row => `${row["Early BCE/CE"]} — ${row["Late BCE/CE"]}`,
       sortable: true,
     },
     {
-      name: "Comune",
-      selector: row => row.comune,
+      name: "Collection Summary",
+      selector: row => row["Collection Summary"],
       sortable: true,
     },
+    
   ]}
 />
+
+---
+
+Data from [Kahramanmaraş Survey](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) created by [Elizabeth Carter](http://opencontext.org/persons/3208923d-69d0-70e9-9cc1-23ad97770aec) and published on [OpenContext](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) add distributed with [CC BY 4.0 Internatkional](https://creativecommons.org/licenses/by/4.0) license.
   </div>
 </div>
