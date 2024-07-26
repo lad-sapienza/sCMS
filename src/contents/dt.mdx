@@ -118,17 +118,17 @@ import DataTb from "../modules/datatb.js"
   path2csv="../data/ksa.csv"
   columns={[
     {
-      name: "Item Label",
+      name: "Item_Label",
       sortable: true,
       cell: item => (
             <a href={item["URI"]} target="_blank">
-              {item["Item Label"]}
+              {item["Item_Label"]}
             </a>
           ),
     },
     {
-      name: "Site Name",
-      selector: row => row["Site Name"],
+      name: "Site_Name",
+      selector: row => row["Site_Name"],
       sortable: true,
     },
     {
@@ -140,16 +140,16 @@ import DataTb from "../modules/datatb.js"
     },
     {
       name: "Date",
-      selector: row => `${row["Early BCE/CE"]} — ${row["Late BCE/CE"]}`,
+      selector: row => `${row["Early"]} — ${row["Late"]}`,
       sortable: true,
     },
     {
-      name: "Collection Summary",
-      selector: row => row["Collection Summary"],
+      name: "Collection_Summary",
+      selector: row => row["Collection_Summary"],
       sortable: true,
     },
-    
   ]}
+  
 />
 ```
   </div>
@@ -159,17 +159,17 @@ import DataTb from "../modules/datatb.js"
   path2csv="../data/ksa.csv"
   columns={[
     {
-      name: "Item Label",
+      name: "Item_Label",
       sortable: true,
       cell: item => (
             <a href={item["URI"]} target="_blank">
-              {item["Item Label"]}
+              {item["Item_Label"]}
             </a>
           ),
     },
     {
-      name: "Site Name",
-      selector: row => row["Site Name"],
+      name: "Site_Name",
+      selector: row => row["Site_Name"],
       sortable: true,
     },
     {
@@ -177,14 +177,17 @@ import DataTb from "../modules/datatb.js"
       cell: item => (
             <img src={item["Thumbnail"]} />
           ),
+      sortable: true,
     },
     {
       name: "Date",
-      selector: row => `${row["Early BCE/CE"]} — ${row["Late BCE/CE"]}`,
+      selector: row => `${row["Early"]} — ${row["Late"]}`,
+      sortable: true,
     },
     {
-      name: "Collection Summary",
-      selector: row => row["Collection Summary"],
+      name: "Collection_Summary",
+      selector: row => row["Collection_Summary"],
+      sortable: true,
     },
     
   ]}

@@ -36,16 +36,16 @@ import {
     fitToContent={true}
     checked={true}
     popupTemplate={
-    (attribs) => `<p><strong>${attribs["Item Label"]}</strong> 
-    ${attribs["Site Name"]}
+    (attribs) => `<p><strong>${attribs["Item_Label"]}</strong> 
+    ${attribs["Site_Name"]}
     <br>
-    Date: ${attribs["Early BCE/CE"]} — ${attribs["Late BCE/CE"]}
+    Date: ${attribs["Early"]} — ${attribs["Late"]}
     ` }
     pointToLayer={
       (f, ll) => {
         return L.circleMarker(ll, {
           radius: 4,
-          fillColor: !Object.hasOwn(f.properties, "Late BCE/CE") ? '#ebebeb' : (f.properties["Late BCE/CE"] < 0 ? "#FE04FC" : '#1B64F7'),
+          fillColor: !Object.hasOwn(f.properties, "Late") ? '#ebebeb' : (f.properties["Late"] < 0 ? "#FE04FC" : '#1B64F7'),
           color: "#000",
           weight: 1,
           opacity: 1,
@@ -69,16 +69,16 @@ import {
       fitToContent={true}
       checked={true}
       popupTemplate={
-      (attribs) => `<p><strong>${attribs["Item Label"]}</strong> 
-      ${attribs["Site Name"]}
+      (attribs) => `<p><strong>${attribs["Item_Label"]}</strong> 
+      ${attribs["Site_Name"]}
       <br>
-      Date: ${attribs["Early BCE/CE"]} — ${attribs["Late BCE/CE"]}
+      Date: ${attribs["Early"]} — ${attribs["Late"]}
       ` }
       pointToLayer={
         (f, ll) => {
           return L.circleMarker(ll, {
             radius: 4,
-            fillColor: !Object.hasOwn(f.properties, "Late BCE/CE") ? '#ebebeb' : (f.properties["Late BCE/CE"] < 0 ? "#FE04FC" : '#1B64F7'),
+            fillColor: !Object.hasOwn(f.properties, "Late") ? '#ebebeb' : (f.properties["Late"] < 0 ? "#FE04FC" : '#1B64F7'),
             color: "#000",
             weight: 1,
             opacity: 1,
