@@ -2,13 +2,13 @@
 
 s:CMS is an easy, open source and ready-to-use content management system useful for generating sites based on Gatsby.js. It also implements data-oriented components for easily connect, display and search your data in maps (WebGis) and/or tables. 
 
-## What can i do wit S:CMS?
+## What can I do with S:CMS?
 
-1. **Personalized graphics** ([Link](#personalized-graphics))
-2. **Create Static pages** ([Link](#create-static-pages))
-3. **Create Static pages with dynamic data** ([Link](#create-static-pages-with-dynamic-data))
-4. **Create a Web-gis** ([Link](#create-a-web-gis))
-5. **Create full detail pages to fully explore the dataset** ([Link](#create-full-detail-pages-to-fully-explore-the-dataset))
+1. [**Personalized graphics** ](#personalize-sites-layout-and-graphic)
+2. [**Create Static pages**](#2-static-page)
+3. [**Create Static pages with dynamic data**](#3-pages-with-dynamic-content)
+4. [**Create a Web-gis**](#3.1.-Maps)
+5. [**Create full detail pages to fully explore the dataset**](#3.4.-record-page)
 
 ## Preliminary operations
 
