@@ -4,11 +4,11 @@ s:CMS is an easy, open source and ready-to-use content management system useful 
 
 ## What can i do wit S:CMS?
 
-1. **Personalized graphics**(#personalize-site's-layout-and-graphic)
-2. **Create Static pages**(#static-page)
-3. **Create Static pages with dynamic data**(#3-pages-with-dynamic-content)
-4. **Create a Web-gis**(#3.1-Maps)
-5. **Create full detail pages to fully explore the dataset**(#3.4-Record-page)
+1. **Personalized graphics** ([Link](#personalized-graphics))
+2. **Create Static pages** ([Link](#create-static-pages))
+3. **Create Static pages with dynamic data** ([Link](#create-static-pages-with-dynamic-data))
+4. **Create a Web-gis** ([Link](#create-a-web-gis))
+5. **Create full detail pages to fully explore the dataset** ([Link](#create-full-detail-pages-to-fully-explore-the-dataset))
 
 ## Preliminary operations
 
