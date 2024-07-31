@@ -297,7 +297,6 @@ It accepts the following props:
 |---------------|---------------------|---------------|------------------------------------------------------------------------------|
 | name          | string              |               | Specifies the name of the layer as it appears in the LayersControl tool.      |
 | popupTemplate | Accepts other props |               | A custom popup template for viewing geographical objects' attributes. Can include fields from your project. |
-| Filter        |                     | ‘True’        | A comment that indicates a filter or setting                                 |
 | pointToLayer  | bool                | CircleMarker  | Function defining how to display point features. See: https://leafletjs.com/reference.html#circlemarker |
 | checked       | bool                | ‘True’        | If true, the layer is displayed by default on the map.                       |
 | fitToContent  | bool                | ‘True’        | If true, adjusts the map's view to fit the bounds of the current layer.      |
