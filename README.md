@@ -1,7 +1,6 @@
 # s:CMS
 
-`s:CMS` is an easy to use content management system to generate static sites.
-It is based on [Gatsby.js](https://www.gatsbyjs.com/) and implements some data-oriented components for connecting to databases and display data as maps and/or tables.
+s:CMS is an easy, open source and ready-to-use content management system useful for generating sites based on Gatsby.js. It also implements data-oriented components for easily connect, display and search your data in maps (WebGis) and/or tables. 
 
 ## Preliminary operations
 
@@ -39,42 +38,23 @@ The following preliminary operations are meant to help to be productive from scr
 
 By following these preliminary steps, you'll be ready to start developing with Gatsby JS on your computer.
 
-## Creating a new sCMS project
+### 4. **Is really that simple?**:
 
-1. **Create a new sCMS project**:
+Now you can create your own sCMS project!
 
-Open the terminal or command prompt and type `npx gatsby new my-new-site https://github.com/lab-archeologia-digitale/sCMS` in the terminal replacing `my-new-site` with your desired project name. The command will create a new folder with the specified name and download the necessary example files.
+Just open the terminal or command prompt and type ‘npx gatsby new my-new-site https://github.com/lab-archeologia-digitale/sCMS’ (replace my-new-site with your project name). 
 
-2. **Navigate to the project folder**:
+Then, open the directory of the project using your terminal (cd my-new-site) to access the directory of your new project and the command npm i to install all the dependencies listed in the package.json file of your project and then run the command npm start to start the development server. The site will be opened in a local version, setting by default at the URL http://localhost:8000 (more projects can be simultaneously opened at the same time with different URLs)
 
-- Run the command `cd my-new-site` to enter the directory of your new project.
-- Run the command `npm i` to install all the dependencies listed in the package.json file of your project.
-- Run the command `npm start` to start the development server.
-- Once started, the project will be available at `http://localhost:8000`.
+## What can I do with SCMS?
 
-## Editing the project
+	1. **Personalized graphics**(#personalize-sites-layout-and-graphic)
+	2. **Create Static pages**(#static-pages)
+	3. **Create Static pages with dynamic data**(#pages-with-dynamic-content)
+	4. **Create a Web-gis**(#Maps)
+	5. **Create full detail pages to fully explore the dataset**(#Record-page)
 
-- Open Visual Studio Code.
-- Select `File` > `Open Folder` and navigate to your sCMS project folder.
-- Use VS Code to edit the files of your Gatsby project and see the changes in real-time thanks to the development server.
-
-## SETTINGS - ENV FILE
-
-`Documentation to be completed`
-
-## TABLE OF CONTENTS
-
-- COMPONENTS
-- CONTENTS
-- IMAGES
-- MODULES
-- PAGES
-- SERVICES
-- TEMPLATES
-
-This is the list of contents of the Gatsby project. To modify the example site the user will have to intervene in particular in the files contained in the first three folders (Components, Contents and Images).
-
-### COMPONENTS - CHANGE THE THE SITE'LAYOUT AND GRAPHIC
+## PERSONALIZE SITE'S LAYOUT AND GRAPHIC
 
 In the components folder there are the files **to be able to change the site from a graphic point of view**, in particular it is possible to change the header, the footer and add a slide.
 
@@ -83,14 +63,15 @@ In the components folder there are the files **to be able to change the site fro
 - index.modules.css
 - layout.css
 - layout.css.map
-- layout.js (MAIN PAGE)
+- layout.js (MAIN AGE)
 - layout.scss
 - slide.js
 - viewRecord.js
 
-1. **layout.js**
+### **layout.js**
    The main structure of the site consists of the layout.js page. On this page, the header and footer of the site are declared and there is the possibility of activating the slide by changing the tag from `{/_ <Slide /> _/}` in `<Slide />`
-2. **header.js**
+
+### **header.js**
    It is possible to change the header graphics by modifying this file. The code to change is the one contained within the <Container> tag. Through html code it is possible to insert divs, images and links.
 
 - div: As for divs you can use bootstrap classes
@@ -133,7 +114,7 @@ const Header = styled.header`
 `
 ```
 
-3. **footer.js**
+### **footer.js**
    It is possible to change the footer graphics by modifying this file. The code to change is the one contained within the <Container> tag. Through html code it is possible to insert divs, images and links.
 
 - div: As for divs you can use bootstrap classes
@@ -171,228 +152,234 @@ const Footer = styled.footer`
 `
 ```
 
-4. **slide.js**
+### **slide.js**
 
 On the slide page you can edit the StaticImage inside CarouselItems or add a new CarouselItems element. The images also in this case must be saved in the images folder.
 
-### CONTENTS - MANAGE THE PAGES OF THE WEB SITE
+### **navbar.js**
 
-Inside the contents folder you can find the default pages of the site and create new ones.
+To enhance site navigation, a horizontal Navbar has been implemented. On mobile devices, the Navbar becomes vertical and collapsible. This feature automatically collects information on titles and internal positioning from the Front Matter of various pages  (Learn how: [Front Matter](#1-front-matter) ). As the Navbar is built using a React-Bootstrap component, please refer to the official documentation for styling modifications or further implementations: https://react-bootstrap.netlify.app/docs/components/navbar/ 
 
-**Default pages:**
+## Pages
 
-- credits.mdx
-- dt.mdx
-- home.mdx
-- map.mdx
-- simpleSearch.mdx
+Scms also provide tools for easily build and personalize the pages of your website. Being based on Gatsby, every such page works with the .mdx Markdown extension [MDX documentation](https://www.gatsbyjs.com/docs/glossary/mdx/#:~:text=MDX%20is%20an%20extension%20to,but%20still%20supports%20inline%20HTML). 
 
-The pages are in mdx format. At the top of the page you will find the essential fields, which are contained in three solid lines at the top and bottom. The title refers to the title of the page, the date to the date of the content, the slug for the url, the description of the content and menu position is for the position within the navbar. After this block you can start writing the contents of the page using the formatting of the [md file](https://www.markdownguide.org/basic-syntax/).
+Five example pages are provided in the contents section of the default project that fully explore the potentiality of Scms.
 
-**Example:**
+### 1. Front Matter
 
-title: "Page name"
+Firstly, it is important that you can configure every page’s visualization using metadata that are disposed by default:
 
-date: "2023-10-01"
+| Field           | Required | Example     | Description                                                                 |
+|-----------------|----------|-------------|-----------------------------------------------------------------------------|
+| title           | Y        | ‘homepage’  | Define the name shown for the page and on the navbar                        |
+| date            | N        | ‘2024-04-10’| Define the date of creation/last update of the page                         |
+| slug            | Y        | ‘home’      | Define the personalized ending of the URL address specific to the page.     |
+| menu_position   | Y        | ‘0’         | Define the internal indexing of the page used for the correct ordering in the navbar. |
 
-slug: "page-name"
+### 2. Static page
 
-description: "Lore ipsum"
+As the most basic unit of your website, you can add one or more static pages integrating text, links, and images. The MDX structure permits you to easily use Markdown and HTML syntax, and also allows you to integrate static query components to further personalize your page.
 
-menu_position: 4
+### 3. Pages with dynamic content:
 
-**ADD NEW PAGES**
+Scms provides you a full arrangement of features for building pages integrating static content (text, images, links) with dynamic data (accessed by an Ajax call) taken from a relational database. The system is optimized for online databases managed by Directus, but local access can also be used.
 
-to create a new page just create one inside the contents folder, for example newpage.mdx
+#### 3.1. Maps
 
-**CHANGE HOMEPAGE CONTENTS**
+Scms gives you the chance to build a web-GIS map composed by the juxtaposition of Raster and Vector layers. Various tools are provided for helping customize both the graphical rendering of the wrapper and the visualization of the content.
 
-To change the contents of the homepage you need to modify the contents of the home.mdx file
+For the RASTER bases, a simplified access to the most common providers of satellite imagery and digital maps is provided by default, with the possibility to extend the selection to custom maps. Tools are also provided for full customization of vector layers, from data filtering to icon customization. For more complex projects, a layer selector is provided to allow users a cleaner data visualization.
 
-## MANAGE DATATABLE AND MAP
+(learn how: [MyMap](#mymap))
 
-### MANAGE A DATATABLE
+#### 3.2. Table
 
-This page allows the creation and management of a tabular form useful for viewing the data coming from one of the tables in our reference database. The module is also equipped, by default, with a generic search setting, the customization of which will not be discussed here.
+You can also add a table to organically show your data in an intuitive format! The table component provides options for a front-end general filter. With various graphical configuration options, the presentation of data can be customized to fit the specific needs of the project. Additionally, you can choose which fields to display and customize how they are presented, adding external and/or internal links or preview images that mirror outside sources.
 
-**DATA SOURCES**
+(Learn how: [Dtable](#dtable))
 
-Table data can be collected either from a locally saved csv file or from a Directus database.
-Based on the two options chosen, the <DataTb> tag will have different properties for the data connection.
-The colum property is valid for both options and it indicates which columns of the table must be displayed.
+#### 3.3. Search page
 
-**Columns property:**
+Enhance the navigation of your data by adding a query page. This easily customizable tool supports various query logics and result presentations, allowing you to select which fields are searchable and how the results are displayed. You can also include links to external resources, internal pages, or even previews of content.
 
-- **name**: the column name that appears on the table
-- **selector**: original name of the column on the source table preceded by "row."
-- **sortable**: true or false. indicates whether the field is sortable.
-- **striped**: common display option in tabular management systems, which allows you to chromatically differentiate the even columns from the odd ones;
-- **cell**: in this field it is possible to insert a link to a detail sheet if you click on a value in the table
+(Learn how: [Search](#search))
 
----
+#### 3.4. Record page
 
-## Collect data from file .csv (path2cvs)
+A page that displays an item's details in a simple list format and can be customized to fit your needs. The record page can be accessed only through direct links from other pages on the site, providing a comprehensive view of complex information and allowing for detailed exploration that may not be fully covered in summary pages.
 
-**Example**
+(Learn how: [View Record](#view-record))
 
-```javascript
-<DataTb
-  path2csv="../data/UT_toponimi.csv"
-  columns={[
-    {
-      name: "ID luogo",
-      selector: row => row.id,
-      sortable: true,
-    },
-    {
-      name: "Toponimo",
-      selector: row => row.toponimo,
-      sortable: true,
-    },
-    {
-      name: "Provincia",
-      selector: row => row.provincia,
-      sortable: true,
-    },
-    {
-      name: "Comune",
-      selector: row => row.comune,
-      sortable: true,
-    },
-  ]}
-/>
-```
-
----
-
-## Collect data from Directus
-
-In this second case, it will be possible to choose whether to specify URL (endpoint) and access token or (recommended choice) whether to define only the name of the reference table (dTable). In this case, the path and token information will be automatically imported from the .env file.
-
-- **dEndPoint**: full path to a Directus endpoint, complete with table name (es: toponimi)
-
-es:
-dEndPoint="https://landscapearchaeology.eu/db/items/toponimi?limit=1000&offset=0"
-
-The URL entered must obviously refer to the table you intend to view, while the use of a limiter at the end (?limit=1000&offset=0") can be useful for speeding up loading times in the case of tables comprising more than 1000 voices.
-
-- **dToken**: Directus access token, required if table is not public. If not proved GATSBY_DIRECTUS_TOKEN environment variable will be used
-
-- **dTable**: name of the Directus table containing geographical data. The indication of only the table is possible if the .env file has been set.
-
-- **cell**: The cell value is a function that takes an item argument (arrow function with item argument). The URL is composed of the parameters endpoint, tb (table), token and the id with a value dynamically generated using the values ​​of the item object.
-  The url begins with ../record/ recalling the **record.js** page saved in pages
-  In this page an API call is made based on the parameters passed by the URL and returns a react component called <Record> imported from **../components/viewRecord** to which the item property is passed with the results of the API call to the database <Record item ={recordData} />
-  In the viewRecord.js page saved in the components folder, the Record component is defined as a function that receives item as a prop. item represents the record data. This component returns a Fragment that will contain the child elements. This avoids adding extra nodes in the DOM.
-  Use Object.entries(item) to get an array of [key, value] pairs from item objects. Then, map to this array to create a new array of React elements.
-
-```javascript
-<DataTb
-  striped={true}
-  dEndPoint="https://landscapearchaeology.eu/db/items/toponimi?limit=1000&offset=0"
-  dToken="sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E"
-  columns={[
-    {
-      name: "ID luogo",
-      selector: (item, i) => item.id,
-      sortable: true,
-    },
-    {
-      name: "Toponimo",
-      selector: (item, i) => item.toponimi,
-      sortable: true,
-      cell: item => (
-        <a
-          href={`../record/?dEndPoint=${encodeURIComponent(
-            `https://landscapearchaeology.eu/db/items/toponimi`
-          )}&tb=toponimi&token=sxE2XHdJMWJiymA9w2QJFGJWG9AAnq6E&id=${item.id}`}
-        >
-          {item.toponimo}
-        </a>
-      ),
-    },
-    {
-      name: "Provincia",
-      selector: (item, i) => item.provincia,
-      sortable: true,
-    },
-    {
-      name: "Comune",
-      selector: (item, i) => item.comune,
-      sortable: true,
-    },
-  ]}
-/>
-```
-
-### MANAGE A MAP
-
-The page **map.mdx** allows the creation and management of a WebGis plan composed of multiple layers, both in RASTER and vector format. In addition to them, the default settings include the application of a zoom in/zoom out tool and a layer display manager. These and other settings are defined in the various javascript files that make up the mymap module.
-Geodata can be retrieved form a Directus database or any other JSON API, a statically hosted geoJSON file or any GeoJSON file publically available on the Web. The component can be customised via the following parameters.
-The map.mdx page contains examples using both leaflet.js web mapping library.
-
-### Geodata sourced from a GeoJSON file hosted in the same server
-
-A map with geodata sourced from a GeoJSON file hosted in the same server: only a (public) local path is needed.
-
-**MapComp properties:**
-
-- height: map's height on the screen
-- path2ogejson: path to source file
-- name: map's name
-- baselayers: base maps already preset in the system
-
-**VectorLayer properties:**
-
-- name: Layer's name
-- path2geojson: path to source file
-- fitToContent: options true or false
-- checked: options true or false
-- popupTemplate: point click popup settings
-- pointToLayer: graphic setting of the point and any filters for values
-
-```javascript
-<MapComp
-  height="400px"
-  path2geojson="../data/toponimi.geojson"
-  name="Siti"
-  baseLayers="OSM, EsriStreets, EsriTopo, GoogleSatellite,GoogleRoadmap,GoogleTerrain,GoogleAlteredRoadmap, GoogleTerrainOnly, GoogleHybrid, CartoDb, StamenTerrain, OSMMapnick, OSMCycle, EsriSatellite"
->
-  <VectorLayer
-    name="Siti"
-    path2geojson="../data/toponimi.geojson"
-    fitToContent={true}
-    checked={true}
-    popupTemplate={attribs => {
-      return `<p><strong>${attribs.nome}</strong> ${attribs.comune}
-        ${
-          attribs.epigrafi.length > 0
-            ? `<br /><strong>${
-                attribs.epigrafi.length
-              } epigrafi</strong><hr />${attribs.epigrafi
-                .map(epi => epi.title)
-                .join(", ")}`
-            : ""
-        }`
-    }}
-    pointToLayer={(f, ll) => {
-      return L.circleMarker(ll, {
-        radius: 4,
-        fillColor: f.properties.epigrafi.length > 0 ? "#FE04FC" : "#ebebeb",
-        color: "#000",
-        weight: 1,
-        opacity: 1,
-        fillOpacity: 0.8,
-      })
-    }}
-  />
-</MapComp>
-```
-
-### Geodata sourced from the default Directus database
+## Pubblicazione sito su GitHub Pages
 
 `Documentation to be completed`
 
-```
+## API
 
-```
+### Premises
+
+#### Access to your data
+
+As previously mentioned, Scms is principally designed for the creation of web pages with dynamic content retrieved by an Ajax call from a local CSV or GeoJSON file stored in your project, or a remote database structured in Directus.
+
+For complete documentation on the API system of Directus, see: https://docs.directus.io/reference/introduction.html
+
+For integration of your data into the project, the following props must be used:
+
+| Field     | Source          | Description                                                          |
+|-----------|-----------------|----------------------------------------------------------------------|
+| path2cvs  | local           | relative or full path to a CSV file to use for the data Table creation |
+| dEndPoint | Directus table  | full path to a Directus endpoint, complete with table name            |
+| dToken    | Directus table  | Directus access token, required if the table is not public. If not provided, the `GATSBY_DIRECTUS_TOKEN` environment variable will be used |
+
+Additionally, it is possible to include an `.env` file in your project to store the default endpoint and token of your Directus database. In this case, you will only need the following prop:
+
+| Field   | Source         | Description                                        |
+|---------|----------------|----------------------------------------------------|
+| DTable  | Directus table | name of the Directus table containing geographical data |
+
+This approach should be preferred for both security (it prevents exposure of your credentials) and practicality. Two Directus databases can be linked at the same time, using both methods.
+
+#### Filtering and join options
+
+Tutti gli URL Directus implementano pienamente l'API Directus via `dQueryString`.
+
+All filtering options are applicable in the backend, following the GraphQL logic implemented by Directus. These can be applied to your full API call (`dEndPoint`/`DTable`) or using the following Scms’ Prop:
+
+| Field         | Source         | Description                                                          |
+|---------------|----------------|----------------------------------------------------------------------|
+| dQueryString  | Directus table | A string containing the filter to apply to your complete API, already inserted as `dEndPoint` or `DTable` |
+
+For an example, see: https://lab-archeologia-digitale.github.io/sCMS/modulo-mappa/
+
+This tool is also necessary for displaying data from different tables linked through relational logic or for implementing a limiter (offset) on large databases to facilitate data flow.
+
+For comprehensive documentation, please refer to the official Directus page on the matter: https://docs.directus.io/reference/introduction.html
+
+### Modules
+
+#### MyMap
+
+Element that imports the components useful for rendering your Maps. These components are:
+
+##### MapComp
+
+The wrapper that contains and manages the graphical display and ordering of the layers. It is built on React components `MapContainer` (https://react-leaflet.js.org/docs/api-map/) and `LayersControl` (https://leafletjs.com/reference.html#control-layers).
+
+It accepts `VectorLayer` and `RasterLayer` as children.
+
+##### MapContainer
+
+It accepts the following props:
+
+| Field           | Type              | Default    | Description                                                                   |
+|-----------------|-------------------|------------|-------------------------------------------------------------------------------|
+| height          | string            | ‘600 px’   | Defines the height of the map, expressed in pixels.                           |
+| scrollWheelZoom | bool              | ‘false’    | If true, enables the user's ability to zoom the map using the scroll wheel    |
+| center          | Coordinates (lng, lat) | ‘0,0’ (undefined) | Defines the starting coordinates of the map. If incorrect, center auto-adjusts to the bounding box of vector layers. |
+| zoom            | int               | ‘2’        | Defines the initial zoom level of the map.                                    |
+
+##### LayersControl
+
+It accepts the following props:
+
+| Field      | Type   | Default  | Description                                                                  |
+|------------|--------|----------|------------------------------------------------------------------------------|
+| position   | string | ‘topright’| Specifies the position of the control panel. For more details, see: Leaflet Control Layers Documentation. |
+| baseLayers | string | ‘OSM’    | Determines the base Raster Layers to use on the map. Separate multiple maps with commas. |
+
+##### Vectorlayer
+
+`VectorLayer` is the component that allows you to import, display, and customize your geographical data. It defines the following props:
+
+| Field         | Type                | Default       | Description                                                                  |
+|---------------|---------------------|---------------|------------------------------------------------------------------------------|
+| name          | string              |               | Specifies the name of the layer as it appears in the LayersControl tool.      |
+| popupTemplate | Accepts other props |               | A custom popup template for viewing geographical objects' attributes. Can include fields from your project. |
+| Filter        |                     | ‘True’        | A comment that indicates a filter or setting                                 |
+| pointToLayer  | bool                | CircleMarker  | Function defining how to display point features. See: https://leafletjs.com/reference.html#circlemarker |
+| checked       | bool                | ‘True’        | If true, the layer is displayed by default on the map.                       |
+| fitToContent  | bool                | ‘True’        | If true, adjusts the map's view to fit the bounds of the current layer.      |
+| geoField      | LatLng              | ‘coordinates’ | Specifies the geographical field of your data in LatLng format.              |
+
+(see here: [Access to your data](#access-to-your-data)) to know how correctly setting the path to your data.
+
+##### Rasterlayer and DefaultBaseLayers
+
+These two components manage the raster base of your map. In `DefaultBaseLayers`, each possible source is defined as a prop, which can be added to your `MapComp` Wrapper.
+
+Each declared object has the following attributes:
+
+| Field        | Type   | Required | Description                                          |
+|--------------|--------|----------|------------------------------------------------------|
+| checked      | string | y        | The name to be displayed on your website.            |
+| fitToContent | string | y        | The URL of the tiled map you want to use.            |
+| geoField     | string | n        | A string to credit the original creators of the tiled map (necessary for licensed material). |
+
+In the `MapComp` Wrapper, the attributes of each item are used in the `RasterLayer` structure, which also allows you to add the following prop to your layer:
+
+| Field     | Type  | Default | Description                                           |
+|-----------|-------|---------|-------------------------------------------------------|
+| AsOverlay | bool  | N       | If true, displays the raster layer as an overlay. If false, the layer is treated as a base layer, mutually excluding other base layers. |
+
+#### Dtable
+
+A component to display data in a tabular fashion that accepts as arguments data from your database(s) (see how to link your data to your table here: [Access to your data](#access-to-your-data)). The data can also be filtered. It is built on the React Datatable component, supporting all its graphical configurations (https://primereact.org/datatable). An example of these settings is provided below:
+
+| Field    | Type | Default  | Description                                                              |
+|----------|------|----------|--------------------------------------------------------------------------|
+| striped  | bool | ‘true’   | If true, visualize alternative rows as striped. See: https://primereact.org/datatable/#striped |
+
+##### Columns
+
+Property of `Dtable` that allows customization of data display within the module. It accepts the following arguments:
+
+| Field    | Type              | Default           | Description                                                                                                    |
+|----------|-------------------|-------------------|----------------------------------------------------------------------------------------------------------------|
+| name     | string            | ‘Site_name’       | Define the heading name of your column                                                                         |
+| Selector | row               | Accept a function | ‘row["Site_Name"]’ - This property allows access to values associated with a specific key. You can modify and/or concatenate multiple arguments using expressions and variables. IMPORTANT: All data will be automatically rendered as a string. This can be modified via a custom function. See field ‘Date’ in: https://lab-archeologia-digitale.github.io/sCMS/modulo-datatable/ |
+| cell     | Accept a function | ‘image, external link’ | Retrieve data from columns with additional customization options for presentation using HTML/React and the ability to implement external links. See fields ‘item_label’ and ‘thumbnail’ in: https://lab-archeologia-digitale.github.io/sCMS/modulo-datatable/ |
+| sortable | bool              | ‘true’            | If true, allows the user to sort data by field’s value initials. See: https://primereact.org/datatable/#sort    |
+
+##### Query Tool
+
+Finally, `Datatb` also includes a custom search tool added to your front end to dynamically modify the displayed data. For backend data filtering see here: [Filtering and join options](#filtering-and-join-options). The attributes of the query tool are:
+
+| Field       | Type         | Default             | Description                                                                 |
+|-------------|--------------|---------------------|-----------------------------------------------------------------------------|
+| name        | datatype     | ‘Text’              | Define the type of data for user’s search.                                  |
+| className   | CSS styler   | ‘form-control mb-5’ | For graphic customization of the query tool. Accepts existing and/or custom CSS classes. |
+| placeholder | Text         | ‘search…’           | Default value shown in the query tool placeholder.                          |
+
+NB: All data will be automatically rendered as text upon activation of the query.
+
+It is important to note that the tool does not perform case-sensitive searches and scans through all visible fields in the table module. For constructing specific search fields, see [Search](#search).
+
+### Search
+
+A `Search` component connects to your data, allowing customization of the query logic and the display of results. It consists of a query field for entering text, a button to handle the query, and a template that individually shows each object that satisfies the query.
+
+The query can be directed to selected fields using the following prop:
+
+| Field       | Type   | Default                                  | Description                                                      |
+|-------------|--------|------------------------------------------|------------------------------------------------------------------|
+| searchFields | string | ‘Item_Label,Site_Name,Site_Description’ | Names of fields to be queried. In the case of a multiple-field query, separate the names with commas. |
+
+For more advanced query logic, see here: [Filtering and join options](#filtering-and-join-options).
+
+For the resulting template, the following arguments are given:
+
+| Field | Type | Default                            | Description                                                   |
+|-------|------|------------------------------------|---------------------------------------------------------------|
+| key   | id   | {item.id}                          | Necessary element for indexing results. Do not modify.        |
+| Item  |      | ‘item.Item_Label ; item.Site_Name’ | Selected fields shown for each element’s template.            |
+| <a href=> | URL  | ‘(`https://inrome.sns.it/db/items/cms_articles`)}&tb=cms_articles&token=I0pT7ozY0KuK8i-vtwLQGek36s0IhQ5e&id=${item.id}`}’ | A reference linking the ‘view’ button to the item’s record page. Complete endpoint and token must be provided. |
+
+As shown in the [example’s page](https://lab-archeologia-digitale.github.io/sCMS/simple-search/), HTML/CSS syntax can be used for further personalization and organization of the results.
+
+### View Record
+
+A detailed item page that can be linked to your main pages. In its default view, it shows every key-value pair associated with the element in a simple list. It can be personalized via JSX syntax ([JSX Documentation](https://legacy.reactjs.org/docs/introducing-jsx.html)), keeping in mind that:
+- `itemEl[0]` represents the key (field’s name);
+- `itemEl[1]` represents the associated value for that item.
