@@ -48,11 +48,11 @@ Then, open the directory of the project using your terminal (cd my-new-site) to 
 
 ## What can I do with SCMS?
 
-	1. **Personalized graphics**(#personalize-sites-layout-and-graphic)
-	2. **Create Static pages**(#static-pages)
-	3. **Create Static pages with dynamic data**(#pages-with-dynamic-content)
-	4. **Create a Web-gis**(#Maps)
-	5. **Create full detail pages to fully explore the dataset**(#Record-page)
+	1. **Personalized graphics**(#personalize-site's-layout-and-graphic)
+	2. **Create Static pages**(#static-page)
+	3. **Create Static pages with dynamic data**(#3-pages-with-dynamic-content)
+	4. **Create a Web-gis**(#3.1-Maps)
+	5. **Create full detail pages to fully explore the dataset**(#3.4-Record-page)
 
 ## PERSONALIZE SITE'S LAYOUT AND GRAPHIC
 
