@@ -2,6 +2,14 @@
 
 s:CMS is an easy, open source and ready-to-use content management system useful for generating sites based on Gatsby.js. It also implements data-oriented components for easily connect, display and search your data in maps (WebGis) and/or tables. 
 
+## What can i do wit S:CMS?
+
+1. **Personalized graphics**(#personalize-site's-layout-and-graphic)
+2. **Create Static pages**(#static-page)
+3. **Create Static pages with dynamic data**(#3-pages-with-dynamic-content)
+4. **Create a Web-gis**(#3.1-Maps)
+5. **Create full detail pages to fully explore the dataset**(#3.4-Record-page)
+
 ## Preliminary operations
 
 The following preliminary operations are meant to help to be productive from scratch. Feel free to skip, if you have already a delevoping-orineted environment based on node.js, and Gatsby.js on your computer.
@@ -46,14 +54,6 @@ Just open the terminal or command prompt and type ‘npx gatsby new my-new-site 
 
 Then, open the directory of the project using your terminal (cd my-new-site) to access the directory of your new project and the command npm i to install all the dependencies listed in the package.json file of your project and then run the command npm start to start the development server. The site will be opened in a local version, setting by default at the URL http://localhost:8000 (more projects can be simultaneously opened at the same time with different URLs)
 
-## What can I do with SCMS?
-
-	1. **Personalized graphics**(#personalize-site's-layout-and-graphic)
-	2. **Create Static pages**(#static-page)
-	3. **Create Static pages with dynamic data**(#3-pages-with-dynamic-content)
-	4. **Create a Web-gis**(#3.1-Maps)
-	5. **Create full detail pages to fully explore the dataset**(#3.4-Record-page)
- 
 ## PERSONALIZE SITE'S LAYOUT AND GRAPHIC
 
 In the components folder there are the files **to be able to change the site from a graphic point of view**, in particular it is possible to change the header, the footer and add a slide.
