@@ -53,7 +53,7 @@ Then, open the directory of the project using your terminal (cd my-new-site) to 
 	3. **Create Static pages with dynamic data**(#3-pages-with-dynamic-content)
 	4. **Create a Web-gis**(#3.1-Maps)
 	5. **Create full detail pages to fully explore the dataset**(#3.4-Record-page)
-
+ 
 ## PERSONALIZE SITE'S LAYOUT AND GRAPHIC
 
 In the components folder there are the files **to be able to change the site from a graphic point of view**, in particular it is possible to change the header, the footer and add a slide.
@@ -66,7 +66,6 @@ In the components folder there are the files **to be able to change the site fro
 - layout.js (MAIN AGE)
 - layout.scss
 - slide.js
-- viewRecord.js
 
 ### **layout.js**
    The main structure of the site consists of the layout.js page. On this page, the header and footer of the site are declared and there is the possibility of activating the slide by changing the tag from `{/_ <Slide /> _/}` in `<Slide />`
