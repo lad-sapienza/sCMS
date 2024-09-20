@@ -1,44 +1,54 @@
 # s:CMS
 
-s:CMS is an easy, open source and ready-to-use content management system useful for generating sites based on Gatsby.js. It also implements data-oriented components for easily connect, display and search your data in maps (WebGis) and/or tables. 
+s:CMS is an easy, open source and ready-to-use content management system for [generating static sites](https://www.cloudflare.com/en-gb/learning/performance/static-site-generator/) based on [Gatsby.js](https://www.gatsbyjs.com/). It also implements data-oriented components for easily **connecting**, **displaying** and **analysing** your data in maps and/or tables. 
 
-## What can I do with S:CMS?
+## Table of contents
 
-1. [**Personalized graphics** ](#personalize-sites-layout-and-graphic)
-2. [**Create Static pages**](#2-static-page)
-3. [**Create Static pages with dynamic data**](#3-pages-with-dynamic-content)
-4. [**Create a Web-gis**](#3.1.-Maps)
-5. [**Create full detail pages to fully explore the dataset**](#3.4.-record-page)
+1. [What can I do with s:CMS?](#what-can-i-do-with-sCMS?)
+1. [Preliminary operations](#preliminary-operations)
+   1. [Installing Visual Studio Code](#installing-visual-studio-code)
+   1. [Installing Node.js](#installing-node-js)
+1. [Installing sCMS](#installing-scms)
+1. [Customise graphics ](#customise-sites-layout-and-graphic)
+1. [Create Static pages](#2-static-page)
+1. [Create Static pages with dynamic data](#3-pages-with-dynamic-content)
+1. [Create a Web-gis](#3.1.-Maps)
+1. [Create full detail pages to fully explore the dataset](#3.4.-record-page)
+
+## What can I do with s:CMS?
+You can setup in few minutes a fully working and secure website containing static pages, with text and images describing your project and also rich data pulled in real time from remote databases and or self-hosted as static files, with which you can build maps, and fully searcheable tables. You are fully enabled to customise the layout and look&feel of your site to perfectly fit your needs.
+
+Think of s:CMS as the *public, fully-customiseable front-end of your research database*
 
 ## Preliminary operations
+The following preliminary operations are meant to help to be productive *from scratch*. Feel free to skip, if you already have a delevoping-oriented environment based on
+- [Node.js](https://nodejs.org/), 
+- [Gatsby.js](https://www.gatsbyjs.com/), 
+- [Visual Studio Code](https://code.visualstudio.com/) or similar code editors, and
+- [Git](https://git-scm.com/) on your computer.
 
-The following preliminary operations are meant to help to be productive from scratch. Feel free to skip, if you have already a delevoping-orineted environment based on node.js, and Gatsby.js on your computer.
+### Installing Visual Studio Code
 
-### 1. Installing Visual Studio Code (VS Code)
+To download Visual Studio Code, visit the official [web site](https://code.visualstudio.com/) and down the appropriate version for your operating system. VS Code is available for Windows, MacOS, and Linux.
 
-1. **Download Visual Studio Code**:
-   - Go to the official Visual Studio Code website: [https://code.visualstudio.com/](https://code.visualstudio.com/)
-   - Download the appropriate version for your operating system (Windows, mMcOS, Linux).
-2. **Install Visual Studio Code**:
-   - Run the downloaded file and follow the instructions to complete the installation.
-3. **Configure Visual Studio Code**:
-   - Open VS Code.
-   - Install few useful extensions like `Prettier - Code formatter`, `ESLint`, `MDX` and `Gatsby Snippets` via the extensions marketplace.
+Run the downloaded file and follow the instructions to complete the installation.
 
-### 2. Installing Node.js
+### Installing Node.js
 
+There are diffetent ways to install Node.js, depending on your operating system and on your preferences.
+An official tutorial is available at [https://nodejs.org/en/learn/getting-started/how-to-install-nodejs](https://nodejs.org/en/learn/getting-started/how-to-install-nodejs)
 1. **Download Node.js**:
-   - Go to the official Node.js website: [https://nodejs.org/](https://nodejs.org/)
+   - Go to the official Node.js website: [https://nodejs.org/en/download/prebuilt-installer](https://nodejs.org/en/download/prebuilt-installer)
    - Download the latest stable version (LTS) for your operating system.
 2. **Install Node.js**:
    - Run the downloaded file and follow the instructions to complete the installation.
    - During the installation, ensure the option to add Node.js to the PATH environment variable is selected.
 3. **Verify the installation**:
-   - Open a terminal or command prompt.
+   - Open a terminal window or command prompt.
    - Run the command `node -v` to check the installed version of Node.js.
    - Run the command `npm -v` to check the installed version of npm (Node Package Manager).
 
-### 3. Installing Gatsby CLI
+### Installing Gatsby CLI
 
 - Open a terminal or command prompt.
 - Run the command `npm install -g gatsby-cli` to install Gatsby CLI **globally**.
@@ -46,15 +56,31 @@ The following preliminary operations are meant to help to be productive from scr
 
 By following these preliminary steps, you'll be ready to start developing with Gatsby JS on your computer.
 
-### 4. **Is really that simple?**:
+### Installing sCMS
 
-Now you can create your own sCMS project!
+Now you can create your own s:CMS project!
 
-Just open the terminal or command prompt and type ‘npx gatsby new my-new-site https://github.com/lab-archeologia-digitale/sCMS’ (replace my-new-site with your project name). 
+Just open the terminal or command prompt and type
+```bash
+npx gatsby new my-new-site https://github.com/lab-archeologia-digitale/sCMS
+```
+(Make sure to replace `my-new-site` with the name of your own project). 
 
-Then, open the directory of the project using your terminal (cd my-new-site) to access the directory of your new project and the command npm i to install all the dependencies listed in the package.json file of your project and then run the command npm start to start the development server. The site will be opened in a local version, setting by default at the URL http://localhost:8000 (more projects can be simultaneously opened at the same time with different URLs)
+In the terminal, change the working directory to geet inside your project:
+```bash
+cd my-new-site
+```
+and then install all the dependencies of sCMS by running:
+```bash
+npm i
+```
+Finally type:
+```bash
+npm start
+```
+to start the development server. The site will be served at the URL [http://localhost:8000](http://localhost:8000).
 
-## PERSONALIZE SITE'S LAYOUT AND GRAPHIC
+## Customise site's layout and graphics
 
 In the components folder there are the files **to be able to change the site from a graphic point of view**, in particular it is possible to change the header, the footer and add a slide.
 
@@ -161,9 +187,9 @@ To enhance site navigation, a horizontal Navbar has been implemented. On mobile 
 
 ## Pages
 
-Scms also provide tools for easily build and personalize the pages of your website. Being based on Gatsby, every such page works with the .mdx Markdown extension [MDX documentation](https://www.gatsbyjs.com/docs/glossary/mdx/#:~:text=MDX%20is%20an%20extension%20to,but%20still%20supports%20inline%20HTML). 
+s:CMS also provide tools for easily build and personalize the pages of your website. Being based on Gatsby, every such page works with the .mdx Markdown extension [MDX documentation](https://www.gatsbyjs.com/docs/glossary/mdx/#:~:text=MDX%20is%20an%20extension%20to,but%20still%20supports%20inline%20HTML). 
 
-Five example pages are provided in the contents section of the default project that fully explore the potentiality of Scms.
+Five example pages are provided in the contents section of the default project that fully explore the potentiality of s:CMS.
 
 ### 1. Front Matter
 
@@ -171,10 +197,10 @@ Firstly, it is important that you can configure every page’s visualization usi
 
 | Field           | Required | Example     | Description                                                                 |
 |-----------------|----------|-------------|-----------------------------------------------------------------------------|
-| title           | Y        | ‘homepage’  | Define the name shown for the page and on the navbar                        |
-| date            | N        | ‘2024-04-10’| Define the date of creation/last update of the page                         |
-| slug            | Y        | ‘home’      | Define the personalized ending of the URL address specific to the page.     |
-| menu_position   | Y        | ‘0’         | Define the internal indexing of the page used for the correct ordering in the navbar. |
+| title           | Y        | `homepage`  | Define the name shown for the page and on the navbar                        |
+| date            | N        | `2024-04-10`| Define the date of creation/last update of the page                         |
+| slug            | Y        | `home`      | Define the personalized ending of the URL address specific to the page.     |
+| menu_position   | Y        | `0`         | Define the internal indexing of the page used for the correct ordering in the navbar. |
 
 ### 2. Static page
 
@@ -182,11 +208,11 @@ As the most basic unit of your website, you can add one or more static pages int
 
 ### 3. Pages with dynamic content:
 
-Scms provides you a full arrangement of features for building pages integrating static content (text, images, links) with dynamic data (accessed by an Ajax call) taken from a relational database. The system is optimized for online databases managed by Directus, but local access can also be used.
+s:CMS provides you a full arrangement of features for building pages integrating static content (text, images, links) with dynamic data (accessed by an Ajax call) taken from a relational database. The system is optimized for online databases managed by Directus, but local access can also be used.
 
 #### 3.1. Maps
 
-Scms gives you the chance to build a web-GIS map composed by the juxtaposition of Raster and Vector layers. Various tools are provided for helping customize both the graphical rendering of the wrapper and the visualization of the content.
+s:CMS gives you the chance to build a web-GIS map composed by the juxtaposition of Raster and Vector layers. Various tools are provided for helping customize both the graphical rendering of the wrapper and the visualization of the content.
 
 For the RASTER bases, a simplified access to the most common providers of satellite imagery and digital maps is provided by default, with the possibility to extend the selection to custom maps. Tools are also provided for full customization of vector layers, from data filtering to icon customization. For more complex projects, a layer selector is provided to allow users a cleaner data visualization.
 
@@ -220,7 +246,7 @@ A page that displays an item's details in a simple list format and can be custom
 
 #### Access to your data
 
-As previously mentioned, Scms is principally designed for the creation of web pages with dynamic content retrieved by an Ajax call from a local CSV or GeoJSON file stored in your project, or a remote database structured in Directus.
+As previously mentioned, s:CMS is principally designed for the creation of web pages with dynamic content retrieved by an Ajax call from a local CSV or GeoJSON file stored in your project, or a remote database structured in Directus.
 
 For complete documentation on the API system of Directus, see: https://docs.directus.io/reference/introduction.html
 
@@ -244,7 +270,7 @@ This approach should be preferred for both security (it prevents exposure of you
 
 Tutti gli URL Directus implementano pienamente l'API Directus via `dQueryString`.
 
-All filtering options are applicable in the backend, following the GraphQL logic implemented by Directus. These can be applied to your full API call (`dEndPoint`/`DTable`) or using the following Scms’ Prop:
+All filtering options are applicable in the backend, following the GraphQL logic implemented by Directus. These can be applied to your full API call (`dEndPoint`/`DTable`) or using the following s:CMS’ Prop:
 
 | Field         | Source         | Description                                                          |
 |---------------|----------------|----------------------------------------------------------------------|
