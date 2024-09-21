@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
-import Layout from "../components/layout"
-import Record from "../components/viewRecord"
+import Layout from "../layout/layout"
+import Record from "../layout/viewRecord"
 import getData from "../services/getData"
 
 const RecordPage = ({ location }) => {
