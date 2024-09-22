@@ -1,6 +1,15 @@
 # s:CMS
 
-s:CMS is an easy, open source and ready-to-use content management system for [generating static sites](https://www.cloudflare.com/en-gb/learning/performance/static-site-generator/) based on [Gatsby.js](https://www.gatsbyjs.com/). It also implements data-oriented components for easily **connecting**, **displaying** and **analysing** your data in maps and/or tables. 
+s:CMS is an easy, open source and ready-to-use content management system for [generating static sites](https://www.cloudflare.com/en-gb/learning/performance/static-site-generator/) based on [Gatsby.js](https://www.gatsbyjs.com/). It also implements data-oriented components for easily **connecting**, **displaying** and **analysing** research data stored in databases, in flat files or remotely, in an easy, informative and efficient way: maps, searchable tables, and soon to come charts. 
+
+Our aim is to enable researchers to publish online rich data portals, by pulling the information from a wide range of sources, be them flat static files, remotely accessible services, or online databases. We try to build components — resuing as much as possible well known open source projects — to make the integration seemless and to offer a simplified workflow to securely publish contents.
+
+### What is Gatsby.js
+> Gatsby is a React-based open source framework for creating websites. Whether your site has 100 pages or 100,000 pages — if you care deeply about performance, scalability, and built-in security — you'll love building with us. Start pulling data from your favorite headless CMS easily!  
+— [https://www.gatsbyjs.com/docs](https://www.gatsbyjs.com/docs)
+
+### Why static sites
+Static sites are fast, secure, durable: no databases to manage, no code that gets outdated, no performace issues. Once you have build and deployed your site, you are sure it will never stop working.
 
 ## Table of contents
 
@@ -9,6 +18,7 @@ s:CMS is an easy, open source and ready-to-use content management system for [ge
    1. [Installing Visual Studio Code](#installing-visual-studio-code)
    1. [Installing Node.js](#installing-node-js)
 1. [Installing sCMS](#installing-scms)
+1. [General concepts](#general-concepts)
 1. [Customise graphics ](#customise-sites-layout-and-graphic)
 1. [Create Static pages](#2-static-page)
 1. [Create Static pages with dynamic data](#3-pages-with-dynamic-content)
@@ -56,7 +66,7 @@ An official tutorial is available at [https://nodejs.org/en/learn/getting-starte
 
 By following these preliminary steps, you'll be ready to start developing with Gatsby JS on your computer.
 
-### Installing sCMS
+## Installing sCMS
 
 Now you can create your own s:CMS project!
 
@@ -80,18 +90,31 @@ npm start
 ```
 to start the development server. The site will be served at the URL [http://localhost:8000](http://localhost:8000).
 
-## Customise site's layout and graphics
+## Edit site's metadata
+The main metadata of the site can be changed by editing `gatsby-config.js`. Edit lines 16-19 and add custom values to:
+- `siteMetadata.title`: the default title attribute of the site
+- `siteMetadata.description`: the default descriprion attribute of the site
+- `siteMetadata.author`: the default author attribute of the site
+- `siteMetadata.siteUrl`: The URL where the site is available
 
-In the components folder there are the files **to be able to change the site from a graphic point of view**, in particular it is possible to change the header, the footer and add a slide.
+If is also important to change at line 15: `pathPrefix` to match the relative URL where the site will be published.
 
-- footer.js
-- header.js
-- index.modules.css
-- layout.css
-- layout.css.map
-- layout.js (MAIN AGE)
-- layout.scss
-- slide.js
+This is a very impornt passage, since its misconfiguration might determine wrong paths for internal links.
+
+## Customise site's layout and look & feel
+
+sCMS comes with a default template and a minimum set of example pages. By design, we are not aiming at developing templates: layout and graphics are entirely on your own. Nevertheless sCMS is delivered with a set of tools — such as [React Bootstrap](https://react-bootstrap.github.io/) — that make it easy to write your own templates or customise the default one.
+
+The files responsible for layouting are collected in the `src/layout/` directory.
+You can customise the header, the footer, the general layout and stying by editing:
+- `header.js`
+- `footer.js`
+- `layout.js`
+- `layout.scss`
+- `slide.js`
+
+> **Please note** that you should not edit `layout.css`, `layout.css.map` since this files are being created and updated from the system each time that layout.scss is being updated.
+
 
 ### **layout.js**
    The main structure of the site consists of the layout.js page. On this page, the header and footer of the site are declared and there is the possibility of activating the slide by changing the tag from `{/_ <Slide /> _/}` in `<Slide />`
@@ -113,10 +136,10 @@ In the components folder there are the files **to be able to change the site fro
 />
 ```
 
-- link: here is an example of the <Link> tag for the interal page and <a></a> to external links
+- link: here is an example of the <Link> tag for the internal page and <a></a> to external links
 
 ```javascript
-<Link to={withPrefix("/")}> Somethings </Link>
+<Link to={"/"}> Somethings </Link>
 ```
 
 `<a href="https://github.com/lab-archeologia-digitale/gatsby-directus-ui/issues" target="_blank" rel="noreferrer">Issues</a>`
@@ -159,7 +182,7 @@ const Header = styled.header`
 - link: here is an example of the <Link> tag for the interal page and <a></a> to external links
 
 ```javascript
-<Link to={withPrefix("/")}> Somethings </Link>
+<Link to={"/"}> Somethings </Link>
 ```
 
 `<a href="https://github.com/lab-archeologia-digitale/gatsby-directus-ui/issues" target="_blank" rel="noreferrer">Issues</a>`
