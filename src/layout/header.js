@@ -8,7 +8,7 @@ const HeaderSection = ({ siteTitle }) => (
   <Header>
     <Container>
       <div className="d-sm-flex align-items-center text-center">
-        <Link to={withPrefix("/")}>
+        <Link to={"/"}>
           <StaticImage
             src="../images/scms-lad.png"
             width={150}

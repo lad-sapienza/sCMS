@@ -19,11 +19,24 @@ Static sites are fast, secure, durable: no databases to manage, no code that get
    1. [Installing Node.js](#installing-node-js)
 1. [Installing sCMS](#installing-scms)
 1. [General concepts](#general-concepts)
-1. [Customise graphics ](#customise-sites-layout-and-graphic)
-1. [Create Static pages](#2-static-page)
-1. [Create Static pages with dynamic data](#3-pages-with-dynamic-content)
-1. [Create a Web-gis](#3.1.-Maps)
-1. [Create full detail pages to fully explore the dataset](#3.4.-record-page)
+1. [Customise site's layout and look & feel](#customise-sites-layout-and-look--feel)
+1. [Adding content](#adding-content)
+1. [Deploy your site for free on Github Pages]()
+1. [API](#api)
+   1. [Premises](#premises)
+   1. [Access your data](#access-your-data)
+   1. [Filtering and join options](#filtering-and-join-options)
+   1. [MyMap](#mymap)
+   1. [MapComp](#mapcomp)
+   1. [MapContainer](#mapcontainer)
+   1. [LayersControl](#layerscontrol)
+   1. [Vectorlayer](#vectorlayer)
+   1. [Rasterlayer and DefaultBaseLayers](#rasterlayer-and-defaultbaselayers)
+   1. [Dtable](#dtable)
+   1. [Columns](#columns)
+   1. [Query Tool](#query-tool)
+   1. [Search](#search)
+   1. [View Record](#view-record)
 
 ## What can I do with s:CMS?
 You can setup in few minutes a fully working and secure website containing static pages, with text and images describing your project and also rich data pulled in real time from remote databases and or self-hosted as static files, with which you can build maps, and fully searcheable tables. You are fully enabled to customise the layout and look&feel of your site to perfectly fit your needs.
@@ -139,7 +152,7 @@ You can customise the header, the footer, the general layout and stying by editi
 - link: here is an example of the <Link> tag for the internal page and <a></a> to external links
 
 ```javascript
-<Link to={"/"}> Somethings </Link>
+<Link to={"/"}> Something</Link>
 ```
 
 `<a href="https://github.com/lab-archeologia-digitale/gatsby-directus-ui/issues" target="_blank" rel="noreferrer">Issues</a>`
@@ -182,7 +195,7 @@ const Header = styled.header`
 - link: here is an example of the <Link> tag for the interal page and <a></a> to external links
 
 ```javascript
-<Link to={"/"}> Somethings </Link>
+<Link to={"/"}> Something</Link>
 ```
 
 `<a href="https://github.com/lab-archeologia-digitale/gatsby-directus-ui/issues" target="_blank" rel="noreferrer">Issues</a>`
@@ -208,9 +221,9 @@ On the slide page you can edit the StaticImage inside CarouselItems or add a new
 
 To enhance site navigation, a horizontal Navbar has been implemented. On mobile devices, the Navbar becomes vertical and collapsible. This feature automatically collects information on titles and internal positioning from the Front Matter of various pages  (Learn how: [Front Matter](#1-front-matter) ). As the Navbar is built using a React-Bootstrap component, please refer to the official documentation for styling modifications or further implementations: https://react-bootstrap.netlify.app/docs/components/navbar/ 
 
-## Pages
+## Adding content
 
-s:CMS also provide tools for easily build and personalize the pages of your website. Being based on Gatsby, every such page works with the .mdx Markdown extension [MDX documentation](https://www.gatsbyjs.com/docs/glossary/mdx/#:~:text=MDX%20is%20an%20extension%20to,but%20still%20supports%20inline%20HTML). 
+s:CMS also provide tools for easily build and personalize the pages of your website. Being based on Gatsby, every such page works with the [*.mdx Markdown extension](https://www.gatsbyjs.com/docs/glossary/mdx/#:~:text=MDX%20is%20an%20extension%20to,but%20still%20supports%20inline%20HTML). 
 
 Five example pages are provided in the contents section of the default project that fully explore the potentiality of s:CMS.
 
@@ -259,15 +272,17 @@ A page that displays an item's details in a simple list format and can be custom
 
 (Learn how: [View Record](#view-record))
 
-## Pubblicazione sito su GitHub Pages
+## Deploy your site for free on Github Pages
 
 `Documentation to be completed`
+
+---
 
 ## API
 
 ### Premises
 
-#### Access to your data
+#### Access your data
 
 As previously mentioned, s:CMS is principally designed for the creation of web pages with dynamic content retrieved by an Ajax call from a local CSV or GeoJSON file stored in your project, or a remote database structured in Directus.
 
