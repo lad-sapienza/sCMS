@@ -365,7 +365,7 @@ It accepts the following props:
 | fitToContent  | bool                | ‘True’        | If true, adjusts the map's view to fit the bounds of the current layer.      |
 | geoField      | LatLng              | ‘coordinates’ | Specifies the geographical field of your data in LatLng format.              |
 
-(see here: [Access to your data](#access-to-your-data)) to know how correctly setting the path to your data.
+(see here: [Access your data](#access-your-data)) to know how correctly setting the path to your data.
 
 ##### Rasterlayer and DefaultBaseLayers
 
@@ -387,7 +387,7 @@ In the `MapComp` Wrapper, the attributes of each item are used in the `RasterLay
 
 #### Dtable
 
-A component to display data in a tabular fashion that accepts as arguments data from your database(s) (see how to link your data to your table here: [Access to your data](#access-to-your-data)). The data can also be filtered. It is built on the React Datatable component, supporting all its graphical configurations (https://primereact.org/datatable). An example of these settings is provided below:
+A component to display data in a tabular fashion that accepts as arguments data from your database(s) (see how to link your data to your table here: [Access your data](#access-your-data)). The data can also be filtered. It is built on the React Datatable component, supporting all its graphical configurations (https://primereact.org/datatable). An example of these settings is provided below:
 
 | Field    | Type | Default  | Description                                                              |
 |----------|------|----------|--------------------------------------------------------------------------|
