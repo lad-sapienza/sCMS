@@ -229,7 +229,7 @@ Five example pages are provided in the contents section of the default project t
 
 ### 1. Front Matter
 
-Firstly, it is important that you can configure every page’s visualization using metadata that are disposed by default:
+Firstly, it is important that you can configure every page's visualization using metadata that are disposed by default:
 
 | Field           | Required | Example     | Description                                                                 |
 |-----------------|----------|-------------|-----------------------------------------------------------------------------|
@@ -308,7 +308,7 @@ This approach should be preferred for both security (it prevents exposure of you
 
 Tutti gli URL Directus implementano pienamente l'API Directus via `dQueryString`.
 
-All filtering options are applicable in the backend, following the GraphQL logic implemented by Directus. These can be applied to your full API call (`dEndPoint`/`DTable`) or using the following s:CMS’ Prop:
+All filtering options are applicable in the backend, following the GraphQL logic implemented by Directus. These can be applied to your full API call (`dEndPoint`/`DTable`) or using the following s:CMS` Prop:
 
 | Field         | Source         | Description                                                          |
 |---------------|----------------|----------------------------------------------------------------------|
@@ -338,10 +338,10 @@ It accepts the following props:
 
 | Field           | Type              | Default    | Description                                                                   |
 |-----------------|-------------------|------------|-------------------------------------------------------------------------------|
-| height          | string            | ‘600 px’   | Defines the height of the map, expressed in pixels.                           |
-| scrollWheelZoom | bool              | ‘false’    | If true, enables the user's ability to zoom the map using the scroll wheel    |
-| center          | Coordinates (lng, lat) | ‘0,0’ (undefined) | Defines the starting coordinates of the map. If incorrect, center auto-adjusts to the bounding box of vector layers. |
-| zoom            | int               | ‘2’        | Defines the initial zoom level of the map.                                    |
+| height          | string            | `600 px`   | Defines the height of the map, expressed in pixels.                           |
+| scrollWheelZoom | bool              | `false`    | If true, enables the user's ability to zoom the map using the scroll wheel    |
+| center          | Coordinates (lng, lat) | `0,0` (undefined) | Defines the starting coordinates of the map. If incorrect, center auto-adjusts to the bounding box of vector layers. |
+| zoom            | int               | `2`        | Defines the initial zoom level of the map.                                    |
 
 ##### LayersControl
 
@@ -349,8 +349,8 @@ It accepts the following props:
 
 | Field      | Type   | Default  | Description                                                                  |
 |------------|--------|----------|------------------------------------------------------------------------------|
-| position   | string | ‘topright’| Specifies the position of the control panel. For more details, see: Leaflet Control Layers Documentation. |
-| baseLayers | string | ‘OSM’    | Determines the base Raster Layers to use on the map. Separate multiple maps with commas. |
+| position   | string | `topright`| Specifies the position of the control panel. For more details, see: Leaflet Control Layers Documentation. |
+| baseLayers | string | `OSM`    | Determines the base Raster Layers to use on the map. Separate multiple maps with commas. |
 
 ##### Vectorlayer
 
@@ -361,9 +361,9 @@ It accepts the following props:
 | name          | string              |               | Specifies the name of the layer as it appears in the LayersControl tool.      |
 | popupTemplate | Accepts other props |               | A custom popup template for viewing geographical objects' attributes. Can include fields from your project. |
 | pointToLayer  | bool                | CircleMarker  | Function defining how to display point features. See: https://leafletjs.com/reference.html#circlemarker |
-| checked       | bool                | ‘True’        | If true, the layer is displayed by default on the map.                       |
-| fitToContent  | bool                | ‘True’        | If true, adjusts the map's view to fit the bounds of the current layer.      |
-| geoField      | LatLng              | ‘coordinates’ | Specifies the geographical field of your data in LatLng format.              |
+| checked       | bool                | `True`        | If true, the layer is displayed by default on the map.                       |
+| fitToContent  | bool                | `True`        | If true, adjusts the map's view to fit the bounds of the current layer.      |
+| geoField      | LatLng              | `coordinates` | Specifies the geographical field of your data in LatLng format.              |
 
 (see here: [Access your data](#access-your-data)) to know how correctly setting the path to your data.
 
@@ -391,7 +391,7 @@ A component to display data in a tabular fashion that accepts as arguments data 
 
 | Field    | Type | Default  | Description                                                              |
 |----------|------|----------|--------------------------------------------------------------------------|
-| striped  | bool | ‘true’   | If true, visualize alternative rows as striped. See: https://primereact.org/datatable/#striped |
+| striped  | bool | `true`   | If true, visualize alternative rows as striped. See: https://primereact.org/datatable/#striped |
 
 ##### Columns
 
@@ -399,10 +399,10 @@ Property of `Dtable` that allows customization of data display within the module
 
 | Field    | Type              | Default           | Description                                                                                                    |
 |----------|-------------------|-------------------|----------------------------------------------------------------------------------------------------------------|
-| name     | string            | ‘Site_name’       | Define the heading name of your column                                                                         |
-| Selector | row               | Accept a function | ‘row["Site_Name"]’ - This property allows access to values associated with a specific key. You can modify and/or concatenate multiple arguments using expressions and variables. IMPORTANT: All data will be automatically rendered as a string. This can be modified via a custom function. See field ‘Date’ in: https://lab-archeologia-digitale.github.io/sCMS/modulo-datatable/ |
-| cell     | Accept a function | ‘image, external link’ | Retrieve data from columns with additional customization options for presentation using HTML/React and the ability to implement external links. See fields ‘item_label’ and ‘thumbnail’ in: https://lab-archeologia-digitale.github.io/sCMS/modulo-datatable/ |
-| sortable | bool              | ‘true’            | If true, allows the user to sort data by field’s value initials. See: https://primereact.org/datatable/#sort    |
+| name     | string            | `Site_name`       | Define the heading name of your column                                                                         |
+| Selector | row               | Accept a function | `row["Site_Name"]` - This property allows access to values associated with a specific key. You can modify and/or concatenate multiple arguments using expressions and variables. IMPORTANT: All data will be automatically rendered as a string. This can be modified via a custom function. See field `Date` in: https://lab-archeologia-digitale.github.io/sCMS/modulo-datatable/ |
+| cell     | Accept a function | `image, external link` | Retrieve data from columns with additional customization options for presentation using HTML/React and the ability to implement external links. See fields `item_label` and `thumbnail` in: https://lab-archeologia-digitale.github.io/sCMS/modulo-datatable/ |
+| sortable | bool              | `true`            | If true, allows the user to sort data by field`s value initials. See: https://primereact.org/datatable/#sort    |
 
 ##### Query Tool
 
@@ -410,9 +410,9 @@ Finally, `Datatb` also includes a custom search tool added to your front end to 
 
 | Field       | Type         | Default             | Description                                                                 |
 |-------------|--------------|---------------------|-----------------------------------------------------------------------------|
-| name        | datatype     | ‘Text’              | Define the type of data for user’s search.                                  |
-| className   | CSS styler   | ‘form-control mb-5’ | For graphic customization of the query tool. Accepts existing and/or custom CSS classes. |
-| placeholder | Text         | ‘search…’           | Default value shown in the query tool placeholder.                          |
+| name        | datatype     | `Text`              | Define the type of data for user`s search.                                  |
+| className   | CSS styler   | `form-control mb-5` | For graphic customization of the query tool. Accepts existing and/or custom CSS classes. |
+| placeholder | Text         | `search…`           | Default value shown in the query tool placeholder.                          |
 
 NB: All data will be automatically rendered as text upon activation of the query.
 
@@ -426,7 +426,7 @@ The query can be directed to selected fields using the following prop:
 
 | Field       | Type   | Default                                  | Description                                                      |
 |-------------|--------|------------------------------------------|------------------------------------------------------------------|
-| searchFields | string | ‘Item_Label,Site_Name,Site_Description’ | Names of fields to be queried. In the case of a multiple-field query, separate the names with commas. |
+| searchFields | string | `Item_Label,Site_Name,Site_Description` | Names of fields to be queried. In the case of a multiple-field query, separate the names with commas. |
 
 For more advanced query logic, see here: [Filtering and join options](#filtering-and-join-options).
 
@@ -435,13 +435,13 @@ For the resulting template, the following arguments are given:
 | Field | Type | Default                            | Description                                                   |
 |-------|------|------------------------------------|---------------------------------------------------------------|
 | key   | id   | {item.id}                          | Necessary element for indexing results. Do not modify.        |
-| Item  |      | ‘item.Item_Label ; item.Site_Name’ | Selected fields shown for each element’s template.            |
-| <a href=> | URL  | ‘(`https://inrome.sns.it/db/items/cms_articles`)}&tb=cms_articles&token=I0pT7ozY0KuK8i-vtwLQGek36s0IhQ5e&id=${item.id}`}’ | A reference linking the ‘view’ button to the item’s record page. Complete endpoint and token must be provided. |
+| Item  |      | `item.Item_Label; item.Site_Name`  | Selected fields shown for each element`s template.            |
+| <a href=> | URL  | `(`https://inrome.sns.it/db/items/cms_articles`)}&tb=cms_articles&token=I0pT7ozY0KuK8i-vtwLQGek36s0IhQ5e&id=${item.id}`}` | A reference linking the `view` button to the item`s record page. Complete endpoint and token must be provided. |
 
-As shown in the [example’s page](https://lab-archeologia-digitale.github.io/sCMS/simple-search/), HTML/CSS syntax can be used for further personalization and organization of the results.
+As shown in the [example`s page](https://lab-archeologia-digitale.github.io/sCMS/simple-search/), HTML/CSS syntax can be used for further customisation and organization of the results.
 
 ### View Record
 
 A detailed item page that can be linked to your main pages. In its default view, it shows every key-value pair associated with the element in a simple list. It can be personalized via JSX syntax ([JSX Documentation](https://legacy.reactjs.org/docs/introducing-jsx.html)), keeping in mind that:
-- `itemEl[0]` represents the key (field’s name);
+- `itemEl[0]` represents the key (field`s name);
 - `itemEl[1]` represents the associated value for that item.
