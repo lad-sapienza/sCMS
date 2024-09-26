@@ -16,6 +16,8 @@ Geodata can be retrieved form a Directus database or any other JSON API, a stati
 
 import {
   MapComp,
+  MapCompLibre,
+  SourceLayer,
   RasterLayer,
   VectorLayer
 } from "../modules/myMap/myMap.js"
@@ -292,7 +294,7 @@ Data from [Kahramanmaraş Survey](https://opencontext.org/projects/ca4f4719-f2a5
 
 <div className="row">
   <div className="col-sm-4">
-    GeoJson file loaded from extenral source
+    GeoJSON file loaded from external source
     ```
     <MapComp
       height="400px"
@@ -332,5 +334,157 @@ Data from [Kahramanmaraş Survey](https://opencontext.org/projects/ca4f4719-f2a5
   Data from [https://geojson.xyz/](https://geojson.xyz/), layer: `populated places simple`.
 
   ---
+  </div>
+</div>
+
+<div className="row">
+  <div className="col-sm-4">
+    Local GeoJSON file lxoaded in MapLibre.
+  
+    A map with geodata sourced from a GeoJSON file hosted in the same server: only a (public) local path is needed:
+
+```
+ <MapCompLibre 
+        center="37.49528553873456,36.909771208445264,8"
+        interactiveLayerIds ={["ksaSites"]}>
+      <SourceLayer
+        id="1"
+        type="geojson"
+        path2geojson="../data/ksa.geojson"
+        layerstyle={{
+          id: "ksaSites",
+          type: "circle",
+          paint: {
+            "circle-radius": 10,
+            "circle-color": "#007cbf",
+          },
+        }}
+      />
+    </MapCompLibre>
+```
+  </div>
+  <div className="col-sm-8">
+    <MapCompLibre 
+        center="37.49528553873456,36.909771208445264,8"
+        interactiveLayerIds ={["ksaSites"]}>
+      <SourceLayer
+        id="1"
+        type="geojson"
+        path2geojson="../data/ksa.geojson"
+        layerstyle={{
+          id: "ksaSites",
+          type: "circle",
+          paint: {
+            "circle-radius": 10,
+            "circle-color": "#007cbf",
+          },
+        }}
+      />
+    </MapCompLibre>
+  </div>
+</div>
+
+---
+
+<div className="row">
+  <div className="col-sm-4">
+    
+    A map sourced from the default Directus database with endpoint/dtoken/dQueryString, rendered with MapLibre:
+
+```
+  <MapCompLibre 
+      center="37.49528553873456,36.909771208445264,8"
+      interactiveLayerIds={["ksa-directus"]}>
+    <SourceLayer
+      id="2"
+      type="geojson"
+      dEndPoint="https://db.lad-sapienza.it/curry/items/scms_ksa"
+      dFilter="filter[Iron_Age][_eq]=true"
+      geoField="geometry"
+      fitToContent={true}
+      layerstyle={{
+        id: "ksa-directus",
+        type: "circle",
+        paint: {
+          "circle-radius": 10,
+          "circle-color": "red",
+        },
+      }}
+    />
+  </MapCompLibre>
+```
+</div>
+  <div className="col-sm-8"><br/>
+    
+    <MapCompLibre 
+        center="37.49528553873456,36.909771208445264,8"
+        interactiveLayerIds={["ksa-directus"]}>
+      <SourceLayer
+        id="2"
+        type="geojson"
+        dEndPoint="https://db.lad-sapienza.it/curry/items/scms_ksa"
+        dFilter="filter[Iron_Age][_eq]=true"
+        geoField="geometry"
+        layerstyle={{
+          id: "ksa-directus",
+          type: "circle",
+          paint: {
+            "circle-radius": 10,
+            "circle-color": "red",
+          },
+        }}
+      />
+    </MapCompLibre>
+  </div>
+</div>
+
+---
+
+
+<div className="row">
+  <div className="col-sm-4">
+
+  MapLibre rendering a JSON style static file.
+
+```
+  <MapCompLibre 
+      center="37.49528553873456,36.909771208445264,8"
+      interactiveLayerIds={["ksa"]}
+      styleJson="../data/ksa.json"
+      layerId ="ksa"
+      filterConditions={[
+        "Chalcolithic",
+        "Early Bronze",
+        "Early_Bronze_Middle_Bronze",
+        "Middle_Bronze",
+        "Late_Bronze",
+        "Iron_Age",
+        "Hellenistic_Roman",
+        "Medieval",
+        "Item_Label"
+      ]}
+    />
+```
+    </div>
+    
+    <div className="col-sm-8">
+      <MapCompLibre
+        center="37.49528553873456,36.909771208445264,8"
+        interactiveLayerIds={["ksa"]}
+        styleJson="../data/ksa.json"
+        layerId ="ksa"
+        filterConditions={[
+          "Chalcolithic",
+          "Early Bronze",
+          "Early_Bronze_Middle_Bronze",
+          "Middle_Bronze",
+          "Late_Bronze",
+          "Iron_Age",
+          "Hellenistic_Roman",
+          "Medieval",
+          "Item_Label"
+        ]}
+      />
+
   </div>
 </div>

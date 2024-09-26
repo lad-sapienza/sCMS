@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Link, withPrefix } from "gatsby"
+import { Link } from "gatsby"
 import { StaticImage } from "gatsby-plugin-image"
 import styled from "styled-components"
 import { Container } from "react-bootstrap"
