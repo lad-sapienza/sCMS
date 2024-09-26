@@ -155,7 +155,7 @@ You can customise the header, the footer, the general layout and stying by editi
 <Link to={"/"}> Something</Link>
 ```
 
-`<a href="https://github.com/lab-archeologia-digitale/gatsby-directus-ui/issues" target="_blank" rel="noreferrer">Issues</a>`
+`<a href="https://github.com/lab-archeologia-digitale/sCMS/issues" target="_blank" rel="noreferrer">Issues</a>`
 
 - style: At the bottom of the page inside the Header constant there is the possibility to add the CSS rules directly
 
@@ -198,7 +198,7 @@ const Header = styled.header`
 <Link to={"/"}> Something</Link>
 ```
 
-`<a href="https://github.com/lab-archeologia-digitale/gatsby-directus-ui/issues" target="_blank" rel="noreferrer">Issues</a>`
+`<a href="https://github.com/lab-archeologia-digitale/sCMS/issues" target="_blank" rel="noreferrer">Issues</a>`
 
 - style: At the bottom of the page inside the Footer constant there is the possibility to add the CSS rules directly
 

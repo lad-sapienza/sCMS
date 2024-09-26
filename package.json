@@ -1,5 +1,5 @@
 {
-  "name": "@lab-archeologia-digitale/gatsby-directus-ui",
+  "name": "@lab-archeologia-digitale/scms",
   "private": false,
   "description": "A simple starter to get up and developing quickly with Gatsby 5 and Bootstrap 5",
   "version": "4.0.0",
@@ -50,11 +50,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lab-archeologia-digitale/gatsby-directus-ui.git"
+    "url": "git+https://github.com/lab-archeologia-digitale/sCMS.git"
   },
   "bugs": {
-    "url": "https://github.com/lab-archeologia-digitale/gatsby-directus-ui/issues"
+    "url": "https://github.com/lab-archeologia-digitale/sCMS/issues"
   },
-  "homepage": "https://github.com/lab-archeologia-digitale/gatsby-directus-ui#readme",
+  "homepage": "https://github.com/lab-archeologia-digitale/sCMS#readme",
   "main": "gatsby-browser.js"
 }

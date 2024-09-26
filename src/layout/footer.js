@@ -34,7 +34,7 @@ const FooterSection = () => {
               </a>
               <br />
               <a
-                href="https://github.com/lab-archeologia-digitale/gatsby-directus-ui"
+                href="https://github.com/lab-archeologia-digitale/sCMS"
                 target="_blank"
                 rel="noreferrer"
               >
@@ -42,7 +42,7 @@ const FooterSection = () => {
               </a>
               &nbsp;|&nbsp;
               <a
-                href="https://github.com/lab-archeologia-digitale/gatsby-directus-ui/issues"
+                href="https://github.com/lab-archeologia-digitale/sCMS/issues"
                 target="_blank"
                 rel="noreferrer"
               >
