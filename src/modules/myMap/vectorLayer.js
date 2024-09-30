@@ -16,7 +16,7 @@ const VectorLayer = ({
   filter,
   checked,
   fitToContent,
-  geoField
+  geoField,
 }) => {
   const [geojsonData, setGeojson] = useState()
   const [error, setError] = useState(false)
@@ -40,14 +40,14 @@ const VectorLayer = ({
       } else if (dTable) {
         if (!process.env.GATSBY_DIRECTUS_ENDPOINT) {
           setError(
-            "Cannot calculate API end-point. Parameter dTable requires the enc variable GATSBY_DIRECTUS_ENDPOINT to be set"
+            "Cannot calculate API end-point. Parameter dTable requires the enc variable GATSBY_DIRECTUS_ENDPOINT to be set",
           )
           return
         }
         endPoint = `${process.env.GATSBY_DIRECTUS_ENDPOINT}items/${dTable}`
       } else {
         setError(
-          "Cannont calculate Directus enpoint. Please provide a full endpoint as a MyMap attribute or provide dTable attribute and set GATSBY_DIRECTUS_ENDPOINT environmental variable"
+          "Cannont calculate Directus enpoint. Please provide a full endpoint as a MyMap attribute or provide dTable attribute and set GATSBY_DIRECTUS_ENDPOINT environmental variable",
         )
         return
       }
@@ -58,7 +58,7 @@ const VectorLayer = ({
       const token = dToken ? dToken : process.env.GATSBY_DIRECTUS_TOKEN
       if (!token) {
         setError(
-          "Cannot calculate Directus token. Please provide it as an attribute of the MyMap component or define it as the environmnetal variable GATSBY_DIRECTUS_TOKEN"
+          "Cannot calculate Directus token. Please provide it as an attribute of the MyMap component or define it as the environmnetal variable GATSBY_DIRECTUS_TOKEN",
         )
         return
       }
@@ -92,8 +92,11 @@ const VectorLayer = ({
         <GeoJSON
           data={geojsonData}
           pointToLayer={pointToLayer ? pointToLayer : null}
-          onEachFeature={(feature, layer) =>
-            layer.bindPopup(popupTemplate ? popupTemplate(feature.properties) : null)
+          onEachFeature={
+            popupTemplate
+              ? (feature, layer) =>
+                  layer.bindPopup(popupTemplate(feature.properties))
+              : null
           }
           filter={filter ? filter : null}
         />
