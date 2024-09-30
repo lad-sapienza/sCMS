@@ -363,7 +363,7 @@ It accepts the following props:
 | pointToLayer  | bool                | CircleMarker  | Function defining how to display point features. See: https://leafletjs.com/reference.html#circlemarker |
 | checked       | bool                | `True`        | If true, the layer is displayed by default on the map.                       |
 | fitToContent  | bool                | `True`        | If true, adjusts the map's view to fit the bounds of the current layer.      |
-| geoField      | LatLng              | `coordinates` | Specifies the geographical field of your data in LatLng format.              |
+| dGeoField      | LatLng              | `coordinates` | Specifies the geographical field of your data in LatLng format.              |
 
 (see here: [Access your data](#access-your-data)) to know how correctly setting the path to your data.
 
@@ -377,7 +377,7 @@ Each declared object has the following attributes:
 |--------------|--------|----------|------------------------------------------------------|
 | checked      | string | y        | The name to be displayed on your website.            |
 | fitToContent | string | y        | The URL of the tiled map you want to use.            |
-| geoField     | string | n        | A string to credit the original creators of the tiled map (necessary for licensed material). |
+| dGeoField     | string | n        | A string to credit the original creators of the tiled map (necessary for licensed material). |
 
 In the `MapLeaflet` Wrapper, the attributes of each item are used in the `RasterLayer` structure, which also allows you to add the following prop to your layer:
 

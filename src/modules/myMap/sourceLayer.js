@@ -14,7 +14,7 @@ const SourceLayer = ({
   dToken,
   filter,
   fitToContent,
-  geoField,
+  dGeoField,
   layerstyle,
   searchTerm, // Aggiungi searchTerm come props
 }) => {
@@ -63,7 +63,7 @@ const SourceLayer = ({
         )
         return
       }
-      getData(endPoint, token, "geojson", geoField)
+      getData(endPoint, token, "geojson", dGeoField)
         .then(geoJSON => {
           setGeojson(geoJSON)
         })
@@ -72,7 +72,7 @@ const SourceLayer = ({
           setError("Error getting remote data")
         })
     }
-  }, [path2geojson, dEndPoint, dTable, dFilter, dToken, geoField]) // L'array di dipendenze vuoto assicura che questo effetto venga eseguito solo una volta, simile a componentDidMount
+  }, [path2geojson, dEndPoint, dTable, dFilter, dToken, dGeoField]) // L'array di dipendenze vuoto assicura che questo effetto venga eseguito solo una volta, simile a componentDidMount
 
   // Filtra i dati in base a searchTerm
   useEffect(() => {

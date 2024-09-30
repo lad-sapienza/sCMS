@@ -22,9 +22,10 @@ const json2GeoJson = (json, geoDataField) => {
  * @param {String} source required. Data source: can be a Directus endpont (complete with protocol, full path and table name), a path to a local file or a path to e remotelo accessible file
  * @param {Sting} token optional. Authentication token for services supporting Authetnication bearaer token
  * @param {String} transType Data transformation type. At present the following are supported: json, geojson, csv2json
+ * @param {String} dGeoField Directus field containing geographical data
  * @returns
  */
-const getData = async (source, token, transType, geoField) => {
+const getData = async (source, token, transType, dGeoField) => {
   let output
   let options = {}
 
@@ -45,7 +46,7 @@ const getData = async (source, token, transType, geoField) => {
 
       case "geojson":
         const respgeoJson = await response.json()
-        output = json2GeoJson(respgeoJson.data, geoField || "coordinates")
+        output = json2GeoJson(respgeoJson.data, dGeoField || "coordinates")
         break
 
       case "csv2json":

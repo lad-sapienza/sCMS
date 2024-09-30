@@ -8,6 +8,7 @@ const VectorLayer = ({
   path2geojson,
   dEndPoint,
   dTable,
+  dGeoField,
   dQueryString,
   dToken,
   name,
@@ -16,7 +17,6 @@ const VectorLayer = ({
   filter,
   checked,
   fitToContent,
-  geoField,
 }) => {
   const [geojsonData, setGeojson] = useState()
   const [error, setError] = useState(false)
@@ -62,7 +62,7 @@ const VectorLayer = ({
         )
         return
       }
-      getData(endPoint, token, "geojson", geoField)
+      getData(endPoint, token, "geojson", dGeoField)
         .then(geoJSON => {
           setGeojson(geoJSON)
         })
@@ -71,7 +71,7 @@ const VectorLayer = ({
           setError("Error getting remote data")
         })
     }
-  }, [path2geojson, dEndPoint, dTable, dQueryString, dToken, geoField]) // L'array di dipendenze vuoto assicura che questo effetto venga eseguito solo una volta, simile a componentDidMount
+  }, [path2geojson, dEndPoint, dTable, dQueryString, dToken, dGeoField])
 
   if (error) {
     console.log(error)
