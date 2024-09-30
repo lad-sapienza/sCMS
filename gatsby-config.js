@@ -12,7 +12,7 @@ require("dotenv").config({
  */
 
 module.exports = {
-  pathPrefix: process.env.NODE_ENV === 'production' ? '/sCMS/' : '/',
+  pathPrefix: process.env.NODE_ENV === "production" ? "/sCMS/" : "/",
   siteMetadata: {
     title: `s:CMS`,
     description: `S:CMS | Static site Content Managemt System is developend and maintained by LAD: Laboratorio di Archeologia Digitale alla Sapienza`,
@@ -24,7 +24,10 @@ module.exports = {
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
-        gatsbyRemarkPlugins: [`gatsby-remark-autolink-headers`],
+        gatsbyRemarkPlugins: [
+          `gatsby-remark-autolink-headers`,
+          `gatsby-remark-prismjs`,
+        ],
       },
     },
     `gatsby-plugin-styled-components`,
