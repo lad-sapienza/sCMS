@@ -3,20 +3,18 @@ import { MapContainer, LayersControl } from "react-leaflet"
 import { RasterLayer } from "./rasterLayer"
 import { defaultBaseLayers } from "../maps/defaultBaseLayers"
 
-const MapLeaflet = ({ height, center, baseLayers, children }) => {
-  if (!center) {
-    center = "0,0,2"
-  }
+const MapLeaflet = ({ height, center, baseLayers, children, scrollWheelZoom, layersControlPosition }) => {
+  
   let [lng, lat, zoom] = center?.split(",").map(e => parseFloat(e.trim()))
 
   return (
     <MapContainer
       style={{ height: height ? height : `800px` }}
-      scrollWheelZoom={false}
+      scrollWheelZoom={scrollWheelZoom === true ? true : false}
       center={[lng || 0, lat || 0]}
       zoom={zoom || 2}
     >
-      <LayersControl position="topright">
+      <LayersControl position={ layersControlPosition ? layersControlPosition : null }>
         {baseLayers &&
           baseLayers.split(",").map((layer, index) => {
             let bl = layer.trim()

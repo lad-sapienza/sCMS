@@ -290,69 +290,39 @@ For complete documentation on the API system of Directus, see: https://docs.dire
 
 For integration of your data into the project, the following props must be used:
 
-| Field     | Source          | Description                                                          |
-|-----------|-----------------|----------------------------------------------------------------------|
-| path2cvs  | local           | relative or full path to a CSV file to use for the data Table creation |
-| dEndPoint | Directus table  | full path to a Directus endpoint, complete with table name            |
-| dToken    | Directus table  | Directus access token, required if the table is not public. If not provided, the `GATSBY_DIRECTUS_TOKEN` environment variable will be used |
+| Field     | Type    | Description                                                          |
+|-----------|---------|----------------------------------------------------------------------|
+| path2cvs  | String  | Relative or full path to the static file containing your data        |
+| dEndPoint | String  | Full URL pointing to a Directus endpoint, complete with referenced table name |
+| dToken    | String  | Directus access token, required if the table is not public. If not provided, the `GATSBY_DIRECTUS_TOKEN` environment variable will be used |
+| dTable    | String  | Directus table containing geographical data. This is an alternative way to point to a Directus table and needs the the `GATSBY_DIRECTUS_TOKEN` environment variable to be set |
+| dQueryString | String | A string containing the filter to apply to your complete API, already inserted as `dEndPoint` or `dTable` |
 
-Additionally, it is possible to include an `.env` file in your project to store the default endpoint and token of your Directus database. In this case, you will only need the following prop:
+The preferred way to point to a Directus database is via environment variables and `dTable` parameter, both for security (it prevents exposure of your credentials) and practicality. Two or more different Directus instances can be referred at the same time, using both methods.
 
-| Field   | Source         | Description                                        |
-|---------|----------------|----------------------------------------------------|
-| DTable  | Directus table | name of the Directus table containing geographical data |
+`dQueryString` can also be used for displaying data from different tables linked through relational logic (i.e. define JOINs) or for implementing a limiter (offset) on large databases to facilitate data flow.
 
-This approach should be preferred for both security (it prevents exposure of your credentials) and practicality. Two Directus databases can be linked at the same time, using both methods.
-
-#### Filtering and join options
-
-Tutti gli URL Directus implementano pienamente l'API Directus via `dQueryString`.
-
-All filtering options are applicable in the backend, following the GraphQL logic implemented by Directus. These can be applied to your full API call (`dEndPoint`/`DTable`) or using the following s:CMS` Prop:
-
-| Field         | Source         | Description                                                          |
-|---------------|----------------|----------------------------------------------------------------------|
-| dQueryString  | Directus table | A string containing the filter to apply to your complete API, already inserted as `dEndPoint` or `DTable` |
-
-For an example, see: https://lab-archeologia-digitale.github.io/sCMS/modulo-mappa/
-
-This tool is also necessary for displaying data from different tables linked through relational logic or for implementing a limiter (offset) on large databases to facilitate data flow.
-
-For comprehensive documentation, please refer to the official Directus page on the matter: https://docs.directus.io/reference/introduction.html
+For comprehensive documentation, please refer to the official Directus.io API documentation: https://docs.directus.io/reference/introduction.html
 
 ### Modules
 
-#### MyMap
+#### MapLeaflet
 
-Element that imports the components useful for rendering your Maps. These components are:
-
-##### MapLeaflet
-
-The wrapper that contains and manages the graphical display and ordering of the layers. It is built on React components `MapContainer` (https://react-leaflet.js.org/docs/api-map/) and `LayersControl` (https://leafletjs.com/reference.html#control-layers).
+This is a component used to vcreate maps using Leaflet and it is a wrapper around [`MapContainer`]((https://react-leaflet.js.org/docs/api-map/)) and [`LayersControl`](https://leafletjs.com/reference.html#control-layers) and that contains and manages the graphical display and ordering of the layers. 
 
 It accepts `VectorLayer` and `RasterLayer` as children.
 
-##### MapContainer
-
 It accepts the following props:
 
-| Field           | Type              | Default    | Description                                                                   |
-|-----------------|-------------------|------------|-------------------------------------------------------------------------------|
-| height          | string            | `600 px`   | Defines the height of the map, expressed in pixels.                           |
-| scrollWheelZoom | bool              | `false`    | If true, enables the user's ability to zoom the map using the scroll wheel    |
-| center          | Coordinates (lng, lat) | `0,0` (undefined) | Defines the starting coordinates of the map. If incorrect, center auto-adjusts to the bounding box of vector layers. |
-| zoom            | int               | `2`        | Defines the initial zoom level of the map.                                    |
+| Field           | Type      | Default | Description                                                                   |
+|-----------------|-----------|---------|-------------------------------------------------------------------------------|
+| height          | String    | `600px` | The height of the map |
+| center          | String    | `0,0,2` | Defines the starting coordinates and zoom of the map: longitude,latitude,zoom level |
+| scrollWheelZoom | bool      | `false` | If true, enables the user's ability to zoom the map using the scroll wheel |
+| baseLayers      | String    | `null`  | Comma separated list of default raster base map (one or more from): `OSM`, `EsriSatellite`, `EsriStreets`, `EsriTopo`, `GoogleSatellite`, `GoogleRoadmap`, `GoogleTerrain`, `GoogleAlteredRoadmap`, `GoogleTerrainOnly`, `GoogleHybrid`, `CartoDb`, `StamenTerrain`, `OSMMapnick`, `OSMCycle`
+| layerControlPosition | String | `toptight' | Posiont of the Layer Controle. Refer to [offial Leaflet Docs](https://leafletjs.com/reference.html#control-position)
 
-##### LayersControl
-
-It accepts the following props:
-
-| Field      | Type   | Default  | Description                                                                  |
-|------------|--------|----------|------------------------------------------------------------------------------|
-| position   | string | `topright`| Specifies the position of the control panel. For more details, see: Leaflet Control Layers Documentation. |
-| baseLayers | string | `OSM`    | Determines the base Raster Layers to use on the map. Separate multiple maps with commas. |
-
-##### Vectorlayer
+#### Vectorlayer
 
 `VectorLayer` is the component that allows you to import, display, and customize your geographical data. It defines the following props:
 
@@ -363,7 +333,7 @@ It accepts the following props:
 | pointToLayer  | bool                | CircleMarker  | Function defining how to display point features. See: https://leafletjs.com/reference.html#circlemarker |
 | checked       | bool                | `True`        | If true, the layer is displayed by default on the map.                       |
 | fitToContent  | bool                | `True`        | If true, adjusts the map's view to fit the bounds of the current layer.      |
-| dGeoField      | LatLng              | `coordinates` | Specifies the geographical field of your data in LatLng format.              |
+| dGeoField     | LatLng              | `coordinates` | Specifies the geographical field of your data in LatLng format.              |
 
 (see here: [Access your data](#access-your-data)) to know how correctly setting the path to your data.
 
@@ -385,7 +355,7 @@ In the `MapLeaflet` Wrapper, the attributes of each item are used in the `Raster
 |-----------|-------|---------|-------------------------------------------------------|
 | AsOverlay | bool  | N       | If true, displays the raster layer as an overlay. If false, the layer is treated as a base layer, mutually excluding other base layers. |
 
-#### Dtable
+#### dtable
 
 A component to display data in a tabular fashion that accepts as arguments data from your database(s) (see how to link your data to your table here: [Access your data](#access-your-data)). The data can also be filtered. It is built on the React Datatable component, supporting all its graphical configurations (https://primereact.org/datatable). An example of these settings is provided below:
 
