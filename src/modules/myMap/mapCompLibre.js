@@ -11,7 +11,7 @@ import Map, {
   Layer,
 } from "react-map-gl/maplibre"
 import ControlPanel from "./control-panel"
-import { defaultBaseLayers } from "./defaultBaseLayers"
+import { defaultBaseLayers } from "../maps/defaultBaseLayers"
 
 const MapCompLibre = ({
   children,
@@ -121,9 +121,9 @@ const MapCompLibre = ({
         />
         <Map
           initialViewState={{
-            longitude: lng,
-            latitude: lat,
-            zoom: zoom
+            longitude: lng ? lng : 0,
+            latitude: lat ?  lat : 0,
+            zoom: zoom ? zoom : 2
           }}
           style={{ height: height ? height : `800px` }}
           mapStyle={mapStyle}

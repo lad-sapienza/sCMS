@@ -1,0 +1,41 @@
+---
+title: "Leaflet: shorthand syntax to add default raster basemaps"
+date: "2024-10-01"
+slug: "examples/leaflet-all-shorthand-basemaps"
+description: "Leaflet: shorthand syntax to add default raster basemaps"
+---
+
+import {
+  MapComp,
+  RasterLayer,
+} from "../../modules/myMap/myMap.js"
+
+
+### Leaflet: shorthand syntax to add default raster basemaps
+
+<div className="row mt-3 mb-5 border-top border-bottom py-3">
+  <div className="col-6">
+    <MapComp 
+        height="400px" 
+        center="37.00416,37.48551,9"
+        baseLayers="OSM, EsriSatellite, EsriStreets, EsriTopo, GoogleSatellite, GoogleRoadmap, GoogleTerrain, GoogleAlteredRoadmap, GoogleTerrainOnly, GoogleHybrid, CartoDb, StamenTerrain, OSMMapnick, OSMCycle"
+        >
+      />
+    </MapComp>
+  </div>
+  <div className="col-6">
+    ```jsx
+    import {
+      MapComp,
+      RasterLayer,
+    } from "../../modules/myMap/myMap.js"
+
+    <MapComp 
+        height="400px" 
+        center="37.00416,37.48551,9"
+        baseLayers="OSM, EsriSatellite, EsriStreets, EsriTopo, GoogleSatellite, GoogleRoadmap, GoogleTerrain, GoogleAlteredRoadmap, GoogleTerrainOnly, GoogleHybrid, CartoDb, StamenTerrain, OSMMapnick, OSMCycle"
+        >
+    </MapComp>
+    ```
+  </div>
+</div>

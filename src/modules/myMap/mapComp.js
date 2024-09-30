@@ -1,7 +1,7 @@
 import React from "react"
 import { MapContainer, LayersControl } from "react-leaflet"
 import { RasterLayer } from "./rasterLayer"
-import { defaultBaseLayers } from "./defaultBaseLayers"
+import { defaultBaseLayers } from "../maps/defaultBaseLayers"
 
 const MapComp = ({ height, center, baseLayers, children }) => {
   if (!center) {

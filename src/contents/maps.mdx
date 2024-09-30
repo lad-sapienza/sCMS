@@ -1,0 +1,45 @@
+---
+title: "Examples of maps"
+date: "2023-10-01"
+slug: "maps"
+description: "An easy to use component for building powerful and fully customizable maps"
+menu_position: 1
+---
+
+# Build different types of maps form a variety of sources
+
+`<MapComp />` can be used in MDX pages to display a dynamic maps, which are fully customisable.
+
+Geodata can be retrieved form a Directus database or any other JSON API, a statically hosted geoJSON file or any GeoJSON file publically available on the Web. The component can be customised via the following parameters.
+
+
+import AddingRasterBasemaps from './examples/leaflet-adding-raster-basemaps.mdx'
+import AddingRasterBasemapsShorthand from './examples/leaflet-adding-raster-basemaps-shorthand.mdx'
+
+import LeafletAndLocalGeoJSON from './examples/leaflet-local-geojson.mdx'
+import LeafletAndLocalGeoJSONWithStyling from './examples/leaflet-local-geojson-with-styling.mdx'
+import LeafletAndRemoteGeoJSON from './examples/leaflet-remote-geojson.mdx'
+
+import LeafletAndDirectus from './examples/leaflet-directus.mdx'
+import LeafletAndDirectusWithFilter from './examples/leaflet-directus-with-filter.mdx'
+
+import MaplibreFromJsonStyle from './examples/maplibre-from-json-style.mdx'
+import MaplibreLocalGeoJSON from './examples/maplibre-local-geojson.mdx'
+import MaplibreAndDirectusWithFilter from './examples/maplibre-directus-with-filter.mdx'
+
+
+## Leaflet examples
+<AddingRasterBasemaps />
+<AddingRasterBasemapsShorthand />
+
+<LeafletAndLocalGeoJSON />
+<LeafletAndLocalGeoJSONWithStyling />
+<LeafletAndRemoteGeoJSON />
+
+<LeafletAndDirectus />
+<LeafletAndDirectusWithFilter />
+
+## MapLibre examples
+<MaplibreFromJsonStyle />
+<MaplibreLocalGeoJSON />
+<MaplibreAndDirectusWithFilter />

@@ -1,0 +1,85 @@
+---
+title: "Leaflet: Adding a vector layer from a local GeoJSON file, and styling it on the base of the attributes"
+date: "2024-10-01"
+slug: "examples/leaflet-local-geojson-with-styling"
+description: "Leaflet: Adding a vector layer from a local GeoJSON file, and styling it on the base of the attributes"
+---
+
+import {
+  MapComp,
+  VectorLayer
+} from "../../modules/myMap/myMap.js"
+
+
+### Leaflet: Adding a vector layer from a local GeoJSON file, and styling it on the base of the attributes
+
+
+<div className="row mt-3 mb-5 border-top border-bottom py-3">
+  <div className="col-6">
+    <MapComp
+      height="400px"
+      baseLayers="OSM"
+      >
+      
+      <VectorLayer 
+        name="Sites"
+        path2geojson="../../data/ksa.geojson"
+        fitToContent={true}
+        checked={true}
+        popupTemplate={ (attribs) => `
+          <p><strong>${attribs["Item_Label"]}</strong>${attribs["Site_Name"]} <br>
+          Date: ${attribs["Early"]} — ${attribs["Late"]}</p>
+        ` }
+        pointToLayer={
+          (f, ll) => {
+            return L.circleMarker(ll, {
+              radius: 4,
+              fillColor: !Object.hasOwn(f.properties, "Late") ? '#ebebeb' : (f.properties["Late"] < 0 ? "#FE04FC" : '#1B64F7'),
+              color: "#000",
+              weight: 1,
+              opacity: 1,
+              fillOpacity: 0.8
+            });
+          }}
+      />
+    </MapComp>
+    Data from [Kahramanmaraş Survey](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) created by [Elizabeth Carter](http://opencontext.org/persons/3208923d-69d0-70e9-9cc1-23ad97770aec) and published on [OpenContext](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) add distributed with [CC BY 4.0 International](https://creativecommons.org/licenses/by/4.0) license.
+
+  </div>
+  <div className="col-6">
+    ```jsx
+    import {
+      MapComp,
+      VectorLayer
+    } from "../../modules/myMap/myMap.js"
+
+    <MapComp
+      height="400px"
+      baseLayers="OSM"
+      >
+      
+      <VectorLayer 
+        name="Sites"
+        path2geojson="../../data/ksa.geojson"
+        fitToContent={true}
+        checked={true}
+        popupTemplate={ (attribs) => `
+          <p><strong>${attribs["Item_Label"]}</strong>${attribs["Site_Name"]} <br>
+          Date: ${attribs["Early"]} — ${attribs["Late"]}</p>
+        ` }
+        pointToLayer={
+          (f, ll) => {
+            return L.circleMarker(ll, {
+              radius: 4,
+              fillColor: !Object.hasOwn(f.properties, "Late") ? '#ebebeb' : (f.properties["Late"] < 0 ? "#FE04FC" : '#1B64F7'),
+              color: "#000",
+              weight: 1,
+              opacity: 1,
+              fillOpacity: 0.8
+            });
+          }}
+      />
+    </MapComp>
+    ```
+  </div>
+</div>

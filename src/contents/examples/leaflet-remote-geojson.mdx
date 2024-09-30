@@ -1,0 +1,60 @@
+---
+title: "Leaflet: Adding a vector layer from a remote GeoJSON file"
+date: "2024-10-01"
+slug: "examples/map-leaflet-remote-geojson"
+description: "Leaflet: Adding a vector layer from a remote GeoJSON file"
+---
+
+import {
+  MapComp,
+  VectorLayer
+} from "../../modules/myMap/myMap.js"
+
+
+### Leaflet: Adding a vector layer from a remote GeoJSON file
+
+
+<div className="row mt-3 mb-5 border-top border-bottom py-3">
+  <div className="col-6">
+    <MapComp
+      height="400px"
+      baseLayers="OSM,EsriSatellite"
+      fitToContent={true} >
+
+      <VectorLayer
+        name="Iron Age Sites"
+        fitToContent={true}
+        checked={true}
+        path2geojson="https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_110m_populated_places_simple.geojson"
+        popupTemplate={attribs => {
+          return `<p><strong>${attribs.ls_name}</strong>`
+        }}
+      />
+    </MapComp>
+
+  </div>
+  <div className="col-6">
+    ```jsx
+    import {
+      MapComp,
+      VectorLayer
+    } from "../../modules/myMap/myMap.js"
+
+    <MapComp
+      height="400px"
+      baseLayers="OSM,EsriSatellite"
+      fitToContent={true} >
+      
+      <VectorLayer
+        name="Iron Age Sites"
+        fitToContent={true}
+        checked={true}
+        path2geojson="https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_110m_populated_places_simple.geojson"
+        popupTemplate={attribs => {
+          return `<p><strong>${attribs.ls_name}</strong>`
+        }}
+      />
+    </MapComp>
+    ```
+  </div>
+</div>
