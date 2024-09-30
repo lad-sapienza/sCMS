@@ -93,7 +93,7 @@ const VectorLayer = ({
           data={geojsonData}
           pointToLayer={pointToLayer ? pointToLayer : null}
           onEachFeature={(feature, layer) =>
-            layer.bindPopup(popupTemplate(feature.properties))
+            layer.bindPopup(popupTemplate ? popupTemplate(feature.properties) : null)
           }
           filter={filter ? filter : null}
         />
