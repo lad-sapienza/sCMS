@@ -3,7 +3,7 @@ import { MapContainer, LayersControl } from "react-leaflet"
 import { RasterLayer } from "./rasterLayer"
 import { defaultBaseLayers } from "../maps/defaultBaseLayers"
 
-const MapComp = ({ height, center, baseLayers, children }) => {
+const MapLeaflet = ({ height, center, baseLayers, children }) => {
   if (!center) {
     center = "0,0,2"
   }
@@ -43,4 +43,4 @@ const MapComp = ({ height, center, baseLayers, children }) => {
   )
 }
 
-export { MapComp }
+export { MapLeaflet }

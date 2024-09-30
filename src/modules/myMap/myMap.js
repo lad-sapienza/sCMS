@@ -1,4 +1,4 @@
-export { MapComp } from "./mapComp.js"
+export { MapLeaflet } from "./mapLeaflet.js"
 export { MapCompLibre } from "./mapCompLibre.js"
 export { SourceLayer } from "./sourceLayer.js"
 export { RasterLayer } from "./rasterLayer.js"

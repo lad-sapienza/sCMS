@@ -27,7 +27,7 @@ Static sites are fast, secure, durable: no databases to manage, no code that get
    1. [Access your data](#access-your-data)
    1. [Filtering and join options](#filtering-and-join-options)
    1. [MyMap](#mymap)
-   1. [MapComp](#mapcomp)
+   1. [MapLeaflet](#mapleaflet)
    1. [MapContainer](#mapcontainer)
    1. [LayersControl](#layerscontrol)
    1. [Vectorlayer](#vectorlayer)
@@ -326,7 +326,7 @@ For comprehensive documentation, please refer to the official Directus page on t
 
 Element that imports the components useful for rendering your Maps. These components are:
 
-##### MapComp
+##### MapLeaflet
 
 The wrapper that contains and manages the graphical display and ordering of the layers. It is built on React components `MapContainer` (https://react-leaflet.js.org/docs/api-map/) and `LayersControl` (https://leafletjs.com/reference.html#control-layers).
 
@@ -369,7 +369,7 @@ It accepts the following props:
 
 ##### Rasterlayer and DefaultBaseLayers
 
-These two components manage the raster base of your map. In `DefaultBaseLayers`, each possible source is defined as a prop, which can be added to your `MapComp` Wrapper.
+These two components manage the raster base of your map. In `DefaultBaseLayers`, each possible source is defined as a prop, which can be added to your `MapLeaflet` Wrapper.
 
 Each declared object has the following attributes:
 
@@ -379,7 +379,7 @@ Each declared object has the following attributes:
 | fitToContent | string | y        | The URL of the tiled map you want to use.            |
 | geoField     | string | n        | A string to credit the original creators of the tiled map (necessary for licensed material). |
 
-In the `MapComp` Wrapper, the attributes of each item are used in the `RasterLayer` structure, which also allows you to add the following prop to your layer:
+In the `MapLeaflet` Wrapper, the attributes of each item are used in the `RasterLayer` structure, which also allows you to add the following prop to your layer:
 
 | Field     | Type  | Default | Description                                           |
 |-----------|-------|---------|-------------------------------------------------------|

@@ -6,7 +6,7 @@ description: "Leaflet: Adding a vector layer from a Directus API with filter"
 ---
 
 import {
-  MapComp,
+  MapLeaflet,
   VectorLayer,
 } from "../../modules/myMap/myMap.js"
 
@@ -17,7 +17,7 @@ Only Hellenistic and Roman sites are being displayed
 
 <div className="row mt-3 mb-5 border-top border-bottom py-3">
   <div className="col-6">
-    <MapComp
+    <MapLeaflet
       height="400px"
       baseLayers="OSM">
 
@@ -33,17 +33,17 @@ Only Hellenistic and Roman sites are being displayed
         }}
       />
 
-    </MapComp>
+    </MapLeaflet>
     Data from [Kahramanmaraş Survey](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) created by [Elizabeth Carter](http://opencontext.org/persons/3208923d-69d0-70e9-9cc1-23ad97770aec) and published on [OpenContext](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) add distributed with [CC BY 4.0 International](https://creativecommons.org/licenses/by/4.0) license.
   </div>
   <div className="col-6">
     ```jsx
     import {
-      MapComp,
+      MapLeaflet,
       VectorLayer,
     } from "../../modules/myMap/myMap.js"
 
-    <MapComp
+    <MapLeaflet
       height="400px"
       baseLayers="OSM">
 
@@ -59,7 +59,7 @@ Only Hellenistic and Roman sites are being displayed
         }}
       />
 
-    </MapComp>
+    </MapLeaflet>
     ```
   </div>
 </div>

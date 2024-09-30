@@ -6,7 +6,7 @@ description: "Leaflet: Adding a vector layer from a remote GeoJSON file"
 ---
 
 import {
-  MapComp,
+  MapLeaflet,
   VectorLayer
 } from "../../modules/myMap/myMap.js"
 
@@ -16,7 +16,7 @@ import {
 
 <div className="row mt-3 mb-5 border-top border-bottom py-3">
   <div className="col-6">
-    <MapComp
+    <MapLeaflet
       height="400px"
       baseLayers="OSM,EsriSatellite"
       fitToContent={true} >
@@ -30,17 +30,17 @@ import {
           return `<p><strong>${attribs.ls_name}</strong>`
         }}
       />
-    </MapComp>
+    </MapLeaflet>
 
   </div>
   <div className="col-6">
     ```jsx
     import {
-      MapComp,
+      MapLeaflet,
       VectorLayer
     } from "../../modules/myMap/myMap.js"
 
-    <MapComp
+    <MapLeaflet
       height="400px"
       baseLayers="OSM,EsriSatellite"
       fitToContent={true} >
@@ -54,7 +54,7 @@ import {
           return `<p><strong>${attribs.ls_name}</strong>`
         }}
       />
-    </MapComp>
+    </MapLeaflet>
     ```
   </div>
 </div>
