@@ -14,7 +14,7 @@ import { Link } from "gatsby"
 <div className="row">
   <div className="col-sm-4">
   A Search component connecting to the Directus default instance by using only the name of the table:
-```html
+```jsx
 <Search
   dTable="scms_ksa"
   searchFields="Item_Label,Site_Name,Site_Description"
@@ -64,70 +64,6 @@ import { Link } from "gatsby"
       </div>
       }}
     />
-
-  Data from [Kahramanmaraş Survey](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) created by [Elizabeth Carter](http://opencontext.org/persons/3208923d-69d0-70e9-9cc1-23ad97770aec) and published on [OpenContext](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) add distributed with [CC BY 4.0 International](https://creativecommons.org/licenses/by/4.0) license.
-
-  ---
-
-  </div>
-</div>
-
-
-<div className="row">
-  <div className="col-sm-4">
-  A Search component connecting to a Directus instance by using full path to API endpoint and an authentication token:
-```html
-<Search
-  dEndPoint="https://db.lad-sapienza.it/curry/items/scms_ksa"
-  dToken="TzwQYgn4PSk5czDvQsT39gx8EByfBdiN"
-  searchFields="Item_Label,Site_Name,Site_Description"
-  resultItemTemplate = { item => {
-    return  <div className="card my-3" key={item.id}>
-      <div className="card-body">
-        <h5 className="card-title">{item.Item_Label} — {item.Site_Name}</h5>
-        <div className="card-text">
-        <div className="row">
-          <div classname="col-3">
-            <img src={item.Thumbnail} className="card-img-top img-fluid" alt={item.Site_Name} style={{maxWidth: 200}} />
-          </div>
-          <div className="col-9">
-            {item.Site_Description}
-            <hr />
-            <a href={`../record/?dEndPoint=${encodeURIComponent(`https://db.lad-sapienza.it/curry/items/scms_ksa`)}&tb=cms_articles&token=I0pT7ozY0KuK8i-vtwLQGek36s0IhQ5e&id=${item.id}`} className="btn btn-primary">View</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  }}
-/>
-```
-  </div>
-  <div className="col-sm-8">
-  <Search
-    dEndPoint="https://db.lad-sapienza.it/curry/items/scms_ksa"
-    dToken="TzwQYgn4PSk5czDvQsT39gx8EByfBdiN"
-    searchFields="Item_Label,Site_Name,Site_Description"
-    resultItemTemplate = { item => {
-      return  <div className="card my-3" key={item.id}>
-        <div className="card-body">
-          <h5 className="card-title">{item.Item_Label} — {item.Site_Name}</h5>
-          <div className="card-text">
-          <div className="row">
-            <div className="col-3">
-              <img src={item.Thumbnail} className="card-img-top img-fluid" alt={item.Site_Name} style={{maxWidth: 200}} />
-            </div>
-            <div className="col-9">
-              {item.Site_Description}
-              <hr />
-              <a href={`../record/?dEndPoint=${encodeURIComponent(`https://db.lad-sapienza.it/curry/items/scms_ksa`)}&tb=cms_articles&token=I0pT7ozY0KuK8i-vtwLQGek36s0IhQ5e&id=${item.id}`} className="btn btn-primary">View</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    }}
-  />
 
   Data from [Kahramanmaraş Survey](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) created by [Elizabeth Carter](http://opencontext.org/persons/3208923d-69d0-70e9-9cc1-23ad97770aec) and published on [OpenContext](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) add distributed with [CC BY 4.0 International](https://creativecommons.org/licenses/by/4.0) license.
 

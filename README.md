@@ -138,7 +138,7 @@ You can customise the header, the footer, the general layout and stying by editi
 - div: As for divs you can use bootstrap classes
 - images: here is an example of the <staticImage> tag. The images must be contained in the images folder.
 
-```javascript
+```jsx
 <StaticImage
   src="../images/scms-lad.png"
   width={150}
@@ -151,7 +151,7 @@ You can customise the header, the footer, the general layout and stying by editi
 
 - link: here is an example of the <Link> tag for the internal page and <a></a> to external links
 
-```javascript
+```jsx
 <Link to={"/"}> Something</Link>
 ```
 
@@ -159,7 +159,7 @@ You can customise the header, the footer, the general layout and stying by editi
 
 - style: At the bottom of the page inside the Header constant there is the possibility to add the CSS rules directly
 
-```javascript
+```jsx
 const Header = styled.header`
   background-color: #fe04fc;
   color: #ffffff;
@@ -181,7 +181,7 @@ const Header = styled.header`
 - div: As for divs you can use bootstrap classes
 - images: here is an example of the <staticImage> tag. The images must be contained in the images folder.
 
-```javascript
+```jsx
 <StaticImage
   src="../images/scms-lad.png"
   width={150}
@@ -194,7 +194,7 @@ const Header = styled.header`
 
 - link: here is an example of the <Link> tag for the interal page and <a></a> to external links
 
-```javascript
+```jsx
 <Link to={"/"}> Something</Link>
 ```
 
@@ -202,7 +202,7 @@ const Header = styled.header`
 
 - style: At the bottom of the page inside the Footer constant there is the possibility to add the CSS rules directly
 
-```javascript
+```jsx
 const Footer = styled.footer`
   background-color: #ececec;
   border-top: #000 solid 0.5rem;
