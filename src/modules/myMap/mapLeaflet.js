@@ -5,14 +5,21 @@ import { defaultBaseLayers } from "../maps/defaultBaseLayers"
 
 const MapLeaflet = ({ height, center, baseLayers, children, scrollWheelZoom, layersControlPosition }) => {
   
+  if (!center) {
+    center = "0,0,2"
+  }
+  if (!layersControlPosition){
+    layersControlPosition = "topright"
+  }
+
   let [lng, lat, zoom] = center?.split(",").map(e => parseFloat(e.trim()))
 
   return (
     <MapContainer
       style={{ height: height ? height : `800px` }}
       scrollWheelZoom={scrollWheelZoom === true ? true : false}
-      center={[lng || 0, lat || 0]}
-      zoom={zoom || 2}
+      center={[lng, lat]}
+      zoom={zoom}
     >
       <LayersControl position={ layersControlPosition ? layersControlPosition : null }>
         {baseLayers &&
