@@ -23,9 +23,7 @@ Static sites are fast, secure, durable: no databases to manage, no code that get
 1. [Adding content](#adding-content)
 1. [Deploy your site for free on Github Pages]()
 1. [API](#api)
-   1. [Premises](#premises)
    1. [Access your data](#access-your-data)
-   1. [Filtering and join options](#filtering-and-join-options)
    1. [MyMap](#mymap)
    1. [MapLeaflet](#mapleaflet)
    1. [MapContainer](#mapcontainer)
@@ -280,9 +278,7 @@ A page that displays an item's details in a simple list format and can be custom
 
 ## API
 
-### Premises
-
-#### Access your data
+### Access your data
 
 As previously mentioned, s:CMS is principally designed for the creation of web pages with dynamic content retrieved by an Ajax call from a local CSV or GeoJSON file stored in your project, or a remote database structured in Directus.
 
@@ -304,9 +300,7 @@ The preferred way to point to a Directus database is via environment variables a
 
 For comprehensive documentation, please refer to the official Directus.io API documentation: https://docs.directus.io/reference/introduction.html
 
-### Modules
-
-#### MapLeaflet
+### MapLeaflet
 
 This is a component used to vcreate maps using Leaflet and it is a wrapper around [`MapContainer`]((https://react-leaflet.js.org/docs/api-map/)) and [`LayersControl`](https://leafletjs.com/reference.html#control-layers) and that contains and manages the graphical display and ordering of the layers. 
 
@@ -322,18 +316,23 @@ It accepts the following props:
 | baseLayers      | String    | `null`  | Comma separated list of default raster base map (one or more from): `OSM`, `EsriSatellite`, `EsriStreets`, `EsriTopo`, `GoogleSatellite`, `GoogleRoadmap`, `GoogleTerrain`, `GoogleAlteredRoadmap`, `GoogleTerrainOnly`, `GoogleHybrid`, `CartoDb`, `StamenTerrain`, `OSMMapnick`, `OSMCycle`
 | layerControlPosition | String | `toptight' | Posiont of the Layer Controle. Refer to [offial Leaflet Docs](https://leafletjs.com/reference.html#control-position)
 
-#### Vectorlayer
+### Vectorlayer
 
-`VectorLayer` is the component that allows you to import, display, and customize your geographical data. It defines the following props:
+`VectorLayer` is the component that allows you to import, display, and customize your geographical vector data. It must be used as a child of `MapLeaflet` component. It can be populated with data from different sources, like:
+- a local GeoJSON file
+- a remote GeoJSON file
+- a table of Directus instance containing geographical data.
+Parameters for accessing data, such as `path2geojson`, `dEndPoint`, `dTable`, `dGeoField`, `dQueryString` and `dToken` are [documented above](#access-your-data).
+Other parameters are:
+  
 
 | Field         | Type                | Default       | Description                                                                  |
 |---------------|---------------------|---------------|------------------------------------------------------------------------------|
 | name          | string              |               | Specifies the name of the layer as it appears in the LayersControl tool.      |
 | popupTemplate | Accepts other props |               | A custom popup template for viewing geographical objects' attributes. Can include fields from your project. |
 | pointToLayer  | bool                | CircleMarker  | Function defining how to display point features. See: https://leafletjs.com/reference.html#circlemarker |
-| checked       | bool                | `True`        | If true, the layer is displayed by default on the map.                       |
-| fitToContent  | bool                | `True`        | If true, adjusts the map's view to fit the bounds of the current layer.      |
-| dGeoField     | LatLng              | `coordinates` | Specifies the geographical field of your data in LatLng format.              |
+| checked       | bool                | `true`        | If true, the layer is displayed by default on the map.                       |
+| fitToContent  | bool                | `true`        | If true, adjusts the map's view to fit the bounds of the current layer.      |
 
 (see here: [Access your data](#access-your-data)) to know how correctly setting the path to your data.
 
