@@ -96,18 +96,16 @@ const SourceLayer = ({
 
   useEffect(() => {
     if (mapInstance) {
-      // Log degli ID dei layer disponibili
-      const layers = mapInstance.getStyle().layers.map(layer => layer.id)
-      console.log("Layer disponibili:", layers)
-
       if (searchTerm) {
+        console.log("Search term:", searchTerm) // Aggiungi questo
         const isProperty = filterConditions.includes(searchTerm)
+        console.log("Is property:", isProperty) // Aggiungi questo
 
-        const applyFilter = layerId => {
-          if (layers.includes(layerId)) {
-            // Controlla se il layer esiste
+        if (Array.isArray(layerId)) {
+          layerId.forEach(id => {
             if (isProperty) {
-              mapInstance.setFilter(layerId, ["==", ["get", searchTerm], true])
+              console.log(`Setting filter for ${id}:, searchTerm`) // Aggiungi questo
+              mapInstance.setFilter(id, ["==", ["get", searchTerm], "true"])
             } else {
               const lowerSearchTerm = searchTerm.toLowerCase()
               const filterConditionsArray = filterConditions.map(property => [
@@ -115,32 +113,41 @@ const SourceLayer = ({
                 lowerSearchTerm,
                 ["downcase", ["get", property]],
               ])
-              mapInstance.setFilter(layerId, ["any", ...filterConditionsArray])
+              console.log(
+                `Setting filter for ${id} with conditions:,
+                filterConditionsArray,
+              `,
+              ) // Aggiungi questo
+              mapInstance.setFilter(id, ["any", ...filterConditionsArray])
             }
-          } else {
-            console.warn(`Layer "${layerId}" non esiste sulla mappa.`)
-          }
-        }
-
-        if (Array.isArray(layerId)) {
-          layerId.forEach(id => applyFilter(id))
+          })
         } else {
-          applyFilter(layerId)
+          if (isProperty) {
+            console.log(`Setting filter for ${layerId}:, searchTerm`) // Aggiungi questo
+            mapInstance.setFilter(layerId, ["==", ["get", searchTerm], "true"])
+          } else {
+            const lowerSearchTerm = searchTerm.toLowerCase()
+            const filterConditionsArray = filterConditions.map(property => [
+              "in",
+              lowerSearchTerm,
+              ["downcase", ["get", property]],
+            ])
+            console.log(
+              `Setting filter for ${layerId} with conditions:,
+              filterConditionsArray,
+            `,
+            ) // Aggiungi questo
+            mapInstance.setFilter(layerId, ["any", ...filterConditionsArray])
+          }
         }
       } else {
         // Rimuovi il filtro se il searchTerm è vuoto
-        const removeFilter = layerId => {
-          if (layers.includes(layerId)) {
-            mapInstance.setFilter(layerId, null)
-          } else {
-            console.warn(`Layer "${layerId}" non esiste sulla mappa.`)
-          }
-        }
-
         if (Array.isArray(layerId)) {
-          layerId.forEach(id => removeFilter(id))
+          layerId.forEach(id => {
+            mapInstance.setFilter(id, null)
+          })
         } else {
-          removeFilter(layerId)
+          mapInstance.setFilter(layerId, null)
         }
       }
     }
