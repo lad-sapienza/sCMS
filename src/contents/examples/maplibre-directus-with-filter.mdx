@@ -5,11 +5,7 @@ slug: "examples/leaflet-directus-with-filter"
 description: "Maplibre: Adding a vector layer from a Directus API with filter"
 ---
 
-import {
-  MapCompLibre,
-  SourceLayer,
-} from "../../modules/myMap/myMap.js"
-
+import { MapCompLibre, SourceLayer } from "../../modules/myMap/myMap.js"
 
 ### Maplibre: Adding a vector layer from a Directus API with filter
 
@@ -38,8 +34,9 @@ Only Hellenistic and Roman sites are being displayed
       />
 
     </MapCompLibre>
-    
+
     Data from [Kahramanmaraş Survey](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) created by [Elizabeth Carter](http://opencontext.org/persons/3208923d-69d0-70e9-9cc1-23ad97770aec) and published on [OpenContext](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) add distributed with [CC BY 4.0 International](https://creativecommons.org/licenses/by/4.0) license.
+
   </div>
   <div className="col-6">
     ```jsx
@@ -48,7 +45,7 @@ Only Hellenistic and Roman sites are being displayed
       SourceLayer,
     } from "../../modules/myMap/myMap.js"
 
-    <MapCompLibre 
+    <MapCompLibre
         center="37.00416,37.48551,9"
         interactiveLayerIds={["ksa-directus"]}>
 
@@ -70,5 +67,6 @@ Only Hellenistic and Roman sites are being displayed
 
     </MapCompLibre>
     ```
+
   </div>
 </div>
