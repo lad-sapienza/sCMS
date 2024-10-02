@@ -10,7 +10,7 @@ import Map, {
   Source,
   Layer,
 } from "react-map-gl/maplibre"
-import ControlPanel from "./control-panel"
+import ControlPanel from "./controlPanel"
 import { defaultBaseLayers } from "../maps/defaultBaseLayers"
 
 const MapCompLibre = ({

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import { GeoJSON, LayersControl, useMap } from "react-leaflet"
 import * as bbox from "geojson-bbox"
 
-import getData from "../../services/getData"
+import getData from "../../../services/getData"
 
 const VectorLayer = ({
   path2geojson,

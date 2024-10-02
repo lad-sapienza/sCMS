@@ -1,7 +1,8 @@
 import React from "react"
 import { MapContainer, LayersControl } from "react-leaflet"
+
 import { RasterLayer } from "./rasterLayer"
-import { defaultBaseLayers } from "../maps/defaultBaseLayers"
+import { defaultBaseLayers } from "../defaultBaseLayers"
 
 const MapLeaflet = ({ height, center, baseLayers, children, scrollWheelZoom, layersControlPosition }) => {
   
