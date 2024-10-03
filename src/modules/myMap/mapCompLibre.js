@@ -13,12 +13,18 @@ import Map, {
 import ControlPanel from "./controlPanel"
 import { defaultBaseLayers } from "../maps/defaultBaseLayers"
 
+// Importa i componenti di ricerca
+import Search from "../search"
+
 const MapCompLibre = ({
   children,
   height,
   center,
   interactiveLayerIds = [],
   styleJson,
+  fieldList,
+  operators,
+  connector,
 }) => {
   const [lng, lat, zoom] = center?.split(",").map(e => parseFloat(e.trim()))
 
@@ -31,12 +37,12 @@ const MapCompLibre = ({
   }
 
   const [clickInfo, setClickInfo] = useState(null)
-  const [searchTerm, setSearchTerm] = useState("")
+  //const [searchTerm, setSearchTerm] = useState("")
   const [mapInstance, setMapInstance] = useState(null) // Stato per memorizzare la mappa
 
-  const handleSearchChange = event => {
-    setSearchTerm(event.target.value)
-  }
+  // const handleSearchChange = event => {
+  //   setSearchTerm(event.target.value)
+  // }
 
   const onClick = useCallback(
     event => {
@@ -53,11 +59,10 @@ const MapCompLibre = ({
 
   return (
     <React.Fragment>
-      <input
-        type="text"
-        placeholder="Cerca..."
-        value={searchTerm}
-        onChange={handleSearchChange}
+      <Search
+        fieldList={fieldList}
+        operators={operators}
+        connector={connector}
       />
       <Map
         initialViewState={{
@@ -75,7 +80,7 @@ const MapCompLibre = ({
         {/* Passa searchTerm e mapIstance a SourceLayer */}
         {React.Children.map(children, child => {
           if (React.isValidElement(child)) {
-            return React.cloneElement(child, { searchTerm, mapInstance })
+            return React.cloneElement(child, { mapInstance })
           }
           return child
         })}
