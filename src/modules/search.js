@@ -52,15 +52,15 @@ const Search = ({
     if (!fieldList) {
       setError("fieldList parameter is mising")
     }
-    const payload = JSON.stringify(plain2directus(conn, inputs));
-    console.log(payload);
+    const filter = JSON.stringify(plain2directus(conn, inputs));
 
-    getData(`${endPoint}?filter=${payload}`, token, "json")
+    getData(`${endPoint}?filter=${filter}`, token, "json")
       .then(data => {
         if (data.errors) {
           console.log(data.errors)
           setError("Error in querying getting remote data 1")
         } else {
+          setError(null);
           setSearchResults(data)
         }
       })
@@ -76,8 +76,10 @@ const Search = ({
       
 
       {error && <div className="text-danger">{error}</div>}
+      
+      {searchResults.data.length ===0  && <div className="text-warning">No results found</div>}
 
-      {searchResults && !error && (
+      {searchResults && searchResults.data.length > 0  && !error && (
         <Fragment>
           <h1 className="mt-5">Results</h1>
           <div className="resultsContainer">
