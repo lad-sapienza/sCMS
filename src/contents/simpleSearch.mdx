@@ -38,7 +38,7 @@ import SearchUI from "../modules/search/searchUI.js"
 ```jsx
 <Search
   dTable="scms_ksa"
-  searchFields="Item_Label,Site_Name,Site_Description"
+  fieldList="Item_Label,Site_Name,Site_Description"
   resultItemTemplate = { item => {
     return  <div className="card my-3" key={item.id}>
       <div className="card-body">
@@ -64,7 +64,7 @@ import SearchUI from "../modules/search/searchUI.js"
   <div className="col-sm-8">
     <Search
       dTable="scms_ksa"
-      searchFields="Item_Label,Site_Name,Site_Description"
+      fieldList="Item_Label,Site_Name,Site_Description"
       resultItemTemplate = { item => {
         return  <div className="card my-3" key={item.id}>
           <div className="card-body">

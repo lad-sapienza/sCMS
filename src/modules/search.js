@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from "react"
+import { Button, Form } from "react-bootstrap"
 
 import getData from "../services/getData"
 
@@ -8,7 +9,7 @@ const Search = ({
   dToken,
   dQueryString,
   resultItemTemplate,
-  searchFields,
+  fieldList,
 }) => {
   const [query, setQuery] = useState("")
   const [searchResults, setSearchResults] = useState(null)
@@ -45,10 +46,10 @@ const Search = ({
         "Directus token is missing. It should be provided as dToken parameter or as a GATSBY_DIRECTUS_TOKEN env variable"
       )
     }
-    if (!searchFields) {
-      setError("searchFields parameter is mising")
+    if (!fieldList) {
+      setError("fieldList parameter is mising")
     }
-    const query_parts = searchFields.split(",").map((fld, index) => {
+    const query_parts = fieldList.split(",").map((fld, index) => {
       return `[${index}][${fld.trim()}][_icontains]=${query}`
     })
 
@@ -76,10 +77,9 @@ const Search = ({
           <label htmlFor="search_input" className="visually-hidden label">
             Search
           </label>
-          <input
+          <Form.Control
             id="search_input"
-            type="text"
-            className="form-control searchInput"
+            type="search"
             value={query}
             onChange={e => setQuery(e.target.value)}
             placeholder="Search..."
@@ -87,9 +87,9 @@ const Search = ({
         </div>
 
         <div className="col-auto">
-          <button type="submit" className="btn btn-primary">
+          <Button type="submit" variant="primary">
             Search
-          </button>
+          </Button>
         </div>
       </form>
 

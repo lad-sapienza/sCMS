@@ -395,7 +395,7 @@ The query can be directed to selected fields using the following prop:
 
 | Field       | Type   | Default                                  | Description                                                      |
 |-------------|--------|------------------------------------------|------------------------------------------------------------------|
-| searchFields | string | `Item_Label,Site_Name,Site_Description` | Names of fields to be queried. In the case of a multiple-field query, separate the names with commas. |
+| fieldList | string | `Item_Label,Site_Name,Site_Description` | Names of fields to be queried. In the case of a multiple-field query, separate the names with commas. |
 
 For more advanced query logic, see here: [Filtering and join options](#filtering-and-join-options).
 
