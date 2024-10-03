@@ -22,9 +22,6 @@ const MapCompLibre = ({
   center,
   interactiveLayerIds = [],
   styleJson,
-  fieldList,
-  operators,
-  connector,
 }) => {
   const [lng, lat, zoom] = center?.split(",").map(e => parseFloat(e.trim()))
 
@@ -59,11 +56,7 @@ const MapCompLibre = ({
 
   return (
     <React.Fragment>
-      <SearchUI
-        fieldList={fieldList}
-        operators={operators}
-        connector={connector}
-      />
+      <SearchUI />
       <Map
         initialViewState={{
           longitude: lng ? lng : 0,
