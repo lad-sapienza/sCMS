@@ -1,52 +1,34 @@
 import React, { useState } from "react"
 
 import { Row, Col, Form, Button } from "react-bootstrap"
+import defaultOperators from "./defaultOperators"
+import { plain2directus, plain2maplibre } from "./transformers"
 
 const SearchUI = ({ fieldList, operators, connector }) => {
-  operators = operators || {
-    _eq: "Equals",
-    _neq: "Doesn't equal",
-    _lt: "Less than",
-    _lte: "Less than or equal to",
-    _gt: "Greater than",
-    _gte: "Greater than or equal to",
-    // "_in": "Is one of",
-    // "_nin": "Is not one of",
-    _null: "Is null",
-    _nnull: "Isn't null",
-    _contains: "Contains",
-    _icontains: "Contains (case-insensitive)",
-    _ncontains: "Doesn't contain",
-    _starts_with: "Starts with",
-    _istarts_with: "Starts with (case-insensitive)",
-    _nstarts_with: "Doesn't start with",
-    _nistarts_with: "Doesn't start with (case-insensitive)",
-    _ends_with: "Ends with",
-    _iends_with: "Ends with (case-insensitive)",
-    _nends_with: "Doesn't end with",
-    _niends_with: "Doesn't end with (case-insensitive)",
-    _empty: "Is empty",
-    _nempty: "Isn't empty",
-  }
-
-  connector = connector || {
-    _and: "AND",
-    _or: "OR",
+  operators = Object.assign(defaultOperators, operators)
+  connector = {
+    _and: connector?._and || "AND",
+    _or: connector?._or || "OR",
   }
 
   const [inputs, setInputs] = useState([
     {
-      connector: "",
       field: Object.keys(fieldList)[0],
       operator: Object.keys(operators)[0],
       value: "",
     },
   ])
 
+  const [conn, setConn] = useState("_and")
+
   const handleAddInput = () => {
     setInputs([
       ...inputs,
-      { connector: Object.keys(connector)[0], field: Object.keys(fieldList)[0], operator: Object.keys(operators)[0], value: "" },
+      {
+        field: Object.keys(fieldList)[0],
+        operator: Object.keys(operators)[0],
+        value: "",
+      },
     ])
   }
 
@@ -64,28 +46,29 @@ const SearchUI = ({ fieldList, operators, connector }) => {
   }
 
   const handleSend = () => {
-    console.log(inputs)
+    console.log(plain2directus(conn, inputs))
   }
 
   return (
     <React.Fragment>
+      {inputs.length > 1 && (
+        <React.Fragment>
+          {Object.entries(connector).map(([k, v], i) => (
+            <Form.Check
+              key={k}
+              inline
+              type="radio"
+              name="connector"
+              value={k}
+              label={v}
+              checked={k === conn}
+              onChange={event => setConn(k)}
+            />
+          ))}
+        </React.Fragment>
+      )}
       {inputs.map((item, index) => (
         <Row key={index} className="my-2">
-          <Col sm>
-            {index > 0 && (
-              <Form.Select
-                name="connector"
-                onChange={event => handleChange(event, index)}
-                value={item.connector}
-              >
-                {Object.entries(connector).map(([k, v], i) => (
-                  <option key={i} value={v}>
-                    {v}
-                  </option>
-                ))}
-              </Form.Select>
-            )}
-          </Col>
           <Col sm>
             <Form.Select
               aria-label="Select field"
@@ -180,9 +163,32 @@ const SearchUI = ({ fieldList, operators, connector }) => {
           </Col>
         </Row>
       ))}
-      <pre>
-        <code language="js">{JSON.stringify(inputs, null, 2)}</code>
-      </pre>
+      <Row className="row border m-3 shadow p-3">
+        <Col>
+          <p className="border mb-3 shadow p-2">Raw output</p>
+          <pre>
+            <code language="js">
+              {JSON.stringify({ conn: conn, filters: inputs }, null, 2)}
+            </code>
+          </pre>
+        </Col>
+        <Col>
+        <p className="border mb-3 shadow p-2">Output ransformed to Directus API syntax:</p>
+          <pre>
+            <code language="js">
+              {JSON.stringify(plain2directus(conn, inputs), null, 2)}
+            </code>
+          </pre>
+        </Col>
+        <Col>
+        <p className="border mb-3 shadow p-2">Output ransformed to MapLibre Expression syntax:</p>
+          <pre>
+            <code language="js">
+              {JSON.stringify(plain2maplibre(conn, inputs), null, 2)}
+            </code>
+          </pre>
+        </Col>
+      </Row>
     </React.Fragment>
   )
 }
