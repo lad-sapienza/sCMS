@@ -4,10 +4,8 @@ import { Button } from "react-bootstrap"
 import SearchUiAdv from "./searchUiAdv"
 import SearchUiSimple from "./searchUiSimple"
 
-const SearchUI = ({ type, fieldList, processData, operators, connector }) => {
-  type = ["simple", "advanced"].includes(type) ? type : "simple"
-
-  const [isSimple, setIsSimple] = useState(type === "simple")
+const SearchUI = ({ fieldList, processData, operators, connector }) => {
+  const [isSimple, setIsSimple] = useState(true)
 
   const onClickSimple = () => setIsSimple(!isSimple)
 
