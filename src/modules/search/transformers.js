@@ -34,23 +34,8 @@ const operator_map = {
   _lte: "<=",
   _gt: ">",
   _gte: ">=",
-  // "_in": "Is one of",
-  // "_nin": "Is not one of",
-  // _null: "TODO == null?",
-  // _nnull: "TODO != null?",
-  // _contains: "TODO: index-of > -1?",
-  // _icontains: "TODO",
-  // _ncontains: "TODO: index-of < 0",
-  // _starts_with: "TODO",
-  // _istarts_with: "TODO",
-  // _nstarts_with: "TODO",
-  // _nistarts_with: "TODO",
-  // _ends_with: "TODO",
-  // _iends_with: "TODO",
-  // _nends_with: "TODO",
-  // _niends_with: "TODO",
-  // _empty: "TODO: == ''?",
-  _nempty: "TODO: != ''",
+  _in: "in",
+  _nin: "!in",
 }
 
 const connector_map = {
@@ -78,6 +63,101 @@ const plain2maplibre = (conn, plain) => {
       maplibre.push([operator_map[el.operator], ["get", el.field], el.value])
     })
   }
+
+  // Supporto per operatori aggiuntivi in MapLibre
+  plain.forEach(el => {
+    switch (el.operator) {
+      case "_null":
+        maplibre.push(["==", ["get", el.field], null])
+        break
+      case "_nnull":
+        maplibre.push(["!=", ["get", el.field], null])
+        break
+      case "_contains":
+        maplibre.push(["index-of", el.value, ["get", el.field], ">=", 0])
+        break
+      case "_icontains":
+        maplibre.push([
+          "index-of",
+          ["to-lower-case", ["get", el.field]],
+          ["to-lower-case", el.value],
+          ">=",
+          0,
+        ])
+        break
+      case "_ncontains":
+        maplibre.push(["index-of", el.value, ["get", el.field], "<", 0])
+        break
+      case "_starts_with":
+        maplibre.push(["match", ["get", el.field], `${el.value}*`, true, false])
+        break
+      case "_istarts_with":
+        maplibre.push([
+          "match",
+          ["to-lower-case", ["get", el.field]],
+          [`${el.value}*`],
+          true,
+          false,
+        ])
+        break
+      case "_nstarts_with":
+        maplibre.push(
+          ["!match", ["get", el.field]],
+          [`${el.value}*`],
+          true,
+          false,
+        )
+        break
+      case "_nistarts_with":
+        maplibre.push([
+          "!match",
+          ["to-lower-case", ["get", el.field]],
+          [`${el.value}*`],
+          true,
+          false,
+        ])
+        break
+      case "_ends_with":
+        maplibre.push(["match", ["get", el.field], `*${el.value}`, true, false])
+        break
+      case "_iends_with":
+        maplibre.push([
+          "match",
+          ["to-lower", ["get", el.field]],
+          `*${el.value.toLowerCase()}`,
+          true,
+          false,
+        ])
+        break
+      case "_nends_with":
+        maplibre.push([
+          "!match",
+          ["to-lower", ["get", el.field]],
+          `*${el.value.toLowerCase()}`,
+          true,
+          false,
+        ])
+        break
+      case "_niends_with":
+        maplibre.push([
+          "!match",
+          ["get", el.field],
+          `*${el.value}`,
+          true,
+          false,
+        ])
+        break
+      case "_empty":
+        maplibre.push(["==", ["get", el.field], ""])
+        break
+      case "_nempty":
+        maplibre.push(["!=", ["get", el.field], ""])
+        break
+      default:
+        break
+    }
+  })
+
   return maplibre
 }
 
