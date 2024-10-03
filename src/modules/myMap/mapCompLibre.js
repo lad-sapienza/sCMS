@@ -14,7 +14,7 @@ import ControlPanel from "./controlPanel"
 import { defaultBaseLayers } from "../maps/defaultBaseLayers"
 
 // Importa i componenti di ricerca
-import Search from "../search"
+import SearchUI from "../search/searchUI"
 
 const MapCompLibre = ({
   children,
@@ -59,7 +59,7 @@ const MapCompLibre = ({
 
   return (
     <React.Fragment>
-      <Search
+      <SearchUI
         fieldList={fieldList}
         operators={operators}
         connector={connector}
