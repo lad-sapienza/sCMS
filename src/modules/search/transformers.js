@@ -6,18 +6,16 @@
  * @returns {Object}      Object with query compatible to Directus API
  */
 const plain2directus = (conn, plain) => {
-  const directus = {
-    filter: {},
-  }
+  const directus = {}
 
   if (plain.length === 1) {
-    directus.filter[plain[0].field] = {
+    directus[plain[0].field] = {
       [plain[0].operator]: plain[0].value,
     }
   } else {
-    directus.filter[conn] = []
+    directus[conn] = []
     plain.forEach((el, i) => {
-      directus.filter[conn].push({
+      directus[conn].push({
         [el.field]: {
           [el.operator]: el.value,
         },

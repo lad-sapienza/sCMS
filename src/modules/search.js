@@ -1,5 +1,8 @@
 import React, { Fragment, useState } from "react"
-import { Button, Form } from "react-bootstrap"
+
+import SearchUI from "./search/searchUI"
+
+import { plain2directus } from "./search/transformers"
 
 import getData from "../services/getData"
 
@@ -10,15 +13,15 @@ const Search = ({
   dQueryString,
   resultItemTemplate,
   fieldList,
+  operators,
+  connector
 }) => {
-  const [query, setQuery] = useState("")
   const [searchResults, setSearchResults] = useState(null)
   // Stato per gestire lo stato di errore
   const [error, setError] = useState(null)
 
-  const handleSubmit = async event => {
-    event.preventDefault()
-
+  const processData = (conn, inputs) => {
+    
     let endPoint
 
     if (dEndPoint) {
@@ -49,13 +52,10 @@ const Search = ({
     if (!fieldList) {
       setError("fieldList parameter is mising")
     }
-    const query_parts = fieldList.split(",").map((fld, index) => {
-      return `[${index}][${fld.trim()}][_icontains]=${query}`
-    })
+    const payload = JSON.stringify(plain2directus(conn, inputs));
+    console.log(payload);
 
-    const final_query = `filter[_or]${query_parts.join(`&filter[_or]`)}`
-
-    getData(`${endPoint}?${final_query}`, token, "json")
+    getData(`${endPoint}?filter=${payload}`, token, "json")
       .then(data => {
         if (data.errors) {
           console.log(data.errors)
@@ -72,26 +72,8 @@ const Search = ({
 
   return (
     <Fragment>
-      <form onSubmit={handleSubmit} className="mt-5 row searchForm">
-        <div className="col-auto labelContainer">
-          <label htmlFor="search_input" className="visually-hidden label">
-            Search
-          </label>
-          <Form.Control
-            id="search_input"
-            type="search"
-            value={query}
-            onChange={e => setQuery(e.target.value)}
-            placeholder="Search..."
-          />
-        </div>
-
-        <div className="col-auto">
-          <Button type="submit" variant="primary">
-            Search
-          </Button>
-        </div>
-      </form>
+      <SearchUI fieldList={fieldList} operators={operators} connector={connector} processData={processData} />
+      
 
       {error && <div className="text-danger">{error}</div>}
 

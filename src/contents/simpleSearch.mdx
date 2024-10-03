@@ -9,24 +9,24 @@ menu_position: 2
 import Search from "../modules/search.js"
 import { Link } from "gatsby"
 
-import SearchUI from "../modules/search/searchUI.js"
+import SearchUiTest from "../modules/search/searchUiTest.js"
 
 
 <div className="row">
   <div className="col-sm-4">
     ```jsx
-    <SearchUI fieldList={{
-      "field_1": "Field 1",
-      "field_2": "Field 2",
-      "field_3": "Field 3",
+    <SearchUiTest fieldList={{
+      "Item_Label": "Label",
+      "Site_Name": "Site name",
+      "Site_Description": "Site description"
     }} />
     ```
   </div>
   <div className="col-sm-8">
-    <SearchUI fieldList={{
-      "field_1": "Field 1",
-      "field_2": "Field 2",
-      "field_3": "Field 3",
+    <SearchUiTest fieldList={{
+      "Item_Label": "Label",
+      "Site_Name": "Site name",
+      "Site_Description": "Site description"
     }} />
   </div>
 </div>
@@ -38,7 +38,11 @@ import SearchUI from "../modules/search/searchUI.js"
 ```jsx
 <Search
   dTable="scms_ksa"
-  fieldList="Item_Label,Site_Name,Site_Description"
+  fieldList={{
+    "Item_Label": "Label",
+    "Site_Name": "Site name",
+    "Site_Description": "Site description"
+    }}
   resultItemTemplate = { item => {
     return  <div className="card my-3" key={item.id}>
       <div className="card-body">
@@ -64,7 +68,11 @@ import SearchUI from "../modules/search/searchUI.js"
   <div className="col-sm-8">
     <Search
       dTable="scms_ksa"
-      fieldList="Item_Label,Site_Name,Site_Description"
+      fieldList={{
+        "Item_Label": "Label",
+        "Site_Name": "Site name",
+        "Site_Description": "Site description"
+        }}
       resultItemTemplate = { item => {
         return  <div className="card my-3" key={item.id}>
           <div className="card-body">
