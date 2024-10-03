@@ -31,6 +31,28 @@ const plain2directus = (conn, plain) => {
 // TODO: map all type of filters as defined in defaultOperators
 const operator_map = {
   _eq: "==",
+  _neq: "!=",
+  _lt: "<",
+  _lte: "<=",
+  _gt: ">",
+  _gte: ">=",
+  // "_in": "Is one of",
+  // "_nin": "Is not one of",
+  // _null: "TODO == null?",
+  // _nnull: "TODO != null?",
+  // _contains: "TODO: index-of > -1?",
+  // _icontains: "TODO",
+  // _ncontains: "TODO: index-of < 0",
+  // _starts_with: "TODO",
+  // _istarts_with: "TODO",
+  // _nstarts_with: "TODO",
+  // _nistarts_with: "TODO",
+  // _ends_with: "TODO",
+  // _iends_with: "TODO",
+  // _nends_with: "TODO",
+  // _niends_with: "TODO",
+  // _empty: "TODO: == ''?",
+  _nempty: "TODO: != ''",
 }
 
 const connector_map = {
