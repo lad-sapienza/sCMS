@@ -34,12 +34,7 @@ const MapCompLibre = ({
   }
 
   const [clickInfo, setClickInfo] = useState(null)
-  //const [searchTerm, setSearchTerm] = useState("")
   const [mapInstance, setMapInstance] = useState(null) // Stato per memorizzare la mappa
-
-  // const handleSearchChange = event => {
-  //   setSearchTerm(event.target.value)
-  // }
 
   const onClick = useCallback(
     event => {
