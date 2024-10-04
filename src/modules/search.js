@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from "react"
+import PropTypes from "prop-types"
 
 import SearchUI from "./search/searchUI"
 
@@ -91,6 +92,41 @@ const Search = ({
       )}
     </Fragment>
   )
+}
+
+SearchUI.propTypes = {
+  /**
+   * Full URL of Directus endpoint
+   */
+  dEndPoint: PropTypes.string,
+  /**
+   * Directus table
+   */
+  dTable: PropTypes.string,
+  /**
+   * Directus access token
+   */
+  dToken: PropTypes.string,
+  /**
+   * Directus query string
+   */
+  dQueryString: PropTypes.string,
+  /**
+   * Template to use for results
+   */
+  resultItemTemplate: PropTypes.func,
+  /**
+   * List of fields
+   */
+  fieldList: PropTypes.object,
+  /**
+   * List of operators
+   */
+  operators: PropTypes.object,
+  /**
+   * List of connectors
+   */
+  connector: PropTypes.object,
 }
 
 export default Search

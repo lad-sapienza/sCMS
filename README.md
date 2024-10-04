@@ -393,9 +393,17 @@ A `Search` component connects to your data, allowing customization of the query 
 
 The query can be directed to selected fields using the following prop:
 
-| Field       | Type   | Default                                  | Description                                                      |
-|-------------|--------|------------------------------------------|------------------------------------------------------------------|
-| fieldList | string | `Item_Label,Site_Name,Site_Description` | Names of fields to be queried. In the case of a multiple-field query, separate the names with commas. |
+| Field       | Required | Type   | Default   | Description                                                      |
+|-------------|--------  |--------|-----------|------------------------------------------------------------------|
+| fieldList   |    Y     | object |           | Object containing the names of the field that will be available in tha advanced search form. Keys are database name of the fields; values the labels to be shown. In simple search, the query will be limited to these fields|
+| dEndPoint   |    N     | string | | TODO |
+| dTable      |    N     | string | | TODO |
+| dToken      |    N     | string | | TODO |
+| dQueryString |    N    | string | | TODO |
+| resultItemTemplate | N | func | | TODO |
+| fieldList   |    N     | object | | TODO |
+| operators   |    N     | object | | TODO |
+| connector   |    N     | object | | TODO |
 
 For more advanced query logic, see here: [Filtering and join options](#filtering-and-join-options).
 
