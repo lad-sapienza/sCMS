@@ -11,10 +11,10 @@ import Map, {
   Layer,
 } from "react-map-gl/maplibre"
 import ControlPanel from "./controlPanel"
-import { defaultBaseLayers } from "../maps/defaultBaseLayers"
+import { defaultBaseLayers } from "../../maps/defaultBaseLayers"
 
 // Importa i componenti di ricerca
-import SearchUI from "../search/searchUI"
+import SearchUI from "../../search/searchUI.js"
 
 const MapCompLibre = ({
   children,

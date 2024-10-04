@@ -1,11 +1,11 @@
 import React, { Fragment, useState } from "react"
 import PropTypes from "prop-types"
 
-import SearchUI from "./search/searchUI"
+import SearchUI from "./searchUI"
 
-import { plain2directus } from "./search/transformers"
+import { plain2directus } from "./transformers"
 
-import getData from "../services/getData"
+import getData from "../../services/getData"
 
 const Search = ({
   dEndPoint,
@@ -129,4 +129,4 @@ SearchUI.propTypes = {
   connector: PropTypes.object,
 }
 
-export default Search
+export { Search }

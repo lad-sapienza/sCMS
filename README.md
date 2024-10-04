@@ -24,7 +24,6 @@ Static sites are fast, secure, durable: no databases to manage, no code that get
 1. [Deploy your site for free on Github Pages]()
 1. [API](#api)
    1. [Access your data](#access-your-data)
-   1. [MyMap](#mymap)
    1. [MapLeaflet](#mapleaflet)
    1. [MapContainer](#mapcontainer)
    1. [LayersControl](#layerscontrol)
@@ -249,8 +248,6 @@ s:CMS provides you a full arrangement of features for building pages integrating
 s:CMS gives you the chance to build a web-GIS map composed by the juxtaposition of Raster and Vector layers. Various tools are provided for helping customize both the graphical rendering of the wrapper and the visualization of the content.
 
 For the RASTER bases, a simplified access to the most common providers of satellite imagery and digital maps is provided by default, with the possibility to extend the selection to custom maps. Tools are also provided for full customization of vector layers, from data filtering to icon customization. For more complex projects, a layer selector is provided to allow users a cleaner data visualization.
-
-(learn how: [MyMap](#mymap))
 
 #### 3.2. Table
 

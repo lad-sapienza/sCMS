@@ -47,7 +47,7 @@ const VectorLayer = ({
         endPoint = `${process.env.GATSBY_DIRECTUS_ENDPOINT}items/${dTable}`
       } else {
         setError(
-          "Cannont calculate Directus enpoint. Please provide a full endpoint as a MyMap attribute or provide dTable attribute and set GATSBY_DIRECTUS_ENDPOINT environmental variable",
+          "Cannont calculate Directus enpoint. Please provide a full endpoint as an attribute or provide dTable attribute and set GATSBY_DIRECTUS_ENDPOINT environmental variable",
         )
         return
       }
@@ -58,7 +58,7 @@ const VectorLayer = ({
       const token = dToken ? dToken : process.env.GATSBY_DIRECTUS_TOKEN
       if (!token) {
         setError(
-          "Cannot calculate Directus token. Please provide it as an attribute of the MyMap component or define it as the environmnetal variable GATSBY_DIRECTUS_TOKEN",
+          "Cannot calculate Directus token. Please provide it as an attribute of the component or define it as the environmnetal variable GATSBY_DIRECTUS_TOKEN",
         )
         return
       }

@@ -60,7 +60,7 @@ const DataTb = props => {
       } else {
         setError({
           message:
-            "Cannont calculate Directus enpoint. Please provide a full endpoint as a MyMap attribute or provide dTable attribute and set GATSBY_DIRECTUS_ENDPOINT environmental variable",
+            "Cannont calculate Directus enpoint. Please provide a full endpoint as an attribute or provide dTable attribute and set GATSBY_DIRECTUS_ENDPOINT environmental variable",
         })
         setIsLoading(false)
         return
@@ -75,7 +75,7 @@ const DataTb = props => {
       if (!token) {
         setError({
           mesage:
-            "Cannot calculate Directus token. Please provide it as an attribute of the MyMap component or define it as the environmnetal variable GATSBY_DIRECTUS_TOKEN",
+            "Cannot calculate Directus token. Please provide it as an attribute of the component or define it as the environmnetal variable GATSBY_DIRECTUS_TOKEN",
         })
         setIsLoading(false)
         return
@@ -124,4 +124,4 @@ const DataTb = props => {
   )
 }
 
-export default DataTb
+export { DataTb }
