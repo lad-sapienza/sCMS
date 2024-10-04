@@ -3,11 +3,11 @@ import React, { useState } from "react"
 import { Row, Col, Form, Button } from "react-bootstrap"
 import defaultOperators from "./defaultOperators"
 
-const SearchUiAdv = ({ fieldList, processData, operators, connector }) => {
+const SearchUiAdv = ({ fieldList, processData, operators, connectors }) => {
   operators = Object.assign(defaultOperators, operators)
-  connector = {
-    _and: connector?._and || "AND",
-    _or: connector?._or || "OR",
+  connectors = {
+    _and: connectors?._and || "AND",
+    _or: connectors?._or || "OR",
   }
 
   const [inputs, setInputs] = useState([
@@ -48,7 +48,7 @@ const SearchUiAdv = ({ fieldList, processData, operators, connector }) => {
     <React.Fragment>
       {inputs.length > 1 && (
         <React.Fragment>
-          {Object.entries(connector).map(([k, v], i) => (
+          {Object.entries(connectors).map(([k, v], i) => (
             <Form.Check
               key={k}
               inline
