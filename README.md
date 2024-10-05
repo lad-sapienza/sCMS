@@ -384,23 +384,23 @@ NB: All data will be automatically rendered as text upon activation of the query
 
 It is important to note that the tool does not perform case-sensitive searches and scans through all visible fields in the table module. For constructing specific search fields, see [Search](#search).
 
-### Search
+## Search
 
-A `Search` component connects to your data, allowing customization of the query logic and the display of results. It consists of a query field for entering text, a button to handle the query, and a template that individually shows each object that satisfies the query.
+The `Search` component shows a double search — both a simple and an advanced one — connected to your data that a user can use to filter them and finally list the results by defining a customised template.
 
 The query can be directed to selected fields using the following prop:
 
-| Field       | Required | Type   | Default   | Description                                                      |
-|-------------|--------  |--------|-----------|------------------------------------------------------------------|
-| fieldList   |    Y     | object |           | Object containing the names of the field that will be available in tha advanced search form. Keys are database name of the fields; values the labels to be shown. In simple search, the query will be limited to these fields|
-| dEndPoint   |    N     | string | | TODO |
-| dTable      |    N     | string | | TODO |
-| dToken      |    N     | string | | TODO |
-| dQueryString |    N    | string | | TODO |
-| resultItemTemplate | N | func | | TODO |
-| fieldList   |    N     | object | | TODO |
-| operators   |    N     | object | | TODO |
-| connector   |    N     | object | | TODO |
+
+| Parameter   | Required | Type   | Description |
+|-------------|----------|--------|-------------|
+| `dEndPoint`   |          | string | See above [Access your data](#access-your-data) |
+| `dTable`      |          | string | See above [Access your data](#access-your-data) |
+| `dToken`      |          | string | See above [Access your data](#access-your-data) |
+| `dQueryString` |         | string | See above [Access your data](#access-your-data) |
+| `fieldList`   |    Y     | object | Object containing the names of the field that will be available in tha advanced search form. Keys are database name of the fields; values the labels to be shown. In simple search, the query will be limited to these fields |
+| `resultItemTemplate` | N | func | Function to be used to show the results. It will receive the object cotaining data about a single item |
+| `operators`   |    N     | object | TODO |
+| `connector`   |    N     | object | TODO |
 
 For more advanced query logic, see here: [Filtering and join options](#filtering-and-join-options).
 
