@@ -2,7 +2,7 @@ import csv from "csvtojson"
 import { json2GeoJson } from "../modules/transformers"
 
 /**
- *
+ * Loads data from external source, that might be a static file (csv o (geo)json) or a Directus API
  * @param {String} source required. Data source: can be a Directus endpont (complete with protocol, full path and table name), a path to a local file or a path to e remotelo accessible file
  * @param {Sting} token optional. Authentication token for services supporting Authetnication bearaer token
  * @param {String} transType Data transformation type. At present the following are supported: json, geojson, csv2json
