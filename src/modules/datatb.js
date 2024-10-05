@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+import PropTypes from "prop-types"
 import DataTable from "react-data-table-component"
 import getData from "../services/getData"
 
@@ -122,6 +123,14 @@ const DataTb = props => {
       <DataTable data={filteredData} pagination {...props} />
     </>
   )
+}
+
+DataTb.propTypes = {
+  path2data: PropTypes.string,
+  dEndPoint: PropTypes.string,
+  dToken: PropTypes.string,
+  dTable: PropTypes.string,
+  dQueryString: PropTypes.string
 }
 
 export { DataTb }
