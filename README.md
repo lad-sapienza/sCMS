@@ -1,5 +1,11 @@
 # s:CMS
 
+## TODO
+
+- Un componente aggiuntivo alla mappa che elenca le features visualizzate sulla mappa con una piccola ricerca
+
+---
+
 s:CMS is an easy, open source and ready-to-use content management system for [generating static sites](https://www.cloudflare.com/en-gb/learning/performance/static-site-generator/) based on [Gatsby.js](https://www.gatsbyjs.com/). It also implements data-oriented components for easily **connecting**, **displaying** and **analysing** research data stored in databases, in flat files or remotely, in an easy, informative and efficient way: maps, searchable tables, and soon to come charts. 
 
 Our aim is to enable researchers to publish online rich data portals, by pulling the information from a wide range of sources, be them flat static files, remotely accessible services, or online databases. We try to build components — resuing as much as possible well known open source projects — to make the integration seemless and to offer a simplified workflow to securely publish contents.
@@ -81,6 +87,7 @@ By following these preliminary steps, you'll be ready to start developing with G
 Now you can create your own s:CMS project!
 
 Just open the terminal or command prompt and type
+
 ```bash
 npx gatsby new my-new-site https://github.com/lab-archeologia-digitale/sCMS
 ```
@@ -230,10 +237,10 @@ Firstly, it is important that you can configure every page's visualization using
 
 | Field           | Required | Example     | Description                                                                 |
 |-----------------|----------|-------------|-----------------------------------------------------------------------------|
-| title           | Y        | `homepage`  | Define the name shown for the page and on the navbar                        |
-| date            | N        | `2024-04-10`| Define the date of creation/last update of the page                         |
-| slug            | Y        | `home`      | Define the personalized ending of the URL address specific to the page.     |
-| menu_position   | Y        | `0`         | Define the internal indexing of the page used for the correct ordering in the navbar. |
+| `title`           | Y        | homepage  | Define the name shown for the page and on the navbar                        |
+| `date`            | N        | 2024-04-10 | Define the date of creation/last update of the page                         |
+| `slug`            | Y        | home      | Define the personalized ending of the URL address specific to the page.     |
+| `menu_position`   | Y        | 0         | Define the internal indexing of the page used for the correct ordering in the navbar. |
 
 ### 2. Static page
 
@@ -285,7 +292,7 @@ For integration of your data into the project, the following props must be used:
 
 | Field     | Type    | Description                                                          |
 |-----------|---------|----------------------------------------------------------------------|
-| path2cvs  | String  | Relative or full path to the static file containing your data        |
+| `path2csv`  | String  | Relative or full path to the static file containing your data        |
 | dEndPoint | String  | Full URL pointing to a Directus endpoint, complete with referenced table name |
 | dToken    | String  | Directus access token, required if the table is not public. If not provided, the `GATSBY_DIRECTUS_TOKEN` environment variable will be used |
 | dTable    | String  | Directus table containing geographical data. This is an alternative way to point to a Directus table and needs the the `GATSBY_DIRECTUS_TOKEN` environment variable to be set |
