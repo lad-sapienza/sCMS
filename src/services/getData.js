@@ -1,5 +1,5 @@
 import csv from "csvtojson"
-import { Json2GeoJson } from "../modules/transformers"
+import { json2GeoJson } from "../modules/transformers"
 
 /**
  *
@@ -30,7 +30,7 @@ const getData = async (source, token, transType, dGeoField) => {
 
       case "geojson":
         const respgeoJson = await response.json()
-        output = Json2GeoJson(respgeoJson.data, dGeoField || "coordinates")
+        output = json2GeoJson(respgeoJson.data, dGeoField || "coordinates")
         break
 
       case "csv2json":
