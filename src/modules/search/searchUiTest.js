@@ -3,12 +3,10 @@ import { Row, Col } from "react-bootstrap"
 
 import SearchUI from "./searchUI.js"
 
-import { plain2directus } from "./transformers"
-import { plain2maplibre } from "./transformers"
+import { plain2directus, plain2maplibre } from "../transformers/index.js"
 
 const SearchUiTest = ({ type, fieldList, operators, connector }) => {
   type = ["simple", "advanced"].includes(type) ? type : "simple"
-
 
   const [outDir, setOutDir] = useState("")
   const [outML, setOutML] = useState("")
@@ -22,8 +20,13 @@ const SearchUiTest = ({ type, fieldList, operators, connector }) => {
 
   return (
     <React.Fragment>
-      <SearchUI fieldList={fieldList} operators={operators} connector={connector} processData={processData} />
-      
+      <SearchUI
+        fieldList={fieldList}
+        operators={operators}
+        connector={connector}
+        processData={processData}
+      />
+
       <hr />
 
       <Row className="row border m-3 shadow p-3">

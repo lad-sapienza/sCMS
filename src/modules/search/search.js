@@ -3,8 +3,7 @@ import PropTypes from "prop-types"
 
 import SearchUI from "./searchUI"
 
-import { plain2directus } from "./transformers"
-
+import { plain2directus } from "../transformers/index"
 import getData from "../../services/getData"
 
 const Search = ({
