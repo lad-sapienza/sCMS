@@ -5,7 +5,7 @@ import * as bbox from "geojson-bbox"
 import getData from "../../../services/getData"
 
 const VectorLayer = ({
-  path2geojson,
+  path2data,
   dEndPoint,
   dTable,
   dGeoField,
@@ -23,8 +23,8 @@ const VectorLayer = ({
   const map = useMap()
 
   useEffect(() => {
-    if (path2geojson) {
-      getData(path2geojson, null, "json")
+    if (path2data) {
+      getData(path2data, null, "json")
         .then(geoJSON => {
           setGeojson(geoJSON)
         })
@@ -71,7 +71,7 @@ const VectorLayer = ({
           setError("Error getting remote data")
         })
     }
-  }, [path2geojson, dEndPoint, dTable, dQueryString, dToken, dGeoField])
+  }, [path2data, dEndPoint, dTable, dQueryString, dToken, dGeoField])
 
   if (error) {
     console.log(error)

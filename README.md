@@ -292,11 +292,11 @@ For integration of your data into the project, the following props must be used:
 
 | Field     | Type    | Description                                                          |
 |-----------|---------|----------------------------------------------------------------------|
-| `path2csv`  | String  | Relative or full path to the static file containing your data        |
-| dEndPoint | String  | Full URL pointing to a Directus endpoint, complete with referenced table name |
-| dToken    | String  | Directus access token, required if the table is not public. If not provided, the `GATSBY_DIRECTUS_TOKEN` environment variable will be used |
-| dTable    | String  | Directus table containing geographical data. This is an alternative way to point to a Directus table and needs the the `GATSBY_DIRECTUS_TOKEN` environment variable to be set |
-| dQueryString | String | A string containing the filter to apply to your complete API, already inserted as `dEndPoint` or `dTable` |
+| `path2data`  | String  | Relative or full path to the static file containing your data        |
+| `dEndPoint` | String  | Full URL pointing to a Directus endpoint, complete with referenced table name |
+| `dToken`    | String  | Directus access token, required if the table is not public. If not provided, the `GATSBY_DIRECTUS_TOKEN` environment variable will be used |
+| `dTable`    | String  | Directus table containing geographical data. This is an alternative way to point to a Directus table and needs the the `GATSBY_DIRECTUS_TOKEN` environment variable to be set |
+| `dQueryString` | String | A string containing the filter to apply to your complete API, already inserted as `dEndPoint` or `dTable` |
 
 The preferred way to point to a Directus database is via environment variables and `dTable` parameter, both for security (it prevents exposure of your credentials) and practicality. Two or more different Directus instances can be referred at the same time, using both methods.
 
@@ -326,7 +326,7 @@ It accepts the following props:
 - a local GeoJSON file
 - a remote GeoJSON file
 - a table of Directus instance containing geographical data.
-Parameters for accessing data, such as `path2geojson`, `dEndPoint`, `dTable`, `dGeoField`, `dQueryString` and `dToken` are [documented above](#access-your-data).
+Parameters for accessing data, such as `path2data`, `dEndPoint`, `dTable`, `dGeoField`, `dQueryString` and `dToken` are [documented above](#access-your-data).
 Other parameters are:
   
 

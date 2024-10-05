@@ -36,8 +36,8 @@ const DataTb = props => {
   useEffect(() => {
     setIsLoading(true)
 
-    if (props.path2csv) {
-      getData(props.path2csv, null, "csv2json")
+    if (props.path2data) {
+      getData(props.path2data, null, "csv2json")
         .then(jsonData => {
           setData(jsonData)
           setIsLoading(false)

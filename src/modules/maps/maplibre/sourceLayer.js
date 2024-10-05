@@ -7,7 +7,7 @@ import getData from "../../../services/getData"
 const SourceLayer = ({
   id,
   type,
-  path2geojson,
+  path2data,
   dEndPoint,
   dTable,
   dFilter,
@@ -21,8 +21,8 @@ const SourceLayer = ({
   const map = useMap()
 
   useEffect(() => {
-    if (path2geojson) {
-      getData(path2geojson, null, "json")
+    if (path2data) {
+      getData(path2data, null, "json")
         .then(geoJSON => {
           setGeojson(geoJSON)
         })
@@ -69,7 +69,7 @@ const SourceLayer = ({
           setError("Error getting remote data")
         })
     }
-  }, [path2geojson, dEndPoint, dTable, dFilter, dToken, dGeoField]) // L'array di dipendenze vuoto assicura che questo effetto venga eseguito solo una volta, simile a componentDidMount
+  }, [path2data, dEndPoint, dTable, dFilter, dToken, dGeoField]) // L'array di dipendenze vuoto assicura che questo effetto venga eseguito solo una volta, simile a componentDidMount
 
   if (error) {
     console.log(error)
