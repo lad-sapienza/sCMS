@@ -9,6 +9,7 @@ const getData = async ({
   dToken,
 
   dTable,
+  id,
   dQueryString,
 
   transType,
@@ -36,6 +37,9 @@ const getData = async ({
       throw new Error(
         "Either `dEndPoint` or env variable `GATSBY_DIRECTUS_ENDPOINT` AND `dTable` are needed",
       )
+    }
+    if (id){
+      source += `/${id}`
     }
     source += `?${dQueryString ? dQueryString : ""}`
 
@@ -85,6 +89,7 @@ getData.PropTypes = {
   dEndPoint: PropTypes.string,
   dToken: PropTypes.string,
   dTable: PropTypes.string,
+  id: PropTypes.number,
   dQueryString: PropTypes.string,
   transType: PropTypes.oneOf(["text", "csv2json", "json", "geojeson"]),
 }

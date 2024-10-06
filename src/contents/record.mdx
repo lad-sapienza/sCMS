@@ -1,0 +1,38 @@
+---
+title: "Record component"
+date: "2023-10-01"
+slug: "record"
+description: ""
+menu_position: 2
+---
+
+import {Record, Field} from "../modules/scms.js"
+
+<div className="row">
+  <div className="col-sm-4">
+    ```jsx
+    <Record>
+      - **Label**: <Field name="Item_Label" />
+      - **URI**: <Field name="URI" />
+      - **Project**: <Field name="Project" />
+      - **Project_URI**: <Field name="Project_URI" />
+      - **Project_URI**: <Field name="Project_URI" />
+      - Coordinates:
+        - **Lng**: <Field name="geometry" name2="coordinates" name3="0" />
+        - **Lat**: <Field name="geometry" name2="coordinates" name3="1" />
+    </Record>
+    ```
+  </div>
+  <div className="col-sm-8">
+    <Record>
+      - **Label**: <Field name="Item_Label" />
+      - **URI**: <Field name="URI" />
+      - **Project**: <Field name="Project" />
+      - **Project_URI**: <Field name="Project_URI" />
+      - **Project_URI**: <Field name="Project_URI" />
+      - Coordinates:
+        - **Lng**: <Field name="geometry" name2="coordinates" name3="0" />
+        - **Lat**: <Field name="geometry" name2="coordinates" name3="1" />
+    </Record>
+  </div>
+</div>

@@ -417,7 +417,7 @@ For the resulting template, the following arguments are given:
 |-------|------|------------------------------------|---------------------------------------------------------------|
 | key   | id   | {item.id}                          | Necessary element for indexing results. Do not modify.        |
 | Item  |      | `item.Item_Label; item.Site_Name`  | Selected fields shown for each element`s template.            |
-| <a href=> | URL  | `(`https://inrome.sns.it/db/items/cms_articles`)}&tb=cms_articles&token=I0pT7ozY0KuK8i-vtwLQGek36s0IhQ5e&id=${item.id}`}` | A reference linking the `view` button to the item`s record page. Complete endpoint and token must be provided. |
+| <a href=> | URL  | `(`https://inrome.sns.it/db/items/cms_ksa`)}&tb=cms_ksa&token=I0pT7ozY0KuK8i-vtwLQGek36s0IhQ5e&id=${item.id}`}` | A reference linking the `view` button to the item`s record page. Complete endpoint and token must be provided. |
 
 As shown in the [example`s page](https://lab-archeologia-digitale.github.io/sCMS/simple-search/), HTML/CSS syntax can be used for further customisation and organization of the results.
 
