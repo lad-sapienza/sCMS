@@ -1,36 +1,61 @@
+import PropTypes from "prop-types"
 import csv from "csvtojson"
-import { json2GeoJson } from "../modules/transformers"
+import { json2geoJson } from "../modules/transformers"
 
-/**
- * Loads data from external source, that might be a static file (csv o (geo)json) or a Directus API
- * @param {String} source required. Data source: can be a Directus endpont (complete with protocol, full path and table name), a path to a local file or a path to e remotelo accessible file
- * @param {Sting} token optional. Authentication token for services supporting Authetnication bearaer token
- * @param {String} transType Data transformation type. At present the following are supported: json, geojson, csv2json
- * @param {String} dGeoField Directus field containing geographical data
- * @returns
- */
-const getData = async (source, token, transType, dGeoField) => {
-  let output
+const getData = async ({
+  path2data,
+
+  dEndPoint,
+  dToken,
+
+  dTable,
+  dQueryString,
+
+  transType,
+  geoField,
+}) => {
+  let source
   let options = {}
+  let output
 
-  if (token) {
-    options = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+  if (path2data) {
+    source = path2data
+    if (path2data.toLowerCase().endsWith(".csv")) {
+      transType = "csv2json"
+    }
+    if (path2data.toLowerCase().endsWith(".geojson")) {
+      transType = "json"
+    }
+  } else {
+    if (dEndPoint) {
+      source = dEndPoint
+    } else if (process.env.GATSBY_DIRECTUS_ENDPOINT && dTable) {
+      source = `${process.env.GATSBY_DIRECTUS_ENDPOINT}items/${dTable}`
+    } else {
+      console.log(path2data)
+      throw new Error(
+        "Either `dEndPoint` or env variable `GATSBY_DIRECTUS_ENDPOINT` AND `dTable` are needed",
+      )
+    }
+    source += `?${dQueryString ? dQueryString : ""}`
+
+    const token = dToken ? dToken : process.env.GATSBY_DIRECTUS_TOKEN
+
+    if (token) {
+      options = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     }
   }
+
   try {
     const response = await fetch(source, options)
 
     switch (transType) {
-      case "json":
-        output = await response.json()
-        break
-
-      case "geojson":
-        const respgeoJson = await response.json()
-        output = json2GeoJson(respgeoJson.data, dGeoField || "coordinates")
+      case "text":
+        output = await response.text()
         break
 
       case "csv2json":
@@ -38,15 +63,30 @@ const getData = async (source, token, transType, dGeoField) => {
         output = await csv().fromString(csvText)
         break
 
+      case "geojson":
+        const respJson = await response.json()
+        output = json2geoJson(respJson.data, geoField)
+        break
+
+      case "json":
       default:
-        output = await response.text()
+        output = await response.json()
         break
     }
 
-    return output
+    return Object.hasOwn(output, 'data') ? output.data : output
   } catch (error) {
     throw Error(`Cannot get data from ${source}`)
   }
+}
+
+getData.PropTypes = {
+  path2data: PropTypes.string,
+  dEndPoint: PropTypes.string,
+  dToken: PropTypes.string,
+  dTable: PropTypes.string,
+  dQueryString: PropTypes.string,
+  transType: PropTypes.oneOf(["text", "csv2json", "json", "geojeson"]),
 }
 
 export default getData

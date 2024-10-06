@@ -1,4 +1,4 @@
-const json2GeoJson = (json, geoDataField) => {
+const json2geoJson = (json, geoDataField) => {
   return {
     type: "FeatureCollection",
     features: json.map(item => ({
@@ -15,4 +15,4 @@ const json2GeoJson = (json, geoDataField) => {
   }
 }
 
-export {json2GeoJson};
+export {json2geoJson};

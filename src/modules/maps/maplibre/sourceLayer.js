@@ -10,10 +10,10 @@ const SourceLayer = ({
   path2data,
   dEndPoint,
   dTable,
-  dFilter,
+  dQueryString,
   dToken,
   fitToContent,
-  dGeoField,
+  geoField,
   layerstyle,
 }) => {
   const [geojsonData, setGeojson] = useState()
@@ -21,55 +21,21 @@ const SourceLayer = ({
   const map = useMap()
 
   useEffect(() => {
-    if (path2data) {
-      getData(path2data, null, "json")
-        .then(geoJSON => {
-          setGeojson(geoJSON)
-        })
-        .catch(err => {
-          console.log(err)
-          setError("Error getting remote data from static file")
-        })
-    } else {
-      // Define Directus endpoint anche check all dependencies
-      let endPoint
-      if (dEndPoint) {
-        endPoint = dEndPoint
-      } else if (dTable) {
-        if (!process.env.GATSBY_DIRECTUS_ENDPOINT) {
-          setError(
-            "Cannot calculate API end-point. Parameter dTable requires the enc variable GATSBY_DIRECTUS_ENDPOINT to be set",
-          )
-          return
-        }
-        endPoint = `${process.env.GATSBY_DIRECTUS_ENDPOINT}items/${dTable}`
-      } else {
-        setError(
-          "Cannont calculate Directus enpoint. Please provide a full endpoint as an attribute or provide dTable attribute and set GATSBY_DIRECTUS_ENDPOINT environmental variable",
-        )
-        return
-      }
-      if (dFilter) {
-        endPoint += `?${dFilter}`
-      }
-      // Define Directus token
-      const token = dToken ? dToken : process.env.GATSBY_DIRECTUS_TOKEN
-      if (!token) {
-        setError(
-          "Cannot calculate Directus token. Please provide it as an attribute of the component or define it as the environmnetal variable GATSBY_DIRECTUS_TOKEN",
-        )
-        return
-      }
-      getData(endPoint, token, "geojson", dGeoField)
-        .then(geoJSON => {
-          setGeojson(geoJSON)
-        })
-        .catch(err => {
-          console.log(err)
-          setError("Error getting remote data")
-        })
-    }
-  }, [path2data, dEndPoint, dTable, dFilter, dToken, dGeoField]) // L'array di dipendenze vuoto assicura che questo effetto venga eseguito solo una volta, simile a componentDidMount
+    getData({
+      path2data: path2data,
+      dEndPoint: dEndPoint,
+      dTable: dTable,
+      dToken: dToken,
+      dQueryString: dQueryString,
+      transType: "geojson",
+      geoField: geoField
+    }).then(geoJSON => {
+      setGeojson(geoJSON)
+    }).catch(err => {
+      console.log(err)
+      setError("Error getting data")
+    });
+  }, [path2data, dEndPoint, dTable, dToken, geoField, dQueryString])
 
   if (error) {
     console.log(error)

@@ -8,7 +8,7 @@ const VectorLayer = ({
   path2data,
   dEndPoint,
   dTable,
-  dGeoField,
+  geoField,
   dQueryString,
   dToken,
   name,
@@ -23,61 +23,29 @@ const VectorLayer = ({
   const map = useMap()
 
   useEffect(() => {
-    if (path2data) {
-      getData(path2data, null, "json")
-        .then(geoJSON => {
-          setGeojson(geoJSON)
-        })
-        .catch(err => {
-          console.log(err)
-          setError("Error getting remote data from static file")
-        })
-    } else {
-      // Define Drectus endpoint anche check all dependencies
-      let endPoint
-      if (dEndPoint) {
-        endPoint = dEndPoint
-      } else if (dTable) {
-        if (!process.env.GATSBY_DIRECTUS_ENDPOINT) {
-          setError(
-            "Cannot calculate API end-point. Parameter dTable requires the enc variable GATSBY_DIRECTUS_ENDPOINT to be set",
-          )
-          return
-        }
-        endPoint = `${process.env.GATSBY_DIRECTUS_ENDPOINT}items/${dTable}`
-      } else {
-        setError(
-          "Cannont calculate Directus enpoint. Please provide a full endpoint as an attribute or provide dTable attribute and set GATSBY_DIRECTUS_ENDPOINT environmental variable",
-        )
-        return
-      }
-      if (dQueryString) {
-        endPoint += `?${dQueryString}`
-      }
-      // Define Directus token
-      const token = dToken ? dToken : process.env.GATSBY_DIRECTUS_TOKEN
-      if (!token) {
-        setError(
-          "Cannot calculate Directus token. Please provide it as an attribute of the component or define it as the environmnetal variable GATSBY_DIRECTUS_TOKEN",
-        )
-        return
-      }
-      getData(endPoint, token, "geojson", dGeoField)
-        .then(geoJSON => {
-          setGeojson(geoJSON)
-        })
-        .catch(err => {
-          console.log(err)
-          setError("Error getting remote data")
-        })
-    }
-  }, [path2data, dEndPoint, dTable, dQueryString, dToken, dGeoField])
+    getData({
+      path2data: path2data,
+      dTable: dTable,
+      dEndPoint: dEndPoint,
+      dToken: dToken,
+      dQueryString: dQueryString,
+      transType: "geojson",
+      geoField: geoField,
+    })
+      .then(geoJSON => {
+        setGeojson(geoJSON)
+      })
+      .catch(err => {
+        console.log(err)
+        setError("Error getting data")
+      })
+  }, [path2data, dEndPoint, dTable, dQueryString, dToken, geoField])
 
   if (error) {
     console.log(error)
-    return <></>
+    return <div className="text-danger">Error in rendering the map</div>
   } else if (!geojsonData) {
-    return <></>
+    return <div className="text-danger">Error in rendering the map</div>
   } else {
     if (fitToContent) {
       const lBb = bbox(geojsonData)

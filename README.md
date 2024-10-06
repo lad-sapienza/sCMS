@@ -326,7 +326,7 @@ It accepts the following props:
 - a local GeoJSON file
 - a remote GeoJSON file
 - a table of Directus instance containing geographical data.
-Parameters for accessing data, such as `path2data`, `dEndPoint`, `dTable`, `dGeoField`, `dQueryString` and `dToken` are [documented above](#access-your-data).
+Parameters for accessing data, such as `path2data`, `dEndPoint`, `dTable`, `geoField`, `dQueryString` and `dToken` are [documented above](#access-your-data).
 Other parameters are:
   
 
@@ -350,7 +350,7 @@ Each declared object has the following attributes:
 |--------------|--------|----------|------------------------------------------------------|
 | checked      | string | y        | The name to be displayed on your website.            |
 | fitToContent | string | y        | The URL of the tiled map you want to use.            |
-| dGeoField     | string | n        | A string to credit the original creators of the tiled map (necessary for licensed material). |
+| geoField     | string | n        | A string to credit the original creators of the tiled map (necessary for licensed material). |
 
 In the `MapLeaflet` Wrapper, the attributes of each item are used in the `RasterLayer` structure, which also allows you to add the following prop to your layer:
 
