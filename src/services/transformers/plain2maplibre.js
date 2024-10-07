@@ -141,4 +141,4 @@ const plain2maplibre = (conn, plain) => {
   return maplibre
 }
 
-export { plain2maplibre }
+export default plain2maplibre

@@ -3,7 +3,8 @@ import { Row, Col } from "react-bootstrap"
 
 import SearchUI from "./searchUI.js"
 
-import { plain2directus, plain2maplibre } from "../transformers/index.js"
+import plain2directus from "../../services/transformers/plain2directus.js"
+import plain2maplibre from "../../services/transformers/plain2maplibre.js"
 
 const SearchUiTest = ({ type, fieldList, operators, connector }) => {
   type = ["simple", "advanced"].includes(type) ? type : "simple"

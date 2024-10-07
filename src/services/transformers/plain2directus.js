@@ -26,4 +26,4 @@ const plain2directus = (conn, plain) => {
   return directus
 }
 
-export { plain2directus }
+export default plain2directus

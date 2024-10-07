@@ -15,4 +15,4 @@ const json2geoJson = (json, geoDataField) => {
   }
 }
 
-export {json2geoJson};
+export default json2geoJson;

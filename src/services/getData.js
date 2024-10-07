@@ -1,6 +1,6 @@
 import PropTypes from "prop-types"
 import csv from "csvtojson"
-import { json2geoJson } from "../modules/transformers"
+import json2geoJson from "./transformers/json2geojson.js"
 
 const getData = async ({
   path2data,
