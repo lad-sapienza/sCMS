@@ -19,4 +19,4 @@ const getDataFromObj = (obj, search) => {
   return output
 }
 
-export { getDataFromObj }
+export default getDataFromObj

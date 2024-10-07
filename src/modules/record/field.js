@@ -1,6 +1,6 @@
 import React from "react"
 import { RecordContext } from "../record"
-import getDataFromObj from "../transformers/getDataFromObj.js"
+import getDataFromObj from "../../services/transformers/getDataFromObj"
 
 const Field = ({ name }) => {
   const value = React.useContext(RecordContext)
