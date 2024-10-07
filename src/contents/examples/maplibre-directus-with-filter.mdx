@@ -1,7 +1,7 @@
 ---
 title: "Maplibre: Adding a vector layer from a Directus API with filter"
 date: "2024-10-01"
-slug: "examples/leaflet-directus-with-filter"
+slug: "maps/examples/leaflet-directus-with-filter"
 description: "Maplibre: Adding a vector layer from a Directus API with filter"
 ---
 
@@ -25,10 +25,8 @@ Only Hellenistic and Roman sites are being displayed
       <SourceLayer
         id="2"
         type="geojson"
-        dEndPoint="https://db.lad-sapienza.it/curry/items/scms_ksa"
         dQueryString="filter[Hellenistic_Roman][_eq]=true"
         dTable="scms_ksa"
-        dToken="TzwQYgn4PSk5czDvQsT39gx8EByfBdiN"
         geoField="geometry"
         layerstyle={{
           id: "ksa-directus",
@@ -61,8 +59,8 @@ Only Hellenistic and Roman sites are being displayed
       <SourceLayer
         id="2"
         type="geojson"
-        dEndPoint="https://db.lad-sapienza.it/curry/items/scms_ksa"
         dQueryString="filter[Hellenistic_Roman][_eq]=true"
+        dTable="scms_ksa"
         geoField="geometry"
         layerstyle={{
           id: "ksa-directus",
