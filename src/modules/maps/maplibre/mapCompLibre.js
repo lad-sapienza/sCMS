@@ -28,8 +28,30 @@ const MapCompLibre = ({
 
   const [clickInfo, setClickInfo] = useState(null)
 
-  const handleLayerChange = styleUrl => {
-    setMapStyle(styleUrl)
+  // Verifica se ci sono children e se possono essere mappati correttamente
+  const [visibleSourceLayers, setVisibleSourceLayers] = useState(
+    children
+      ? React.Children.map(children, child => ({
+          id: child.props.id,
+          visible: true, // Inizialmente tutti visibili
+          ...child.props,
+        }))
+      : [], // Fallback nel caso non ci siano children
+  )
+
+  // Funzione per cambiare il layer (sia baseLayers che sourceLayers)
+  const handleLayerChange = (layerId, type = "base") => {
+    if (type === "base") {
+      // Cambio dello stile della mappa
+      setMapStyle(layerId)
+    } else {
+      // Cambio della visibilità dei sourceLayers
+      setVisibleSourceLayers(prev =>
+        prev.map(layer =>
+          layer.id === layerId ? { ...layer, visible: !layer.visible } : layer,
+        ),
+      )
+    }
   }
 
   const onClick = useCallback(
@@ -58,6 +80,19 @@ const MapCompLibre = ({
         interactiveLayerIds={interactiveLayerIds} // Passa l'array di layer interattivi
         onClick={onClick}
       >
+        {/* Render dei base layers */}
+        <Source id="basemap" type="raster" tiles={[mapStyle]} tileSize={256} />
+        <Layer id="basemap-layer" type="raster" source="basemap" />
+
+        {/* Render dei sourceLayers basati sulla loro visibilità */}
+        {visibleSourceLayers.map(
+          layer =>
+            layer.visible && (
+              <Source key={layer.id} id={layer.id} {...layer}>
+                <Layer {...layer.layerstyle} />
+              </Source>
+            ),
+        )}
         {children}
 
         <Source id="basemap" type="raster" tiles={[mapStyle]} tileSize={256} />
