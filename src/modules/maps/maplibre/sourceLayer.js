@@ -68,9 +68,9 @@ const SourceLayer = ({
 
           const property = feature.properties[field] // Ottieni la proprietà corretta
 
-          console.log(
-            `Confronto per ${field}: ${property} ${operator} ${value}`,
-          )
+          // console.log(
+          //   `Confronto per ${field}: ${property} ${operator} ${value}`,
+          // )
 
           // Applica l'operatore di confronto
           switch (operator) {

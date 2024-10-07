@@ -27,14 +27,16 @@ Only Hellenistic and Roman sites are being displayed
         type="geojson"
         dEndPoint="https://db.lad-sapienza.it/curry/items/scms_ksa"
         dQueryString="filter[Hellenistic_Roman][_eq]=true"
+        dTable="scms_ksa"
+        dToken="TzwQYgn4PSk5czDvQsT39gx8EByfBdiN"
         geoField="geometry"
         layerstyle={{
           id: "ksa-directus",
-          type: "fill",
+          type: "circle",
           paint: {
-            "fill-color": "#888",
-            "fill-opacity": 0.5
-          }
+            "circle-radius": 10,
+            "circle-color": "red",
+          },
         }}
       />
     </MapCompLibre>
