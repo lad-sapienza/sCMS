@@ -75,7 +75,7 @@ MapLeaflet.propTypes = {
   /**
    * Children elements
    */
-  children: PropTypes.element, 
+  children: PropTypes.arrayOf(PropTypes.element), 
   /**
    * Boolean to controle if wheel zoom is active or not. Default false
    */

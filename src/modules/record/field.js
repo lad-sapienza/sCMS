@@ -1,5 +1,5 @@
 import React from "react"
-import { RecordContext } from "../record"
+import { RecordContext } from "./record"
 import getDataFromObj from "../../services/transformers/getDataFromObj"
 
 const Field = ({ name }) => {

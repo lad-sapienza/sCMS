@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
-import withLocation from "./record/withLocation"
-import getData from "../services/getData"
+import withLocation from "./withLocation"
+import getData from "../../services/getData"
 
 export const RecordContext = React.createContext()
 
@@ -32,9 +32,9 @@ const RecordNotWrapped = ({ search, children }) => {
     }
   }, [endPoint, tb, token, id])
 
-  if (loading) {
+  if (loading){ 
     return <div className="text-info">Loading...</div>
-  }
+ } 
   if (error) {
     console.log(error)
     return (
