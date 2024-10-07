@@ -5,7 +5,7 @@ slug: "examples/leaflet-directus-with-filter"
 description: "Maplibre: Adding a vector layer from a Directus API with filter"
 ---
 
-import { Search, MapCompLibre, SourceLayer } from "../../modules/scms.js"
+import { MapCompLibre, SourceLayer } from "../../modules/scms.js"
 
 ### Maplibre: Adding a vector layer from a Directus API with filter
 
@@ -14,14 +14,14 @@ Only Hellenistic and Roman sites are being displayed
 <div className="row mt-3 mb-5 border-top border-bottom py-3">
   <div className="col-6">
     <MapCompLibre 
-        center="37.00416,37.48551,9"
-        interactiveLayerIds={["ksa-directus"]}
-        fieldList={{
-      "Item_Label": "Label",
-      "Site_Name": "Site name",
-      "Site_Description": "Site description"
-    }}>
-
+      center="37.00416,37.48551,9"
+      interactiveLayerIds={["ksa-directus"]}
+      fieldList={{
+        "Item_Label": "Label",
+        "Site_Name": "Site name",
+        "Site_Description": "Site description"
+      }}
+    >
       <SourceLayer
         id="2"
         type="geojson"
@@ -30,18 +30,15 @@ Only Hellenistic and Roman sites are being displayed
         geoField="geometry"
         layerstyle={{
           id: "ksa-directus",
-          type: "circle",
+          type: "fill",
           paint: {
-            "circle-radius": 10,
-            "circle-color": "red",
-          },
+            "fill-color": "#888",
+            "fill-opacity": 0.5
+          }
         }}
       />
-
     </MapCompLibre>
-
     Data from [Kahramanmaraş Survey](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) created by [Elizabeth Carter](http://opencontext.org/persons/3208923d-69d0-70e9-9cc1-23ad97770aec) and published on [OpenContext](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) add distributed with [CC BY 4.0 International](https://creativecommons.org/licenses/by/4.0) license.
-
   </div>
   <div className="col-6">
     ```jsx
@@ -52,7 +49,12 @@ Only Hellenistic and Roman sites are being displayed
 
     <MapCompLibre
         center="37.00416,37.48551,9"
-        interactiveLayerIds={["ksa-directus"]}>
+        interactiveLayerIds={["ksa-directus"]}
+              fieldList={{
+        "Item_Label": "Label",
+        "Site_Name": "Site name",
+        "Site_Description": "Site description"
+      }}>
 
       <SourceLayer
         id="2"

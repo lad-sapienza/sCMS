@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react"
-import { Source, Layer, useMap } from "react-map-gl/maplibre"
-import * as bbox from "geojson-bbox"
-
-import getData from "../../../services/getData"
+import { Source, Layer } from "react-map-gl/maplibre"
+import getData from "../../../services/getData" // Importa la tua funzione getData
 
 const SourceLayer = ({
   id,
@@ -10,49 +8,107 @@ const SourceLayer = ({
   path2data,
   dEndPoint,
   dTable,
-  dQueryString,
   dToken,
-  fitToContent,
+  dQueryString,
   geoField,
   layerstyle,
+  filters,
+  mapInstance,
+  layerId,
 }) => {
-  const [geojsonData, setGeojson] = useState()
+  const [geojsonData, setGeojson] = useState(null) // GeoJSON data
+  const [filteredData, setFilteredData] = useState(null) // Dati filtrati
   const [error, setError] = useState(false)
-  const map = useMap()
 
+  // Funzione per ottenere i dati da getData
   useEffect(() => {
-    getData({
-      path2data: path2data,
-      dEndPoint: dEndPoint,
-      dTable: dTable,
-      dToken: dToken,
-      dQueryString: dQueryString,
-      transType: "geojson",
-      geoField: geoField
-    }).then(geoJSON => {
-      setGeojson(geoJSON)
-    }).catch(err => {
-      console.log(err)
-      setError("Error getting data")
-    });
-  }, [path2data, dEndPoint, dTable, dToken, geoField, dQueryString])
+    const fetchGeoData = async () => {
+      try {
+        const geoJSON = await getData({
+          path2data,
+          dEndPoint,
+          dTable,
+          dToken,
+          dQueryString,
+          transType: "geojson",
+          geoField,
+        })
+        setGeojson(geoJSON) // Imposta i dati geoJSON
+        console.log("Dati GeoJSON caricati:", geoJSON)
+      } catch (err) {
+        console.error("Errore nel caricamento dei dati:", err)
+        setError("Errore nel caricamento dei dati")
+      }
+    }
+
+    fetchGeoData() // Carica i dati quando il componente è montato
+  }, [path2data, dEndPoint, dTable, dToken, dQueryString, geoField])
+
+  // useEffect per applicare i filtri
+  useEffect(() => {
+    console.log("filters in SourceLayer:", filters) // Verifica i filtri ricevuti
+    console.log("layerId in SourceLayer:", layerId) // Verifica il layerId ricevuto
+
+    if (mapInstance && filters && filters.length > 0 && geojsonData) {
+      if (layerId && Array.isArray(layerId) && layerId.length > 0) {
+        layerId.forEach(id => {
+          mapInstance.setFilter(id, filters) // Applica i filtri al layer
+          console.log("Filtri applicati al layer:", id, filters)
+        })
+      } else {
+        console.error("layerId non valido o vuoto:", layerId)
+      }
+
+      // Logica di filtraggio locale
+      const filtered = geojsonData.features.filter(feature => {
+        return filters.some(filter => {
+          const operator = filter[0] // Ottieni l'operatore (es. "==")
+          const field = filter[1][1] // Ottieni il nome del campo (es. "Item_Label")
+          const value = filter[2] // Ottieni il valore (es. "KM 198")
+
+          const property = feature.properties[field] // Ottieni la proprietà corretta
+
+          console.log(
+            `Confronto per ${field}: ${property} ${operator} ${value}`,
+          )
+
+          // Applica l'operatore di confronto
+          switch (operator) {
+            case "==":
+              return property === value
+            case "!=":
+              return property !== value
+            case ">":
+              return property > value
+            case "<":
+              return property < value
+            case ">=":
+              return property >= value
+            case "<=":
+              return property <= value
+            default:
+              return false // Se l'operatore non è gestito, ignora il filtro
+          }
+        })
+      })
+
+      setFilteredData({ ...geojsonData, features: filtered })
+      console.log("Dati filtrati localmente:", filtered)
+    } else {
+      setFilteredData(geojsonData) // Se non ci sono filtri, mostra i dati originali
+    }
+  }, [filters, mapInstance, layerId, geojsonData])
 
   if (error) {
-    console.log(error)
-    return <></>
+    return <div>{error}</div>
   } else if (!geojsonData) {
-    return <></>
+    return <div>Caricamento dati...</div>
   } else {
-    if (fitToContent) {
-      const lBb = bbox(geojsonData)
-      map.fitBounds([
-        [lBb[1], lBb[0]],
-        [lBb[3], lBb[2]],
-      ])
-    }
+    const dataToShow =
+      filters && filters.length > 0 ? filteredData : geojsonData // Mostra i dati filtrati o tutti i dati
     return (
       <>
-        <Source id={id} type={type} data={geojsonData}>
+        <Source id={id} type={type} data={dataToShow}>
           <Layer {...layerstyle} />
         </Source>
       </>
