@@ -13,7 +13,7 @@ import Map, {
 import ControlPanel from "./controlPanel"
 import { defaultBaseLayers } from "../../maps/defaultBaseLayers"
 import SearchUI from "../../search/searchUI.js"
-import { plain2maplibre } from "../../transformers/plain2maplibre" // Usa il named import corretto
+import { plain2maplibre } from "../../transformers/plain2maplibre"
 
 const MapCompLibre = ({
   children,
