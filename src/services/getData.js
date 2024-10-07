@@ -40,8 +40,9 @@ const getData = async ({
     }
     if (id){
       source += `/${id}`
+    } else {
+      source += `?${dQueryString ? dQueryString : ""}`
     }
-    source += `?${dQueryString ? dQueryString : ""}`
 
     const token = dToken ? dToken : process.env.GATSBY_DIRECTUS_TOKEN
 
@@ -78,9 +79,14 @@ const getData = async ({
         break
     }
 
+    if (output.errors){
+      throw new Error(`Error communicating with server: ${output.errors[0].message}`);
+    }
+
     return Object.hasOwn(output, 'data') ? output.data : output
   } catch (error) {
-    throw Error(`Cannot get data from ${source}`)
+    // console.log(error)
+    throw Error(error)
   }
 }
 

@@ -36,14 +36,18 @@ const RecordNotWrapped = ({ search, children }) => {
     return <div className="text-info">Loading...</div>
   }
   if (error) {
-    return <div className="text-danger">{error}</div>
+    console.log(error);
+    return <div className="text-danger">{error.message}<br />More info in the console log</div>
   }
-
-  return (
-    <RecordContext.Provider value={recordData}>
-      { children }
-    </RecordContext.Provider>
-  )
+  if (recordData.length < 1) {
+    return <div className="text-warning">No result found</div>
+  } else {
+    return (
+      <RecordContext.Provider value={recordData}>
+        {children}
+      </RecordContext.Provider>
+    )
+  }
 }
 
 const Record = withLocation(RecordNotWrapped)
