@@ -1,15 +1,23 @@
 import React from "react"
+import PropTypes from "prop-types"
+
 import { MapContainer, LayersControl } from "react-leaflet"
 
 import { RasterLayer } from "./rasterLayer"
 import { defaultBaseLayers } from "../defaultBaseLayers"
 
-const MapLeaflet = ({ height, center, baseLayers, children, scrollWheelZoom, layersControlPosition }) => {
-  
+const MapLeaflet = ({
+  height,
+  center,
+  baseLayers,
+  children,
+  scrollWheelZoom,
+  layersControlPosition,
+}) => {
   if (!center) {
     center = "0,0,2"
   }
-  if (!layersControlPosition){
+  if (!layersControlPosition) {
     layersControlPosition = "topright"
   }
 
@@ -22,8 +30,11 @@ const MapLeaflet = ({ height, center, baseLayers, children, scrollWheelZoom, lay
       center={[lng, lat]}
       zoom={zoom}
     >
-      <LayersControl position={ layersControlPosition ? layersControlPosition : null }>
-        {baseLayers && baseLayers.map((layer, index) => {
+      <LayersControl
+        position={layersControlPosition ? layersControlPosition : null}
+      >
+        {baseLayers &&
+          baseLayers.map((layer, index) => {
             let bl = layer.trim()
             if (!defaultBaseLayers.hasOwnProperty(bl)) {
               return <></>
@@ -46,6 +57,33 @@ const MapLeaflet = ({ height, center, baseLayers, children, scrollWheelZoom, lay
       </LayersControl>
     </MapContainer>
   )
+}
+
+MapLeaflet.propTypes = {
+  /**
+   * Height (with unit) of the map element: default: 800px
+   */
+  height: PropTypes.string, 
+  /**
+   * Center of the map, as a string with long, lat and zoom separated by commas: default to 0,0,2
+   */
+  center: PropTypes.string, 
+  /**
+   * Array with default baselayers to show
+   */
+  baseLayers: PropTypes.arrayOf(PropTypes.oneOf(["OSM", "EsriSatellite", "EsriStreets", "EsriTopo", "GoogleSatellite", "GoogleRoadmap", "GoogleTerrain", "GoogleAlteredRoadmap", "GoogleTerrainOnly", "GoogleHybrid", "CartoDb", "StamenTerrain", "OSMMapnick", "OSMCycle"])), 
+  /**
+   * Children elements
+   */
+  children: PropTypes.element, 
+  /**
+   * Boolean to controle if wheel zoom is active or not. Default false
+   */
+  scrollWheelZoom: PropTypes.bool, 
+  /**
+   * Position of the layers control
+   */
+  layersControlPosition: PropTypes.oneOf(["topright", "topleft", "bottomright", "bottomleft"])
 }
 
 export { MapLeaflet }
