@@ -3,7 +3,7 @@ title: "Modulo Datatable"
 date: "2023-10-01"
 slug: "datatable"
 description: ""
-menu_position: 3
+menu_position: 4
 ---
 
 import { DataTb } from "../modules/scms.js"
@@ -107,9 +107,9 @@ import { DataTb } from "../modules/scms.js"
   ]}
     />
 
-  Data from [Kahramanmaraş Survey](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) created by [Elizabeth Carter](http://opencontext.org/persons/3208923d-69d0-70e9-9cc1-23ad97770aec) and published on [OpenContext](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) add distributed with [CC BY 4.0 International](https://creativecommons.org/licenses/by/4.0) license.
+Data from [Kahramanmaraş Survey](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) created by [Elizabeth Carter](http://opencontext.org/persons/3208923d-69d0-70e9-9cc1-23ad97770aec) and published on [OpenContext](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) add distributed with [CC BY 4.0 International](https://creativecommons.org/licenses/by/4.0) license.
 
-  ---
+---
 
   </div>
 </div>
@@ -167,10 +167,10 @@ import { DataTb } from "../modules/scms.js"
       name: "Item_Label",
       sortable: true,
       cell: item => (
-            <a href={item["URI"]} target="_blank">
-              {item["Item_Label"]}
-            </a>
-          ),
+        <a href={item["URI"]} target="_blank">
+          {item["Item_Label"]}
+        </a>
+      ),
     },
     {
       name: "Site_Name",
@@ -179,9 +179,7 @@ import { DataTb } from "../modules/scms.js"
     },
     {
       name: "Thumbnail",
-      cell: item => (
-            <img src={item["Thumbnail"]} />
-          ),
+      cell: item => <img src={item["Thumbnail"]} />,
       sortable: true,
     },
     {
@@ -194,7 +192,6 @@ import { DataTb } from "../modules/scms.js"
       selector: row => row["Collection_Summary"],
       sortable: true,
     },
-    
   ]}
 />
 

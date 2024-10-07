@@ -84,6 +84,7 @@ const MapCompLibre = ({
           position="top-right"
           baseLayers={defaultBaseLayers}
           selectedLayer={mapStyle}
+          sourceLayers={children}
           onLayerChange={handleLayerChange}
         />
       </Map>
