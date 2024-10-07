@@ -23,8 +23,7 @@ const MapLeaflet = ({ height, center, baseLayers, children, scrollWheelZoom, lay
       zoom={zoom}
     >
       <LayersControl position={ layersControlPosition ? layersControlPosition : null }>
-        {baseLayers &&
-          baseLayers.split(",").map((layer, index) => {
+        {baseLayers && baseLayers.map((layer, index) => {
             let bl = layer.trim()
             if (!defaultBaseLayers.hasOwnProperty(bl)) {
               return <></>
