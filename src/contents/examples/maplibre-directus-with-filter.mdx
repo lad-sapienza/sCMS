@@ -16,11 +16,6 @@ Only Hellenistic and Roman sites are being displayed
     <MapCompLibre 
       center="37.00416,37.48551,9"
       interactiveLayerIds={["ksa-directus"]}
-      fieldList={{
-        "Item_Label": "Label",
-        "Site_Name": "Site name",
-        "Site_Description": "Site description"
-      }}
     >
       <SourceLayer
         id="2"
@@ -28,6 +23,11 @@ Only Hellenistic and Roman sites are being displayed
         dQueryString="filter[Hellenistic_Roman][_eq]=true"
         dTable="scms_ksa"
         geoField="geometry"
+        fieldList={{
+        "Item_Label": "Label",
+        "Site_Name": "Site name",
+        "Site_Description": "Site description"
+      }}
         layerstyle={{
           id: "ksa-directus",
           type: "circle",
@@ -52,11 +52,7 @@ Only Hellenistic and Roman sites are being displayed
     <MapCompLibre
         center="37.00416,37.48551,9"
         interactiveLayerIds={["ksa-directus"]}
-        fieldList={{
-          "Item_Label": "Label",
-          "Site_Name": "Site name",
-          "Site_Description": "Site description"
-        }}>
+      >
 
       <SourceLayer
         id="2"
@@ -64,6 +60,11 @@ Only Hellenistic and Roman sites are being displayed
         dQueryString="filter[Hellenistic_Roman][_eq]=true"
         dTable="scms_ksa"
         geoField="geometry"
+         fieldList={{
+          "Item_Label": "Label",
+          "Site_Name": "Site name",
+          "Site_Description": "Site description"
+        }}
         layerstyle={{
           id: "ksa-directus",
           type: "circle",
