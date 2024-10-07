@@ -52,6 +52,26 @@ const ControlPanel = ({
               </label>
             </div>
           ))}
+          {/* Render dei SourceLayers */}
+          <h5>Source Layers</h5>
+          {sourceLayers && sourceLayers.length > 0 ? (
+            sourceLayers.map(sourceLayer => (
+              <div key={sourceLayer.id} className="form-check">
+                <input
+                  type="checkbox"
+                  className="form-check-input"
+                  id={sourceLayer.id}
+                  checked={sourceLayer.visible}
+                  onChange={() => onLayerChange(sourceLayer.id)}
+                />
+                <label htmlFor={sourceLayer.id} className="form-check-label">
+                  {sourceLayer.name}
+                </label>
+              </div>
+            ))
+          ) : (
+            <p>No source layers available.</p>
+          )}
         </div>
       )}
     </StyledControl>
