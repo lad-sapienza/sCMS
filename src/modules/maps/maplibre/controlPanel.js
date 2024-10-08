@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import styled from "styled-components"
-import Modal from "react-modal"
+import { Modal } from "react-bootstrap"
 import SearchUI from "../../search/searchUI"
 
 const ControlPanel = ({
