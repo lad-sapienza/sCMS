@@ -14,6 +14,7 @@ const ControlPanel = ({
   const [isVisible, setIsVisible] = useState(false)
   const [activeLayer, setActiveLayer] = useState(null) // Stato per tracciare il layer attivo nel modal
   const [modalIsOpen, setModalIsOpen] = useState(false)
+  const [activeFieldList, setActiveFieldList] = useState(null) // Nuovo stato per salvare il fieldList
 
   const toggleVisibility = () => {
     setIsVisible(!isVisible)
@@ -22,6 +23,14 @@ const ControlPanel = ({
   const openModal = layer => {
     setActiveLayer(layer)
     setModalIsOpen(true)
+
+    // Verifica se fieldListProp esiste nel layer, altrimenti assegna un valore predefinito
+    if (layer.fieldListProp) {
+      setActiveFieldList(layer.fieldListProp)
+    } else {
+      console.warn(`fieldListProp is undefined for layer: ${layer.name}`)
+      setActiveFieldList([]) // Assegna un array vuoto come fallback
+    }
   }
 
   const closeModal = () => {
@@ -88,7 +97,7 @@ const ControlPanel = ({
         <Modal.Body>
           {activeLayer && (
             <SearchUI
-              fieldList={activeLayer?.fieldList}
+              fieldList={activeFieldList} // Passa il fieldListProp qui
               processData={activeLayer?.processData}
             />
           )}
