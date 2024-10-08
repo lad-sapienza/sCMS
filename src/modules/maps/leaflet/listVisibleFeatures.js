@@ -25,28 +25,19 @@ const ListVisibleFeatures = ({ elTemplate }) => {
   if (lyrList.length === 0) {
     return <></>
   } else {
-    console.log(lyrList.length)
-
     return (
-      <div
-        style={{
-          position: "absolute",
-          maxHeight: "50%",
-          width: "20%",
-          bottom: "0",
-          left: "0px",
-          border: "1px solid red",
-          padding: ".5rem",
-          zIndex: 999,
-          overflow: "auto",
-          background: "rgba(255, 255, 255, .5)",
-        }}
-      >
-        Items: <strong>{lyrList.length}</strong>{" "}
-        <div className="list-container">
-          {lyrList.map(l => {
-            return <>{elTemplate(l)}</>
-          })}
+      <div>
+        <div className="leaflet-bottom leaflet-left">
+          <div className="leaflet-control leaflet-bar m-1 p-1" style={{
+            maxHeight: '200px',
+            overflow: 'auto',
+            background: 'rgba(255, 255, 255, .7)'
+          }}>
+            <div className="border-bottom mb-1">Items: <strong>{lyrList.length}</strong></div>
+            {lyrList.map(l => {
+              return <>{elTemplate(l)}</>
+            })}
+          </div>
         </div>
       </div>
     )
