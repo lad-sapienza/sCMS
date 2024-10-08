@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { Source, Layer } from "react-map-gl/maplibre"
 import getData from "../../../services/getData" // Importa la tua funzione getData
-import SearchUI from "../../search/searchUI.js"
 import plain2maplibre from "../../../services/transformers/plain2maplibre.js"
 
 const SourceLayer = ({
@@ -125,13 +124,6 @@ const SourceLayer = ({
       filters && filters.length > 0 ? filteredData : geojsonData // Mostra i dati filtrati o tutti i dati
     return (
       <div>
-        {/* Posiziona il componente SearchUI sopra o vicino alla mappa */}
-        {fieldList && (
-          <div style={{ position: "absolute", top: 0, left: 0, zIndex: 10 }}>
-            <SearchUI fieldList={fieldList} processData={processData} />
-          </div>
-        )}
-
         {/* Mostra il Source solo se ci sono dati GeoJSON */}
         {geojsonData && (
           <Source id={id} type={type} data={dataToShow}>
