@@ -153,7 +153,7 @@ const MapCompLibre = ({
             ...(children
               ? React.Children.map(children, child => ({
                   id: child.props.id,
-                  name: child.props.id, // Nome personalizzabile
+                  name: child.props.layerstyle.id, // Nome personalizzabile
                 }))
               : []),
             ...styleLayers.map(layer => ({
