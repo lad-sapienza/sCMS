@@ -1,5 +1,5 @@
 import * as React from "react"
-import { useState, useCallback } from "react"
+import { useState, useCallback, useEffect } from "react"
 import "maplibre-gl/dist/maplibre-gl.css"
 import Map, {
   NavigationControl,
@@ -30,6 +30,8 @@ const MapCompLibre = ({
 
   // Stato per gestire i source layer visibili
   const [visibleSourceLayers, setVisibleSourceLayers] = useState({})
+  const [styleLayers, setStyleLayers] = useState([]) // Stato per i layer dal JSON
+  const [visibleLayers, setVisibleLayers] = useState({}) // Stato per la visibilità dei layer
 
   const handleLayerChange = styleUrl => {
     setMapStyle(styleUrl)
@@ -37,6 +39,13 @@ const MapCompLibre = ({
 
   const toggleLayerVisibility = layerId => {
     setVisibleSourceLayers(prevState => ({
+      ...prevState,
+      [layerId]: !prevState[layerId],
+    }))
+  }
+
+  const toggleStyleLayerVisibility = layerId => {
+    setVisibleLayers(prevState => ({
       ...prevState,
       [layerId]: !prevState[layerId],
     }))
@@ -54,6 +63,34 @@ const MapCompLibre = ({
     },
     [interactiveLayerIds],
   )
+
+  // Effetto per caricare i layer dal file di stile JSON
+  useEffect(() => {
+    const fetchStyle = async () => {
+      try {
+        const response = await fetch(styleJson)
+        const styleData = await response.json()
+
+        // Verifica se ci sono layer nel file di stile JSON
+        const layers =
+          styleData.layers && Array.isArray(styleData.layers)
+            ? styleData.layers.map(layer => ({
+                id: layer.id,
+                name: layer.id, // Puoi cambiare il nome se necessario
+              }))
+            : [] // Se non ci sono layer, imposta un array vuoto
+
+        setStyleLayers(layers) // Imposta i layer dallo stile JSON o un array vuoto
+      } catch (error) {
+        console.error("Errore nel caricamento dello stile JSON:", error)
+        setStyleLayers([]) // Se c'è un errore, imposta un array vuoto
+      }
+    }
+
+    if (styleJson) {
+      fetchStyle() // Carica solo se c'è un file di stile JSON
+    }
+  }, [styleJson])
 
   return (
     <React.Fragment>
@@ -75,6 +112,16 @@ const MapCompLibre = ({
           }
           return null
         })}
+
+        {/* Applica i layer dal file di stile JSON solo se presenti */}
+        {styleLayers &&
+          styleLayers.length > 0 &&
+          styleLayers.map(
+            layer =>
+              visibleLayers[layer.id] !== false && (
+                <Layer key={layer.id} id={layer.id} {...layer} />
+              ),
+          )}
 
         <Source id="basemap" type="raster" tiles={[mapStyle]} tileSize={256} />
         <Layer id="basemap-layer" type="raster" source="basemap" />
@@ -101,11 +148,23 @@ const MapCompLibre = ({
           baseLayers={defaultBaseLayers}
           selectedLayer={mapStyle}
           onLayerChange={handleLayerChange}
-          sourceLayers={React.Children.map(children, child => ({
-            id: child.props.id,
-            name: child.props.id, // Puoi personalizzare il nome da visualizzare
-          }))}
-          onToggleLayer={toggleLayerVisibility}
+          // Combina i SourceLayer definiti manualmente e quelli dal file JSON
+          sourceLayers={[
+            ...(children
+              ? React.Children.map(children, child => ({
+                  id: child.props.id,
+                  name: child.props.id, // Nome personalizzabile
+                }))
+              : []),
+            ...styleLayers.map(layer => ({
+              id: layer.id,
+              name: layer.name,
+            })),
+          ]}
+          onToggleLayer={layerId => {
+            toggleLayerVisibility(layerId)
+            toggleStyleLayerVisibility(layerId)
+          }}
         />
       </Map>
     </React.Fragment>
