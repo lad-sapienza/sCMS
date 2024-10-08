@@ -2,7 +2,8 @@
 
 ## TODO
 
-- Un componente aggiuntivo alla mappa che elenca le features visualizzate sulla mappa con una piccola ricerca
+- [x] Un componente aggiuntivo alla mappa che elenca le features visualizzate sulla mappa con una piccola ricerca: `ListVisibleFeatures`
+   - [] `ListVisibleFeatures` dovrebbe essere un filio di un `VectorLayer` non della mappa o comunque dovrebbe agire suun layer (alla volta)
 
 ---
 

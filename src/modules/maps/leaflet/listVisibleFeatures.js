@@ -19,7 +19,6 @@ const ListVisibleFeatures = ({ elTemplate }) => {
 
   const map = useMapEvent("moveend", () => {
     setLyrList(getFeaturesInView(map))
-    // console.log('map center:', map.getCenter())
   })
 
   if (lyrList.length === 0) {
@@ -34,8 +33,8 @@ const ListVisibleFeatures = ({ elTemplate }) => {
             background: 'rgba(255, 255, 255, .7)'
           }}>
             <div className="border-bottom mb-1">Items: <strong>{lyrList.length}</strong></div>
-            {lyrList.map(l => {
-              return <>{elTemplate(l)}</>
+            {lyrList.map((l, i) => {
+              return <React.Fragment key={i}>{elTemplate(l)}</React.Fragment>
             })}
           </div>
         </div>
