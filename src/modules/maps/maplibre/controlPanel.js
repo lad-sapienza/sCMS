@@ -1,5 +1,7 @@
 import React, { useState } from "react"
 import styled from "styled-components"
+import Modal from "react-modal"
+import SearchUI from "../../search/searchUI"
 
 const ControlPanel = ({
   baseLayers,
@@ -9,10 +11,23 @@ const ControlPanel = ({
   onToggleLayer, // Funzione per gestire la visibilità dei source layer
 }) => {
   const [isVisible, setIsVisible] = useState(false)
+  const [activeLayer, setActiveLayer] = useState(null) // Stato per tracciare il layer attivo nel modal
+  const [modalIsOpen, setModalIsOpen] = useState(false)
 
   const toggleVisibility = () => {
     setIsVisible(!isVisible)
   }
+
+  const openModal = layer => {
+    setActiveLayer(layer)
+    setModalIsOpen(true)
+  }
+
+  const closeModal = () => {
+    setModalIsOpen(false)
+    setActiveLayer(null)
+  }
+
   return (
     <StyledControl
       className={`control-panel ${isVisible ? "visible" : "hidden"} border shadow rounded`}
@@ -67,10 +82,33 @@ const ControlPanel = ({
               <label htmlFor={layer.id} className="form-check-label">
                 {layer.name}
               </label>
+              {/* Icona per aprire il modal con SearchUI */}
+              <button
+                className="btn btn-sm btn-light ms-2"
+                onClick={() => openModal(layer)}
+              >
+                🔍
+              </button>
             </div>
           ))}
         </div>
       )}
+      {/* Modal per la ricerca */}
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="Filtra Layer"
+        style={{ overlay: { zIndex: 20 }, content: { zIndex: 30 } }}
+      >
+        <h2>Filtra {activeLayer?.name}</h2>
+        <button onClick={closeModal}>Chiudi</button>
+        {activeLayer && (
+          <SearchUI
+            fieldList={activeLayer.fieldList}
+            processData={activeLayer.processData}
+          />
+        )}
+      </Modal>
     </StyledControl>
   )
 }
