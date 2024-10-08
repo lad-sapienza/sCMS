@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import styled from "styled-components"
-import { Modal } from "react-bootstrap"
+import { Modal, Button } from "react-bootstrap"
 import SearchUI from "../../search/searchUI"
 
 const ControlPanel = ({
@@ -101,7 +101,7 @@ const ControlPanel = ({
         style={{ overlay: { zIndex: 20 }, content: { zIndex: 30 } }}
       >
         <h2>Filtra {activeLayer?.name}</h2>
-        <button onClick={closeModal}>Chiudi</button>
+        <Button onClick={closeModal}>Chiudi</Button>
         {activeLayer && (
           <SearchUI
             fieldList={activeLayer.fieldList}
