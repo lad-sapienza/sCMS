@@ -28,30 +28,18 @@ const MapCompLibre = ({
 
   const [clickInfo, setClickInfo] = useState(null)
 
-  // Verifica se ci sono children e se possono essere mappati correttamente
-  const [visibleSourceLayers, setVisibleSourceLayers] = useState(
-    children
-      ? React.Children.map(children, child => ({
-          id: child.props.id,
-          visible: true, // Inizialmente tutti visibili
-          ...child.props,
-        }))
-      : [], // Fallback nel caso non ci siano children
-  )
+  // Stato per gestire i source layer visibili
+  const [visibleSourceLayers, setVisibleSourceLayers] = useState({})
 
-  // Funzione per cambiare il layer (sia baseLayers che sourceLayers)
-  const handleLayerChange = (layerId, type = "base") => {
-    if (type === "base") {
-      // Cambio dello stile della mappa
-      setMapStyle(layerId)
-    } else {
-      // Cambio della visibilità dei sourceLayers
-      setVisibleSourceLayers(prev =>
-        prev.map(layer =>
-          layer.id === layerId ? { ...layer, visible: !layer.visible } : layer,
-        ),
-      )
-    }
+  const handleLayerChange = styleUrl => {
+    setMapStyle(styleUrl)
+  }
+
+  const toggleLayerVisibility = layerId => {
+    setVisibleSourceLayers(prevState => ({
+      ...prevState,
+      [layerId]: !prevState[layerId],
+    }))
   }
 
   const onClick = useCallback(
@@ -80,20 +68,13 @@ const MapCompLibre = ({
         interactiveLayerIds={interactiveLayerIds} // Passa l'array di layer interattivi
         onClick={onClick}
       >
-        {/* Render dei base layers */}
-        <Source id="basemap" type="raster" tiles={[mapStyle]} tileSize={256} />
-        <Layer id="basemap-layer" type="raster" source="basemap" />
-
-        {/* Render dei sourceLayers basati sulla loro visibilità */}
-        {visibleSourceLayers.map(
-          layer =>
-            layer.visible && (
-              <Source key={layer.id} id={layer.id} {...layer}>
-                <Layer {...layer.layerstyle} />
-              </Source>
-            ),
-        )}
-        {children}
+        {/* Condizionalmente rendi visibili i SourceLayer basati sul loro stato */}
+        {React.Children.map(children, child => {
+          if (visibleSourceLayers[child.props.id] !== false) {
+            return child
+          }
+          return null
+        })}
 
         <Source id="basemap" type="raster" tiles={[mapStyle]} tileSize={256} />
         <Layer id="basemap-layer" type="raster" source="basemap" />
@@ -119,8 +100,12 @@ const MapCompLibre = ({
           position="top-right"
           baseLayers={defaultBaseLayers}
           selectedLayer={mapStyle}
-          sourceLayers={children}
           onLayerChange={handleLayerChange}
+          sourceLayers={React.Children.map(children, child => ({
+            id: child.props.id,
+            name: child.props.id, // Puoi personalizzare il nome da visualizzare
+          }))}
+          onToggleLayer={toggleLayerVisibility}
         />
       </Map>
     </React.Fragment>

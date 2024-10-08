@@ -5,7 +5,8 @@ const ControlPanel = ({
   baseLayers,
   selectedLayer,
   onLayerChange,
-  sourceLayers,
+  sourceLayers, // Aggiunto per mostrare i source layer
+  onToggleLayer, // Funzione per gestire la visibilità dei source layer
 }) => {
   const [isVisible, setIsVisible] = useState(false)
 
@@ -52,26 +53,22 @@ const ControlPanel = ({
               </label>
             </div>
           ))}
-          {/* Render dei SourceLayers */}
+          {/* Sezione per i source layer */}
+          <hr />
           <h5>Source Layers</h5>
-          {sourceLayers && sourceLayers.length > 0 ? (
-            sourceLayers.map(sourceLayer => (
-              <div key={sourceLayer.id} className="form-check">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  id={sourceLayer.id}
-                  checked={sourceLayer.visible}
-                  onChange={() => onLayerChange(sourceLayer.id)}
-                />
-                <label htmlFor={sourceLayer.id} className="form-check-label">
-                  {sourceLayer.name}
-                </label>
-              </div>
-            ))
-          ) : (
-            <p>No source layers available.</p>
-          )}
+          {sourceLayers.map(layer => (
+            <div key={layer.id} className="form-check">
+              <input
+                type="checkbox"
+                className="form-check-input"
+                id={layer.id}
+                onChange={() => onToggleLayer(layer.id)}
+              />
+              <label htmlFor={layer.id} className="form-check-label">
+                {layer.name}
+              </label>
+            </div>
+          ))}
         </div>
       )}
     </StyledControl>
