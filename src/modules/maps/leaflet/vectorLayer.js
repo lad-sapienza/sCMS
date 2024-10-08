@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+import PropTypes from "prop-types"
 import { GeoJSON, LayersControl, useMap } from "react-leaflet"
 import * as bbox from "geojson-bbox"
 
@@ -73,4 +74,66 @@ const VectorLayer = ({
   }
 }
 
+VectorLayer.propTypes = {
+  /**
+   * Path to GeoJSON data: might be a local path or an URL.
+   * Required if dEndPoint or dTable are not set
+   */
+  path2data: PropTypes.string,
+  /**
+   * Directus endpoint.
+   * Required if either dTable (and env GATSBY_DIRECTUS_ENDPOINT) or path2data are not set
+   */
+  dEndPoint: PropTypes.string,
+  /**
+   * Directus table name, to be used if env variable GATSBY_DIRECTUS_ENDPOINT is set.
+   * Required if neither path2data or dEndPoit are set
+   */
+  dTable: PropTypes.string,
+  /**
+   * Directus optional filters and other, provided as querystring compatible to Directus API
+   */
+  dQueryString: PropTypes.string,
+  /**
+   * Tirectus access token.
+   * Required if env variable GATSBY_DIRECTUS_TOKEN is not set
+   */
+  dToken: PropTypes.string,
+  /**
+   * The property holding geographical cooercnates.
+   * Required if data are in JSON format and need to be transformed in GeoJSON
+   */
+  geoField: PropTypes.string,
+  /**
+   * Layer name to use in the Layer control
+   * Required
+   */
+  name: PropTypes.string.isRequired,
+  /**
+   * A function that takes as parameters the clicked feature and layer and returns an HTML string to show as content of the popup
+   * Optional
+   */
+  popupTemplate: PropTypes.func,
+  /**
+   * A Function defining how GeoJSON points spawn Leaflet layers. It is internally called when data is added, passing the GeoJSON point feature and its LatLng. The default is to spawn a default Marker: 
+   * Ref: https://leafletjs.com/reference.html#geojson-pointtolayer
+   */
+  pointToLayer: PropTypes.func,
+  /**
+   * A Function that will be used to decide whether to include a feature or not. The default is to include all features
+   */
+  filter: PropTypes.string,
+  /**
+   * If true, the layer will be shown (tuned on).
+   * Reference: https://leafletjs.com/reference.html#geojson-filter
+   * TODO @eiacopini: fare un esempio che lo usa
+   * TODO @eiacopini: possiamo settarlo dinamicamente e usarlo come filtro in tempo reale
+   * Default: null
+   */
+  checked: PropTypes.bool,
+  /**
+   * If true, the map will be zoomed and panned to show full extents of the layer added
+   */
+  fitToContent: PropTypes.bool,
+};
 export { VectorLayer }
