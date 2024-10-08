@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import PropTypes from "prop-types"
 import withLocation from "./withLocation"
 import getData from "../../services/getData"
 
@@ -58,4 +59,28 @@ const RecordNotWrapped = ({ search, children }) => {
 
 const Record = withLocation(RecordNotWrapped)
 
+Record.propTypes = {
+  /**
+   * Object with access data
+   */
+  search: PropTypes.shape({
+    /**
+     * Directus table name
+     */
+    tb: PropTypes.string,
+    /**
+     * Directus endpoint, if env variable GATSBY_DIRECTUS_ENDPOINT is not available
+     */
+    endPoint: PropTypes.string,
+    /**
+     * Directus endpoint, if env variable GATSBY_DIRECTUS_TOKEN is not available
+     */
+    token: PropTypes.string,
+    /**
+     * Record id
+     */
+    id: PropTypes.number
+  }),
+  children: PropTypes.arrayOf(PropTypes.element)
+}
 export { Record }
