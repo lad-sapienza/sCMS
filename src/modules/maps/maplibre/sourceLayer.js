@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { Source, Layer } from "react-map-gl/maplibre"
 import getData from "../../../services/getData" // Importa la tua funzione getData
-import plain2maplibre from "../../../services/transformers/plain2maplibre.js"
 
 const SourceLayer = ({
   id,
@@ -46,13 +45,6 @@ const SourceLayer = ({
 
     fetchGeoData() // Carica i dati quando il componente è montato
   }, [path2data, dEndPoint, dTable, dToken, dQueryString, geoField])
-
-  // Funzione per processare i filtri e convertirli in formato compatibile con MapLibre
-  const processData = (conn, inputs) => {
-    const mapLibreFilters = plain2maplibre(conn, inputs) // Converte i filtri per MapLibre
-    setFilters(mapLibreFilters) // Imposta i filtri generati
-    console.log("Filtri generati in processData:", mapLibreFilters)
-  }
 
   // useEffect per applicare i filtri sia ai dati GeoJSON che ai layer definiti in style.json
   useEffect(() => {

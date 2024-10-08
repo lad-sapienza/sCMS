@@ -1,8 +1,9 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 import { Modal } from "react-bootstrap"
 import { Search, Stack } from "react-bootstrap-icons"
 import SearchUI from "../../search/searchUI"
+import plain2maplibre from "../../../services/transformers/plain2maplibre.js"
 
 const ControlPanel = ({
   baseLayers,
@@ -10,11 +11,14 @@ const ControlPanel = ({
   onLayerChange,
   sourceLayers, // Aggiunto per mostrare i source layer
   onToggleLayer, // Funzione per gestire la visibilità dei source layer
+  activeSourceLayers, // Lista dei sourceLayer attivi (selezionati)
+  mapInstance, // Istanze di MapLibre
 }) => {
   const [isVisible, setIsVisible] = useState(false)
   const [activeLayer, setActiveLayer] = useState(null) // Stato per tracciare il layer attivo nel modal
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const [activeFieldList, setActiveFieldList] = useState(null) // Nuovo stato per salvare il fieldList
+  const [filters, setFilters] = useState([]) // Stato per i filtri generati
 
   const toggleVisibility = () => {
     setIsVisible(!isVisible)
@@ -37,6 +41,37 @@ const ControlPanel = ({
     setModalIsOpen(false)
     setActiveLayer(null)
   }
+
+  // Funzione per processare i filtri e convertirli in formato compatibile con MapLibre
+  const processData = (conn, inputs) => {
+    const mapLibreFilters = plain2maplibre(conn, inputs) // Converte i filtri per MapLibre
+    setFilters(mapLibreFilters) // Imposta i filtri generati
+
+    // Applica i filtri ai layer attivi
+    if (mapInstance && activeLayer) {
+      mapInstance.setFilter(activeLayer.id, mapLibreFilters)
+      console.log(
+        `Filtri applicati al layer ${activeLayer.id}:`,
+        mapLibreFilters,
+      )
+    }
+  }
+  // Effetto per applicare i filtri solo ai layer attivi
+  useEffect(() => {
+    if (mapInstance && Array.isArray(activeSourceLayers)) {
+      activeSourceLayers.forEach(layerId => {
+        if (filters.length > 0) {
+          // Applica i filtri se ci sono
+          mapInstance.setFilter(layerId, filters)
+          console.log(`Filtri applicati al layer attivo ${layerId}:`, filters)
+        } else {
+          // Rimuove i filtri se non ci sono
+          mapInstance.setFilter(layerId, null)
+          console.log(`Filtri rimossi dal layer attivo ${layerId}`)
+        }
+      })
+    }
+  }, [filters, mapInstance, activeSourceLayers])
 
   return (
     <StyledControl
@@ -98,7 +133,7 @@ const ControlPanel = ({
           {activeLayer && (
             <SearchUI
               fieldList={activeFieldList} // Passa il fieldListProp qui
-              processData={activeLayer?.processData}
+              processData={processData}
             />
           )}
         </Modal.Body>
