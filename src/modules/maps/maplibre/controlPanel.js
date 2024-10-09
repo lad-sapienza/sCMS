@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import styled from "styled-components"
+import PropTypes from "prop-types"
 import { Modal } from "react-bootstrap"
 import { Search, Stack } from "react-bootstrap-icons"
 import SearchUI from "../../search/searchUI"
@@ -12,6 +13,7 @@ const ControlPanel = ({
   sourceLayers, // Aggiunto per mostrare i source layer
   onToggleLayer, // Funzione per gestire la visibilità dei source layer
   activeSourceLayers, // Lista dei sourceLayer attivi (selezionati)
+  // TODO @eiacopini: perché passi questo a mano: non puoi usare mapRef (https://visgl.github.io/react-map-gl/docs/api-reference/map#methods)?
   mapInstance, // Istanze di MapLibre
 }) => {
   const [isVisible, setIsVisible] = useState(false)
@@ -152,4 +154,14 @@ const StyledControl = styled.div`
   padding: 0.5rem;
   margin: 0.5rem;
 `
+
+ControlPanel.propTypes = {
+  baseLayers : PropTypes.array,
+  selectedLayer: PropTypes.string,
+  onLayerChange: PropTypes.func,
+  sourceLayers: PropTypes.array,
+  onToggleLayer: PropTypes.func,
+  activeSourceLayers: PropTypes.array,
+  mapInstance: PropTypes.element,
+}
 export default ControlPanel
