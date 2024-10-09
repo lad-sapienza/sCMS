@@ -3,7 +3,11 @@ import { Source, Layer } from "react-map-gl/maplibre"
 import getData from "../../../services/getData" // Importa la tua funzione getData
 
 const SourceLayer = ({
+  // TODO @eiacopini perché ti serve questo id? La documentazione ufficiale (https://visgl.github.io/react-map-gl/docs/api-reference/source#id) dice che è opzionale e deve essere unico.
+  // Fornito da noi non riusciamo a garantire l'unicità, quindi potrebbe essere fonte di problemi
+  // Io aggiungerei piuttosto name, per avere un'etichetta da far vedere nel layer control, esattamente come succede per VectorLayer.
   id,
+  // TODO @eiacopini anche qui, perché chiederlo all'utente e non calcolarlo lato applicazione?
   type,
   path2data,
   dEndPoint,
@@ -11,8 +15,11 @@ const SourceLayer = ({
   dToken,
   dQueryString,
   geoField,
+  // TODO @eiacopini anche su questo bisogna fare una riflessione, perché non è molto intuitivo
   layerstyle,
+  // TODO @eiacopini, come sopra. fieldList ha un senso in Search ma qui va cambiato il nome. Ci pensiamo.
   fieldList,
+  // TODO @eiacopini: perché passi questo a mano: non puoi usare mapRef (https://visgl.github.io/react-map-gl/docs/api-reference/map#methods)?
   mapInstance, // L'istanza della mappa, necessaria per applicare i filtri ai layer definiti nello style.json
   styleLayerIds, // Lista degli ID dei layer caricati da style.json
 }) => {

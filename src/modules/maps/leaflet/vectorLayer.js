@@ -95,7 +95,7 @@ VectorLayer.propTypes = {
    */
   dQueryString: PropTypes.string,
   /**
-   * Tirectus access token.
+   * Directus access token.
    * Required if env variable GATSBY_DIRECTUS_TOKEN is not set
    */
   dToken: PropTypes.string,
@@ -121,14 +121,14 @@ VectorLayer.propTypes = {
   pointToLayer: PropTypes.func,
   /**
    * A Function that will be used to decide whether to include a feature or not. The default is to include all features
-   */
-  filter: PropTypes.string,
-  /**
-   * If true, the layer will be shown (tuned on).
    * Reference: https://leafletjs.com/reference.html#geojson-filter
    * TODO @eiacopini: fare un esempio che lo usa
    * TODO @eiacopini: possiamo settarlo dinamicamente e usarlo come filtro in tempo reale
    * Default: null
+   */
+  filter: PropTypes.string,
+  /**
+   * If true, the layer will be shown (tuned on).
    */
   checked: PropTypes.bool,
   /**

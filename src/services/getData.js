@@ -38,7 +38,7 @@ const getData = async ({
         "Either `dEndPoint` or env variable `GATSBY_DIRECTUS_ENDPOINT` AND `dTable` are needed",
       )
     }
-    if (id){
+    if (id) {
       source += `/${id}`
     } else {
       source += `?${dQueryString ? dQueryString : ""}`
@@ -79,11 +79,13 @@ const getData = async ({
         break
     }
 
-    if (output.errors){
-      throw new Error(`Error communicating with server: ${output.errors[0].message}`);
+    if (output.errors) {
+      throw new Error(
+        `Error communicating with server: ${output.errors[0].message}`,
+      )
     }
 
-    return Object.hasOwn(output, 'data') ? output.data : output
+    return Object.hasOwn(output, "data") ? output.data : output
   } catch (error) {
     // console.log(error)
     throw Error(error)
@@ -91,13 +93,38 @@ const getData = async ({
 }
 
 getData.PropTypes = {
+  /**
+   * Path to GeoJSON data: might be a local path or an URL.
+   * Required if dEndPoint or dTable are not set
+   */
   path2data: PropTypes.string,
+  /**
+   * Directus endpoint.
+   * Required if either dTable (and env GATSBY_DIRECTUS_ENDPOINT) or path2data are not set
+   */
   dEndPoint: PropTypes.string,
-  dToken: PropTypes.string,
+  /**
+   * Directus table name, to be used if env variable GATSBY_DIRECTUS_ENDPOINT is set.
+   * Required if neither path2data or dEndPoit are set
+   */
   dTable: PropTypes.string,
-  id: PropTypes.number,
+  /**
+   * Directus optional filters and other, provided as querystring compatible to Directus API
+   */
   dQueryString: PropTypes.string,
-  transType: PropTypes.oneOf(["text", "csv2json", "json", "geojeson"]),
+  /**
+   * Directus access token.
+   * Required if env variable GATSBY_DIRECTUS_TOKEN is not set
+   */
+  dToken: PropTypes.string,
+  /**
+   * Id of a specific record to retrieve
+   */
+  id: PropTypes.number,
+  /**
+   * Tranformation to apply to data
+   */
+  transType: PropTypes.oneOf(["text", "csv2json", "json", "geojson"]),
 }
 
 export default getData
