@@ -89,6 +89,9 @@ const ControlPanel = ({
   }
 
   // Funzione per processare i filtri e convertirli in formato compatibile con MapLibre
+
+  // TODO: MANCA FILTRO SU LAYER STYLE JSON
+
   const processData = (conn, inputs) => {
     const mapLibreFilters = plain2maplibre(conn, inputs)
     console.log("Filtri generati:", mapLibreFilters)
