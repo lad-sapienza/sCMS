@@ -12,7 +12,6 @@ const ControlPanel = ({
   onLayerChange,
   sourceLayers,
   onToggleLayer,
-  activeSourceLayers,
   mapRef, // Aggiunto mapRef come prop
 }) => {
   const [isVisible, setIsVisible] = useState(false)
