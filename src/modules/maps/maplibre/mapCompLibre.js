@@ -1,5 +1,5 @@
 import * as React from "react"
-import { useState, useCallback, useEffect } from "react"
+import { useState, useCallback, useEffect, useRef } from "react"
 import "maplibre-gl/dist/maplibre-gl.css"
 import Map, {
   NavigationControl,
@@ -32,6 +32,7 @@ const MapCompLibre = ({
   const [visibleSourceLayers, setVisibleSourceLayers] = useState({})
   const [styleLayers, setStyleLayers] = useState([]) // Stato per i layer dal JSON
   const [visibleLayers, setVisibleLayers] = useState({}) // Stato per la visibilità dei layer
+  const mapRef = useRef(null) // Crea il riferimento alla mappa
 
   const handleLayerChange = styleUrl => {
     setMapStyle(styleUrl)
@@ -95,6 +96,7 @@ const MapCompLibre = ({
   return (
     <React.Fragment>
       <Map
+        ref={mapRef} // Collega il riferimento alla mappa
         initialViewState={{
           longitude: lng ? lng : 0,
           latitude: lat ? lat : 0,
@@ -166,6 +168,7 @@ const MapCompLibre = ({
             toggleLayerVisibility(layerId)
             toggleStyleLayerVisibility(layerId)
           }}
+          mapRef={mapRef} // Passa il mapRef al ControlPanel
         />
       </Map>
     </React.Fragment>

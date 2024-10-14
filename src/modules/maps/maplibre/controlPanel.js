@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import styled from "styled-components"
 import PropTypes from "prop-types"
 import { Modal } from "react-bootstrap"
@@ -10,17 +10,16 @@ const ControlPanel = ({
   baseLayers,
   selectedLayer,
   onLayerChange,
-  sourceLayers, // Aggiunto per mostrare i source layer
-  onToggleLayer, // Funzione per gestire la visibilità dei source layer
-  activeSourceLayers, // Lista dei sourceLayer attivi (selezionati)
-  // TODO @eiacopini: perché passi questo a mano: non puoi usare mapRef (https://visgl.github.io/react-map-gl/docs/api-reference/map#methods)?
-  mapInstance, // Istanze di MapLibre
+  sourceLayers,
+  onToggleLayer,
+  activeSourceLayers,
+  mapRef, // Aggiunto mapRef come prop
 }) => {
   const [isVisible, setIsVisible] = useState(false)
-  const [activeLayer, setActiveLayer] = useState(null) // Stato per tracciare il layer attivo nel modal
+  const [activeLayer, setActiveLayer] = useState(null)
   const [modalIsOpen, setModalIsOpen] = useState(false)
-  const [activeFieldList, setActiveFieldList] = useState(null) // Nuovo stato per salvare il fieldList
-  const [filters, setFilters] = useState([]) // Stato per i filtri generati
+  const [activeFieldList, setActiveFieldList] = useState(null)
+  const [filters, setFilters] = useState([])
 
   const toggleVisibility = () => {
     setIsVisible(!isVisible)
@@ -44,36 +43,60 @@ const ControlPanel = ({
     setActiveLayer(null)
   }
 
+  // Funzione per verificare se il layer esiste nella mappa utilizzando il nome del layer
+  const checkLayerExists = layerName => {
+    const mapInstance = mapRef.current.getMap() // Usa getMap per ottenere l'istanza MapLibre
+    const layers = mapInstance.getStyle().layers
+    console.log("Verifica layer con nome:", layerName)
+    console.log(
+      "Lista dei nomi dei layers disponibili:",
+      layers.map(layer => layer.name || layer.id),
+    ) // Stampa i nomi o gli ID se il nome non è presente
+    return layers.some(
+      layer => layer.name === layerName || layer.id === layerName,
+    ) // Verifica anche per ID se necessario
+  }
+
+  // Funzione per verificare se il layer supporta i filtri (solo alcuni tipi supportano i filtri)
+  const checkLayerTypeSupportsFilter = layerId => {
+    const mapInstance = mapRef.current.getMap()
+    const layer = mapInstance.getLayer(layerId)
+    return (
+      layer &&
+      (layer.type === "fill" ||
+        layer.type === "line" ||
+        layer.type === "circle")
+    ) // Verifica se il tipo di layer supporta i filtri
+  }
+
   // Funzione per processare i filtri e convertirli in formato compatibile con MapLibre
   const processData = (conn, inputs) => {
-    const mapLibreFilters = plain2maplibre(conn, inputs) // Converte i filtri per MapLibre
-    setFilters(mapLibreFilters) // Imposta i filtri generati
+    const mapLibreFilters = plain2maplibre(conn, inputs)
+    console.log("Filtri generati:", mapLibreFilters)
+    setFilters(mapLibreFilters)
 
-    // Applica i filtri ai layer attivi
-    if (mapInstance && activeLayer) {
-      mapInstance.setFilter(activeLayer.id, mapLibreFilters)
-      console.log(
-        `Filtri applicati al layer ${activeLayer.id}:`,
-        mapLibreFilters,
-      )
+    if (mapRef && mapRef.current) {
+      const mapInstance = mapRef.current.getMap() // Usa getMap per ottenere l'istanza MapLibre
+      console.log("mapInstance:", mapInstance) // Verifica che l'istanza della mappa sia disponibile
+
+      const layerExists = checkLayerExists(activeLayer.name)
+      console.log(`Layer trovato? ${layerExists}`)
+
+      if (layerExists && checkLayerTypeSupportsFilter(activeLayer.name)) {
+        mapInstance.setFilter(activeLayer.name, mapLibreFilters) // Usa il nome anziché l'id
+        console.log(
+          `Filtri applicati al layer ${activeLayer.name}:`,
+          mapLibreFilters,
+        )
+      } else {
+        console.error(
+          `Il layer ${activeLayer.name} non supporta i filtri o non esiste.`,
+        )
+      }
+    } else {
+      console.warn("MapRef non è definito o la mappa non è pronta.")
     }
   }
-  // Effetto per applicare i filtri solo ai layer attivi
-  useEffect(() => {
-    if (mapInstance && Array.isArray(activeSourceLayers)) {
-      activeSourceLayers.forEach(layerId => {
-        if (filters.length > 0) {
-          // Applica i filtri se ci sono
-          mapInstance.setFilter(layerId, filters)
-          console.log(`Filtri applicati al layer attivo ${layerId}:`, filters)
-        } else {
-          // Rimuove i filtri se non ci sono
-          mapInstance.setFilter(layerId, null)
-          console.log(`Filtri rimossi dal layer attivo ${layerId}`)
-        }
-      })
-    }
-  }, [filters, mapInstance, activeSourceLayers])
 
   return (
     <StyledControl
@@ -109,14 +132,14 @@ const ControlPanel = ({
           <hr />
           <h5>Source Layers</h5>
           {sourceLayers.map(layer => (
-            <div key={layer.id} className="form-check">
+            <div key={layer.name} className="form-check">
               <input
                 type="checkbox"
                 className="form-check-input"
-                id={layer.id}
-                onChange={() => onToggleLayer(layer.id)}
+                id={layer.name}
+                onChange={() => onToggleLayer(layer.name)}
               />
-              <label htmlFor={layer.id} className="form-check-label">
+              <label htmlFor={layer.name} className="form-check-label">
                 {layer.name}
               </label>
               <Search className="ms-4" onClick={() => openModal(layer)} />
@@ -135,7 +158,7 @@ const ControlPanel = ({
           {activeLayer && (
             <SearchUI
               fieldList={activeFieldList} // Passa il fieldListProp qui
-              processData={processData}
+              processData={processData} // La funzione che processa i filtri
             />
           )}
         </Modal.Body>
@@ -144,7 +167,7 @@ const ControlPanel = ({
   )
 }
 
-//style
+// Styled component per lo stile del Control Panel
 const StyledControl = styled.div`
   position: absolute;
   top: 0;
@@ -156,12 +179,13 @@ const StyledControl = styled.div`
 `
 
 ControlPanel.propTypes = {
-  baseLayers : PropTypes.array,
+  baseLayers: PropTypes.array,
   selectedLayer: PropTypes.string,
   onLayerChange: PropTypes.func,
   sourceLayers: PropTypes.array,
   onToggleLayer: PropTypes.func,
   activeSourceLayers: PropTypes.array,
-  mapInstance: PropTypes.element,
+  mapRef: PropTypes.object, // mapRef è ora un oggetto con getMap
 }
+
 export default ControlPanel
