@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import styled from "styled-components"
 import PropTypes from "prop-types"
-import { Modal } from "react-bootstrap"
+import { Modal, Button } from "react-bootstrap"
 import { Search, Stack } from "react-bootstrap-icons"
 import SearchUI from "../../search/searchUI"
 import plain2maplibre from "../../../services/transformers/plain2maplibre.js"
@@ -41,6 +41,26 @@ const ControlPanel = ({
   const closeModal = () => {
     setModalIsOpen(false)
     setActiveLayer(null)
+  }
+
+  const removeFilter = layerName => {
+    if (mapRef && mapRef.current) {
+      const mapInstance = mapRef.current.getMap()
+      console.log(`Rimuovo il filtro dal layer ${layerName}`)
+
+      // Verifica se il layer esiste e supporta i filtri
+      if (
+        checkLayerExists(layerName) &&
+        checkLayerTypeSupportsFilter(layerName)
+      ) {
+        mapInstance.setFilter(layerName, null) // Rimuove il filtro impostando null
+        console.log(`Filtro rimosso dal layer ${layerName}`)
+      } else {
+        console.error(
+          `Il layer ${layerName} non supporta i filtri o non esiste.`,
+        )
+      }
+    }
   }
 
   // Funzione per verificare se il layer esiste nella mappa utilizzando il nome del layer
@@ -162,6 +182,17 @@ const ControlPanel = ({
             />
           )}
         </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={closeModal}>
+            Chiudi
+          </Button>
+          <Button
+            variant="danger"
+            onClick={() => removeFilter(activeLayer.name)}
+          >
+            Rimuovi Filtro
+          </Button>
+        </Modal.Footer>
       </Modal>
     </StyledControl>
   )
