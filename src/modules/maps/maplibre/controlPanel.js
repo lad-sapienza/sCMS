@@ -170,7 +170,7 @@ const ControlPanel = ({
         </div>
       )}
       {/* Modal per la ricerca */}
-      <Modal show={modalIsOpen} onHide={closeModal}>
+      <Modal show={modalIsOpen} onHide={closeModal} size="lg">
         <Modal.Header closeButton>
           <Modal.Title>
             <Search /> {activeLayer?.name}
