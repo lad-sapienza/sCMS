@@ -20,7 +20,7 @@ const SourceLayer = ({
   dToken,
   dQueryString,
   geoField,
-  // TODO @eiacopini anche su questo bisogna fare una riflessione, perché non è molto intuitivo
+  // TODO @eiacopini anche `layerstyle` su questo bisogna fare una riflessione, perché non è molto intuitivo
   layerstyle,
 }) => {
   const [geojsonData, setGeojson] = useState(null) // GeoJSON data
@@ -40,6 +40,12 @@ const SourceLayer = ({
           transType: "geojson",
           geoField,
         })
+        // TODO @eiacopini Qui c'è un problema logico
+        // la funzione `calculatedType` può restituire 3 tipi di dati: `geojson`, `vector` o `unknown`
+        // Mentre qui il tesro della funzioona lavora solo su GeoJSON
+        // Dove vengono gestiti gli altri due tipi?
+        // In effetti `getData` con `transType: "geojson"` dovrebbe restotuire solo GeoJSON,
+        // quindi sembra che qui c'è un sacco di spazzatura
         const calculatedType = determineTypeFromData(geoJSON) // Calcola il tipo in base ai dati
         setGeojson(geoJSON) // Imposta i dati geoJSON originali
         setType(calculatedType) // Imposta il tipo di layer
