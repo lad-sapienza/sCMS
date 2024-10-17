@@ -24,6 +24,8 @@ const ControlPanel = ({
     setIsVisible(!isVisible)
   }
 
+  // TODO: MANCA FILTRO SU LAYER STYLE JSON, VA DEFINITO UN FIELDLIST
+
   const openModal = layer => {
     setActiveLayer(layer)
     setModalIsOpen(true)
@@ -89,8 +91,6 @@ const ControlPanel = ({
   }
 
   // Funzione per processare i filtri e convertirli in formato compatibile con MapLibre
-
-  // TODO: MANCA FILTRO SU LAYER STYLE JSON, VA DEFINITO UN FIELDLIST
 
   const processData = (conn, inputs) => {
     const mapLibreFilters = plain2maplibre(conn, inputs)
