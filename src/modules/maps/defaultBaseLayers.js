@@ -1,4 +1,10 @@
 export const defaultBaseLayers = {
+  CAWM: {
+    name: "Ancient World Map",
+    url: "https://cawm.lib.uiowa.edu/tiles/{z}/{x}/{y}.png",
+    attribution:
+      '&copy; <a http://cawm.lib.uiowa.edu/index.html">Consortium of Ancient World Mappers</a>',
+  },
   OSM: {
     name: "Open Street Map",
     url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
