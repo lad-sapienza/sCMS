@@ -7,9 +7,7 @@
   "sources": {
     "vectorLyr": {
       "type": "vector",
-      "tiles": [
-        "https://db.lad-sapienza.it/gis/curry/scms_ksa/{z}/{x}/{y}"
-      ],
+      "tiles": ["https://db.lad-sapienza.it/gis/curry/scms_ksa/{z}/{x}/{y}"],
       "maxzoom": 24
     },
     "EsriSat": {
@@ -36,7 +34,6 @@
         "circle-radius": 5,
         "circle-stroke-width": 1.5,
         "circle-stroke-color": "#000000"
-        
       }
     }
   ]
