@@ -23,120 +23,76 @@ const connector_map = {
  * @param {Array} plain   Array di oggetti con chiavi 'field', 'operator' e 'value'
  * @returns {Array}       Array compatibile con MapLibre Style Expression
  */
+
 const plain2maplibre = (conn, plain) => {
   const maplibre = []
 
-  // if (plain.length === 1) {
-  //   maplibre.push(operator_map[plain[0].operator])
-  //   maplibre.push(["get", plain[0].field])
-  //   maplibre.push(plain[0].value)
-  // } else {
-  //   maplibre.push(connector_map[conn])
-  //   plain.forEach((el, i) => {
-  //     maplibre.push([operator_map[el.operator], ["get", el.field], el.value])
-  //   })
-  // }
+  if (plain.length === 1) {
+    maplibre.push(operator_map[plain[0].operator] || "==")
+    maplibre.push(["get", plain[0].field])
+    maplibre.push(plain[0].value)
+  } else {
+    maplibre.push(connector_map[conn] || "any")
+    plain.forEach(el => {
+      const operator = el.operator || "_icontains" // Default a _icontains se non specificato
 
-  // Usa il connettore logico (di default usa "any" se conn è undefined)
-  maplibre.push(connector_map[conn] || "any")
-
-  // Itera attraverso i filtri e aggiunge le condizioni alla query
-  plain.forEach(el => {
-    // switch (el.operator) {
-    //   case "_null":
-    //     maplibre.push(["==", ["get", el.field], null])
-    //     break
-    //   case "_nnull":
-    //     maplibre.push(["!=", ["get", el.field], null])
-    //     break
-    //   case "_contains":
-    //     maplibre.push(["index-of", el.value, ["get", el.field], ">=", 0])
-    //     break
-    //   case "_icontains":
-    //     maplibre.push([
-    //       "index-of",
-    //       ["to-lower-case", ["get", el.field]],
-    //       ["to-lower-case", el.value],
-    //       ">=",
-    //       0,
-    //     ])
-    //     break
-    //   case "_ncontains":
-    //     maplibre.push(["index-of", el.value, ["get", el.field], "<", 0])
-    //     break
-    //   case "_starts_with":
-    //     maplibre.push(["match", ["get", el.field], `${el.value}*`, true, false])
-    //     break
-    //   case "_istarts_with":
-    //     maplibre.push([
-    //       "match",
-    //       ["to-lower-case", ["get", el.field]],
-    //       [`${el.value}*`],
-    //       true,
-    //       false,
-    //     ])
-    //     break
-    //   case "_nstarts_with":
-    //     maplibre.push(
-    //       ["!match", ["get", el.field]],
-    //       [`${el.value}*`],
-    //       true,
-    //       false,
-    //     )
-    //     break
-    //   case "_nistarts_with":
-    //     maplibre.push([
-    //       "!match",
-    //       ["to-lower-case", ["get", el.field]],
-    //       [`${el.value}*`],
-    //       true,
-    //       false,
-    //     ])
-    //     break
-    //   case "_ends_with":
-    //     maplibre.push(["match", ["get", el.field], `*${el.value}`, true, false])
-    //     break
-    //   case "_iends_with":
-    //     maplibre.push([
-    //       "match",
-    //       ["to-lower", ["get", el.field]],
-    //       `*${el.value.toLowerCase()}`,
-    //       true,
-    //       false,
-    //     ])
-    //     break
-    //   case "_nends_with":
-    //     maplibre.push([
-    //       "!match",
-    //       ["to-lower", ["get", el.field]],
-    //       `*${el.value.toLowerCase()}`,
-    //       true,
-    //       false,
-    //     ])
-    //     break
-    //   case "_niends_with":
-    //     maplibre.push([
-    //       "!match",
-    //       ["get", el.field],
-    //       `*${el.value}`,
-    //       true,
-    //       false,
-    //     ])
-    //     break
-    //   case "_empty":
-    //     maplibre.push(["==", ["get", el.field], ""])
-    //     break
-    //   case "_nempty":
-    //     maplibre.push(["!=", ["get", el.field], ""])
-    //     break
-    //   default:
-    //     break
-    // }
-
-    const operator = operator_map[el.operator] || "==" // Operatore di default: "=="
-    // Gestisci gli operatori di default (uguale, diverso, maggiore, etc.)
-    maplibre.push([operator, ["get", el.field], el.value])
-  })
+      switch (operator) {
+        case "_icontains":
+          // Usa index-of per ricerca parziale case-insensitive
+          maplibre.push([
+            ">=",
+            [
+              "index-of",
+              el.value.toLowerCase(),
+              ["downcase", ["get", el.field]],
+            ],
+            0,
+          ])
+          break
+        case "_ncontains":
+          // Usa index-of per escludere stringhe che contengono il valore
+          maplibre.push([
+            "<",
+            [
+              "index-of",
+              el.value.toLowerCase(),
+              ["downcase", ["get", el.field]],
+            ],
+            0,
+          ])
+          break
+        case "_starts_with":
+          // Cerca stringhe che iniziano con il valore
+          maplibre.push([
+            "==",
+            ["slice", ["get", el.field], 0, el.value.length],
+            el.value,
+          ])
+          break
+        case "_ends_with":
+          // Cerca stringhe che terminano con il valore
+          maplibre.push([
+            "==",
+            ["slice", ["get", el.field], -el.value.length],
+            el.value,
+          ])
+          break
+        case "_empty":
+          maplibre.push(["==", ["get", el.field], ""])
+          break
+        case "_nempty":
+          maplibre.push(["!=", ["get", el.field], ""])
+          break
+        default:
+          maplibre.push([
+            operator_map[operator] || "==",
+            ["get", el.field],
+            el.value,
+          ])
+          break
+      }
+    })
+  }
 
   return maplibre
 }
