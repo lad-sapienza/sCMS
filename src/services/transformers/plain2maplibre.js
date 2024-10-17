@@ -27,72 +27,75 @@ const connector_map = {
 const plain2maplibre = (conn, plain) => {
   const maplibre = []
 
-  if (plain.length === 1) {
-    maplibre.push(operator_map[plain[0].operator] || "==")
-    maplibre.push(["get", plain[0].field])
-    maplibre.push(plain[0].value)
-  } else {
-    maplibre.push(connector_map[conn] || "any")
-    plain.forEach(el => {
-      const operator = el.operator || "_icontains" // Default a _icontains se non specificato
+  // Usa il connettore logico passato dalla funzione (default: "any")
+  const logicalConnector = connector_map[conn] || "any"
+  maplibre.push(logicalConnector)
 
-      switch (operator) {
-        case "_icontains":
-          // Usa index-of per ricerca parziale case-insensitive
-          maplibre.push([
-            ">=",
-            [
-              "index-of",
-              el.value.toLowerCase(),
-              ["downcase", ["get", el.field]],
-            ],
-            0,
-          ])
-          break
-        case "_ncontains":
-          // Usa index-of per escludere stringhe che contengono il valore
-          maplibre.push([
-            "<",
-            [
-              "index-of",
-              el.value.toLowerCase(),
-              ["downcase", ["get", el.field]],
-            ],
-            0,
-          ])
-          break
-        case "_starts_with":
-          // Cerca stringhe che iniziano con il valore
-          maplibre.push([
-            "==",
-            ["slice", ["get", el.field], 0, el.value.length],
-            el.value,
-          ])
-          break
-        case "_ends_with":
-          // Cerca stringhe che terminano con il valore
-          maplibre.push([
-            "==",
-            ["slice", ["get", el.field], -el.value.length],
-            el.value,
-          ])
-          break
-        case "_empty":
-          maplibre.push(["==", ["get", el.field], ""])
-          break
-        case "_nempty":
-          maplibre.push(["!=", ["get", el.field], ""])
-          break
-        default:
-          maplibre.push([
-            operator_map[operator] || "==",
-            ["get", el.field],
-            el.value,
-          ])
-          break
-      }
-    })
-  }
+  plain.forEach(el => {
+    const operator = el.operator || "_eq" // Default operator
+    switch (operator) {
+      case "_icontains":
+        maplibre.push([
+          ">=",
+          ["index-of", el.value.toLowerCase(), ["downcase", ["get", el.field]]],
+          0,
+        ])
+        break
+      case "_contains":
+        maplibre.push([">=", ["index-of", el.value, ["get", el.field]], 0])
+        break
+      case "_ncontains":
+        maplibre.push(["<", ["index-of", el.value, ["get", el.field]], 0])
+        break
+      case "_starts_with":
+        maplibre.push([
+          "==",
+          ["slice", ["get", el.field], 0, el.value.length],
+          ["literal", el.value],
+        ])
+        break
+      case "_istarts_with":
+        maplibre.push([
+          "==",
+          ["slice", ["downcase", ["get", el.field]], 0, el.value.length],
+          ["literal", el.value.toLowerCase()],
+        ])
+        break
+      case "_ends_with":
+        maplibre.push([
+          "==",
+          ["slice", ["get", el.field], -el.value.length],
+          ["literal", el.value],
+        ])
+        break
+      case "_iends_with":
+        maplibre.push([
+          "==",
+          ["slice", ["downcase", ["get", el.field]], -el.value.length],
+          ["literal", el.value.toLowerCase()],
+        ])
+        break
+      case "_empty":
+        maplibre.push(["==", ["get", el.field], ""])
+        break
+      case "_nempty":
+        maplibre.push(["!=", ["get", el.field], ""])
+        break
+      case "_null":
+        maplibre.push(["==", ["get", el.field], null])
+        break
+      case "_nnull":
+        maplibre.push(["!=", ["get", el.field], null])
+        break
+      default:
+        maplibre.push([
+          operator_map[operator] || "==",
+          ["get", el.field],
+          ["literal", el.value],
+        ])
+        break
+    }
+  })
 
   return maplibre
 }
