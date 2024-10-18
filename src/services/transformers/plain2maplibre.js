@@ -1,4 +1,6 @@
 // Mappa degli operatori da Directus a MapLibre
+// TODO @eiacopini: spostare questi nello switch sotto
+// TODO @eiacopini: Testare tutti i casi
 const operator_map = {
   _eq: "==",
   _neq: "!=",
