@@ -3,13 +3,16 @@ import { Source, Layer } from "react-map-gl/maplibre"
 import getData from "../../../services/getData" // Importa la tua funzione getData
 
 const SourceLayer = ({
+  // TODO: @eiacopini deve prendere da utente parametro `name`, da usare per il controlPanel
+  // TODO: @eiacopini deve prendere da utente parametro `checked` (bool), da usare per il controlPanel
+  // TODO: @eiacopini deve prendere da utente parametro `fitToContent` (bool), da usare per il controlPanel
   path2data,
   dEndPoint,
   dTable,
   dToken,
   dQueryString,
   geoField,
-  // TODO @eiacopini anche `layerstyle` su questo bisogna fare una riflessione, perché non è molto intuitivo
+  // TODO @eiacopini rinominarlo `style`
   layerstyle,
 }) => {
   const [geojsonData, setGeojson] = useState(null) // GeoJSON data

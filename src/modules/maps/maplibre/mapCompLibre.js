@@ -20,6 +20,15 @@ const MapCompLibre = ({
   interactiveLayerIds = [],
   styleJson,
 }) => {
+  /**
+   * TODO: @eiacopini
+   const lyrList = [
+    {
+    "name": "=> controlPanel"
+    "popUpTmpl": "=> fn => PopUp"
+   }
+   ];
+   */
   const [lng, lat, zoom] = center?.split(",").map(e => parseFloat(e.trim()))
 
   const [mapStyle, setMapStyle] = useState(
