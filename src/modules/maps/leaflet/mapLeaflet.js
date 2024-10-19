@@ -71,7 +71,7 @@ MapLeaflet.propTypes = {
   /**
    * Array with default baselayers to show
    */
-  baseLayers: PropTypes.arrayOf(PropTypes.oneOf(["OSM", "EsriSatellite", "EsriStreets", "EsriTopo", "GoogleSatellite", "GoogleRoadmap", "GoogleTerrain", "GoogleAlteredRoadmap", "GoogleTerrainOnly", "GoogleHybrid", "CartoDb", "StamenTerrain", "OSMMapnick", "OSMCycle"])), 
+  baseLayers: PropTypes.arrayOf(PropTypes.oneOf(["CAWM", "OSM", "EsriSatellite", "EsriStreets", "EsriTopo", "GoogleSatellite", "GoogleRoadmap", "GoogleTerrain", "GoogleAlteredRoadmap", "GoogleTerrainOnly", "GoogleHybrid", "CartoDb", "StamenTerrain", "OSMMapnick", "OSMCycle"])), 
   /**
    * Children elements
    */
