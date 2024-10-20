@@ -19,6 +19,10 @@ const MapCompLibre = ({
   center,
   interactiveLayerIds = [],
   styleJson,
+  geolocateControl,
+  fullscreenControl,
+  navigationControl,
+  scaleControl,
 }) => {
   /**
    * TODO: @eiacopini
@@ -151,10 +155,16 @@ const MapCompLibre = ({
             </div>
           </Popup>
         )}
-        <GeolocateControl position="top-left" />
-        <FullscreenControl position="top-left" />
-        <NavigationControl position="top-left" />
-        <ScaleControl />
+
+        {geolocateControl && <GeolocateControl position={geolocateControl} />}
+        {fullscreenControl && (
+          <FullscreenControl position={fullscreenControl} />
+        )}
+        {navigationControl && (
+          <NavigationControl position={navigationControl} />
+        )}
+        {scaleControl && <ScaleControl position={scaleControl} />}
+
         <ControlPanel
           position="top-right"
           baseLayers={defaultBaseLayers}
