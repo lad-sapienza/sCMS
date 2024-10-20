@@ -12,6 +12,7 @@ const ControlPanel = ({
   onLayerChange,
   sourceLayers,
   onToggleLayer,
+  // TODO @eiacopini: perché passare questo quando si può usare useMap: https://visgl.github.io/react-map-gl/docs/api-reference/use-map
   mapRef, // Aggiunto mapRef come prop
 }) => {
   const [isVisible, setIsVisible] = useState(false)

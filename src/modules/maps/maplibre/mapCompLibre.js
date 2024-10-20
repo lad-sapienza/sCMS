@@ -105,6 +105,7 @@ const MapCompLibre = ({
   return (
     <React.Fragment>
       <Map
+        // TODO: @eicopini: a che serve questo ref qui?
         ref={mapRef} // Collega il riferimento alla mappa
         initialViewState={{
           longitude: lng ? lng : 0,
@@ -177,6 +178,7 @@ const MapCompLibre = ({
             toggleLayerVisibility(layerId)
             toggleStyleLayerVisibility(layerId)
           }}
+          // TODO @eiacopini vedi la nota nel componente
           mapRef={mapRef} // Passa il mapRef al ControlPanel
         />
       </Map>
