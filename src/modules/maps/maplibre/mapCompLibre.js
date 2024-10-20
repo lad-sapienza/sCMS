@@ -36,7 +36,7 @@ const MapCompLibre = ({
   const [lng, lat, zoom] = center?.split(",").map(e => parseFloat(e.trim()))
 
   const [mapStyle, setMapStyle] = useState(
-    styleJson || "https://demotiles.maplibre.org/style.json",
+    styleJson || "https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json",
   ) // Stile di default
 
   const [clickInfo, setClickInfo] = useState(null)
