@@ -213,7 +213,7 @@ const StyledControl = styled.div`
 `
 
 ControlPanel.propTypes = {
-  baseLayers: PropTypes.array,
+  baseLayers: PropTypes.object,
   selectedLayer: PropTypes.string,
   onLayerChange: PropTypes.func,
   sourceLayers: PropTypes.array,
