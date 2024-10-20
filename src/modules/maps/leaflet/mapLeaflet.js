@@ -63,27 +63,53 @@ MapLeaflet.propTypes = {
   /**
    * Height (with unit) of the map element: default: 800px
    */
-  height: PropTypes.string, 
+  height: PropTypes.string,
   /**
    * Center of the map, as a string with long, lat and zoom separated by commas: default to 0,0,2
    */
-  center: PropTypes.string, 
+  center: PropTypes.string,
   /**
    * Array with default baselayers to show
    */
-  baseLayers: PropTypes.arrayOf(PropTypes.oneOf(["CAWM", "OSM", "EsriSatellite", "EsriStreets", "EsriTopo", "GoogleSatellite", "GoogleRoadmap", "GoogleTerrain", "GoogleAlteredRoadmap", "GoogleTerrainOnly", "GoogleHybrid", "CartoDb", "StamenTerrain", "OSMMapnick", "OSMCycle"])), 
+  baseLayers: PropTypes.arrayOf(
+    PropTypes.oneOf([
+      "CAWM",
+      "OSM",
+      "EsriSatellite",
+      "EsriStreets",
+      "EsriTopo",
+      "GoogleSatellite",
+      "GoogleRoadmap",
+      "GoogleTerrain",
+      "GoogleAlteredRoadmap",
+      "GoogleTerrainOnly",
+      "GoogleHybrid",
+      "CartoDb",
+      "StamenTerrain",
+      "OSMMapnick",
+      "OSMCycle",
+    ]),
+  ),
   /**
    * Children elements
    */
-  children: PropTypes.arrayOf(PropTypes.element), 
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.element),
+    PropTypes.element,
+  ]),
   /**
    * Boolean to controle if wheel zoom is active or not. Default false
    */
-  scrollWheelZoom: PropTypes.bool, 
+  scrollWheelZoom: PropTypes.bool,
   /**
    * Position of the layers control
    */
-  layersControlPosition: PropTypes.oneOf(["topright", "topleft", "bottomright", "bottomleft"])
+  layersControlPosition: PropTypes.oneOf([
+    "topright",
+    "topleft",
+    "bottomright",
+    "bottomleft",
+  ]),
 }
 
 export { MapLeaflet }
