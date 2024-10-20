@@ -202,6 +202,12 @@ const ControlPanel = ({
 }
 
 // Styled component per lo stile del Control Panel
+// TODO @eicopini: questo controller è aggiunto in maniera brutale alla mappa e infatti non è listato tra i controller 
+// e va in conflitto se si aggiungono controller in top-right
+// Questo perché non segue le direttive dei controller: 
+// https://maplibre.org/maplibre-gl-js/docs/API/interfaces/IControl/ v. anche
+// https://stackoverflow.com/a/74283884
+// https://stackoverflow.com/a/73333764
 const StyledControl = styled.div`
   position: absolute;
   top: 0;
