@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import PropTypes from "prop-types"
-import withLocation from "./withLocation"
+import withLocation from "../../services/withLocation"
 import getData from "../../services/getData"
 
 export const RecordContext = React.createContext()
@@ -33,9 +33,9 @@ const RecordNotWrapped = ({ search, children }) => {
     }
   }, [endPoint, tb, token, id])
 
-  if (loading){ 
+  if (loading) {
     return <div className="text-info">Loading...</div>
- } 
+  }
   if (error) {
     console.log(error)
     return (
@@ -79,8 +79,11 @@ Record.propTypes = {
     /**
      * Record id
      */
-    id: PropTypes.number
+    id: PropTypes.number,
   }),
-  children: PropTypes.arrayOf(PropTypes.element)
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.element),
+    PropTypes.element,
+  ]),
 }
 export { Record }
