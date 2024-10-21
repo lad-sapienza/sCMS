@@ -1,5 +1,5 @@
 import * as React from "react"
-import { useState, useCallback, useEffect, useRef } from "react"
+import { useState, useCallback, useEffect } from "react"
 import "maplibre-gl/dist/maplibre-gl.css"
 import Map, {
   NavigationControl,
@@ -45,7 +45,6 @@ const MapCompLibre = ({
   const [visibleSourceLayers, setVisibleSourceLayers] = useState({})
   const [styleLayers, setStyleLayers] = useState([]) // Stato per i layer dal JSON
   const [visibleLayers, setVisibleLayers] = useState({}) // Stato per la visibilità dei layer
-  const mapRef = useRef(null) // Crea il riferimento alla mappa
 
   const handleLayerChange = styleUrl => {
     setMapStyleUrl(styleUrl)
@@ -79,6 +78,9 @@ const MapCompLibre = ({
   )
 
   // Effetto per caricare i layer dal file di stile JSON
+  // TODO @eicaopini se capisco bene qui stai caricando (l'ennesima volta) il JSON degli stili per prendere la lista dei layer
+  // Ma questo non serve, perché la lista si può prendere dalla mappa stessa con getStyle() che restituisce prioprio quest'oggetto, senza doverlo ricaricare
+  // https://maplibre.org/maplibre-gl-js/docs/API/classes/Map/#getstyle
   useEffect(() => {
     const fetchStyle = async () => {
       try {
@@ -110,7 +112,6 @@ const MapCompLibre = ({
     <React.Fragment>
       <Map
         // TODO: @eicopini: a che serve questo ref qui?
-        ref={mapRef} // Collega il riferimento alla mappa
         initialViewState={{
           longitude: lng ? lng : 0,
           latitude: lat ? lat : 0,
@@ -128,7 +129,7 @@ const MapCompLibre = ({
           }
           return null
         })}
-
+        
         {/* Applica i layer dal file di stile JSON solo se presenti */}
         {styleLayers &&
           styleLayers.length > 0 &&
@@ -188,8 +189,6 @@ const MapCompLibre = ({
             toggleLayerVisibility(layerId)
             toggleStyleLayerVisibility(layerId)
           }}
-          // TODO @eiacopini vedi la nota nel componente
-          mapRef={mapRef} // Passa il mapRef al ControlPanel
         />
       </Map>
     </React.Fragment>

@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import {useMap} from 'react-map-gl/maplibre';
 import styled from "styled-components"
 import PropTypes from "prop-types"
 import { Modal, Button } from "react-bootstrap"
@@ -11,15 +12,16 @@ const ControlPanel = ({
   selectedLayer,
   onLayerChange,
   sourceLayers,
-  onToggleLayer,
-  // TODO @eiacopini: perché passare questo quando si può usare useMap: https://visgl.github.io/react-map-gl/docs/api-reference/use-map
-  mapRef, // Aggiunto mapRef come prop
+  onToggleLayer
 }) => {
   const [isVisible, setIsVisible] = useState(false)
   const [activeLayer, setActiveLayer] = useState(null)
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const [activeFieldList, setActiveFieldList] = useState(null)
   const [filters, setFilters] = useState([])
+
+  const {current: mapRef} = useMap();
+  const mapInstance = mapRef.getMap();
 
   const toggleVisibility = () => {
     setIsVisible(!isVisible)
@@ -46,8 +48,7 @@ const ControlPanel = ({
   }
 
   const removeFilter = layerName => {
-    if (mapRef && mapRef.current) {
-      const mapInstance = mapRef.current.getMap()
+    if (mapRef) {
       console.log(`Rimuovo il filtro dal layer ${layerName}`)
 
       // Verifica se il layer esiste e supporta i filtri
@@ -67,7 +68,6 @@ const ControlPanel = ({
 
   // Funzione per verificare se il layer esiste nella mappa utilizzando il nome del layer
   const checkLayerExists = layerName => {
-    const mapInstance = mapRef.current.getMap() // Usa getMap per ottenere l'istanza MapLibre
     const layers = mapInstance.getStyle().layers
     console.log("Verifica layer con nome:", layerName)
     console.log(
@@ -81,7 +81,6 @@ const ControlPanel = ({
 
   // Funzione per verificare se il layer supporta i filtri (solo alcuni tipi supportano i filtri)
   const checkLayerTypeSupportsFilter = layerId => {
-    const mapInstance = mapRef.current.getMap()
     const layer = mapInstance.getLayer(layerId)
     return (
       layer &&
@@ -99,7 +98,6 @@ const ControlPanel = ({
     setFilters(mapLibreFilters)
 
     if (mapRef && mapRef.current) {
-      const mapInstance = mapRef.current.getMap() // Usa getMap per ottenere l'istanza MapLibre
       console.log("mapInstance:", mapInstance) // Verifica che l'istanza della mappa sia disponibile
 
       const layerExists = checkLayerExists(activeLayer.name)
