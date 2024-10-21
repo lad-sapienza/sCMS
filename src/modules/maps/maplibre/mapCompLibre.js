@@ -18,7 +18,7 @@ const MapCompLibre = ({
   height,
   center,
   interactiveLayerIds = [],
-  styleJson,
+  mapStyle,
   geolocateControl,
   fullscreenControl,
   navigationControl,
@@ -35,8 +35,8 @@ const MapCompLibre = ({
    */
   const [lng, lat, zoom] = center?.split(",").map(e => parseFloat(e.trim()))
 
-  const [mapStyle, setMapStyle] = useState(
-    styleJson || "https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json",
+  const [mapStyleUrl, setMapStyleUrl] = useState(
+    mapStyle || "https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json",
   ) // Stile di default
 
   const [clickInfo, setClickInfo] = useState(null)
@@ -48,7 +48,7 @@ const MapCompLibre = ({
   const mapRef = useRef(null) // Crea il riferimento alla mappa
 
   const handleLayerChange = styleUrl => {
-    setMapStyle(styleUrl)
+    setMapStyleUrl(styleUrl)
   }
 
   const toggleLayerVisibility = layerId => {
@@ -82,7 +82,7 @@ const MapCompLibre = ({
   useEffect(() => {
     const fetchStyle = async () => {
       try {
-        const response = await fetch(styleJson)
+        const response = await fetch(mapStyle)
         const styleData = await response.json()
 
         // Verifica se ci sono layer nel file di stile JSON
@@ -101,10 +101,10 @@ const MapCompLibre = ({
       }
     }
 
-    if (styleJson) {
+    if (mapStyle) {
       fetchStyle() // Carica solo se c'è un file di stile JSON
     }
-  }, [styleJson])
+  }, [mapStyle])
 
   return (
     <React.Fragment>
@@ -117,7 +117,7 @@ const MapCompLibre = ({
           zoom: zoom ? zoom : 2,
         }}
         style={{ height: height ? height : `800px` }}
-        mapStyle={mapStyle}
+        mapStyle={mapStyleUrl}
         interactiveLayerIds={interactiveLayerIds} // Passa l'array di layer interattivi
         onClick={onClick}
       >
@@ -139,7 +139,7 @@ const MapCompLibre = ({
               ),
           )}
 
-        <Source id="basemap" type="raster" tiles={[mapStyle]} tileSize={256} />
+        <Source id="basemap" type="raster" tiles={[mapStyleUrl]} tileSize={256} />
         <Layer id="basemap-layer" type="raster" source="basemap" />
 
         {clickInfo && (
@@ -168,7 +168,7 @@ const MapCompLibre = ({
         <ControlPanel
           position="top-right"
           baseLayers={defaultBaseLayers}
-          selectedLayer={mapStyle}
+          selectedLayer={mapStyleUrl}
           onLayerChange={handleLayerChange}
           // Combina i SourceLayer definiti manualmente e quelli dal file JSON
           sourceLayers={[
