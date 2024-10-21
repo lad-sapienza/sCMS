@@ -97,7 +97,7 @@ const ControlPanel = ({
     console.log("Filtri generati:", mapLibreFilters)
     setFilters(mapLibreFilters)
 
-    if (mapRef && mapRef.current) {
+    if (mapRef) {
       console.log("mapInstance:", mapInstance) // Verifica che l'istanza della mappa sia disponibile
 
       const layerExists = checkLayerExists(activeLayer.name)
