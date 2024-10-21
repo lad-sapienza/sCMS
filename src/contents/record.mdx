@@ -20,6 +20,7 @@ import {Record, Field} from "../modules/scms.js"
       - Coordinates:
         - **Lng**: <Field name={["geometry", "coordinates", "0"]} />
         - **Lat**: <Field name={["geometry", "coordinates", "1"]} />
+      - **Geometry type** (using a transformer function): <Field name={["geometry"]} transformer={ d => d.type }/>
     </Record>
     ```
   </div>
@@ -33,6 +34,8 @@ import {Record, Field} from "../modules/scms.js"
       - Coordinates:
         - **Lng**: <Field name={["geometry", "coordinates", "0"]} />
         - **Lat**: <Field name={["geometry", "coordinates", "1"]} />
+      - **Geometry type** (using a transformer function): <Field name={["geometry"]} transformer={ d => d.type }/>
+      
     </Record>
   </div>
 </div>

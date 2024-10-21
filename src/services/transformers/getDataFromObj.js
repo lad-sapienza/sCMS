@@ -1,7 +1,6 @@
 const getDataFromObj = (obj, search) => {
   let output
   search.forEach((searchEl, index) => {
-    console.log(index)
     if (obj[searchEl] !== "undefined") {
       if (typeof obj[searchEl] === "string") {
         output = obj[searchEl]
@@ -9,7 +8,7 @@ const getDataFromObj = (obj, search) => {
       } else {
         search.shift()
         if (search.length === 0) {
-          output = JSON.stringify(obj[searchEl], null, 2)
+          output = obj[searchEl]
           return
         }
         output = getDataFromObj(obj[searchEl], search)
