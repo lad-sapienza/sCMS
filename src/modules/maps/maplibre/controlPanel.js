@@ -11,7 +11,6 @@ const ControlPanel = ({
   baseLayers,
   selectedLayer,
   onLayerChange,
-  sourceLayers,
   onToggleLayer
 }) => {
   const [isVisible, setIsVisible] = useState(false)
@@ -152,16 +151,17 @@ const ControlPanel = ({
           {/* Sezione per i source layer */}
           <hr />
           <h5>Source Layers</h5>
-          {sourceLayers.map(layer => (
-            <div key={layer.name} className="form-check">
+          {mapInstance.getStyle().layers.map((layer, k) => (
+            <div key={k} className="form-check">
               <input
                 type="checkbox"
                 className="form-check-input"
-                id={layer.name}
-                onChange={() => onToggleLayer(layer.name)}
+                id={layer.id}
+                defaultChecked={true}
+                onChange={() => onToggleLayer(layer.id)}
               />
               <label htmlFor={layer.name} className="form-check-label">
-                {layer.name}
+                {layer.metadata?.label ? layer.metadata.label :  layer.id}
               </label>
               <Search className="ms-4" onClick={() => openModal(layer)} />
             </div>
@@ -220,10 +220,8 @@ ControlPanel.propTypes = {
   baseLayers: PropTypes.object,
   selectedLayer: PropTypes.string,
   onLayerChange: PropTypes.func,
-  sourceLayers: PropTypes.array,
   onToggleLayer: PropTypes.func,
   activeSourceLayers: PropTypes.array,
-  mapRef: PropTypes.object, // mapRef è ora un oggetto con getMap
 }
 
 export default ControlPanel

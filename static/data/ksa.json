@@ -3,11 +3,12 @@
   "name": "Kahramanmaraş Survey",
   "minzoom": 0,
   "maxzoom": 24,
-
   "sources": {
     "vectorLyr": {
       "type": "vector",
-      "tiles": ["https://db.lad-sapienza.it/gis/curry/scms_ksa/{z}/{x}/{y}"],
+      "tiles": [
+        "https://db.lad-sapienza.it/gis/curry/scms_ksa/{z}/{x}/{y}"
+      ],
       "maxzoom": 24
     },
     "EsriSat": {
@@ -21,13 +22,19 @@
     {
       "id": "sat-esri",
       "source": "EsriSat",
-      "type": "raster"
+      "type": "raster",
+      "metadata": {
+        "label": "ESRI Satellite"
+      }
     },
     {
       "id": "ksa",
       "source": "vectorLyr",
       "source-layer": "scms_ksa",
       "type": "circle",
+      "metadata": {
+        "label": "Kahramanmaraş Survey Sites"
+      },
       "paint": {
         "circle-color": "#ff0000",
         "circle-opacity": 0.5,
