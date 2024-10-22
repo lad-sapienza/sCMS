@@ -3,9 +3,6 @@ import { Source, Layer } from "react-map-gl/maplibre"
 import getData from "../../../services/getData" // Importa la tua funzione getData
 
 const VectorLayerLibre = ({
-  name,
-  checked,
-  fitToContent,
   path2data,
   dEndPoint,
   dTable,

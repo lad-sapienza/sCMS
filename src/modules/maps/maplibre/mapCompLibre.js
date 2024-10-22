@@ -43,6 +43,8 @@ const MapCompLibre = ({
     return {
       id: child.props.style.id,
       name: child.props.name,
+      checked: child.props.checked,
+      fitToContent: child.props.fitToContent,
       popUpTmpl: child.props.popUpTmpl,
     }
   })
@@ -111,6 +113,7 @@ const MapCompLibre = ({
           baseLayers={defaultBaseLayers}
           selectedLayer={mapStyleUrl}
           onLayerChange={handleLayerChange}
+          layerList={lyrList}
         />
       </Map>
     </React.Fragment>
