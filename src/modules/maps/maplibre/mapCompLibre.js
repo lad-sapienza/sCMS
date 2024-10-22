@@ -59,7 +59,6 @@ const MapCompLibre = ({
   return (
     <React.Fragment>
       <Map
-        // TODO: @eicopini: a che serve questo ref qui?
         initialViewState={{
           longitude: lng ? lng : 0,
           latitude: lat ? lat : 0,
