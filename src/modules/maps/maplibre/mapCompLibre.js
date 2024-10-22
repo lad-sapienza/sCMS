@@ -34,10 +34,18 @@ const MapCompLibre = ({
   const [lng, lat, zoom] = center?.split(",").map(e => parseFloat(e.trim()))
 
   const [mapStyleUrl, setMapStyleUrl] = useState(
-    mapStyle || "https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json",
-  ) // Stile di default
+    mapStyle || "https://demotiles.maplibre.org/style.json",
+  ) // Stile di default https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json
 
   const [clickInfo, setClickInfo] = useState(null)
+
+  const lyrList = React.Children.map(children, child => {
+    return {
+      id: child.props.style.id,
+      name: child.props.name,
+      popUpTmpl: child.props.popUpTmpl,
+    }
+  })
 
   const handleLayerChange = styleUrl => {
     setMapStyleUrl(styleUrl)
@@ -50,7 +58,6 @@ const MapCompLibre = ({
       const clickedFeature = features.find(feature =>
         interactiveLayerIds.includes(feature.layer.id),
       )
-
       setClickInfo(clickedFeature ? { feature: clickedFeature } : null)
     },
     [interactiveLayerIds],
@@ -69,8 +76,8 @@ const MapCompLibre = ({
         interactiveLayerIds={interactiveLayerIds} // Passa l'array di layer interattivi
         onClick={onClick}
       >
-        { children }
-        
+        {children}
+
         {clickInfo && (
           <Popup
             anchor="top"
@@ -79,8 +86,13 @@ const MapCompLibre = ({
             onClose={() => setClickInfo(null)}
           >
             <div>
-              {clickInfo.feature.properties &&
-                JSON.stringify(clickInfo.feature.properties, null, 2)}
+              {/* Usa `popUpTmpl` dal `lyrList` o mostra i dati grezzi se non c'è popUpTmpl */}
+              {lyrList.find(layer => layer.id === clickInfo.feature.layer.id)
+                ?.popUpTmpl
+                ? lyrList
+                    .find(layer => layer.id === clickInfo.feature.layer.id)
+                    .popUpTmpl(clickInfo.feature.properties)
+                : JSON.stringify(clickInfo.feature.properties, null, 2)}
             </div>
           </Popup>
         )}

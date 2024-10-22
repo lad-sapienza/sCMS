@@ -115,7 +115,7 @@ VectorLayer.propTypes = {
    */
   popupTemplate: PropTypes.func,
   /**
-   * A Function defining how GeoJSON points spawn Leaflet layers. It is internally called when data is added, passing the GeoJSON point feature and its LatLng. The default is to spawn a default Marker: 
+   * A Function defining how GeoJSON points spawn Leaflet layers. It is internally called when data is added, passing the GeoJSON point feature and its LatLng. The default is to spawn a default Marker:
    * Ref: https://leafletjs.com/reference.html#geojson-pointtolayer
    */
   pointToLayer: PropTypes.func,
@@ -135,5 +135,5 @@ VectorLayer.propTypes = {
    * If true, the map will be zoomed and panned to show full extents of the layer added
    */
   fitToContent: PropTypes.bool,
-};
+}
 export { VectorLayer }

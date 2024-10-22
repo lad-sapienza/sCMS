@@ -5,7 +5,7 @@ slug: "maps/examples/maplibre-directus-with-filter"
 description: "Maplibre: Adding a vector layer from a Directus API with filter"
 ---
 
-import { MapCompLibre, SourceLayer } from "../../modules/scms.js"
+import { MapCompLibre, VectorLayerLibre } from "../../modules/scms.js"
 
 ### Maplibre: Adding a vector layer from a Directus API with filter
 
@@ -17,18 +17,21 @@ Only Hellenistic and Roman sites are being displayed
       center="37.00416,37.48551,9"
       interactiveLayerIds={["ksa-directus"]}
     >
-      <SourceLayer
-        id="2"
-        type="geojson"
-        dQueryString="filter[Hellenistic_Roman][_eq]=true"
+      <VectorLayerLibre
+        name="Hellenistic and Roman Sites"
         dTable="scms_ksa"
         geoField="geometry"
+        dQueryString="filter[Hellenistic_Roman][_eq]=true"
+        checked={true}
+        fitToContent={true}
+        id="2"
+        type="geojson"
         fieldList={{
         "Item_Label": "Label",
         "Site_Name": "Site name",
         "Site_Description": "Site description"
       }}
-        layerstyle={{
+        style={{
           id: "ksa-directus",
           type: "circle",
           paint: {
@@ -38,6 +41,13 @@ Only Hellenistic and Roman sites are being displayed
             "circle-stroke-color": "#000000"
           },
         }}
+          popUpTmpl={(properties) => (
+    <div>
+      <h4>{properties.Site_Name}</h4>
+      <p>{properties.Site_Description}</p>
+      <small>{properties.Item_Label}</small>
+    </div>
+  )}
       />
     </MapCompLibre>
     Data from [Kahramanmaraş Survey](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) created by [Elizabeth Carter](http://opencontext.org/persons/3208923d-69d0-70e9-9cc1-23ad97770aec) and published on [OpenContext](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) add distributed with [CC BY 4.0 International](https://creativecommons.org/licenses/by/4.0) license.
@@ -46,7 +56,7 @@ Only Hellenistic and Roman sites are being displayed
     ```jsx
     import {
       MapCompLibre,
-      SourceLayer,
+      VectorLayerLibre,
     } from "../../modules/scms.js"
 
     <MapCompLibre
@@ -54,18 +64,21 @@ Only Hellenistic and Roman sites are being displayed
         interactiveLayerIds={["ksa-directus"]}
       >
 
-      <SourceLayer
-        id="2"
-        type="geojson"
-        dQueryString="filter[Hellenistic_Roman][_eq]=true"
+      <VectorLayerLibre
+        name="Hellenistic and Roman Sites"
         dTable="scms_ksa"
         geoField="geometry"
-         fieldList={{
-          "Item_Label": "Label",
-          "Site_Name": "Site name",
-          "Site_Description": "Site description"
-        }}
-        layerstyle={{
+        dQueryString="filter[Hellenistic_Roman][_eq]=true"
+        checked={true}
+        fitToContent={true}
+        id="2"
+        type="geojson"
+        fieldList={{
+        "Item_Label": "Label",
+        "Site_Name": "Site name",
+        "Site_Description": "Site description"
+      }}
+          style={{
           id: "ksa-directus",
           type: "circle",
           paint: {
@@ -75,7 +88,16 @@ Only Hellenistic and Roman sites are being displayed
             "circle-stroke-color": "#000000"
           },
         }}
-      />
+          popUpTmpl={(properties) => (
+    <div>
+      <h4>{properties.Site_Name}</h4>
+      <p>{properties.Site_Description}</p>
+      <small>{properties.Item_Label}</small>
+    </div>
+
+)}
+
+/>
 
     </MapCompLibre>
     ```

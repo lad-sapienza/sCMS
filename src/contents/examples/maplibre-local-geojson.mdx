@@ -5,7 +5,7 @@ slug: "maps/examples/maplibre-local-geojson"
 description: "MapLibre: Adding a vector layer from a local GeoJSON file"
 ---
 
-import { MapCompLibre, SourceLayer } from "../../modules/scms.js"
+import { MapCompLibre, VectorLayerLibre } from "../../modules/scms.js"
 
 ### MapLibre: Adding a vector layer from a local GeoJSON file
 
@@ -15,14 +15,17 @@ import { MapCompLibre, SourceLayer } from "../../modules/scms.js"
       center="37.00416,37.48551,9"
       interactiveLayerIds={["ksaSites"]}
     >
-      <SourceLayer
+      <VectorLayerLibre
+        name="Sites"
         path2data="../data/ksa.geojson"
+        fitToContent={true}
+        checked={true}
         fieldList={{
         "Item_Label": "Label",
         "Site_Name": "Site name",
         "Site_Description": "Site description"
       }}
-        layerstyle={{
+        style={{
           id: "ksaSites",
           type: "circle",
           paint: {
@@ -32,15 +35,23 @@ import { MapCompLibre, SourceLayer } from "../../modules/scms.js"
             "circle-stroke-color": "#000000"
           },
         }}
+         popUpTmpl={(properties) => (
+    <div>
+      <h4>{properties.Site_Name}</h4>
+      <p>{properties.Site_Description}</p>
+      <small>{properties.Item_Label}</small>
+    </div>
+  )}
       />
     </MapCompLibre>
     Data from [Kahramanmaraş Survey](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) created by [Elizabeth Carter](http://opencontext.org/persons/3208923d-69d0-70e9-9cc1-23ad97770aec) and published on [OpenContext](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) add distributed with [CC BY 4.0 International](https://creativecommons.org/licenses/by/4.0) license.
+
   </div>
   <div className="col-6">
     ```jsx
     import {
       MapCompLibre,
-      SourceLayer
+      VectorLayerLibre
     } from "../../modules/scms.js"
 
     <MapCompLibre
@@ -48,14 +59,17 @@ import { MapCompLibre, SourceLayer } from "../../modules/scms.js"
         interactiveLayerIds ={["ksaSites"]}
     >
 
-      <SourceLayer
+      <VectorLayerLibre
+        name="Sites"
         path2data="../data/ksa.geojson"
+        fitToContent={true}
+        checked={true}
         fieldList={{
-          "Item_Label": "Label",
-          "Site_Name": "Site name",
-          "Site_Description": "Site description"
-        }}
-        layerstyle={{
+        "Item_Label": "Label",
+        "Site_Name": "Site name",
+        "Site_Description": "Site description"
+      }}
+        style={{
           id: "ksaSites",
           type: "circle",
           paint: {
@@ -65,9 +79,17 @@ import { MapCompLibre, SourceLayer } from "../../modules/scms.js"
             "circle-stroke-color": "#000000"
           },
         }}
-      />
-    </MapCompLibre>
-    ```
+          popUpTmpl={(properties) => (
+    <div>
+      <h4>{properties.Site_Name}</h4>
+      <p>{properties.Site_Description}</p>
+      <small>{properties.Item_Label}</small>
+    </div>
+
+)}
+/>
+</MapCompLibre>
+```
 
   </div>
 </div>
