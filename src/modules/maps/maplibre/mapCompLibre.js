@@ -30,15 +30,15 @@ const MapCompLibre = ({
 
   const [clickInfo, setClickInfo] = useState(null)
 
-  const lyrList = React.Children.map(children, child => {
-    return {
+  const lyrList =
+    React.Children.map(children, child => ({
       id: child.props.style.id,
       name: child.props.name,
       checked: child.props.checked,
       fitToContent: child.props.fitToContent,
+      fieldList: child.props.fieldList,
       popUpTmpl: child.props.popUpTmpl,
-    }
-  })
+    })) || []
 
   const handleLayerChange = styleUrl => {
     setMapStyleUrl(styleUrl)
@@ -79,10 +79,11 @@ const MapCompLibre = ({
             onClose={() => setClickInfo(null)}
           >
             <div>
-              {/* Usa `popUpTmpl` dal `lyrList` o mostra i dati grezzi se non c'è popUpTmpl */}
-              {lyrList.find(layer => layer.id === clickInfo.feature.layer.id)
-                ?.popUpTmpl
-                ? lyrList
+              {/* Usa `lyrList` o un array vuoto come fallback */}
+              {(lyrList || []).find(
+                layer => layer.id === clickInfo.feature.layer.id,
+              )?.popUpTmpl
+                ? (lyrList || [])
                     .find(layer => layer.id === clickInfo.feature.layer.id)
                     .popUpTmpl(clickInfo.feature.properties)
                 : JSON.stringify(clickInfo.feature.properties, null, 2)}

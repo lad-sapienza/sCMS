@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import {useMap} from 'react-map-gl/maplibre';
+import { useMap } from "react-map-gl/maplibre"
 import styled from "styled-components"
 import PropTypes from "prop-types"
 import { Modal, Button } from "react-bootstrap"
@@ -10,7 +10,8 @@ import plain2maplibre from "../../../services/transformers/plain2maplibre.js"
 const ControlPanel = ({
   baseLayers,
   selectedLayer,
-  onLayerChange
+  onLayerChange,
+  layerList,
 }) => {
   const [isVisible, setIsVisible] = useState(false)
   const [activeLayer, setActiveLayer] = useState(null)
@@ -18,31 +19,33 @@ const ControlPanel = ({
   const [activeFieldList, setActiveFieldList] = useState(null)
   const [filters, setFilters] = useState([])
 
-  const {current: mapRef} = useMap();
-  const mapInstance = mapRef.getMap();
+  const { current: mapRef } = useMap()
+  const mapInstance = mapRef.getMap()
 
   const toggleVisibility = () => {
     setIsVisible(!isVisible)
   }
 
   const toggleLayerVisibility = lyrId => {
-    const isVisible = mapInstance.getLayoutProperty(lyrId, 'visibility') !== 'none';
-    mapInstance.setLayoutProperty(lyrId, 'visibility', isVisible ? 'none' : 'visible')
+    const isVisible =
+      mapInstance.getLayoutProperty(lyrId, "visibility") !== "none"
+    mapInstance.setLayoutProperty(
+      lyrId,
+      "visibility",
+      isVisible ? "none" : "visible",
+    )
   }
-
-
-  // TODO: MANCA FILTRO SU LAYER STYLE JSON, VA DEFINITO UN FIELDLIST
 
   const openModal = layer => {
     setActiveLayer(layer)
     setModalIsOpen(true)
 
-    // Verifica se fieldListProp esiste nel layer, altrimenti assegna un valore predefinito
-    if (layer.fieldListProp) {
-      setActiveFieldList(layer.fieldListProp)
+    // Imposta il fieldList dal layer
+    if (layer.fieldList) {
+      setActiveFieldList(layer.fieldList)
     } else {
-      console.warn(`fieldListProp is undefined for layer: ${layer.name}`)
-      setActiveFieldList([]) // Assegna un array vuoto come fallback
+      console.warn(`fieldList is undefined for layer: ${layer.name}`)
+      setActiveFieldList([]) // Fallback a un array vuoto
     }
   }
 
@@ -157,13 +160,42 @@ const ControlPanel = ({
                 type="checkbox"
                 className="form-check-input"
                 id={layer.id}
-                defaultChecked={mapInstance.getLayoutProperty(layer.id, 'visibility') !== 'none'}
+                defaultChecked={
+                  mapInstance.getLayoutProperty(layer.id, "visibility") !==
+                  "none"
+                }
                 onChange={() => toggleLayerVisibility(layer.id)}
               />
               <label htmlFor={layer.name} className="form-check-label">
-                {layer.metadata?.label ? layer.metadata.label :  layer.id}
+                {layer.metadata?.label ? layer.metadata.label : layer.id}
               </label>
-              <Search className="ms-4" onClick={() => openModal(layer)} />
+              {/* Mostra l'icona di ricerca solo se `fieldList` è definito */}
+              {layer.fieldList && (
+                <Search className="ms-4" onClick={() => openModal(layer)} />
+              )}
+            </div>
+          ))}
+          <hr />
+          <h5>Layer list</h5>
+          {layerList.map((layer, k) => (
+            <div key={k} className="form-check">
+              <input
+                type="checkbox"
+                className="form-check-input"
+                id={layer.id}
+                defaultChecked={
+                  mapInstance.getLayoutProperty(layer.id, "visibility") !==
+                  "none"
+                }
+                onChange={() => toggleLayerVisibility(layer.id)}
+              />
+              <label htmlFor={layer.name} className="form-check-label">
+                {layer.metadata?.label ? layer.metadata.label : layer.id}
+              </label>
+              {/* Mostra l'icona di ricerca solo se `fieldList` è definito */}
+              {layer.fieldList && (
+                <Search className="ms-4" onClick={() => openModal(layer)} />
+              )}
             </div>
           ))}
         </div>
@@ -200,9 +232,9 @@ const ControlPanel = ({
 }
 
 // Styled component per lo stile del Control Panel
-// TODO @eicopini: questo controller è aggiunto in maniera brutale alla mappa e infatti non è listato tra i controller 
+// TODO @eicopini: questo controller è aggiunto in maniera brutale alla mappa e infatti non è listato tra i controller
 // e va in conflitto se si aggiungono controller in top-right
-// Questo perché non segue le direttive dei controller: 
+// Questo perché non segue le direttive dei controller:
 // https://maplibre.org/maplibre-gl-js/docs/API/interfaces/IControl/ v. anche
 // https://stackoverflow.com/a/74283884
 // https://stackoverflow.com/a/73333764
@@ -214,6 +246,7 @@ const StyledControl = styled.div`
   background: #fff;
   padding: 0.5rem;
   margin: 0.5rem;
+  overflow-y: auto;
 `
 
 ControlPanel.propTypes = {
