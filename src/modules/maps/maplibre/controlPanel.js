@@ -40,48 +40,41 @@ const ControlPanel = ({
     setActiveLayer(layer)
     setModalIsOpen(true)
 
-    // Imposta il fieldList dal layer
     if (layer.fieldList) {
       setActiveFieldList(layer.fieldList)
     } else {
-      console.warn(`fieldList is undefined for layer: ${layer.name}`)
-      setActiveFieldList([]) // Fallback a un array vuoto
+      console.warn(`fieldList is undefined for layer: ${layer.id}`)
+      setActiveFieldList([])
     }
   }
-
   const closeModal = () => {
     setModalIsOpen(false)
     setActiveLayer(null)
   }
 
-  const removeFilter = layerName => {
+  const removeFilter = layerId => {
     if (mapRef) {
-      console.log(`Rimuovo il filtro dal layer ${layerName}`)
+      console.log(`Rimuovo il filtro dal layer ${layerId}`)
 
-      // Verifica se il layer esiste e supporta i filtri
-      if (
-        checkLayerExists(layerName) &&
-        checkLayerTypeSupportsFilter(layerName)
-      ) {
-        mapInstance.setFilter(layerName, null) // Rimuove il filtro impostando null
-        console.log(`Filtro rimosso dal layer ${layerName}`)
+      if (checkLayerExists(layerId) && checkLayerTypeSupportsFilter(layerId)) {
+        mapInstance.setFilter(layerId, null)
+        console.log(`Filtro rimosso dal layer ${layerId}`)
       } else {
-        console.error(
-          `Il layer ${layerName} non supporta i filtri o non esiste.`,
-        )
+        console.error(`Il layer ${layerId} non supporta i filtri o non esiste.`)
       }
     }
   }
 
-  // Funzione per verificare se il layer esiste nella mappa utilizzando il nome del layer
-  const checkLayerExists = layerName => {
+  const checkLayerExists = layerId => {
     const layers = mapInstance.getStyle().layers
-    return layers.some(
-      layer => layer.name === layerName || layer.id === layerName,
-    ) // Verifica anche per ID se necessario
+    console.log("Layer cercato:", layerId)
+    console.log(
+      "Layer disponibili:",
+      layers.map(layer => layer.id),
+    )
+    return layers.some(layer => layer.id === layerId) // Verifica usando l'ID
   }
 
-  // Funzione per verificare se il layer supporta i filtri (solo alcuni tipi supportano i filtri)
   const checkLayerTypeSupportsFilter = layerId => {
     const layer = mapInstance.getLayer(layerId)
     return (
@@ -89,10 +82,8 @@ const ControlPanel = ({
       (layer.type === "fill" ||
         layer.type === "line" ||
         layer.type === "circle")
-    ) // Verifica se il tipo di layer supporta i filtri
+    )
   }
-
-  // Funzione per processare i filtri e convertirli in formato compatibile con MapLibre
 
   const processData = (conn, inputs) => {
     const mapLibreFilters = plain2maplibre(conn, inputs)
@@ -100,20 +91,20 @@ const ControlPanel = ({
     setFilters(mapLibreFilters)
 
     if (mapRef) {
-      console.log("mapInstance:", mapInstance) // Verifica che l'istanza della mappa sia disponibile
+      console.log("mapInstance:", mapInstance)
 
-      const layerExists = checkLayerExists(activeLayer.name)
+      const layerExists = checkLayerExists(activeLayer.id)
       console.log(`Layer trovato? ${layerExists}`)
 
-      if (layerExists && checkLayerTypeSupportsFilter(activeLayer.name)) {
-        mapInstance.setFilter(activeLayer.name, mapLibreFilters) // Usa il nome anziché l'id
+      if (layerExists && checkLayerTypeSupportsFilter(activeLayer.id)) {
+        mapInstance.setFilter(activeLayer.id, mapLibreFilters)
         console.log(
-          `Filtri applicati al layer ${activeLayer.name}:`,
+          `Filtri applicati al layer ${activeLayer.id}:`,
           mapLibreFilters,
         )
       } else {
         console.error(
-          `Il layer ${activeLayer.name} non supporta i filtri o non esiste.`,
+          `Il layer ${activeLayer.id} non supporta i filtri o non esiste.`,
         )
       }
     } else {
@@ -189,10 +180,9 @@ const ControlPanel = ({
                 }
                 onChange={() => toggleLayerVisibility(layer.id)}
               />
-              <label htmlFor={layer.name} className="form-check-label">
-                {layer.metadata?.label ? layer.metadata.label : layer.id}
+              <label htmlFor={layer.id} className="form-check-label">
+                {layer.name}
               </label>
-              {/* Mostra l'icona di ricerca solo se `fieldList` è definito */}
               {layer.fieldList && (
                 <Search className="ms-4" onClick={() => openModal(layer)} />
               )}
@@ -209,20 +199,14 @@ const ControlPanel = ({
         </Modal.Header>
         <Modal.Body>
           {activeLayer && (
-            <SearchUI
-              fieldList={activeFieldList} // Passa il fieldListProp qui
-              processData={processData} // La funzione che processa i filtri
-            />
+            <SearchUI fieldList={activeFieldList} processData={processData} />
           )}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={closeModal}>
             Chiudi
           </Button>
-          <Button
-            variant="danger"
-            onClick={() => removeFilter(activeLayer.name)}
-          >
+          <Button variant="danger" onClick={() => removeFilter(activeLayer.id)}>
             Rimuovi Filtro
           </Button>
         </Modal.Footer>
@@ -246,6 +230,7 @@ const StyledControl = styled.div`
   background: #fff;
   padding: 0.5rem;
   margin: 0.5rem;
+  max-height: 500px;
   overflow-y: auto;
 `
 
