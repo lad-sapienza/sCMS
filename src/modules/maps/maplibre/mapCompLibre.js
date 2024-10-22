@@ -39,26 +39,8 @@ const MapCompLibre = ({
 
   const [clickInfo, setClickInfo] = useState(null)
 
-  // Stato per gestire i source layer visibili
-  const [visibleSourceLayers, setVisibleSourceLayers] = useState({})
-  const [visibleLayers, setVisibleLayers] = useState({}) // Stato per la visibilità dei layer
-
   const handleLayerChange = styleUrl => {
     setMapStyleUrl(styleUrl)
-  }
-
-  const toggleLayerVisibility = layerId => {
-    setVisibleSourceLayers(prevState => ({
-      ...prevState,
-      [layerId]: !prevState[layerId],
-    }))
-  }
-
-  const toggleStyleLayerVisibility = layerId => {
-    setVisibleLayers(prevState => ({
-      ...prevState,
-      [layerId]: !prevState[layerId],
-    }))
   }
 
   const onClick = useCallback(
@@ -88,13 +70,7 @@ const MapCompLibre = ({
         interactiveLayerIds={interactiveLayerIds} // Passa l'array di layer interattivi
         onClick={onClick}
       >
-        {/* Condizionalmente rendi visibili i SourceLayer basati sul loro stato */}
-        {React.Children.map(children, child => {
-          if (visibleSourceLayers[child.props.id] !== false) {
-            return child
-          }
-          return null
-        })}
+        { children }
         
         {clickInfo && (
           <Popup
@@ -124,11 +100,6 @@ const MapCompLibre = ({
           baseLayers={defaultBaseLayers}
           selectedLayer={mapStyleUrl}
           onLayerChange={handleLayerChange}
-          // Combina i SourceLayer definiti manualmente e quelli dal file JSON
-          onToggleLayer={layerId => {
-            toggleLayerVisibility(layerId)
-            toggleStyleLayerVisibility(layerId)
-          }}
         />
       </Map>
     </React.Fragment>

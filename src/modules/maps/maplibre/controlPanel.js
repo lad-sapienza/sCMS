@@ -10,8 +10,7 @@ import plain2maplibre from "../../../services/transformers/plain2maplibre.js"
 const ControlPanel = ({
   baseLayers,
   selectedLayer,
-  onLayerChange,
-  onToggleLayer
+  onLayerChange
 }) => {
   const [isVisible, setIsVisible] = useState(false)
   const [activeLayer, setActiveLayer] = useState(null)
@@ -25,6 +24,12 @@ const ControlPanel = ({
   const toggleVisibility = () => {
     setIsVisible(!isVisible)
   }
+
+  const toggleLayerVisibility = lyrId => {
+    const isVisible = mapInstance.getLayoutProperty(lyrId, 'visibility') !== 'none';
+    mapInstance.setLayoutProperty(lyrId, 'visibility', isVisible ? 'none' : 'visible')
+  }
+
 
   // TODO: MANCA FILTRO SU LAYER STYLE JSON, VA DEFINITO UN FIELDLIST
 
@@ -68,11 +73,6 @@ const ControlPanel = ({
   // Funzione per verificare se il layer esiste nella mappa utilizzando il nome del layer
   const checkLayerExists = layerName => {
     const layers = mapInstance.getStyle().layers
-    console.log("Verifica layer con nome:", layerName)
-    console.log(
-      "Lista dei nomi dei layers disponibili:",
-      layers.map(layer => layer.name || layer.id),
-    ) // Stampa i nomi o gli ID se il nome non è presente
     return layers.some(
       layer => layer.name === layerName || layer.id === layerName,
     ) // Verifica anche per ID se necessario
@@ -157,8 +157,8 @@ const ControlPanel = ({
                 type="checkbox"
                 className="form-check-input"
                 id={layer.id}
-                defaultChecked={true}
-                onChange={() => onToggleLayer(layer.id)}
+                defaultChecked={mapInstance.getLayoutProperty(layer.id, 'visibility') !== 'none'}
+                onChange={() => toggleLayerVisibility(layer.id)}
               />
               <label htmlFor={layer.name} className="form-check-label">
                 {layer.metadata?.label ? layer.metadata.label :  layer.id}
@@ -220,7 +220,6 @@ ControlPanel.propTypes = {
   baseLayers: PropTypes.object,
   selectedLayer: PropTypes.string,
   onLayerChange: PropTypes.func,
-  onToggleLayer: PropTypes.func,
   activeSourceLayers: PropTypes.array,
 }
 
