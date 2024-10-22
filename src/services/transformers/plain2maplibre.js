@@ -1,16 +1,5 @@
 // Mappa degli operatori da Directus a MapLibre
-// TODO @eiacopini: spostare questi nello switch sotto
 // TODO @eiacopini: Testare tutti i casi
-const operator_map = {
-  _eq: "==",
-  _neq: "!=",
-  _lt: "<",
-  _lte: "<=",
-  _gt: ">",
-  _gte: ">=",
-  _in: "in",
-  _nin: "!in",
-}
 
 // Mappa dei connettori logici
 const connector_map = {
@@ -36,6 +25,30 @@ const plain2maplibre = (conn, plain) => {
   plain.forEach(el => {
     const operator = el.operator || "_eq" // Default operator
     switch (operator) {
+      case "_eq":
+        maplibre.push(["==", ["get", el.field], ["literal", el.value]])
+        break
+      case "_neq":
+        maplibre.push(["!=", ["get", el.field], ["literal", el.value]])
+        break
+      case "_lt":
+        maplibre.push(["<", ["get", el.field], ["literal", el.value]])
+        break
+      case "_lte":
+        maplibre.push(["<=", ["get", el.field], ["literal", el.value]])
+        break
+      case "_gt":
+        maplibre.push([">", ["get", el.field], ["literal", el.value]])
+        break
+      case "_gte":
+        maplibre.push([">=", ["get", el.field], ["literal", el.value]])
+        break
+      case "_in":
+        maplibre.push(["in", ["get", el.field], ["literal", el.value]])
+        break
+      case "_nin":
+        maplibre.push(["!in", ["get", el.field], ["literal", el.value]])
+        break
       case "_icontains":
         maplibre.push([
           ">=",
@@ -90,11 +103,8 @@ const plain2maplibre = (conn, plain) => {
         maplibre.push(["!=", ["get", el.field], null])
         break
       default:
-        maplibre.push([
-          operator_map[operator] || "==",
-          ["get", el.field],
-          ["literal", el.value],
-        ])
+        // Fallback per operatori sconosciuti: usa _eq come predefinito
+        maplibre.push(["==", ["get", el.field], ["literal", el.value]])
         break
     }
   })
