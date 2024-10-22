@@ -34,8 +34,8 @@ import { DataTb } from "../modules/scms.js"
       name: "Item_Label",
       sortable: true,
       cell: item => (
-            <a href={item["URI"]} target="_blank">
-              {item["Item_Label"]}
+            <a href={`../record/?tb=scms_ksa&id=${item.id}`}>
+              {item["Item_Label"]} 
             </a>
           ),
     },
@@ -76,8 +76,8 @@ import { DataTb } from "../modules/scms.js"
       name: "Item_Label",
       sortable: true,
       cell: item => (
-            <a href={item["URI"]} target="_blank">
-              {item["Item_Label"]}
+            <a href={`../record/?tb=scms_ksa&id=${item.id}`}>
+              {item["Item_Label"]} 
             </a>
           ),
     },
@@ -126,8 +126,8 @@ Data from [Kahramanmaraş Survey](https://opencontext.org/projects/ca4f4719-f2a5
       name: "Item_Label",
       sortable: true,
       cell: item => (
-            <a href={item["URI"]} target="_blank">
-              {item["Item_Label"]}
+            <a href={`../record/?tb=scms_ksa&id=${item.id}`}>
+              {item["Item_Label"]} 
             </a>
           ),
     },
@@ -167,9 +167,9 @@ Data from [Kahramanmaraş Survey](https://opencontext.org/projects/ca4f4719-f2a5
       name: "Item_Label",
       sortable: true,
       cell: item => (
-        <a href={item["URI"]} target="_blank">
-          {item["Item_Label"]}
-        </a>
+        <a href={`../record/?tb=scms_ksa&id=${item.id}`}>
+              {item["Item_Label"]} 
+            </a>
       ),
     },
     {
