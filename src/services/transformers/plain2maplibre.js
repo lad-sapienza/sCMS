@@ -1,6 +1,5 @@
 // Mappa degli operatori da Directus a MapLibre
 // TODO @eiacopini: Testare tutti i casi
-
 // Mappa dei connettori logici
 const connector_map = {
   _and: "all",
