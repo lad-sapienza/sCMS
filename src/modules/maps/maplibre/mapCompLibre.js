@@ -22,15 +22,6 @@ const MapCompLibre = ({
   navigationControl,
   scaleControl,
 }) => {
-  /**
-   * TODO: @eiacopini
-   const lyrList = [
-    {
-    "name": "=> controlPanel"
-    "popUpTmpl": "=> fn => PopUp"
-   }
-   ];
-   */
   const [lng, lat, zoom] = center?.split(",").map(e => parseFloat(e.trim()))
 
   const [mapStyleUrl, setMapStyleUrl] = useState(
