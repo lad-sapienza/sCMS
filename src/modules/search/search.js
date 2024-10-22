@@ -34,7 +34,6 @@ const Search = ({
     })
       .then(data => {
         if (data.errors) {
-          console.log(data.errors)
           setError("Error in querying getting remote data 1")
         } else {
           setError(null)
