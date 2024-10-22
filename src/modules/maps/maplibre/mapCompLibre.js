@@ -15,12 +15,13 @@ const MapCompLibre = ({
   children,
   height,
   center,
-  interactiveLayerIds = [],
+  interactiveLayerIds = [], // TODO rendere dinamico activeLayerId
   mapStyle,
   geolocateControl,
   fullscreenControl,
   navigationControl,
   scaleControl,
+  baseLayers, //TODO SCELTA BASELAYER DA MDX
 }) => {
   const [lng, lat, zoom] = center?.split(",").map(e => parseFloat(e.trim()))
 
