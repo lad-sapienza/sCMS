@@ -11,7 +11,6 @@ const ControlPanel = ({
   baseLayers,
   selectedLayer,
   onLayerChange,
-  layerList,
 }) => {
   const [isVisible, setIsVisible] = useState(false)
   const [activeLayer, setActiveLayer] = useState(null)
@@ -40,8 +39,8 @@ const ControlPanel = ({
     setActiveLayer(layer)
     setModalIsOpen(true)
 
-    if (layer.fieldList) {
-      setActiveFieldList(layer.fieldList)
+    if (layer.metadata.fieldList) {
+      setActiveFieldList(layer.metadata.fieldList)
     } else {
       console.warn(`fieldList is undefined for layer: ${layer.id}`)
       setActiveFieldList([])
@@ -145,49 +144,31 @@ const ControlPanel = ({
           {/* Sezione per i source layer */}
           <hr />
           <h5>Source Layers</h5>
-          {mapInstance.getStyle().layers.map((layer, k) => (
-            <div key={k} className="form-check">
-              <input
-                type="checkbox"
-                className="form-check-input"
-                id={layer.id}
-                defaultChecked={
-                  mapInstance.getLayoutProperty(layer.id, "visibility") !==
-                  "none"
-                }
-                onChange={() => toggleLayerVisibility(layer.id)}
-              />
-              <label htmlFor={layer.name} className="form-check-label">
-                {layer.metadata?.label ? layer.metadata.label : layer.id}
-              </label>
-              {/* Mostra l'icona di ricerca solo se `fieldList` è definito */}
-              {layer.fieldList && (
-                <Search className="ms-4" onClick={() => openModal(layer)} />
-              )}
-            </div>
-          ))}
+          {mapInstance.getStyle().layers.map(
+            (layer, k) =>
+              layer.metadata && (
+                <div key={k} className="form-check">
+                  <input
+                    type="checkbox"
+                    className="form-check-input"
+                    id={layer.id}
+                    defaultChecked={
+                      mapInstance.getLayoutProperty(layer.id, "visibility") !==
+                      "none"
+                    }
+                    onChange={() => toggleLayerVisibility(layer.id)}
+                  />
+                  <label htmlFor={layer.name} className="form-check-label">
+                    {layer.metadata?.label ? layer.metadata.label : layer.id}
+                  </label>
+                  {/* Mostra l'icona di ricerca solo se `fieldList` è definito */}
+                  {layer.metadata?.fieldList && (
+                    <Search className="ms-4" onClick={() => openModal(layer)} />
+                  )}
+                </div>
+              ),
+          )}
           <hr />
-          <h5>Layer list</h5>
-          {layerList.map((layer, k) => (
-            <div key={k} className="form-check">
-              <input
-                type="checkbox"
-                className="form-check-input"
-                id={layer.id}
-                defaultChecked={
-                  mapInstance.getLayoutProperty(layer.id, "visibility") !==
-                  "none"
-                }
-                onChange={() => toggleLayerVisibility(layer.id)}
-              />
-              <label htmlFor={layer.id} className="form-check-label">
-                {layer.name}
-              </label>
-              {layer.fieldList && (
-                <Search className="ms-4" onClick={() => openModal(layer)} />
-              )}
-            </div>
-          ))}
         </div>
       )}
       {/* Modal per la ricerca */}

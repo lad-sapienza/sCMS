@@ -31,16 +31,6 @@ const MapCompLibre = ({
 
   const [clickInfo, setClickInfo] = useState(null)
 
-  const lyrList =
-    React.Children.map(children, child => ({
-      id: child.props.style.id,
-      name: child.props.name,
-      checked: child.props.checked,
-      fitToContent: child.props.fitToContent,
-      fieldList: child.props.fieldList,
-      popupTemplate: child.props.popupTemplate,
-    })) || []
-
   const handleLayerChange = styleUrl => {
     setMapStyleUrl(styleUrl)
   }
@@ -56,6 +46,7 @@ const MapCompLibre = ({
     },
     [interactiveLayerIds],
   )
+
 
   return (
     <React.Fragment>
@@ -79,17 +70,17 @@ const MapCompLibre = ({
             latitude={Number(clickInfo.feature.geometry.coordinates[1])}
             onClose={() => setClickInfo(null)}
           >
-            <div>
-              {/* Usa `lyrList` o un array vuoto come fallback */}
-              { /* TODO: in produzione, se non disponibile, disabilitare popup */}
-              {(lyrList || []).find(
-                layer => layer.id === clickInfo.feature.layer.id,
-              )?.popupTemplate
-                ? (lyrList || [])
-                    .find(layer => layer.id === clickInfo.feature.layer.id)
-                    .popupTemplate(clickInfo.feature.properties)
-                : JSON.stringify(clickInfo.feature.properties, null, 2)} 
-            </div>
+          ciao
+            {
+              console.log(
+                clickInfo.feature.layer.metadata.popupTemplate,
+                clickInfo.feature.properties
+              )
+              // TODO: prendere clickInfo.feature.layer.metadata.popupTemplate
+              // https://stackoverflow.com/questions/29182244/convert-a-string-to-a-template-string
+              // e interpolarlo con clickInfo.feature.properties
+              
+            }
           </Popup>
         )}
 
@@ -107,7 +98,6 @@ const MapCompLibre = ({
           baseLayers={defaultBaseLayers}
           selectedLayer={mapStyleUrl}
           onLayerChange={handleLayerChange}
-          layerList={lyrList}
         />
       </Map>
     </React.Fragment>

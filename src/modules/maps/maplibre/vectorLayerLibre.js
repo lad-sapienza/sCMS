@@ -10,9 +10,41 @@ const VectorLayerLibre = ({
   dQueryString,
   geoField,
   style,
+  name,
+  fieldList,
+  fitToContent,
+  checked,
+  popupTemplate,
 }) => {
   const [geojsonData, setGeojson] = useState(null) // GeoJSON data
   const [error, setError] = useState(false)
+
+  if (typeof style === "undefined") {
+    style = {}
+  }
+
+  if (typeof style.metadata === "undefined") {
+    style.metadata = {}
+  }
+
+  if (name) {
+    style.metadata.label = name
+  }
+
+  if (fieldList) {
+    style.metadata.fieldList = fieldList
+  }
+
+  if (popupTemplate) {
+    style.metadata.popupTemplate = popupTemplate.toString()
+  }
+  
+  if (checked === false) {
+    if (typeof style.layout === "undefined") {
+      style.layout = {}
+    }
+    style.layout.visibility = "none"
+  }
 
   // Funzione per ottenere i dati da getData
   useEffect(() => {
