@@ -1,5 +1,5 @@
 // Mappa degli operatori da Directus a MapLibre
-// TODO @eiacopini: Testare tutti i casi
+
 // Mappa dei connettori logici
 const connector_map = {
   _and: "all",
@@ -75,6 +75,22 @@ const plain2maplibre = (conn, plain) => {
           ["literal", el.value.toLowerCase()],
         ])
         break
+      case "_nstarts_with":
+        maplibre.push([
+          "!",
+          ["==", ["slice", ["get", el.field], 0, el.value.length], el.value],
+        ])
+        break
+      case "_nistarts_with":
+        maplibre.push([
+          "!",
+          [
+            "==",
+            ["slice", ["downcase", ["get", el.field]], 0, el.value.length],
+            el.value.toLowerCase(),
+          ],
+        ])
+        break
       case "_ends_with":
         maplibre.push([
           "==",
@@ -87,6 +103,22 @@ const plain2maplibre = (conn, plain) => {
           "==",
           ["slice", ["downcase", ["get", el.field]], -el.value.length],
           ["literal", el.value.toLowerCase()],
+        ])
+        break
+      case "_nends_with":
+        maplibre.push([
+          "!",
+          ["==", ["slice", ["get", el.field], -el.value.length], el.value],
+        ])
+        break
+      case "_niends_with":
+        maplibre.push([
+          "!",
+          [
+            "==",
+            ["slice", ["downcase", ["get", el.field]], -el.value.length],
+            el.value.toLowerCase(),
+          ],
         ])
         break
       case "_empty":
