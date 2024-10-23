@@ -39,10 +39,10 @@ const ControlPanel = ({
     setActiveLayer(layer)
     setModalIsOpen(true)
 
-    if (layer.metadata.fieldList) {
-      setActiveFieldList(layer.metadata.fieldList)
+    if (layer.metadata.searchInFields) {
+      setActiveFieldList(layer.metadata.searchInFields)
     } else {
-      console.warn(`fieldList is undefined for layer: ${layer.id}`)
+      console.warn(`searchInFields is undefined for layer: ${layer.id}`)
       setActiveFieldList([])
     }
   }
@@ -161,8 +161,8 @@ const ControlPanel = ({
                   <label htmlFor={layer.name} className="form-check-label">
                     {layer.metadata?.label ? layer.metadata.label : layer.id}
                   </label>
-                  {/* Mostra l'icona di ricerca solo se `fieldList` è definito */}
-                  {layer.metadata?.fieldList && (
+                  {/* Mostra l'icona di ricerca solo se `searchInFields` è definito */}
+                  {layer.metadata?.searchInFields && (
                     <Search className="ms-4" onClick={() => openModal(layer)} />
                   )}
                 </div>

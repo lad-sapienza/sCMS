@@ -11,14 +11,14 @@ const VectorLayerLibre = ({
   geoField,
   style,
   name,
-  fieldList,
+  searchInFields,
   fitToContent,
   checked,
   popupTemplate,
 }) => {
   const [geojsonData, setGeojson] = useState(null) // GeoJSON data
   const [error, setError] = useState(false)
-
+  
   if (typeof style === "undefined") {
     style = {}
   }
@@ -31,8 +31,8 @@ const VectorLayerLibre = ({
     style.metadata.label = name
   }
 
-  if (fieldList) {
-    style.metadata.fieldList = fieldList
+  if (searchInFields) {
+    style.metadata.searchInFields = searchInFields
   }
 
   if (popupTemplate) {
@@ -45,6 +45,15 @@ const VectorLayerLibre = ({
     }
     style.layout.visibility = "none"
   }
+
+  /**
+   * TODO
+   * se il componente ha `refId`, non fa andare fetch, ma
+   * const { current: mapRef } = useMap()
+   * const mapInstance = mapRef.getMap()
+   * trova da qui:  mapInstance.getStyle().layers il layer con id refId
+   * ci sovrascrive gli style
+   */
 
   // Funzione per ottenere i dati da getData
   useEffect(() => {
