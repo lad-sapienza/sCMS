@@ -38,7 +38,7 @@ const MapCompLibre = ({
       checked: child.props.checked,
       fitToContent: child.props.fitToContent,
       fieldList: child.props.fieldList,
-      popUpTmpl: child.props.popUpTmpl,
+      popupTemplate: child.props.popupTemplate,
     })) || []
 
   const handleLayerChange = styleUrl => {
@@ -81,13 +81,14 @@ const MapCompLibre = ({
           >
             <div>
               {/* Usa `lyrList` o un array vuoto come fallback */}
+              { /* TODO: in produzione, se non disponibile, disabilitare popup */}
               {(lyrList || []).find(
                 layer => layer.id === clickInfo.feature.layer.id,
-              )?.popUpTmpl
+              )?.popupTemplate
                 ? (lyrList || [])
                     .find(layer => layer.id === clickInfo.feature.layer.id)
-                    .popUpTmpl(clickInfo.feature.properties)
-                : JSON.stringify(clickInfo.feature.properties, null, 2)}
+                    .popupTemplate(clickInfo.feature.properties)
+                : JSON.stringify(clickInfo.feature.properties, null, 2)} 
             </div>
           </Popup>
         )}
