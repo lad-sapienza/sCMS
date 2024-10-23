@@ -2,16 +2,17 @@ import React, { useState } from "react"
 import { useMap } from "react-map-gl/maplibre"
 import styled from "styled-components"
 import PropTypes from "prop-types"
-import { Modal, Button } from "react-bootstrap"
-import { Search, Stack } from "react-bootstrap-icons"
+import { Modal } from "react-bootstrap"
+import {
+  FilterSquare,
+  FilterSquareFill,
+  Stack,
+  Search,
+} from "react-bootstrap-icons"
 import SearchUI from "../../search/searchUI"
 import plain2maplibre from "../../../services/transformers/plain2maplibre.js"
 
-const ControlPanel = ({
-  baseLayers,
-  selectedLayer,
-  onLayerChange,
-}) => {
+const ControlPanel = ({ baseLayers, selectedLayer, onLayerChange }) => {
   const [isVisible, setIsVisible] = useState(false)
   const [activeLayer, setActiveLayer] = useState(null)
   const [modalIsOpen, setModalIsOpen] = useState(false)
@@ -62,6 +63,7 @@ const ControlPanel = ({
         console.error(`Il layer ${layerId} non supporta i filtri o non esiste.`)
       }
     }
+    setFilters([])
   }
 
   const checkLayerExists = layerId => {
@@ -130,7 +132,7 @@ const ControlPanel = ({
           {Object.keys(baseLayers).map(key => (
             <div key={key} className="form-check">
               <input
-                type="checkbox"
+                type="radio"
                 className="form-check-input"
                 id={key}
                 checked={selectedLayer === baseLayers[key].url}
@@ -143,7 +145,7 @@ const ControlPanel = ({
           ))}
           {/* Sezione per i source layer */}
           <hr />
-          <h5>Source Layers</h5>
+          {/* TODO: *non* fare comparire il titolo h5 se non ci sono layer*/}
           {mapInstance.getStyle().layers.map(
             (layer, k) =>
               layer.metadata && (
@@ -162,13 +164,24 @@ const ControlPanel = ({
                     {layer.metadata?.label ? layer.metadata.label : layer.id}
                   </label>
                   {/* Mostra l'icona di ricerca solo se `searchInFields` è definito */}
-                  {layer.metadata?.searchInFields && (
-                    <Search className="ms-4" onClick={() => openModal(layer)} />
+                  {filters.length > 0 ? (
+                    <FilterSquareFill
+                      className="ms-3"
+                      onClick={() => {
+                        removeFilter(layer.id)
+                      }}
+                    />
+                  ) : (
+                    layer.metadata?.searchInFields && (
+                      <FilterSquare
+                        className="ms-3"
+                        onClick={() => openModal(layer)}
+                      />
+                    )
                   )}
                 </div>
               ),
           )}
-          <hr />
         </div>
       )}
       {/* Modal per la ricerca */}
@@ -183,14 +196,6 @@ const ControlPanel = ({
             <SearchUI fieldList={activeFieldList} processData={processData} />
           )}
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={closeModal}>
-            Chiudi
-          </Button>
-          <Button variant="danger" onClick={() => removeFilter(activeLayer.id)}>
-            Rimuovi Filtro
-          </Button>
-        </Modal.Footer>
       </Modal>
     </StyledControl>
   )
