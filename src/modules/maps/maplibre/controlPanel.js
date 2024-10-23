@@ -148,7 +148,7 @@ const ControlPanel = ({ baseLayers, selectedLayer, onLayerChange }) => {
           {/* TODO: *non* fare comparire il titolo h5 se non ci sono layer*/}
           {mapInstance.getStyle().layers.map(
             (layer, k) =>
-              layer.metadata && (
+              layer.metadata && layer.metadata.label &&(
                 <div key={k} className="form-check">
                   <input
                     type="checkbox"
