@@ -27,10 +27,10 @@ Only Hellenistic and Roman sites are being displayed
         fitToContent={true}
         type="geojson"
         fieldList={{
-        "Item_Label": "Label",
-        "Site_Name": "Site name",
-        "Site_Description": "Site description"
-      }}
+          "Item_Label": "Label",
+          "Site_Name": "Site name",
+          "Site_Description": "Site description"
+        }}
         style={{
           id: "ksa-directus",
           type: "circle",
@@ -41,13 +41,13 @@ Only Hellenistic and Roman sites are being displayed
             "circle-stroke-color": "#000000"
           },
         }}
-          popUpTmpl={(properties) => (
-    <div>
-      <h4>{properties.Site_Name}</h4>
-      <p>{properties.Site_Description}</p>
-      <small>{properties.Item_Label}</small>
-    </div>
-  )}
+        popUpTmpl={(properties) => (
+          <div>
+            <h4>{properties.Site_Name}</h4>
+            <p>{properties.Site_Description}</p>
+            <small>{properties.Item_Label}</small>
+          </div>
+        )}
       />
     </MapCompLibre>
     Data from [Kahramanmaraş Survey](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) created by [Elizabeth Carter](http://opencontext.org/persons/3208923d-69d0-70e9-9cc1-23ad97770aec) and published on [OpenContext](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) add distributed with [CC BY 4.0 International](https://creativecommons.org/licenses/by/4.0) license.
@@ -62,7 +62,7 @@ Only Hellenistic and Roman sites are being displayed
     <MapCompLibre
         center="37.00416,37.48551,9"
         interactiveLayerIds={["ksa-directus"]}
-         baseLayers={["OSM", "EsriSatellite"]}
+        baseLayers={["OSM", "EsriSatellite"]}
       >
 
       <VectorLayerLibre
@@ -74,11 +74,11 @@ Only Hellenistic and Roman sites are being displayed
         fitToContent={true}
         type="geojson"
         fieldList={{
-        "Item_Label": "Label",
-        "Site_Name": "Site name",
-        "Site_Description": "Site description"
-      }}
-          style={{
+          "Item_Label": "Label",
+          "Site_Name": "Site name",
+          "Site_Description": "Site description"
+        }}
+        style={{
           id: "ksa-directus",
           type: "circle",
           paint: {
@@ -88,17 +88,14 @@ Only Hellenistic and Roman sites are being displayed
             "circle-stroke-color": "#000000"
           },
         }}
-          popUpTmpl={(properties) => (
-    <div>
-      <h4>{properties.Site_Name}</h4>
-      <p>{properties.Site_Description}</p>
-      <small>{properties.Item_Label}</small>
-    </div>
-
-)}
-
-/>
-
+        popUpTmpl={(properties) => (
+          <div>
+            <h4>{properties.Site_Name}</h4>
+            <p>{properties.Site_Description}</p>
+            <small>{properties.Item_Label}</small>
+          </div>
+        )}
+      />
     </MapCompLibre>
     ```
 

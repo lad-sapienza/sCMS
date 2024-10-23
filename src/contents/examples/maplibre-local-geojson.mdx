@@ -22,10 +22,10 @@ import { MapCompLibre, VectorLayerLibre } from "../../modules/scms.js"
         fitToContent={true}
         checked={true}
         fieldList={{
-        "Item_Label": "Label",
-        "Site_Name": "Site name",
-        "Site_Description": "Site description"
-      }}
+          "Item_Label": "Label",
+          "Site_Name": "Site name",
+          "Site_Description": "Site description"
+        }}
         style={{
           id: "ksaSites",
           type: "circle",
@@ -36,13 +36,13 @@ import { MapCompLibre, VectorLayerLibre } from "../../modules/scms.js"
             "circle-stroke-color": "#000000"
           },
         }}
-         popUpTmpl={(properties) => (
-    <div>
-      <h4>{properties.Site_Name}</h4>
-      <p>{properties.Site_Description}</p>
-      <small>{properties.Item_Label}</small>
-    </div>
-  )}
+        popUpTmpl={(properties) => (
+          <div>
+            <h4>{properties.Site_Name}</h4>
+            <p>{properties.Site_Description}</p>
+            <small>{properties.Item_Label}</small>
+          </div>
+        )}
       />
     </MapCompLibre>
     Data from [Kahramanmaraş Survey](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) created by [Elizabeth Carter](http://opencontext.org/persons/3208923d-69d0-70e9-9cc1-23ad97770aec) and published on [OpenContext](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) add distributed with [CC BY 4.0 International](https://creativecommons.org/licenses/by/4.0) license.
@@ -67,10 +67,10 @@ import { MapCompLibre, VectorLayerLibre } from "../../modules/scms.js"
         fitToContent={true}
         checked={true}
         fieldList={{
-        "Item_Label": "Label",
-        "Site_Name": "Site name",
-        "Site_Description": "Site description"
-      }}
+          "Item_Label": "Label",
+          "Site_Name": "Site name",
+          "Site_Description": "Site description"
+        }}
         style={{
           id: "ksaSites",
           type: "circle",
@@ -80,15 +80,13 @@ import { MapCompLibre, VectorLayerLibre } from "../../modules/scms.js"
             "circle-stroke-width": 1.5,
             "circle-stroke-color": "#000000"
           },        }}
-         popUpTmpl={(properties) => (
-    <div>
-      <h4>{properties.Site_Name}</h4>
-      <p>{properties.Site_Description}</p>
-      <small>{properties.Item_Label}</small>
-    </div>
-
-)}
-
+        popUpTmpl={(properties) => (
+          <div>
+            <h4>{properties.Site_Name}</h4>
+            <p>{properties.Site_Description}</p>
+            <small>{properties.Item_Label}</small>
+          </div>
+        )}
       />
     </MapCompLibre>
     ```
