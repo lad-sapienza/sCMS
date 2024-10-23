@@ -11,6 +11,16 @@ import Map, {
 import ControlPanel from "./controlPanel"
 import { defaultBaseLayers } from "../../maps/defaultBaseLayers"
 
+const parseStringTemplate = (str, obj) => {
+  let parts = str.split(/\$\{(?!\d)[\wæøåÆØÅ]*\}/)
+  let args = str.match(/[^{}]+(?=})/g) || []
+  let parameters = args.map(
+    argument =>
+      obj[argument] || (obj[argument] === undefined ? "" : obj[argument]),
+  )
+  return String.raw({ raw: parts }, ...parameters)
+}
+
 const MapCompLibre = ({
   children,
   height,
@@ -23,10 +33,13 @@ const MapCompLibre = ({
   scaleControl,
   baseLayers, //TODO SCELTA BASELAYER DA MDX
 }) => {
-  const [lng, lat, zoom] = center ? center.split(",").map(e => parseFloat(e.trim())) : [0,0,2]
+  const [lng, lat, zoom] = center
+    ? center.split(",").map(e => parseFloat(e.trim()))
+    : [0, 0, 2]
 
   const [mapStyleUrl, setMapStyleUrl] = useState(
-    mapStyle || "https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json"
+    mapStyle ||
+      "https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json",
     //"https://demotiles.maplibre.org/style.json",
   )
 
@@ -48,7 +61,6 @@ const MapCompLibre = ({
     [interactiveLayerIds],
   )
 
-
   return (
     <React.Fragment>
       <Map
@@ -64,24 +76,25 @@ const MapCompLibre = ({
       >
         {children}
 
-        {clickInfo && (
+        {clickInfo &&  clickInfo.feature.layer.metadata.popupTemplate && (
           <Popup
             anchor="top"
             longitude={Number(clickInfo.feature.geometry.coordinates[0])}
             latitude={Number(clickInfo.feature.geometry.coordinates[1])}
             onClose={() => setClickInfo(null)}
           >
-          ciao
             {
-              console.log(
-                clickInfo.feature.layer.metadata.popupTemplate,
-                clickInfo.feature.properties
-              )
-              // TODO: prendere clickInfo.feature.layer.metadata.popupTemplate
+              // TODO: Vedi se riesci a fare di meglio
               // https://stackoverflow.com/questions/29182244/convert-a-string-to-a-template-string
-              // e interpolarlo con clickInfo.feature.properties
-              
             }
+            <div
+              dangerouslySetInnerHTML={{
+                __html: parseStringTemplate(
+                  clickInfo.feature.layer.metadata.popupTemplate,
+                  clickInfo.feature.properties,
+                ),
+              }}
+            />
           </Popup>
         )}
 
