@@ -23,7 +23,7 @@ const MapCompLibre = ({
   scaleControl,
   baseLayers, //TODO SCELTA BASELAYER DA MDX
 }) => {
-  const [lng, lat, zoom] = center?.split(",").map(e => parseFloat(e.trim()))
+  const [lng, lat, zoom] = center ? center.split(",").map(e => parseFloat(e.trim())) : [0,0,2]
 
   const [mapStyleUrl, setMapStyleUrl] = useState(
     mapStyle || "https://demotiles.maplibre.org/style.json",
@@ -61,9 +61,9 @@ const MapCompLibre = ({
     <React.Fragment>
       <Map
         initialViewState={{
-          longitude: lng ? lng : 0,
-          latitude: lat ? lat : 0,
-          zoom: zoom ? zoom : 2,
+          longitude: lng,
+          latitude: lat,
+          zoom: zoom,
         }}
         style={{ height: height ? height : `800px` }}
         mapStyle={mapStyleUrl}
