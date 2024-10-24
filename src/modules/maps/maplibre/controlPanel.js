@@ -54,11 +54,8 @@ const ControlPanel = ({ baseLayers, selectedLayer, onLayerChange }) => {
 
   const removeFilter = layerId => {
     if (mapRef) {
-      console.log(`Rimuovo il filtro dal layer ${layerId}`)
-
       if (checkLayerExists(layerId) && checkLayerTypeSupportsFilter(layerId)) {
         mapInstance.setFilter(layerId, null)
-        console.log(`Filtro rimosso dal layer ${layerId}`)
       } else {
         console.error(`Il layer ${layerId} non supporta i filtri o non esiste.`)
       }
@@ -68,11 +65,6 @@ const ControlPanel = ({ baseLayers, selectedLayer, onLayerChange }) => {
 
   const checkLayerExists = layerId => {
     const layers = mapInstance.getStyle().layers
-    console.log("Layer cercato:", layerId)
-    console.log(
-      "Layer disponibili:",
-      layers.map(layer => layer.id),
-    )
     return layers.some(layer => layer.id === layerId) // Verifica usando l'ID
   }
 
@@ -88,28 +80,19 @@ const ControlPanel = ({ baseLayers, selectedLayer, onLayerChange }) => {
 
   const processData = (conn, inputs) => {
     const mapLibreFilters = plain2maplibre(conn, inputs)
-    console.log("Filtri generati:", mapLibreFilters)
     setFilters(mapLibreFilters)
 
     if (mapRef) {
-      console.log("mapInstance:", mapInstance)
-
       const layerExists = checkLayerExists(activeLayer.id)
-      console.log(`Layer trovato? ${layerExists}`)
-
       if (layerExists && checkLayerTypeSupportsFilter(activeLayer.id)) {
         mapInstance.setFilter(activeLayer.id, mapLibreFilters)
-        console.log(
-          `Filtri applicati al layer ${activeLayer.id}:`,
-          mapLibreFilters,
-        )
       } else {
         console.error(
           `Il layer ${activeLayer.id} non supporta i filtri o non esiste.`,
         )
       }
     } else {
-      console.warn("MapRef non è definito o la mappa non è pronta.")
+      console.error("MapRef non è definito o la mappa non è pronta.")
     }
   }
 
@@ -187,7 +170,7 @@ const ControlPanel = ({ baseLayers, selectedLayer, onLayerChange }) => {
       <Modal show={modalIsOpen} onHide={closeModal} size="lg">
         <Modal.Header closeButton>
           <Modal.Title>
-            <Search /> {activeLayer?.name}
+            <Search /> {activeLayer?.metadata.label}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
