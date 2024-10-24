@@ -1,5 +1,5 @@
 import * as React from "react"
-import { useState, useCallback,useRef } from "react"
+import { useState, useCallback, useRef, useEffect } from "react"
 import "maplibre-gl/dist/maplibre-gl.css"
 import Map, {
   NavigationControl,
@@ -44,10 +44,42 @@ const MapCompLibre = ({
 
   const [clickInfo, setClickInfo] = useState(null)
   const interactiveLayersRef = useRef([]);
+  const [mapStyleData, setMapStyleData] = useState(null);
+
 
   const handleLayerChange = styleUrl => {
     setMapStyleUrl(styleUrl)
   }
+
+  // Carica e modifica lo stile della mappa solo se `mapStyle` è definito
+  useEffect(() => {
+    if (mapStyle) {
+      fetch(mapStyle)
+        .then(response => response.json())
+        .then(styleData => {
+          const modifiedStyle = modifyMapStyle(styleData, children);
+          setMapStyleData(modifiedStyle);
+        });
+    }
+  }, [mapStyle, children]);
+
+  const modifyMapStyle = (styleData, children) => {
+    const modifiedStyle = { ...styleData };
+
+    React.Children.forEach(children, child => {
+      if (child.type && child.type.name === "VectorLayerLibre") {
+        const { refId, style } = child.props;
+
+        const layerToUpdate = modifiedStyle.layers.find(layer => layer.id === refId);
+        if (layerToUpdate) {
+          Object.assign(layerToUpdate, style);
+        }
+      }
+    });
+
+    return modifiedStyle;
+  };
+
 
   const onMapLoad = useCallback((event) => {
     const mapInstance = event.target;
@@ -90,7 +122,7 @@ const MapCompLibre = ({
           zoom: zoom,
         }}
         style={{ height: height ? height : `800px` }}
-        mapStyle={mapStyleUrl}
+        mapStyle={mapStyleData || mapStyleUrl} // Usa lo stile modificato o quello di default
         onLoad={onMapLoad}
         onClick={onClick}
       >
