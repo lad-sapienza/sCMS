@@ -1,5 +1,5 @@
 import * as React from "react"
-import { useState, useCallback } from "react"
+import { useState, useCallback,useRef } from "react"
 import "maplibre-gl/dist/maplibre-gl.css"
 import Map, {
   NavigationControl,
@@ -25,7 +25,6 @@ const MapCompLibre = ({
   children,
   height,
   center,
-  interactiveLayerIds = [], // TODO rendere dinamico activeLayerId
   mapStyle,
   geolocateControl,
   fullscreenControl,
@@ -44,22 +43,43 @@ const MapCompLibre = ({
   )
 
   const [clickInfo, setClickInfo] = useState(null)
+  const interactiveLayersRef = useRef([]);
 
   const handleLayerChange = styleUrl => {
     setMapStyleUrl(styleUrl)
   }
 
+  const onMapLoad = useCallback((event) => {
+    const mapInstance = event.target;
+
+    // Usa map per scorrere i layer e filtrare quelli con metadata.popupTemplate
+    const dynamicInteractiveLayers = mapInstance.getStyle().layers
+      .map(layer => (layer.metadata && layer.metadata.popupTemplate ? layer.id : null))
+      .filter(Boolean); // Rimuove i valori null
+
+    // Salva i layer interattivi nella variabile di riferimento
+    interactiveLayersRef.current = dynamicInteractiveLayers;
+  }, []);
+
   const onClick = useCallback(
     event => {
-      const { features, lngLat } = event
-      // Filtra solo i feature dai layer interattivi
-      const clickedFeature = features.find(feature =>
-        interactiveLayerIds.includes(feature.layer.id),
-      )
-      setClickInfo(clickedFeature ? { feature: clickedFeature, lngLat: lngLat } : null)
+      const { lngLat, point } = event;
+      const mapInstance = event.target;
+  
+      // Usa queryRenderedFeatures per ottenere le feature dal punto cliccato
+      const clickedFeatures = mapInstance.queryRenderedFeatures(point, {
+        layers: interactiveLayersRef.current,
+      });
+  
+      const clickedFeature = clickedFeatures.find(feature =>
+        interactiveLayersRef.current.includes(feature.layer.id)
+      );
+  
+      setClickInfo(clickedFeature ? { feature: clickedFeature, lngLat: lngLat } : null);
     },
-    [interactiveLayerIds],
-  )
+    []
+  );
+  
 
   return (
     <React.Fragment>
@@ -71,7 +91,7 @@ const MapCompLibre = ({
         }}
         style={{ height: height ? height : `800px` }}
         mapStyle={mapStyleUrl}
-        interactiveLayerIds={interactiveLayerIds} // Passa l'array di layer interattivi
+        onLoad={onMapLoad}
         onClick={onClick}
       >
         {children}
@@ -83,8 +103,6 @@ const MapCompLibre = ({
             onClose={() => setClickInfo(null)}
           >
             {
-              // TODO: Vedi se riesci a fare di meglio
-              // https://stackoverflow.com/questions/29182244/convert-a-string-to-a-template-string
             }
             <div
               dangerouslySetInnerHTML={{
