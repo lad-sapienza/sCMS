@@ -10,3 +10,4 @@ export { ListVisibleFeatures } from "./maps/leaflet/listVisibleFeatures.js"
 
 export { MapCompLibre } from "./maps/maplibre/mapCompLibre.js"
 export { VectorLayerLibre } from "./maps/maplibre/vectorLayerLibre.js"
+
