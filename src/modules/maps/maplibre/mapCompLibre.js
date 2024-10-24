@@ -1,5 +1,5 @@
 import * as React from "react"
-import { useState, useCallback, useRef, useEffect } from "react"
+import { useState, useCallback, useRef } from "react"
 import "maplibre-gl/dist/maplibre-gl.css"
 import Map, {
   NavigationControl,
@@ -30,7 +30,7 @@ const MapCompLibre = ({
   fullscreenControl,
   navigationControl,
   scaleControl,
-  baseLayers, //TODO SCELTA BASELAYER DA MDX
+  baseLayers, 
 }) => {
   const [lng, lat, zoom] = center
     ? center.split(",").map(e => parseFloat(e.trim()))
@@ -44,41 +44,10 @@ const MapCompLibre = ({
 
   const [clickInfo, setClickInfo] = useState(null)
   const interactiveLayersRef = useRef([]);
-  const [mapStyleData, setMapStyleData] = useState(null);
-
 
   const handleLayerChange = styleUrl => {
     setMapStyleUrl(styleUrl)
   }
-
-  // Carica e modifica lo stile della mappa solo se `mapStyle` è definito
-  useEffect(() => {
-    if (mapStyle) {
-      fetch(mapStyle)
-        .then(response => response.json())
-        .then(styleData => {
-          const modifiedStyle = modifyMapStyle(styleData, children);
-          setMapStyleData(modifiedStyle);
-        });
-    }
-  }, [mapStyle, children]);
-
-  const modifyMapStyle = (styleData, children) => {
-    const modifiedStyle = { ...styleData };
-
-    React.Children.forEach(children, child => {
-      if (child.type && child.type.name === "VectorLayerLibre") {
-        const { refId, style } = child.props;
-
-        const layerToUpdate = modifiedStyle.layers.find(layer => layer.id === refId);
-        if (layerToUpdate) {
-          Object.assign(layerToUpdate, style);
-        }
-      }
-    });
-
-    return modifiedStyle;
-  };
 
 
   const onMapLoad = useCallback((event) => {
@@ -112,6 +81,17 @@ const MapCompLibre = ({
     []
   );
   
+// Converti `defaultBaseLayers` da oggetto a un array di valori
+const baseLayersArray = Object.entries(defaultBaseLayers).map(
+  ([key, value]) => ({ id: key, ...value })
+);
+
+// Filtra i base layers in base alla proprietà `baseLayers`
+const filteredBaseLayers = baseLayers
+  ? baseLayersArray.filter(layer => baseLayers.includes(layer.id))
+  : baseLayersArray;
+
+console.log("Base Layers Filtrati:", filteredBaseLayers);
 
   return (
     <React.Fragment>
@@ -122,7 +102,7 @@ const MapCompLibre = ({
           zoom: zoom,
         }}
         style={{ height: height ? height : `800px` }}
-        mapStyle={mapStyleData || mapStyleUrl} // Usa lo stile modificato o quello di default
+        mapStyle={mapStyleUrl} 
         onLoad={onMapLoad}
         onClick={onClick}
       >
@@ -158,7 +138,7 @@ const MapCompLibre = ({
 
         <ControlPanel
           position="top-right"
-          baseLayers={defaultBaseLayers}
+          baseLayers={filteredBaseLayers}
           selectedLayer={mapStyleUrl}
           onLayerChange={handleLayerChange}
         />

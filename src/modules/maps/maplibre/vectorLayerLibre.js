@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react"
-import { Source, Layer } from "react-map-gl/maplibre"
+import React, { useState, useEffect, useCallback } from "react"
+import { Source, Layer, useMap } from "react-map-gl/maplibre"
 import PropTypes from "prop-types"
+import * as bbox from "geojson-bbox"
 import getData from "../../../services/getData" // Importa la tua funzione getData
 
 const VectorLayerLibre = ({
@@ -16,10 +17,13 @@ const VectorLayerLibre = ({
   fitToContent,
   checked,
   popupTemplate,
+  refId,
 }) => {
-  const [geojsonData, setGeojson] = useState(null) // GeoJSON data
+  const [geojsonData, setGeojson] = useState(null) 
   const [error, setError] = useState(false)
-  
+  const { current: mapRef } = useMap();
+  const [mapLoaded, setMapLoaded] = useState(false);
+
   if (typeof style === "undefined") {
     style = {}
   }
@@ -47,15 +51,56 @@ const VectorLayerLibre = ({
     style.layout.visibility = "none"
   }
 
-  /**
-   * TODO
-   * se il componente ha `refId`, non fa andare fetch, ma
-   * const { current: mapRef } = useMap()
-   * const mapInstance = mapRef.getMap()
-   * trova da qui:  mapInstance.getStyle().layers il layer con id refId
-   * ci sovrascrive gli style
-   */
+   // Funzione per sovrascrivere lo stile di un layer, memorizzata con `useCallback`
+   const updateLayerStyle = useCallback(() => {
+    if (mapRef) {
+      const mapInstance = mapRef.getMap();
+      mapInstance.on('styledata', () => {
+        const styleData = mapInstance.getStyle();
 
+        // Trova e modifica direttamente il layer nel JSON dello stile usando il `refId`
+        const layer = styleData.layers.find(layer => layer.id === refId);
+
+        if (layer) {
+          // Sovrascrivi direttamente le proprietà del layer
+          Object.assign(layer, style);
+
+          // Aggiorna lo stile della mappa con il layer modificato
+          console.log("Stile aggiornato per il layer:", refId);
+          mapInstance.setStyle(styleData);
+        } else {
+          console.warn(`Layer con refId "${refId}" non trovato nello stile.`);
+        }
+      });
+    }
+  }, [mapRef, style, refId]);
+
+   // Funzione per adattare la mappa ai contenuti del layer
+   const fitLayerToBounds = useCallback(() => {
+    if (mapRef && geojsonData && fitToContent && mapLoaded) {
+      const mapInstance = mapRef.getMap();
+      const lBb = bbox(geojsonData);
+      mapInstance.fitBounds(
+        [
+          [lBb[1], lBb[0]],
+          [lBb[3], lBb[2]],
+        ],
+        { padding: 20 }
+      );
+    }
+  }, [mapRef, geojsonData, fitToContent, mapLoaded]);
+
+  // Chiama la funzione per aggiornare lo stile del layer quando la mappa è pronta
+  // se metto direttamente mapInstance.getStyle() non mi legge la mappa perchè ancora non è stata caricata
+  useEffect(() => {
+    if (mapRef) {
+      updateLayerStyle();
+      fitLayerToBounds();
+    }
+  }, [mapRef, updateLayerStyle, fitLayerToBounds]);
+
+
+  
   // Funzione per ottenere i dati da getData
   useEffect(() => {
     const fetchGeoData = async () => {
@@ -80,11 +125,13 @@ const VectorLayerLibre = ({
     fetchGeoData() // Carica i dati quando il componente è montato
   }, [path2data, dEndPoint, dTable, dToken, dQueryString, geoField])
 
+
+
   if (error) {
     return <div>{error}</div>
   } else if (!geojsonData) {
     return <div>Caricamento dati...</div>
-  } else {
+  }  else {
     return (
       <div>
         {/* Mostra il Source solo se ci sono dati GeoJSON */}
