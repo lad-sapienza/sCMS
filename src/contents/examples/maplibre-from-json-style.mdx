@@ -30,12 +30,33 @@ import { MapCompLibre, VectorLayerLibre } from "../../modules/scms.js"
       mapStyle="/data/ksa.json"
     >
 
-      <VectorLayerLibre
-        refId = "ksa"
-        style={...}
-        >
-
-        // TODO: fare componente <RasterLayerLibre />
+          <VectorLayerLibre
+            refId = "ksa"
+            name="Sites KSA json"
+            fitToContent={true}
+            checked={true}
+            searchInFields={{
+              "Item_Label": "Label",
+              "Site_Name": "Site name",
+              "Site_Description": "Site description"
+            }}
+          style={{
+          id: "ksa",
+          type: "circle",
+          paint: {
+            "circle-radius": 4,
+            "circle-color": "#007cbf",
+            "circle-stroke-width": 1.5,
+            "circle-stroke-color": "#000000"
+          },
+        }}
+        popupTemplate="<div>
+          <h4>${Site_Name}</h4>
+          <p>${Site_Description}</p>
+          <small>${Item_Label}</small>
+        </div>"
+      />
+       // TODO: fare componente <RasterLayerLibre />
     </MapCompLibre>
     ```
 
