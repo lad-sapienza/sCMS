@@ -158,7 +158,7 @@ VectorLayerLibre.propTypes = {
    * Array containing field that will be exposed to the search interface
    * If missing the layer will NOT be searcheable
    */
-  searchInFields: PropTypes.arrayOf(PropTypes.string),
+  searchInFields: PropTypes.object,
   
 
 }
