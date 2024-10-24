@@ -145,7 +145,6 @@ const ControlPanel = ({ baseLayers, selectedLayer, onLayerChange }) => {
           ))}
           {/* Sezione per i source layer */}
           <hr />
-          {/* TODO: *non* fare comparire il titolo h5 se non ci sono layer*/}
           {mapInstance.getStyle().layers.map(
             (layer, k) =>
               layer.metadata && layer.metadata.label &&(
