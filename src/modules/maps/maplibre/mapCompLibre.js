@@ -51,12 +51,12 @@ const MapCompLibre = ({
 
   const onClick = useCallback(
     event => {
-      const { features } = event
+      const { features, lngLat } = event
       // Filtra solo i feature dai layer interattivi
       const clickedFeature = features.find(feature =>
         interactiveLayerIds.includes(feature.layer.id),
       )
-      setClickInfo(clickedFeature ? { feature: clickedFeature } : null)
+      setClickInfo(clickedFeature ? { feature: clickedFeature, lngLat: lngLat } : null)
     },
     [interactiveLayerIds],
   )
@@ -75,12 +75,11 @@ const MapCompLibre = ({
         onClick={onClick}
       >
         {children}
-
         {clickInfo &&  clickInfo.feature.layer.metadata.popupTemplate && (
           <Popup
             anchor="top"
-            longitude={Number(clickInfo.feature.geometry.coordinates[0])}
-            latitude={Number(clickInfo.feature.geometry.coordinates[1])}
+            longitude={clickInfo.lngLat.lng}
+            latitude={clickInfo.lngLat.lat}
             onClose={() => setClickInfo(null)}
           >
             {
