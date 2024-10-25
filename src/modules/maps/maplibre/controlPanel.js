@@ -26,7 +26,14 @@ const ControlPanel = ({ baseLayers, selectedLayer, onLayerChange }) => {
     setIsVisible(boolVal === true)
   }
 
-  const toggleLayerVisibility = lyrId => {
+  const toggleLayerVisibility = (lyrId, isRaster) => {
+    if (isRaster){
+      mapInstance.getStyle().layers.forEach( lyr => {
+        if(lyr.type === "raster"){
+          mapInstance.setLayoutProperty( lyr.id, "visibility", "none" )
+        }
+      })
+    }
     const isVisible =
       mapInstance.getLayoutProperty(lyrId, "visibility") !== "none"
     mapInstance.setLayoutProperty(
@@ -112,25 +119,30 @@ const ControlPanel = ({ baseLayers, selectedLayer, onLayerChange }) => {
 
       {isVisible && (
         <div className="layer-controls">
-          {Object.keys(baseLayers).map(key => (
-            <div key={key} className="form-check">
-              <input
-                type="radio"
-                className="form-check-input"
-                id={key}
-                checked={selectedLayer === baseLayers[key].url}
-                onChange={() => onLayerChange(baseLayers[key].url)}
-              />
-              <label htmlFor={key} className="form-check-label">
-                {baseLayers[key].name}
-              </label>
-            </div>
-          ))}
+          {mapInstance.getStyle().layers.map(
+            (layer, key) => layer.type === "raster" && (
+                <div key={key} className="form-check">
+                  <label className="form-check-label">
+                    <input
+                      type="radio"
+                      name="base-raster"
+                      className="form-check-input"
+                      defaultChecked={
+                        mapInstance.getLayoutProperty(layer.id, "visibility") !==
+                        "none"
+                      }
+                      onChange={() => toggleLayerVisibility(layer.id, "true")}
+                    />
+                    {layer.metadata.label}
+                  </label>
+                </div>
+              )
+          )}
           {/* Sezione per i source layer */}
           <hr />
           {mapInstance.getStyle().layers.map(
             (layer, k) =>
-              layer.metadata && layer.metadata.label &&(
+              layer.metadata && layer.metadata.label && layer.type !== "raster" && (
                 <div key={k} className="form-check">
                   <input
                     type="checkbox"

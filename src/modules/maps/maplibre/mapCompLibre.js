@@ -8,7 +8,9 @@ import Map, {
   GeolocateControl,
   Popup,
 } from "react-map-gl/maplibre"
+import PropTypes, { arrayOf } from "prop-types"
 import ControlPanel from "./controlPanel"
+import { RasterLayerLibre } from "./rasterLayerLibre"
 import { defaultBaseLayers } from "../../maps/defaultBaseLayers"
 
 const parseStringTemplate = (str, obj) => {
@@ -30,68 +32,65 @@ const MapCompLibre = ({
   fullscreenControl,
   navigationControl,
   scaleControl,
-  baseLayers, 
+  baseLayers,
 }) => {
   const [lng, lat, zoom] = center
     ? center.split(",").map(e => parseFloat(e.trim()))
     : [0, 0, 2]
 
   const [mapStyleUrl, setMapStyleUrl] = useState(
-    mapStyle ||
-      "https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json",
+    mapStyle,
+    // ||
+    // "https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json",
     //"https://demotiles.maplibre.org/style.json",
   )
 
   const [clickInfo, setClickInfo] = useState(null)
-  const interactiveLayersRef = useRef([]);
+  const interactiveLayersRef = useRef([])
 
   const handleLayerChange = styleUrl => {
     setMapStyleUrl(styleUrl)
   }
 
-
-  const onMapLoad = useCallback((event) => {
-    const mapInstance = event.target;
+  const onMapLoad = useCallback(event => {
+    const mapInstance = event.target
 
     // Usa map per scorrere i layer e filtrare quelli con metadata.popupTemplate
-    const dynamicInteractiveLayers = mapInstance.getStyle().layers
-      .map(layer => (layer.metadata && layer.metadata.popupTemplate ? layer.id : null))
-      .filter(Boolean); // Rimuove i valori null
+    const dynamicInteractiveLayers = mapInstance
+      .getStyle()
+      .layers.map(layer =>
+        layer.metadata && layer.metadata.popupTemplate ? layer.id : null,
+      )
+      .filter(Boolean) // Rimuove i valori null
 
     // Salva i layer interattivi nella variabile di riferimento
-    interactiveLayersRef.current = dynamicInteractiveLayers;
-  }, []);
+    interactiveLayersRef.current = dynamicInteractiveLayers
+  }, [])
 
-  const onClick = useCallback(
-    event => {
-      const { lngLat, point } = event;
-      const mapInstance = event.target;
-  
-      // Usa queryRenderedFeatures per ottenere le feature dal punto cliccato
-      const clickedFeatures = mapInstance.queryRenderedFeatures(point, {
-        layers: interactiveLayersRef.current,
-      });
-  
-      const clickedFeature = clickedFeatures.find(feature =>
-        interactiveLayersRef.current.includes(feature.layer.id)
-      );
-  
-      setClickInfo(clickedFeature ? { feature: clickedFeature, lngLat: lngLat } : null);
-    },
-    []
-  );
-  
-// Converti `defaultBaseLayers` da oggetto a un array di valori
-const baseLayersArray = Object.entries(defaultBaseLayers).map(
-  ([key, value]) => ({ id: key, ...value })
-);
+  const onClick = useCallback(event => {
+    const { lngLat, point } = event
+    const mapInstance = event.target
 
-// Filtra i base layers in base alla proprietà `baseLayers`
-const filteredBaseLayers = baseLayers
-  ? baseLayersArray.filter(layer => baseLayers.includes(layer.id))
-  : baseLayersArray;
+    // Usa queryRenderedFeatures per ottenere le feature dal punto cliccato
+    const clickedFeatures = mapInstance.queryRenderedFeatures(point, {
+      layers: interactiveLayersRef.current,
+    })
 
-console.log("Base Layers Filtrati:", filteredBaseLayers);
+    const clickedFeature = clickedFeatures.find(feature =>
+      interactiveLayersRef.current.includes(feature.layer.id),
+    )
+
+    setClickInfo(
+      clickedFeature ? { feature: clickedFeature, lngLat: lngLat } : null,
+    )
+  }, [])
+
+  // Filtra i base layers in base alla proprietà `baseLayers`
+  const filteredBaseLayers = baseLayers
+    ? baseLayers
+        .map(lyr => (defaultBaseLayers[lyr] ? defaultBaseLayers[lyr] : null))
+        .filter(x=>x)
+    : []
 
   return (
     <React.Fragment>
@@ -102,20 +101,28 @@ console.log("Base Layers Filtrati:", filteredBaseLayers);
           zoom: zoom,
         }}
         style={{ height: height ? height : `800px` }}
-        mapStyle={mapStyleUrl} 
+        mapStyle={mapStyleUrl}
         onLoad={onMapLoad}
         onClick={onClick}
       >
+        {filteredBaseLayers &&
+          filteredBaseLayers.map((obj, i) => (
+            <RasterLayerLibre
+              key={i}
+              name={obj.name}
+              tiles={[obj.url]}
+              checked={i === 0}
+            />
+          ))}
+
         {children}
-        {clickInfo &&  clickInfo.feature.layer.metadata.popupTemplate && (
+        {clickInfo && clickInfo.feature.layer.metadata.popupTemplate && (
           <Popup
             anchor="top"
             longitude={clickInfo.lngLat.lng}
             latitude={clickInfo.lngLat.lat}
             onClose={() => setClickInfo(null)}
           >
-            {
-            }
             <div
               dangerouslySetInnerHTML={{
                 __html: parseStringTemplate(
@@ -145,6 +152,36 @@ console.log("Base Layers Filtrati:", filteredBaseLayers);
       </Map>
     </React.Fragment>
   )
+}
+MapCompLibre.propTypes = {
+  height: PropTypes.string,
+  center: PropTypes.string,
+  mapStyle: PropTypes.object,
+  geolocateControl: PropTypes.oneOf([
+    "top-right",
+    "top-left",
+    "bottom-right",
+    "bottom-left",
+  ]),
+  fullscreenControl: PropTypes.oneOf([
+    "top-right",
+    "top-left",
+    "bottom-right",
+    "bottom-left",
+  ]),
+  navigationControl: PropTypes.oneOf([
+    "top-right",
+    "top-left",
+    "bottom-right",
+    "bottom-left",
+  ]),
+  scaleControl: PropTypes.oneOf([
+    "top-right",
+    "top-left",
+    "bottom-right",
+    "bottom-left",
+  ]),
+  baseLayers: arrayOf(PropTypes.string),
 }
 
 export { MapCompLibre }
