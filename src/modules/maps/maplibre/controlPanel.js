@@ -22,8 +22,8 @@ const ControlPanel = ({ baseLayers, selectedLayer, onLayerChange }) => {
   const { current: mapRef } = useMap()
   const mapInstance = mapRef.getMap()
 
-  const toggleVisibility = () => {
-    setIsVisible(!isVisible)
+  const toggleVisibility = (boolVal) => {
+    setIsVisible(boolVal === true)
   }
 
   const toggleLayerVisibility = lyrId => {
@@ -99,8 +99,8 @@ const ControlPanel = ({ baseLayers, selectedLayer, onLayerChange }) => {
   return (
     <StyledControl
       className={`control-panel ${isVisible ? "visible" : "hidden"} border shadow rounded`}
-      onMouseEnter={toggleVisibility}
-      onMouseLeave={toggleVisibility}
+      onMouseEnter={()=>toggleVisibility(true)}
+      onMouseLeave={()=>toggleVisibility(false)}
     >
       <div className="text-end">
         {!isVisible && (
