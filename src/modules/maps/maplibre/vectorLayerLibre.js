@@ -3,7 +3,6 @@ import { Source, Layer, useMap } from "react-map-gl/maplibre"
 import PropTypes from "prop-types"
 import * as bbox from "geojson-bbox"
 import getData from "../../../services/getData" // Importa la tua funzione getData
-import { propTypes } from "react-bootstrap/esm/Image"
 
 const VectorLayerLibre = ({
   refId,
@@ -210,7 +209,7 @@ VectorLayerLibre.propTypes = {
   /**
    * String containinf the id of the referenced layer in styles.json that is being expanded
    */
-  refId: propTypes.string,
+  refId: PropTypes.string,
   
 
 }
