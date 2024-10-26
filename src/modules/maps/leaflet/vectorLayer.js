@@ -121,9 +121,6 @@ VectorLayer.propTypes = {
   pointToLayer: PropTypes.func,
   /**
    * A Function that will be used to decide whether to include a feature or not. The default is to include all features
-   * Reference: https://leafletjs.com/reference.html#geojson-filter
-   * TODO @eiacopini: fare un esempio che lo usa
-   * TODO @eiacopini: possiamo settarlo dinamicamente e usarlo come filtro in tempo reale
    * Default: null
    */
   filter: PropTypes.string,
