@@ -203,6 +203,10 @@ const ControlPanel = ({ baseLayers, selectedLayer, onLayerChange }) => {
 // Styled component per lo stile del Control Panel
 // TODO @eicopini: questo controller è aggiunto in maniera brutale alla mappa e infatti non è listato tra i controller
 // e va in conflitto se si aggiungono controller in top-right
+// testing
+// ho provato a mettere un simplecustomcontrol con la classe icontrol e aggiungerlo onload alla mappa,
+// ma comunque si sovrappone agli altri controller
+
 // Questo perché non segue le direttive dei controller:
 // https://maplibre.org/maplibre-gl-js/docs/API/interfaces/IControl/ v. anche
 // https://stackoverflow.com/a/74283884

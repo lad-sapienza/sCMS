@@ -56,6 +56,7 @@ const MapCompLibre = ({
   const onMapLoad = useCallback(event => {
     const mapInstance = event.target
 
+    // test custom control
     const customControl = new SimpleControl()
     mapInstance.addControl(customControl, "top-left")
 
