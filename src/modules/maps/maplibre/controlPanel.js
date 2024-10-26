@@ -1,7 +1,6 @@
 import React, { useState } from "react"
 import { useMap } from "react-map-gl/maplibre"
 import styled from "styled-components"
-import PropTypes from "prop-types"
 import { Modal } from "react-bootstrap"
 import {
   FilterSquare,
@@ -12,7 +11,7 @@ import {
 import SearchUI from "../../search/searchUI"
 import plain2maplibre from "../../../services/transformers/plain2maplibre.js"
 
-const ControlPanel = ({ baseLayers, selectedLayer, onLayerChange }) => {
+const ControlPanel = () => {
   const [isVisible, setIsVisible] = useState(false)
   const [activeLayer, setActiveLayer] = useState(null)
   const [modalIsOpen, setModalIsOpen] = useState(false)
@@ -222,12 +221,4 @@ const StyledControl = styled.div`
   max-height: 500px;
   overflow-y: auto;
 `
-
-ControlPanel.propTypes = {
-  baseLayers: PropTypes.array,
-  selectedLayer: PropTypes.string,
-  onLayerChange: PropTypes.func,
-  activeSourceLayers: PropTypes.array,
-}
-
 export default ControlPanel
