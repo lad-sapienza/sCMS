@@ -115,8 +115,9 @@ const MapCompLibre = ({
             <RasterLayerLibre
               key={i}
               name={obj.name}
-              tiles={[obj.url]}
+              url={[obj.url]}
               checked={i === 0}
+              attribution={obj.attribution}
             />
           ))}
 
