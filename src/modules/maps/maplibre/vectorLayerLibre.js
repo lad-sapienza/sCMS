@@ -15,6 +15,7 @@ const VectorLayerLibre = ({
   style,
   name,
   searchInFields,
+  // TODO: fitToContent non sta funzionando
   fitToContent,
   checked,
   popupTemplate,
