@@ -10,7 +10,7 @@ import Map, {
 } from "react-map-gl/maplibre"
 import PropTypes, { arrayOf } from "prop-types"
 import ControlPanel from "./controlPanel"
-import SimpleControl from "./iControl"
+import SimpleControl from "./simpleControl"
 import { RasterLayerLibre } from "./rasterLayerLibre"
 import { defaultBaseLayers } from "../../maps/defaultBaseLayers"
 
