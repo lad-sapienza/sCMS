@@ -162,7 +162,7 @@ const MapCompLibre = ({
 MapCompLibre.propTypes = {
   height: PropTypes.string,
   center: PropTypes.string,
-  mapStyle: PropTypes.object,
+  mapStyle: PropTypes.string,
   geolocateControl: PropTypes.oneOf([
     "top-right",
     "top-left",
