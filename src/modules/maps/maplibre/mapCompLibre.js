@@ -10,6 +10,7 @@ import Map, {
 } from "react-map-gl/maplibre"
 import PropTypes, { arrayOf } from "prop-types"
 import ControlPanel from "./controlPanel"
+import SimpleControl from "./iControl"
 import { RasterLayerLibre } from "./rasterLayerLibre"
 import { defaultBaseLayers } from "../../maps/defaultBaseLayers"
 
@@ -55,6 +56,9 @@ const MapCompLibre = ({
   const onMapLoad = useCallback(event => {
     const mapInstance = event.target
 
+    const customControl = new SimpleControl()
+    mapInstance.addControl(customControl, "top-left")
+
     // Usa map per scorrere i layer e filtrare quelli con metadata.popupTemplate
     const dynamicInteractiveLayers = mapInstance
       .getStyle()
@@ -89,7 +93,7 @@ const MapCompLibre = ({
   const filteredBaseLayers = baseLayers
     ? baseLayers
         .map(lyr => (defaultBaseLayers[lyr] ? defaultBaseLayers[lyr] : null))
-        .filter(x=>x)
+        .filter(x => x)
     : []
 
   return (

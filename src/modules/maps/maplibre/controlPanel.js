@@ -22,15 +22,15 @@ const ControlPanel = ({ baseLayers, selectedLayer, onLayerChange }) => {
   const { current: mapRef } = useMap()
   const mapInstance = mapRef.getMap()
 
-  const toggleVisibility = (boolVal) => {
+  const toggleVisibility = boolVal => {
     setIsVisible(boolVal === true)
   }
 
   const toggleLayerVisibility = (lyrId, isRaster) => {
-    if (isRaster){
-      mapInstance.getStyle().layers.forEach( lyr => {
-        if(lyr.type === "raster"){
-          mapInstance.setLayoutProperty( lyr.id, "visibility", "none" )
+    if (isRaster) {
+      mapInstance.getStyle().layers.forEach(lyr => {
+        if (lyr.type === "raster") {
+          mapInstance.setLayoutProperty(lyr.id, "visibility", "none")
         }
       })
     }
@@ -106,8 +106,8 @@ const ControlPanel = ({ baseLayers, selectedLayer, onLayerChange }) => {
   return (
     <StyledControl
       className={`control-panel ${isVisible ? "visible" : "hidden"} border shadow rounded`}
-      onMouseEnter={()=>toggleVisibility(true)}
-      onMouseLeave={()=>toggleVisibility(false)}
+      onMouseEnter={() => toggleVisibility(true)}
+      onMouseLeave={() => toggleVisibility(false)}
     >
       <div className="text-end">
         {!isVisible && (
@@ -120,7 +120,8 @@ const ControlPanel = ({ baseLayers, selectedLayer, onLayerChange }) => {
       {isVisible && (
         <div className="layer-controls">
           {mapInstance.getStyle().layers.map(
-            (layer, key) => layer.type === "raster" && (
+            (layer, key) =>
+              layer.type === "raster" && (
                 <div key={key} className="form-check">
                   <label className="form-check-label">
                     <input
@@ -128,21 +129,25 @@ const ControlPanel = ({ baseLayers, selectedLayer, onLayerChange }) => {
                       name="base-raster"
                       className="form-check-input"
                       defaultChecked={
-                        mapInstance.getLayoutProperty(layer.id, "visibility") !==
-                        "none"
+                        mapInstance.getLayoutProperty(
+                          layer.id,
+                          "visibility",
+                        ) !== "none"
                       }
                       onChange={() => toggleLayerVisibility(layer.id, "true")}
                     />
                     {layer.metadata.label}
                   </label>
                 </div>
-              )
+              ),
           )}
           {/* Sezione per i source layer */}
           <hr />
           {mapInstance.getStyle().layers.map(
             (layer, k) =>
-              layer.metadata && layer.metadata.label && layer.type !== "raster" && (
+              layer.metadata &&
+              layer.metadata.label &&
+              layer.type !== "raster" && (
                 <div key={k} className="form-check">
                   <input
                     type="checkbox"
