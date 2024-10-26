@@ -1,3 +1,5 @@
+export { SimpleSlider } from "./simpleSlider.js"
+
 export { Search } from "./search/search.js"
 export { DataTb } from "./datatb.js"
 export { Record } from "./record/record.js"
