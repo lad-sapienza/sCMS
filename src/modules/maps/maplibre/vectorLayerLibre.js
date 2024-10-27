@@ -22,7 +22,6 @@ const VectorLayerLibre = ({
   const [geojsonData, setGeojson] = useState(null)
   const [error, setError] = useState(false)
   const { current: mapRef } = useMap()
-  const [mapLoaded, setMapLoaded] = useState(false)
 
   if (typeof style === "undefined") {
     style = {}
