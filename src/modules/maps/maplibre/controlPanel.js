@@ -11,15 +11,15 @@ import {
 import SearchUI from "../../search/searchUI"
 import plain2maplibre from "../../../services/transformers/plain2maplibre.js"
 
-const ControlPanel = () => {
+const ControlPanel = ({ mapInstance }) => {
   const [isVisible, setIsVisible] = useState(false)
   const [activeLayer, setActiveLayer] = useState(null)
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const [activeFieldList, setActiveFieldList] = useState(null)
   const [filters, setFilters] = useState([])
 
-  const { current: mapRef } = useMap()
-  const mapInstance = mapRef.getMap()
+  // const { current: mapRef } = useMap()
+  // const mapInstance = mapRef.getMap()
 
   const toggleVisibility = boolVal => {
     setIsVisible(boolVal === true)
@@ -59,7 +59,7 @@ const ControlPanel = () => {
   }
 
   const removeFilter = layerId => {
-    if (mapRef) {
+    if (mapInstance) {
       if (checkLayerExists(layerId) && checkLayerTypeSupportsFilter(layerId)) {
         mapInstance.setFilter(layerId, null)
       } else {
@@ -88,7 +88,7 @@ const ControlPanel = () => {
     const mapLibreFilters = plain2maplibre(conn, inputs)
     setFilters(mapLibreFilters)
 
-    if (mapRef) {
+    if (mapInstance) {
       const layerExists = checkLayerExists(activeLayer.id)
       if (layerExists && checkLayerTypeSupportsFilter(activeLayer.id)) {
         mapInstance.setFilter(activeLayer.id, mapLibreFilters)
@@ -98,7 +98,7 @@ const ControlPanel = () => {
         )
       }
     } else {
-      console.error("MapRef non è definito o la mappa non è pronta.")
+      console.error("mapInstance non è definito o la mappa non è pronta.")
     }
   }
 

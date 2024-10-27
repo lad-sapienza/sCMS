@@ -58,7 +58,7 @@ const MapCompLibre = ({
 
     // test custom control
     const customControl = new SimpleControl()
-    mapInstance.addControl(customControl, "top-left")
+    mapInstance.addControl(customControl, "top-right")
 
     // Usa map per scorrere i layer e filtrare quelli con metadata.popupTemplate
     const dynamicInteractiveLayers = mapInstance
@@ -149,12 +149,12 @@ const MapCompLibre = ({
         )}
         {scaleControl && <ScaleControl position={scaleControl} />}
 
-        <ControlPanel
+        {/* <ControlPanel
           position="top-right"
           baseLayers={filteredBaseLayers}
           selectedLayer={mapStyleUrl}
           onLayerChange={handleLayerChange}
-        />
+        /> */}
       </Map>
     </React.Fragment>
   )
