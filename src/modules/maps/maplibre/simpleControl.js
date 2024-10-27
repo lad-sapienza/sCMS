@@ -12,6 +12,17 @@ class SimpleControl {
     this.container.style.margin = ".5rem"
     this.container.style.maxWidth = "200px"
 
+    // Applica stili inline per rimuovere sfondo, ombre, padding e margini
+    this.container.style.background = "transparent"
+    this.container.style.boxShadow = "none"
+    this.container.style.border = "none"
+    this.container.style.padding = "0"
+    this.container.style.margin = "0"
+    this.container.style.minWidth = "300px"
+    this.container.style.display = "flex"
+    this.container.style.alignItems = "center"
+    this.container.style.justifyContent = "center"
+
     // Crea il root per React all'interno di this.container e rendi il ControlPanel
     this.root = ReactDOM.createRoot(this.container)
     this.root.render(<ControlPanel mapInstance={this.map} />)
