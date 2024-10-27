@@ -22,6 +22,8 @@ class SimpleControl {
   }
 
   onRemove() {
+    // TODO:ReactDOM.unmountComponentAtNode è deprecato.
+    // Nuova API qui: https://react.dev/blog/2022/03/08/react-18-upgrade-guide#updates-to-client-rendering-apis
     ReactDOM.unmountComponentAtNode(this.container)
     this.container.parentNode.removeChild(this.container)
     this.map = undefined
