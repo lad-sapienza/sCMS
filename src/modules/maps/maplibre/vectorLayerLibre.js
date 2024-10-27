@@ -15,15 +15,14 @@ const VectorLayerLibre = ({
   style,
   name,
   searchInFields,
-  // TODO: fitToContent non sta funzionando
   fitToContent,
   checked,
   popupTemplate,
 }) => {
-  const [geojsonData, setGeojson] = useState(null) 
+  const [geojsonData, setGeojson] = useState(null)
   const [error, setError] = useState(false)
-  const { current: mapRef } = useMap();
-  const [mapLoaded, setMapLoaded] = useState(false);
+  const { current: mapRef } = useMap()
+  const [mapLoaded, setMapLoaded] = useState(false)
 
   if (typeof style === "undefined") {
     style = {}
@@ -44,7 +43,7 @@ const VectorLayerLibre = ({
   if (popupTemplate) {
     style.metadata.popupTemplate = popupTemplate.toString()
   }
-  
+
   if (checked === false) {
     if (typeof style.layout === "undefined") {
       style.layout = {}
@@ -52,56 +51,56 @@ const VectorLayerLibre = ({
     style.layout.visibility = "none"
   }
 
-   // Funzione per sovrascrivere lo stile di un layer, memorizzata con `useCallback`
-   const updateLayerStyle = useCallback(() => {
+  // Funzione per sovrascrivere lo stile di un layer, memorizzata con `useCallback`
+  const updateLayerStyle = useCallback(() => {
     if (mapRef) {
-      const mapInstance = mapRef.getMap();
-      mapInstance.on('styledata', () => {
-        const styleData = mapInstance.getStyle();
+      const mapInstance = mapRef.getMap()
+      mapInstance.on("styledata", () => {
+        const styleData = mapInstance.getStyle()
 
         // Trova e modifica direttamente il layer nel JSON dello stile usando il `refId`
-        const layer = styleData.layers.find(layer => layer.id === refId);
+        const layer = styleData.layers.find(layer => layer.id === refId)
 
         if (layer) {
           // Sovrascrivi direttamente le proprietà del layer
-          Object.assign(layer, style);
+          Object.assign(layer, style)
 
           // Aggiorna lo stile della mappa con il layer modificato
-          console.log("Stile aggiornato per il layer:", refId);
-          mapInstance.setStyle(styleData);
+          console.log("Stile aggiornato per il layer:", refId)
+          mapInstance.setStyle(styleData)
         } else {
-          console.warn(`Layer con refId "${refId}" non trovato nello stile.`);
+          console.warn(`Layer con refId "${refId}" non trovato nello stile.`)
         }
-      });
+      })
     }
-  }, [mapRef, style, refId]);
+  }, [mapRef, style, refId])
 
-   // Funzione per adattare la mappa ai contenuti del layer
-   const fitLayerToBounds = useCallback(() => {
-    if (mapRef && geojsonData && fitToContent && mapLoaded) {
-      const mapInstance = mapRef.getMap();
-      const lBb = bbox(geojsonData);
+  const fitLayerToBounds = useCallback(() => {
+    if (mapRef && geojsonData && fitToContent) {
+      const mapInstance = mapRef.getMap()
+      const [minLng, minLat, maxLng, maxLat] = bbox(geojsonData)
+
+      console.log("Bounding box coordinates:", [minLng, minLat, maxLng, maxLat])
+
       mapInstance.fitBounds(
         [
-          [lBb[1], lBb[0]],
-          [lBb[3], lBb[2]],
+          [minLng, minLat],
+          [maxLng, maxLat],
         ],
-        { padding: 20 }
-      );
+        { padding: 20 },
+      )
     }
-  }, [mapRef, geojsonData, fitToContent, mapLoaded]);
+  }, [mapRef, geojsonData, fitToContent])
 
   // Chiama la funzione per aggiornare lo stile del layer quando la mappa è pronta
   // se metto direttamente mapInstance.getStyle() non mi legge la mappa perchè ancora non è stata caricata
   useEffect(() => {
     if (mapRef) {
-      updateLayerStyle();
-      fitLayerToBounds();
+      updateLayerStyle()
+      fitLayerToBounds()
     }
-  }, [mapRef, updateLayerStyle, fitLayerToBounds]);
+  }, [mapRef, updateLayerStyle, fitLayerToBounds])
 
-
-  
   // Funzione per ottenere i dati da getData
   useEffect(() => {
     const fetchGeoData = async () => {
@@ -126,13 +125,11 @@ const VectorLayerLibre = ({
     fetchGeoData() // Carica i dati quando il componente è montato
   }, [path2data, dEndPoint, dTable, dToken, dQueryString, geoField])
 
-
-
   if (error) {
     return <div>{error}</div>
   } else if (!geojsonData) {
     return <div>Caricamento dati...</div>
-  }  else {
+  } else {
     return (
       <div>
         {/* Mostra il Source solo se ci sono dati GeoJSON */}
@@ -211,8 +208,6 @@ VectorLayerLibre.propTypes = {
    * String containinf the id of the referenced layer in styles.json that is being expanded
    */
   refId: PropTypes.string,
-  
-
 }
 
 export { VectorLayerLibre }
