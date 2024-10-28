@@ -5,7 +5,6 @@ import ControlPanel from "./controlPanel"
 class SimpleControl {
   onAdd(map) {
     this.map = map
-    console.log("Map instance:", this.map)
     this.container = document.createElement("div")
     this.container.classList.add("maplibregl-ctrl", "maplibregl-ctrl-group")
     

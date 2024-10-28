@@ -67,8 +67,6 @@ const VectorLayerLibre = ({
           // Aggiorna lo stile della mappa con il layer modificato
           console.log("Stile aggiornato per il layer:", refId)
           mapInstance.setStyle(styleData)
-        } else {
-          console.warn(`Layer con refId "${refId}" non trovato nello stile.`)
         }
       })
     }
@@ -78,9 +76,7 @@ const VectorLayerLibre = ({
     if (mapRef && geojsonData && fitToContent) {
       const mapInstance = mapRef.getMap()
       const [minLng, minLat, maxLng, maxLat] = bbox(geojsonData)
-
-      console.log("Bounding box coordinates:", [minLng, minLat, maxLng, maxLat])
-
+      
       mapInstance.fitBounds(
         [
           [minLng, minLat],

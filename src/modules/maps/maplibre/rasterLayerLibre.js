@@ -27,7 +27,7 @@ RasterLayerLibre.propTypes = {
   /**
    * String with URL of tiles or array with multiple URLs
    */
-  url: PropTypes.oneOf([
+  url: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.string),
     PropTypes.string
   ]),
