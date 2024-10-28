@@ -15,7 +15,6 @@ import { RasterLayerLibre } from "./rasterLayerLibre"
 import { defaultBaseLayers } from "../../maps/defaultBaseLayers"
 import parseStringTemplate from "../../../services/parseStringTemplate"
 
-
 const MapCompLibre = ({
   children,
   height,
@@ -152,34 +151,87 @@ const MapCompLibre = ({
   )
 }
 MapCompLibre.propTypes = {
+  /**
+   * Height (with units) of the map to render
+   * Optional. Default: "800px"
+   */
   height: PropTypes.string,
+  /**
+   * Center of the initial map, in the shape of long,lat,zoom (string, comma-separated)
+   * Optional. Default: "0,0,2"
+   */
   center: PropTypes.string,
+  /**
+   * URL of the JSON mapstyle file
+   * Optional. Default: null
+   */
   mapStyle: PropTypes.string,
+  /**
+   * Position in the map frame of the Geolocate Control. If not provided, the Geolocate Controle will not be shown
+   * Can be one of the following: "top-right", "top-left", "bottom-right", "bottom-left"
+   * Default: false
+   */
   geolocateControl: PropTypes.oneOf([
     "top-right",
     "top-left",
     "bottom-right",
     "bottom-left",
   ]),
+  /**
+   * Position in the map frame of the Fullscreen Control. If not provided, the Fullscreen Controle will not be shown
+   * Can be one of the following: "top-right", "top-left", "bottom-right", "bottom-left"
+   * Default: false
+   */
   fullscreenControl: PropTypes.oneOf([
     "top-right",
     "top-left",
     "bottom-right",
     "bottom-left",
   ]),
+  /**
+   * Position in the map frame of the Navigation Control. If not provided, the Navigation Controle will not be shown
+   * Can be one of the following: "top-right", "top-left", "bottom-right", "bottom-left"
+   * Default: false
+   */
   navigationControl: PropTypes.oneOf([
     "top-right",
     "top-left",
     "bottom-right",
     "bottom-left",
   ]),
+  /**
+   * Position in the map frame of the Scale Control. If not provided, the Scale Controle will not be shown
+   * Can be one of the following: "top-right", "top-left", "bottom-right", "bottom-left"
+   * Default: false
+   */
   scaleControl: PropTypes.oneOf([
     "top-right",
     "top-left",
     "bottom-right",
     "bottom-left",
   ]),
-  baseLayers: arrayOf(PropTypes.string),
+  /**
+   * An adday with the identifiers of the default raster base layers to show in the map.
+   * Can be one or more of the following: "CAWM", "OSM", "EsriSatellite","EsriStreets", "EsriTopo", "GoogleSatellite", "GoogleRoadmap", "GoogleTerrain", "GoogleAlteredRoadmap", "GoogleTerrainOnly", "GoogleHybrid", "CartoDb", "StamenTerrain", "OSMMapnick", "OSMCycle",
+   * Default: null
+   */
+  baseLayers: arrayOf([
+    "CAWM",
+    "OSM",
+    "EsriSatellite",
+    "EsriStreets",
+    "EsriTopo",
+    "GoogleSatellite",
+    "GoogleRoadmap",
+    "GoogleTerrain",
+    "GoogleAlteredRoadmap",
+    "GoogleTerrainOnly",
+    "GoogleHybrid",
+    "CartoDb",
+    "StamenTerrain",
+    "OSMMapnick",
+    "OSMCycle",
+  ]),
 }
 
 export { MapCompLibre }
