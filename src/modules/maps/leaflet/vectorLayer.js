@@ -123,7 +123,7 @@ VectorLayer.propTypes = {
    * A Function that will be used to decide whether to include a feature or not. The default is to include all features
    * Default: null
    */
-  filter: PropTypes.string,
+  filter: PropTypes.func,
   /**
    * If true, the layer will be shown (tuned on).
    */
