@@ -1,12 +1,5 @@
 # s:CMS
 
-## TODO
-
-- [x] Un componente aggiuntivo alla mappa che elenca le features visualizzate sulla mappa con una piccola ricerca: `ListVisibleFeatures`
-   - [] `ListVisibleFeatures` dovrebbe essere un filio di un `VectorLayer` non della mappa o comunque dovrebbe agire suun layer (alla volta)
-
----
-
 s:CMS is an easy, open source and ready-to-use content management system for [generating static sites](https://www.cloudflare.com/en-gb/learning/performance/static-site-generator/) based on [Gatsby.js](https://www.gatsbyjs.com/). It also implements data-oriented components for easily **connecting**, **displaying** and **analysing** research data stored in databases, in flat files or remotely, in an easy, informative and efficient way: maps, searchable tables, and soon to come charts. 
 
 Our aim is to enable researchers to publish online rich data portals, by pulling the information from a wide range of sources, be them flat static files, remotely accessible services, or online databases. We try to build components — resuing as much as possible well known open source projects — to make the integration seemless and to offer a simplified workflow to securely publish contents.
