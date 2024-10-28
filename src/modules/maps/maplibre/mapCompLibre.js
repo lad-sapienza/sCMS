@@ -8,7 +8,7 @@ import Map, {
   GeolocateControl,
   Popup,
 } from "react-map-gl/maplibre"
-import PropTypes, { arrayOf } from "prop-types"
+import PropTypes from "prop-types"
 import ControlPanel from "./controlPanel"
 import SimpleControl from "./simpleControl"
 import { RasterLayerLibre } from "./rasterLayerLibre"
@@ -215,23 +215,25 @@ MapCompLibre.propTypes = {
    * Can be one or more of the following: "CAWM", "OSM", "EsriSatellite","EsriStreets", "EsriTopo", "GoogleSatellite", "GoogleRoadmap", "GoogleTerrain", "GoogleAlteredRoadmap", "GoogleTerrainOnly", "GoogleHybrid", "CartoDb", "StamenTerrain", "OSMMapnick", "OSMCycle",
    * Default: null
    */
-  baseLayers: arrayOf([
-    "CAWM",
-    "OSM",
-    "EsriSatellite",
-    "EsriStreets",
-    "EsriTopo",
-    "GoogleSatellite",
-    "GoogleRoadmap",
-    "GoogleTerrain",
-    "GoogleAlteredRoadmap",
-    "GoogleTerrainOnly",
-    "GoogleHybrid",
-    "CartoDb",
-    "StamenTerrain",
-    "OSMMapnick",
-    "OSMCycle",
-  ]),
+  baseLayers: PropTypes.arrayOf(
+    PropTypes.oneOf([
+      "CAWM",
+      "OSM",
+      "EsriSatellite",
+      "EsriStreets",
+      "EsriTopo",
+      "GoogleSatellite",
+      "GoogleRoadmap",
+      "GoogleTerrain",
+      "GoogleAlteredRoadmap",
+      "GoogleTerrainOnly",
+      "GoogleHybrid",
+      "CartoDb",
+      "StamenTerrain",
+      "OSMMapnick",
+      "OSMCycle",
+    ]),
+  ),
 }
 
 export { MapCompLibre }
