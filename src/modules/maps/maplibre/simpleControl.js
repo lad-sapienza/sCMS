@@ -10,8 +10,6 @@ class SimpleControl {
     this.container.classList.add("maplibregl-ctrl", "maplibregl-ctrl-group")
     this.container.style.padding = ".5rem"
     this.container.style.margin = ".5rem"
-    this.container.style.minWidth = "300px"
-
     // Applica stili inline per rimuovere sfondo, ombre, padding e margini
     this.container.style.background = "transparent"
     this.container.style.boxShadow = "none"

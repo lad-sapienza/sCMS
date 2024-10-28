@@ -203,14 +203,12 @@ const ControlPanel = ({ mapInstance }) => {
 // https://stackoverflow.com/a/74283884
 // https://stackoverflow.com/a/73333764
 const StyledControl = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  max-width: 200px;
   background: #fff;
   padding: 0.5rem;
   margin: 0.5rem;
   max-height: 500px;
   overflow-y: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Aggiunge un'ombra per separare il pannello */
+  border-radius: 8px; /* Arrotonda i bordi */
 `
 export default ControlPanel
