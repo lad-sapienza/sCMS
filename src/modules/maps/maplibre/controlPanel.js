@@ -103,7 +103,7 @@ const ControlPanel = ({ mapInstance }) => {
 
   return (
     <StyledControl
-      className={`control-panel ${isVisible ? "visible" : "hidden"} border shadow rounded`}
+      className={`control-panel ${isVisible ? "visible" : "hidden"} p-2`}
       onMouseEnter={() => toggleVisibility(true)}
       onMouseLeave={() => toggleVisibility(false)}
     >
@@ -139,8 +139,12 @@ const ControlPanel = ({ mapInstance }) => {
                 </div>
               ),
           )}
-          {/* Sezione per i source layer */}
-          <hr />
+
+          {mapInstance.getStyle().layers.filter(l => l.type === "raster")
+            .length > 0 &&
+            mapInstance.getStyle().layers.filter(l => l.type !== "raster")
+              .length > 0 && <hr />}
+
           {mapInstance.getStyle().layers.map(
             (layer, k) =>
               layer.metadata &&
@@ -198,17 +202,8 @@ const ControlPanel = ({ mapInstance }) => {
   )
 }
 
-// Styled component per lo stile del Control Panel
-// https://maplibre.org/maplibre-gl-js/docs/API/interfaces/IControl/
-// https://stackoverflow.com/a/74283884
-// https://stackoverflow.com/a/73333764
 const StyledControl = styled.div`
-  background: #fff;
-  padding: 0.5rem;
-  margin: 0.5rem;
-  max-height: 500px;
+  max-height: 300px;
   overflow-y: auto;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Aggiunge un'ombra per separare il pannello */
-  border-radius: 8px; /* Arrotonda i bordi */
 `
 export default ControlPanel
