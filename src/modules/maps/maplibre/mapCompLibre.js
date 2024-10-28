@@ -13,16 +13,8 @@ import ControlPanel from "./controlPanel"
 import SimpleControl from "./simpleControl"
 import { RasterLayerLibre } from "./rasterLayerLibre"
 import { defaultBaseLayers } from "../../maps/defaultBaseLayers"
+import parseStringTemplate from "../../../services/parseStringTemplate"
 
-const parseStringTemplate = (str, obj) => {
-  let parts = str.split(/\$\{(?!\d)[\wæøåÆØÅ]*\}/)
-  let args = str.match(/[^{}]+(?=})/g) || []
-  let parameters = args.map(
-    argument =>
-      obj[argument] || (obj[argument] === undefined ? "" : obj[argument]),
-  )
-  return String.raw({ raw: parts }, ...parameters)
-}
 
 const MapCompLibre = ({
   children,
