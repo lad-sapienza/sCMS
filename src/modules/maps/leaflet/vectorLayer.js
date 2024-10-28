@@ -4,6 +4,7 @@ import { GeoJSON, LayersControl, useMap } from "react-leaflet"
 import * as bbox from "geojson-bbox"
 
 import getData from "../../../services/getData"
+import parseStringTemplate from "../../../services/parseStringTemplate"
 
 const VectorLayer = ({
   path2data,
@@ -64,7 +65,7 @@ const VectorLayer = ({
           onEachFeature={
             popupTemplate
               ? (feature, layer) =>
-                  layer.bindPopup(popupTemplate(feature.properties))
+                  layer.bindPopup( parseStringTemplate(popupTemplate, feature.properties))
               : null
           }
           filter={filter ? filter : null}
@@ -109,11 +110,11 @@ VectorLayer.propTypes = {
    * Required
    */
   name: PropTypes.string.isRequired,
-  /**
-   * A function that takes as parameters the clicked feature and layer and returns an HTML string to show as content of the popup
+    /**
+   * A string containing the html to render in the popup. Variable props can be injected using ${field_name} syntax
    * Optional
    */
-  popupTemplate: PropTypes.func,
+  popupTemplate: PropTypes.string,
   /**
    * A Function defining how GeoJSON points spawn Leaflet layers. It is internally called when data is added, passing the GeoJSON point feature and its LatLng. The default is to spawn a default Marker:
    * Ref: https://leafletjs.com/reference.html#geojson-pointtolayer

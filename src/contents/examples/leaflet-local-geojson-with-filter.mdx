@@ -23,11 +23,7 @@ This example demonstrates how to add a GeoJSON layer to a Leaflet map and apply 
         fitToContent={true}
         checked={true}
         filter={(feature) => feature.properties.Survey_Year === "1994"}
-        popupTemplate={(attribs) => `
-          <p><strong>${attribs["Item_Label"]}</strong> - ${attribs["Site_Name"]} <br>
-          Survey years: ${attribs["Survey_Year"]}<br>
-          Date: ${attribs["Early"]} — ${attribs["Late"]}</p>
-        `}
+        popupTemplate="<p><strong>${Item_Label}</strong>. ${Site_Name} <br /> Survey years: ${Survey_Year}<br> Date: ${Early} — ${Late}</p>"
       />
     </MapLeaflet>
     Data from [Kahramanmaraş Survey](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) created by [Elizabeth Carter](http://opencontext.org/persons/3208923d-69d0-70e9-9cc1-23ad97770aec) and published on [OpenContext](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) under a [CC BY 4.0 International](https://creativecommons.org/licenses/by/4.0) license.
@@ -46,12 +42,8 @@ This example demonstrates how to add a GeoJSON layer to a Leaflet map and apply 
         path2data="/data/ksa.geojson"
         fitToContent={true}
         checked={true}
-         filter={(feature) => feature.properties.Survey_Year === "1994"}
-        popupTemplate={(attribs) => `
-          <p><strong>${attribs["Item_Label"]}</strong> - ${attribs["Site_Name"]} <br>
-           Survey years: ${attribs["Survey_Year"]}<br>
-          Date: ${attribs["Early"]} — ${attribs["Late"]}</p>
-        `}
+        filter={(feature) => feature.properties.Survey_Year === "1994"}
+        popupTemplate="<p><strong>${Item_Label}</strong>. ${Site_Name} <br /> Survey years: ${Survey_Year}<br> Date: ${Early} — ${Late}</p>"
       />
     </MapLeaflet>
     ```

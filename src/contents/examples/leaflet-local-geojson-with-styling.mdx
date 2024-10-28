@@ -26,10 +26,7 @@ import {
         path2data="/data/ksa.geojson"
         fitToContent={true}
         checked={true}
-        popupTemplate={ (attribs) => `
-          <p><strong>${attribs["Item_Label"]}</strong>${attribs["Site_Name"]} <br>
-          Date: ${attribs["Early"]} — ${attribs["Late"]}</p>
-        ` }
+        popupTemplate="<p><strong>${Item_Label}</strong>. ${Site_Name} <br /> Date: ${Early} — ${Late}</p>"
         pointToLayer={
           (f, ll) => {
             return L.circleMarker(ll, {
@@ -63,10 +60,7 @@ import {
         path2data="/data/ksa.geojson"
         fitToContent={true}
         checked={true}
-        popupTemplate={ (attribs) => `
-          <p><strong>${attribs["Item_Label"]}</strong>${attribs["Site_Name"]} <br>
-          Date: ${attribs["Early"]} — ${attribs["Late"]}</p>
-        ` }
+        popupTemplate="<p><strong>${Item_Label}</strong>. ${Site_Name} <br /> Date: ${Early} — ${Late}</p>"
         pointToLayer={
           (f, ll) => {
             return L.circleMarker(ll, {

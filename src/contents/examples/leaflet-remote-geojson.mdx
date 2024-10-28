@@ -26,9 +26,7 @@ import {
         fitToContent={true}
         checked={true}
         path2data="https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_110m_populated_places_simple.geojson"
-        popupTemplate={attribs => {
-          return `<p><strong>${attribs.ls_name}</strong>`
-        }}
+        popupTemplate="<p><strong>${ls_name}</strong>"
       />
     </MapLeaflet>
 
@@ -50,9 +48,7 @@ import {
         fitToContent={true}
         checked={true}
         path2data="https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_110m_populated_places_simple.geojson"
-        popupTemplate={attribs => {
-          return `<p><strong>${attribs.ls_name}</strong>`
-        }}
+        popupTemplate="<p><strong>${ls_name}</strong>"
       />
     </MapLeaflet>
     ```
