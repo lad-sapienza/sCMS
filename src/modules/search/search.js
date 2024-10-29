@@ -4,13 +4,11 @@ import PropTypes from "prop-types"
 import SearchUI from "./searchUI"
 
 import plain2directus from "../../services/transformers/plain2directus"
-import getData from "../../services/getData"
+import getDataSource from "../../services/getDataSource"
+import sourcePropTypes from "../../services/sourcePropTypes"
 
 const Search = ({
-  dEndPoint,
-  dTable,
-  dToken,
-  dQueryString,
+  source,
   resultItemTemplate,
   fieldList,
   operators,
@@ -18,20 +16,18 @@ const Search = ({
 }) => {
   const [searchResults, setSearchResults] = useState(null)
   const [error, setError] = useState(null)
+  
   if (!fieldList) {
     setError("fieldList parameter is mising")
   }
-
+  
   const processData = (conn, inputs) => {
     const filter = JSON.stringify(plain2directus(conn, inputs))
 
-    getData({
-      dEndPoint: dEndPoint,
-      dTable: dTable,
-      dToken: dToken,
-      dQueryString: `${dQueryString ? `${dQueryString}&` : ""}filter=${filter}`,
-      transType: "json",
-    })
+    source.transType = "json";
+    source.dQueryString = `${source.dQueryString ? `${source.dQueryString}&` : ""}filter=${filter}`
+    
+    getDataSource(source)
       .then(data => {
         if (data.errors) {
           setError("Error in querying getting remote data 1")
@@ -73,23 +69,8 @@ const Search = ({
   )
 }
 
-SearchUI.propTypes = {
-  /**
-   * Full URL of Directus endpoint
-   */
-  dEndPoint: PropTypes.string,
-  /**
-   * Directus table
-   */
-  dTable: PropTypes.string,
-  /**
-   * Directus access token
-   */
-  dToken: PropTypes.string,
-  /**
-   * Directus query string
-   */
-  dQueryString: PropTypes.string,
+Search.propTypes = {
+  source: sourcePropTypes.isRequired,
   /**
    * Template to use for results
    */
@@ -97,7 +78,7 @@ SearchUI.propTypes = {
   /**
    * List of fields
    */
-  fieldList: PropTypes.object,
+  fieldList: PropTypes.object.isRequired,
   /**
    * List of operators
    */

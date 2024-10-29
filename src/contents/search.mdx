@@ -39,12 +39,17 @@ import SearchUiTest from "../modules/search/searchUiTest.js"
   A Search component connecting to the Directus default instance by using only the name of the table:
 ```jsx
 <Search
-  dTable="scms_ksa"
+
+  source={{
+    dTable: "scms_ksa"
+  }}
+
   fieldList={{
     "Item_Label": "Label",
     "Site_Name": "Site name",
     "Site_Description": "Site description"
-    }}
+  }}
+
   resultItemTemplate = { item => {
     return  <div className="card my-3" key={item.id}>
       <div className="card-body">
@@ -63,13 +68,16 @@ import SearchUiTest from "../modules/search/searchUiTest.js"
       </div>
     </div>
   </div>
+  
   }}
 />
 ```
   </div>
   <div className="col-sm-8">
     <Search
-      dTable="scms_ksa"
+      source={{
+        dTable: "scms_ksa"
+      }}
       fieldList={{
         "Item_Label": "Label",
         "Site_Name": "Site name",
