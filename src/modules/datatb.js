@@ -86,7 +86,7 @@ const DataTb = ({source, ...props}) => {
 }
 
 DataTb.propTypes = {
-  source: sourcePropTypes
+  source: sourcePropTypes.isRequired
 }
 
 export { DataTb }
