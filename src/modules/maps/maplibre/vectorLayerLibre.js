@@ -2,16 +2,12 @@ import React, { useState, useEffect, useCallback } from "react"
 import { Source, Layer, useMap } from "react-map-gl/maplibre"
 import PropTypes from "prop-types"
 import * as bbox from "geojson-bbox"
-import getData from "../../../services/getData" // Importa la tua funzione getData
+import getDataSource from "../../../services/getDataSource" // Importa la tua funzione getData
+import sourcePropTypes from "../../../services/sourcePropTypes"
 
 const VectorLayerLibre = ({
+  source,
   refId,
-  path2data,
-  dEndPoint,
-  dTable,
-  dToken,
-  dQueryString,
-  geoField,
   style,
   name,
   searchInFields,
@@ -73,34 +69,27 @@ const VectorLayerLibre = ({
     if (mapRef && geojsonData && fitToContent) {
       const mapInstance = mapRef.getMap()
       const [minLng, minLat, maxLng, maxLat] = bbox(geojsonData)
-      
       mapInstance.fitBounds(
         [
           [minLng, minLat],
           [maxLng, maxLat],
-        ],
-        { padding: 20 },
+        ]
       )
     }
   }, [mapRef, geojsonData, fitToContent])
 
-  // Funzione per ottenere i dati da getData
   useEffect(() => {
     if (mapRef) {
       updateLayerStyle()
       fitLayerToBounds()
     }
+  }, [mapRef, updateLayerStyle, fitLayerToBounds])
+  
+  useEffect(() => {
     const fetchGeoData = async () => {
       try {
-        const geoJSON = await getData({
-          path2data,
-          dEndPoint,
-          dTable,
-          dToken,
-          dQueryString,
-          transType: "geojson",
-          geoField,
-        })
+        source.transType = "geojson";
+        const geoJSON = await getDataSource(source)
         setGeojson(geoJSON) // Imposta i dati geoJSON originali
       } catch (err) {
         console.error("Errore nel caricamento dei dati:", err)
@@ -112,7 +101,7 @@ const VectorLayerLibre = ({
     }
     
 
-  }, [refId, mapRef, updateLayerStyle, fitLayerToBounds, path2data, dEndPoint, dTable, dToken, dQueryString, geoField])
+  }, [refId, source])
 
   if (error) {
     return <div>{error}</div>
@@ -131,35 +120,9 @@ const VectorLayerLibre = ({
 }
 
 VectorLayerLibre.propTypes = {
-  /**
-   * Path to GeoJSON data: might be a local path or an URL.
-   * Required if dEndPoint or dTable are not set
-   */
-  path2data: PropTypes.string,
-  /**
-   * Directus endpoint.
-   * Required if either dTable (and env GATSBY_DIRECTUS_ENDPOINT) or path2data are not set
-   */
-  dEndPoint: PropTypes.string,
-  /**
-   * Directus table name, to be used if env variable GATSBY_DIRECTUS_ENDPOINT is set.
-   * Required if neither path2data or dEndPoit are set
-   */
-  dTable: PropTypes.string,
-  /**
-   * Directus optional filters and other, provided as querystring compatible to Directus API
-   */
-  dQueryString: PropTypes.string,
-  /**
-   * Directus access token.
-   * Required if env variable GATSBY_DIRECTUS_TOKEN is not set
-   */
-  dToken: PropTypes.string,
-  /**
-   * The property holding geographical cooercnates.
-   * Required if data are in JSON format and need to be transformed in GeoJSON
-   */
-  geoField: PropTypes.string,
+
+  source: sourcePropTypes,
+
   /**
    * Layer name to use in the Layer control
    * Required

@@ -19,9 +19,11 @@ Only Hellenistic and Roman sites are being displayed
     >
       <VectorLayerLibre
         name="Hellenistic and Roman Sites"
-        dTable="scms_ksa"
-        geoField="geometry"
-        dQueryString="filter[Hellenistic_Roman][_eq]=true"
+        source={{
+          dTable: "scms_ksa",
+          geoField: "geometry",
+          dQueryString: "filter[Hellenistic_Roman][_eq]=true"  
+        }}
         checked={true}
         fitToContent={true}
         type="geojson"
@@ -61,9 +63,11 @@ Only Hellenistic and Roman sites are being displayed
 
       <VectorLayerLibre
         name="Hellenistic and Roman Sites"
-        dTable="scms_ksa"
-        geoField="geometry"
-        dQueryString="filter[Hellenistic_Roman][_eq]=true"
+        source={{
+          dTable: "scms_ksa",
+          geoField: "geometry",
+          dQueryString: "filter[Hellenistic_Roman][_eq]=true"  
+        }}
         checked={true}
         fitToContent={true}
         type="geojson"

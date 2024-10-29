@@ -14,7 +14,9 @@ import { MapCompLibre, VectorLayerLibre } from "../../modules/scms.js"
     <MapCompLibre baseLayers={["EsriSatellite"]}>
       <VectorLayerLibre
         name="Sites"
-        path2data="/data/ksa.geojson"
+        source={{
+          path2data: "/data/ksa.geojson"
+        }}
         fitToContent={true}
         checked={true}
         searchInFields={{
@@ -51,7 +53,9 @@ import { MapCompLibre, VectorLayerLibre } from "../../modules/scms.js"
     <MapCompLibre baseLayers={["EsriSatellite"]}>
       <VectorLayerLibre
         name="Sites"
-        path2data="/data/ksa.geojson"
+        source={{
+          path2data: "/data/ksa.geojson"
+        }}
         fitToContent={true}
         checked={true}
         searchInFields={{

@@ -17,7 +17,9 @@ import { MapCompLibre, VectorLayerLibre } from "../../modules/scms.js"
     >
       <VectorLayerLibre
         name="Sites"
-        path2data="/data/ksa.geojson"
+        source={{
+          path2data: "/data/ksa.geojson"
+        }}
         checked={true}
         searchInFields={{
           "Item_Label": "Label",
@@ -54,7 +56,9 @@ import { MapCompLibre, VectorLayerLibre } from "../../modules/scms.js"
     >
       <VectorLayerLibre
         name="Sites"
-        path2data="/data/ksa.geojson"
+        source={{
+          path2data: "/data/ksa.geojson"
+        }}
         checked={true}
         searchInFields={{
           "Item_Label": "Label",
