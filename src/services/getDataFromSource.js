@@ -1,6 +1,7 @@
 import csv from "csvtojson"
 import json2geoJson from "./transformers/json2geojson.js"
 import sourcePropTypes from "./sourcePropTypes.js"
+import { withPrefix } from "gatsby"
 
 const getDataFromSource = async source => {
   let {
@@ -19,7 +20,7 @@ const getDataFromSource = async source => {
   let output
 
   if (path2data) {
-    sourceUrl = path2data
+    sourceUrl = path2data.startsWith('http') ? path2data : withPrefix(path2data)
     if (path2data.toLowerCase().endsWith(".csv")) {
       transType = "csv2json"
     }
