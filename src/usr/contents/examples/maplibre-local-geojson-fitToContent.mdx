@@ -1,25 +1,23 @@
 ---
-title: "MapLibre: Adding a vector layer from a local GeoJSON file"
-date: "2024-10-01"
-slug: "maps/examples/maplibre-local-geojson"
-description: "MapLibre: Adding a vector layer from a local GeoJSON file"
+title: "MapLibre: Fitting map to the contents of a vector layer (local GeoJSON)"
+date: "2024-10-26"
+slug: "maps/examples/maplibre-local-geojson-fitToContent"
+description: "MapLibre: Fitting map to the contents of a vector layer (local GeoJSON)"
 ---
 
-import { MapCompLibre, VectorLayerLibre } from "../../modules/scms.js"
+import { MapCompLibre, VectorLayerLibre } from "../../../modules/scms.js"
 
-### MapLibre: Adding a vector layer from a local GeoJSON file
+### MapLibre: Fitting map to the contents of a vector layer (local GeoJSON)
 
 <div className="row mt-3 mb-5 border-top border-bottom py-3">
   <div className="col-6">
-    <MapCompLibre 
-      center="37.00416,37.48551,9"
-      baseLayers={["EsriSatellite", "CAWM"]}
-    >
+    <MapCompLibre baseLayers={["EsriSatellite"]}>
       <VectorLayerLibre
         name="Sites"
         source={{
           path2data: "/data/ksa.geojson"
         }}
+        fitToContent={true}
         checked={true}
         searchInFields={{
           "Item_Label": "Label",
@@ -36,29 +34,29 @@ import { MapCompLibre, VectorLayerLibre } from "../../modules/scms.js"
             "circle-stroke-color": "#000000"
           },
         }}
-        popupTemplate="<h4>${Site_Name}</h4><p>${Site_Description}</p><small>${Item_Label}</small>"
+        popupTemplate="<div>
+          <h4>${Site_Name}</h4>
+          <p>${Site_Description}</p>
+          <small>${Item_Label}</small>
+        </div>"
       />
-    
     </MapCompLibre>
     Data from [Kahramanmaraş Survey](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) created by [Elizabeth Carter](http://opencontext.org/persons/3208923d-69d0-70e9-9cc1-23ad97770aec) and published on [OpenContext](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) add distributed with [CC BY 4.0 International](https://creativecommons.org/licenses/by/4.0) license.
-
   </div>
   <div className="col-6">
     ```jsx
     import {
       MapCompLibre,
       VectorLayerLibre
-    } from "../../modules/scms.js"
+    } from "../../../modules/scms.js"
 
-    <MapCompLibre 
-      center="37.00416,37.48551,9"
-      baseLayers={["EsriSatellite", "CAWM"]}
-    >
+    <MapCompLibre baseLayers={["EsriSatellite"]}>
       <VectorLayerLibre
         name="Sites"
         source={{
           path2data: "/data/ksa.geojson"
         }}
+        fitToContent={true}
         checked={true}
         searchInFields={{
           "Item_Label": "Label",
@@ -75,9 +73,12 @@ import { MapCompLibre, VectorLayerLibre } from "../../modules/scms.js"
             "circle-stroke-color": "#000000"
           },
         }}
-        popupTemplate="<h4>${Site_Name}</h4><p>${Site_Description}</p><small>${Item_Label}</small>"
+        popupTemplate="<div>
+          <h4>${Site_Name}</h4>
+          <p>${Site_Description}</p>
+          <small>${Item_Label}</small>
+        </div>"
       />
-     
     </MapCompLibre>
     ```
 

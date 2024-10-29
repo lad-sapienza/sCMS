@@ -138,7 +138,7 @@ You can customise the header, the footer, the general layout and stying by editi
 
 ```jsx
 <StaticImage
-  src="../images/scms-lad.png"
+  src="../../images/scms-lad.png"
   width={150}
   quality={80}
   formats={["AUTO", "WEBP"]}
@@ -181,7 +181,7 @@ const Header = styled.header`
 
 ```jsx
 <StaticImage
-  src="../images/scms-lad.png"
+  src="../../images/scms-lad.png"
   width={150}
   quality={80}
   formats={["AUTO", "WEBP"]}

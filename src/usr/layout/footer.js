@@ -12,7 +12,7 @@ const FooterSection = () => {
           <div className="p-3">
             <Link to="/">
               <StaticImage
-                src="../images/scms-lad.png"
+                src="../../images/scms-lad.png"
                 width={100}
                 quality={80}
                 formats={["AUTO", "WEBP"]}

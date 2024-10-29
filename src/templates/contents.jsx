@@ -1,6 +1,6 @@
 import React from "react"
 import { graphql } from "gatsby"
-import Layout from "../layout/layout"
+import Layout from "../usr/layout/layout"
 import { Container } from "react-bootstrap"
 import { MDXProvider } from "@mdx-js/react"
 import Seo from "../modules/seo"
