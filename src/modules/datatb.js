@@ -4,7 +4,7 @@ import getDataFromSource from "../services/getDataFromSource"
 import PropTypes from "prop-types"
 import sourcePropTypes from "../services/sourcePropTypes"
 
-const DataTb = ({source, columns, ...props}) => {
+const DataTb = ({ source, columns, ...props }) => {
   const [data, setData] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(false)
@@ -90,7 +90,7 @@ DataTb.propTypes = {
   /**
    * Array describing colums: https://react-data-table-component.netlify.app/?path=/docs/api-columns--docs
    */
-  columns: PropTypes.isRequired
+  columns: PropTypes.isRequired,
 }
 
 export { DataTb }
