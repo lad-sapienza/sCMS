@@ -9,7 +9,6 @@ import Map, {
   Popup,
 } from "react-map-gl/maplibre"
 import PropTypes from "prop-types"
-import ControlPanel from "./controlPanel"
 import SimpleControl from "./simpleControl"
 import { RasterLayerLibre } from "./rasterLayerLibre"
 import { defaultBaseLayers } from "../../maps/defaultBaseLayers"
@@ -30,19 +29,8 @@ const MapCompLibre = ({
     ? center.split(",").map(e => parseFloat(e.trim()))
     : [0, 0, 2]
 
-  const [mapStyleUrl, setMapStyleUrl] = useState(
-    mapStyle,
-    // ||
-    // "https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json",
-    //"https://demotiles.maplibre.org/style.json",
-  )
-
   const [clickInfo, setClickInfo] = useState(null)
   const interactiveLayersRef = useRef([])
-
-  const handleLayerChange = styleUrl => {
-    setMapStyleUrl(styleUrl)
-  }
 
   const onMapLoad = useCallback(event => {
     const mapInstance = event.target
@@ -97,7 +85,7 @@ const MapCompLibre = ({
           zoom: zoom,
         }}
         style={{ height: height ? height : `800px` }}
-        mapStyle={mapStyleUrl}
+        mapStyle={mapStyle}
         onLoad={onMapLoad}
         onClick={onClick}
       >
@@ -139,13 +127,6 @@ const MapCompLibre = ({
           <NavigationControl position={navigationControl} />
         )}
         {scaleControl && <ScaleControl position={scaleControl} />}
-
-        {/* <ControlPanel
-          position="top-right"
-          baseLayers={filteredBaseLayers}
-          selectedLayer={mapStyleUrl}
-          onLayerChange={handleLayerChange}
-        /> */}
       </Map>
     </React.Fragment>
   )
