@@ -13,6 +13,7 @@ import SimpleControl from "./simpleControl"
 import { RasterLayerLibre } from "./rasterLayerLibre"
 import { defaultBaseLayers } from "../../maps/defaultBaseLayers"
 import parseStringTemplate from "../../../services/parseStringTemplate"
+import { withPrefix } from "gatsby"
 
 const MapCompLibre = ({
   children,
@@ -85,7 +86,7 @@ const MapCompLibre = ({
           zoom: zoom,
         }}
         style={{ height: height ? height : `800px` }}
-        mapStyle={mapStyle}
+        mapStyle={mapStyle && mapStyle.startsWith('http') ? mapStyle : withPrefix(mapStyle)}
         onLoad={onMapLoad}
         onClick={onClick}
       >
