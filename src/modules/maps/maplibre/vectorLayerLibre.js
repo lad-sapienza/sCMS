@@ -63,9 +63,6 @@ const VectorLayerLibre = ({
         if (layer) {
           // Sovrascrivi direttamente le proprietà del layer
           Object.assign(layer, style)
-
-          // Aggiorna lo stile della mappa con il layer modificato
-          console.log("Stile aggiornato per il layer:", refId)
           mapInstance.setStyle(styleData)
         }
       })
@@ -87,17 +84,12 @@ const VectorLayerLibre = ({
     }
   }, [mapRef, geojsonData, fitToContent])
 
-  // Chiama la funzione per aggiornare lo stile del layer quando la mappa è pronta
-  // se metto direttamente mapInstance.getStyle() non mi legge la mappa perchè ancora non è stata caricata
+  // Funzione per ottenere i dati da getData
   useEffect(() => {
     if (mapRef) {
       updateLayerStyle()
       fitLayerToBounds()
     }
-  }, [mapRef, updateLayerStyle, fitLayerToBounds])
-
-  // Funzione per ottenere i dati da getData
-  useEffect(() => {
     const fetchGeoData = async () => {
       try {
         const geoJSON = await getData({
@@ -109,16 +101,18 @@ const VectorLayerLibre = ({
           transType: "geojson",
           geoField,
         })
-
         setGeojson(geoJSON) // Imposta i dati geoJSON originali
       } catch (err) {
         console.error("Errore nel caricamento dei dati:", err)
         setError("Errore nel caricamento dei dati")
       }
     }
+    if (!refId){
+      fetchGeoData() // Carica i dati quando il componente è montato
+    }
+    
 
-    fetchGeoData() // Carica i dati quando il componente è montato
-  }, [path2data, dEndPoint, dTable, dToken, dQueryString, geoField])
+  }, [refId, mapRef, updateLayerStyle, fitLayerToBounds, path2data, dEndPoint, dTable, dToken, dQueryString, geoField])
 
   if (error) {
     return <div>{error}</div>
