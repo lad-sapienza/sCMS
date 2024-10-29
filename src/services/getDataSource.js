@@ -1,4 +1,3 @@
-import PropTypes from "prop-types"
 import csv from "csvtojson"
 import json2geoJson from "./transformers/json2geojson.js"
 import sourcePropTypes from "./sourcePropTypes.js"
