@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import PropTypes from "prop-types"
 import withLocation from "../../services/withLocation"
-import getDataSource from "../../services/getDataSource"
+import getDataFromSource from "../../services/getDataFromSource"
 
 export const RecordContext = React.createContext()
 
@@ -14,7 +14,7 @@ const RecordNotWrapped = ({ search, children }) => {
   useEffect(() => {
     try {
       setLoading(true)
-      getDataSource({
+      getDataFromSource({
         dEndPoint: endPoint,
         dTable: tb,
         transType: "json",

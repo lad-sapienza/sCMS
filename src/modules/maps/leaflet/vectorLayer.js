@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 import { GeoJSON, LayersControl, useMap } from "react-leaflet"
 import * as bbox from "geojson-bbox"
 
-import getDataSource from "../../../services/getDataSource"
+import getDataFromSource from "../../../services/getDataFromSource"
 import parseStringTemplate from "../../../services/parseStringTemplate"
 import sourcePropTypes from "../../../services/sourcePropTypes"
 
@@ -23,7 +23,7 @@ const VectorLayer = ({
   source.transType = "geojson"
 
   useEffect(() => {
-    getDataSource(source)
+    getDataFromSource(source)
       .then(geoJSON => {
         setGeojson(geoJSON)
       })

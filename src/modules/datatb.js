@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import DataTable from "react-data-table-component"
-import getDataSource from "../services/getDataSource"
+import getDataFromSource from "../services/getDataFromSource"
 import sourcePropTypes from "../services/sourcePropTypes"
 
 const DataTb = ({source, ...props}) => {
@@ -37,7 +37,7 @@ const DataTb = ({source, ...props}) => {
   useEffect(() => {
     setIsLoading(true)
 
-    getDataSource(source)
+    getDataFromSource(source)
       .then(jsonData => {
         setIsLoading(false)
         setData(jsonData || [])

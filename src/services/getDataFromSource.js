@@ -2,7 +2,7 @@ import csv from "csvtojson"
 import json2geoJson from "./transformers/json2geojson.js"
 import sourcePropTypes from "./sourcePropTypes.js"
 
-const getDataSource = async source => {
+const getDataFromSource = async source => {
   let {
     path2data,
     dEndPoint,
@@ -91,8 +91,8 @@ const getDataSource = async source => {
   }
 }
 
-getDataSource.PropTypes = {
+getDataFromSource.PropTypes = {
   source: sourcePropTypes,
 }
 
-export default getDataSource
+export default getDataFromSource

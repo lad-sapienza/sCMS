@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react"
 import { Source, Layer, useMap } from "react-map-gl/maplibre"
 import PropTypes from "prop-types"
 import * as bbox from "geojson-bbox"
-import getDataSource from "../../../services/getDataSource" // Importa la tua funzione getData
+import getDataFromSource from "../../../services/getDataFromSource" // Importa la tua funzione getData
 import sourcePropTypes from "../../../services/sourcePropTypes"
 
 const VectorLayerLibre = ({
@@ -89,7 +89,7 @@ const VectorLayerLibre = ({
     const fetchGeoData = async () => {
       try {
         source.transType = "geojson";
-        const geoJSON = await getDataSource(source)
+        const geoJSON = await getDataFromSource(source)
         setGeojson(geoJSON) // Imposta i dati geoJSON originali
       } catch (err) {
         console.error("Errore nel caricamento dei dati:", err)

@@ -4,7 +4,7 @@ import PropTypes from "prop-types"
 import SearchUI from "./searchUI"
 
 import plain2directus from "../../services/transformers/plain2directus"
-import getDataSource from "../../services/getDataSource"
+import getDataFromSource from "../../services/getDataFromSource"
 import sourcePropTypes from "../../services/sourcePropTypes"
 
 const Search = ({
@@ -27,7 +27,7 @@ const Search = ({
     source.transType = "json";
     source.dQueryString = `${source.dQueryString ? `${source.dQueryString}&` : ""}filter=${filter}`
     
-    getDataSource(source)
+    getDataFromSource(source)
       .then(data => {
         if (data.errors) {
           setError("Error in querying getting remote data 1")
