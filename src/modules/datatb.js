@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import DataTable from "react-data-table-component"
-import getDataSource from "../services/getData"
+import getDataSource from "../services/getDataSource"
 import sourcePropTypes from "../services/sourcePropTypes"
 
 const DataTb = ({source, ...props}) => {
