@@ -22,8 +22,10 @@ import {
 
       <VectorLayer
         name="All Sites"
-        dTable="scms_ksa"
-        geoField="geometry"
+        source={{
+          dTable: "scms_ksa",
+          geoField: "geometry"
+        }}
         checked={true}
         fitToContent={true}
         popupTemplate="<p><strong>${Item_Label}</strong>"
@@ -45,8 +47,11 @@ import {
 
       <VectorLayer
         name="All Sites"
-        dTable="scms_ksa"
-        geoField="geometry"
+        source= {{
+          dTable: "scms_ksa",
+          geoField: "geometry"
+        }}
+        
         checked={true}
         fitToContent={true}
         popupTemplate="<p><strong>${Item_Label}</strong>"

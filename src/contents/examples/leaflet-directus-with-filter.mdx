@@ -22,10 +22,13 @@ Only Hellenistic and Roman sites are being displayed
       baseLayers={["OSM"]}>
 
       <VectorLayer
+        source={{
+          dTable: "scms_ksa",
+          geoField: "geometry",
+          dQueryString: "filter[Hellenistic_Roman][_eq]=true"
+        }}
         name="Hellenistic and Roman Sites"
-        dTable="scms_ksa"
-        geoField="geometry"
-        dQueryString="filter[Hellenistic_Roman][_eq]=true"
+        
         checked={true}
         fitToContent={true}
         popupTemplate="<p><strong>${Item_Label}</strong>"
@@ -46,10 +49,12 @@ Only Hellenistic and Roman sites are being displayed
       baseLayers={["OSM"]}>
 
       <VectorLayer
+        source={{
+          dTable: "scms_ksa",
+          geoField: "geometry",
+          dQueryString: "filter[Hellenistic_Roman][_eq]=true"
+        }}
         name="Hellenistic and Roman Sites"
-        dTable="scms_ksa"
-        geoField="geometry"
-        dQueryString="filter[Hellenistic_Roman][_eq]=true"
         checked={true}
         fitToContent={true}
         popupTemplate="<p><strong>${Item_Label}</strong>"

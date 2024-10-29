@@ -3,16 +3,12 @@ import PropTypes from "prop-types"
 import { GeoJSON, LayersControl, useMap } from "react-leaflet"
 import * as bbox from "geojson-bbox"
 
-import getData from "../../../services/getData"
+import getDataSource from "../../../services/getDataSource"
 import parseStringTemplate from "../../../services/parseStringTemplate"
+import sourcePropTypes from "../../../services/sourcePropTypes"
 
 const VectorLayer = ({
-  path2data,
-  dEndPoint,
-  dTable,
-  geoField,
-  dQueryString,
-  dToken,
+  source,
   name,
   popupTemplate,
   pointToLayer,
@@ -24,16 +20,10 @@ const VectorLayer = ({
   const [error, setError] = useState(false)
   const map = useMap()
 
+  source.transType = "geojson"
+
   useEffect(() => {
-    getData({
-      path2data: path2data,
-      dTable: dTable,
-      dEndPoint: dEndPoint,
-      dToken: dToken,
-      dQueryString: dQueryString,
-      transType: "geojson",
-      geoField: geoField,
-    })
+    getDataSource(source)
       .then(geoJSON => {
         setGeojson(geoJSON)
       })
@@ -41,7 +31,7 @@ const VectorLayer = ({
         console.log(err)
         setError("Error getting data")
       })
-  }, [path2data, dEndPoint, dTable, dQueryString, dToken, geoField])
+  }, [source])
 
   if (error) {
     console.log(error)
@@ -76,35 +66,8 @@ const VectorLayer = ({
 }
 
 VectorLayer.propTypes = {
-  /**
-   * Path to GeoJSON data: might be a local path or an URL.
-   * Required if dEndPoint or dTable are not set
-   */
-  path2data: PropTypes.string,
-  /**
-   * Directus endpoint.
-   * Required if either dTable (and env GATSBY_DIRECTUS_ENDPOINT) or path2data are not set
-   */
-  dEndPoint: PropTypes.string,
-  /**
-   * Directus table name, to be used if env variable GATSBY_DIRECTUS_ENDPOINT is set.
-   * Required if neither path2data or dEndPoit are set
-   */
-  dTable: PropTypes.string,
-  /**
-   * Directus optional filters and other, provided as querystring compatible to Directus API
-   */
-  dQueryString: PropTypes.string,
-  /**
-   * Directus access token.
-   * Required if env variable GATSBY_DIRECTUS_TOKEN is not set
-   */
-  dToken: PropTypes.string,
-  /**
-   * The property holding geographical cooercnates.
-   * Required if data are in JSON format and need to be transformed in GeoJSON
-   */
-  geoField: PropTypes.string,
+
+  source: sourcePropTypes.isRequired,
   /**
    * Layer name to use in the Layer control
    * Required

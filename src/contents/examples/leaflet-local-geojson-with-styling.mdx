@@ -23,7 +23,9 @@ import {
       
       <VectorLayer 
         name="Sites"
-        path2data="/data/ksa.geojson"
+        source={{
+          path2data: "/data/ksa.geojson"
+        }}
         fitToContent={true}
         checked={true}
         popupTemplate="<p><strong>${Item_Label}</strong>. ${Site_Name} <br /> Date: ${Early} — ${Late}</p>"
@@ -57,7 +59,9 @@ import {
       
       <VectorLayer 
         name="Sites"
-        path2data="/data/ksa.geojson"
+        source={{
+          path2data: "/data/ksa.geojson"
+        }}
         fitToContent={true}
         checked={true}
         popupTemplate="<p><strong>${Item_Label}</strong>. ${Site_Name} <br /> Date: ${Early} — ${Late}</p>"
