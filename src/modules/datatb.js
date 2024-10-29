@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react"
-import PropTypes from "prop-types"
 import DataTable from "react-data-table-component"
-import getData from "../services/getData"
+import getDataSource from "../services/getData"
+import sourcePropTypes from "../services/sourcePropTypes"
 
-const DataTb = props => {
+const DataTb = ({source, ...props}) => {
   const [data, setData] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(false)
@@ -37,13 +37,7 @@ const DataTb = props => {
   useEffect(() => {
     setIsLoading(true)
 
-    getData({
-      path2data: props.path2data,
-      dEndPoint: props.dEndPoint,
-      dToken: props.dToken,
-      dTable: props.dTable,
-      dQueryString: props.dQueryString,
-    })
+    getDataSource(source)
       .then(jsonData => {
         setIsLoading(false)
         setData(jsonData || [])
@@ -56,7 +50,7 @@ const DataTb = props => {
         setIsLoading(false)
         return
       })
-  }, [props]) // L'array di dipendenze vuoto assicura che questo effetto venga eseguito solo una volta, simile a componentDidMount
+  }, [source]) // L'array di dipendenze vuoto assicura che questo effetto venga eseguito solo una volta, simile a componentDidMount
 
   const filteredData = data.filter(item =>
     Object.values(item).some(
@@ -92,31 +86,7 @@ const DataTb = props => {
 }
 
 DataTb.propTypes = {
-  /**
-   * Local or remote link to data (CSV, JSON, GeoJSON, ecc)
-   * Required if dEndPoint or dTable are not set
-   */
-  path2data: PropTypes.string,
-  /**
-   * Directus endpoint.
-   * Required if either dTable (and env GATSBY_DIRECTUS_ENDPOINT) or path2data are not set
-   */
-  dEndPoint: PropTypes.string,
-  /**
-   * Directus table name, to be used if env variable GATSBY_DIRECTUS_ENDPOINT is set.
-   * Required if neither path2data or dEndPoit are set
-   */
-  dTable: PropTypes.string,
-  /**
-   * Directus optional filters and other, provided as querystring compatible to Directus API
-   */
-  dQueryString: PropTypes.string,
-  /**
-   * Directus access token.
-   * Required if env variable GATSBY_DIRECTUS_TOKEN is not set
-   */
-  dToken: PropTypes.string,
-  
+  source: sourcePropTypes
 }
 
 export { DataTb }

@@ -1,5 +1,5 @@
 ---
-title: "DataTb example"
+title: "DataTb"
 date: "2023-10-01"
 slug: "datatable"
 description: ""
@@ -23,54 +23,13 @@ import { DataTb } from "../modules/scms.js"
 ### Directus data source
 
 <div className="row">
-  <div className="col-sm-4">
-    ```jsx
-    <DataTb
-      striped={true}
-      dTable="scms_ksa"
-      dQueryString="limit=1000&offset=0"
-      columns={[
-    {
-      name: "Item_Label",
-      sortable: true,
-      cell: item => (
-            <a href={`../record/?tb=scms_ksa&id=${item.id}`}>
-              {item["Item_Label"]} 
-            </a>
-          ),
-    },
-    {
-      name: "Site_Name",
-      selector: row => row["Site_Name"],
-      sortable: true,
-    },
-    {
-      name: "Thumbnail",
-      cell: item => (
-            <img src={item["Thumbnail"]} />
-          ),
-      sortable: true,
-    },
-    {
-      name: "Date",
-      selector: row => `${row["Early"]} — ${row["Late"]}`,
-      sortable: true,
-    },
-    {
-      name: "Collection_Summary",
-      selector: row => row["Collection_Summary"],
-      sortable: true,
-    },
-    
-  ]}
-    />
-    ```
-  </div>
   <div className="col-sm-8">
     <DataTb
+      source={{
+        dTable: "scms_ksa",
+        dQueryString: "limit=1000&offset=0",
+      }}
       striped={true}
-      dTable="scms_ksa"
-      dQueryString="limit=1000&offset=0"
       columns={[
     {
       name: "Item_Label",
@@ -106,21 +65,16 @@ import { DataTb } from "../modules/scms.js"
     
   ]}
     />
-
-Data from [Kahramanmaraş Survey](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) created by [Elizabeth Carter](http://opencontext.org/persons/3208923d-69d0-70e9-9cc1-23ad97770aec) and published on [OpenContext](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) add distributed with [CC BY 4.0 International](https://creativecommons.org/licenses/by/4.0) license.
-
----
-
   </div>
-</div>
 
-### Example with CSV data source
-
-<div className="row">
   <div className="col-sm-4">
 ```jsx
 <DataTb
-  path2data="/data/ksa.csv"
+  striped={true}
+  source={{
+    dTable: "scms_ksa",
+    dQueryString :"limit=1000&offset=0"
+  }}
   columns={[
     {
       name: "Item_Label",
@@ -153,15 +107,25 @@ Data from [Kahramanmaraş Survey](https://opencontext.org/projects/ca4f4719-f2a5
       selector: row => row["Collection_Summary"],
       sortable: true,
     },
-  ]}
-  
+]}
 />
 ```
   </div>
-  <div className="col-sm-8">
 
+Data from [Kahramanmaraş Survey](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) created by [Elizabeth Carter](http://opencontext.org/persons/3208923d-69d0-70e9-9cc1-23ad97770aec) and published on [OpenContext](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) add distributed with [CC BY 4.0 International](https://creativecommons.org/licenses/by/4.0) license.
+
+---
+
+</div>
+
+### Example with CSV data source
+
+<div className="row">
+  <div className="col-sm-8">
 <DataTb
-  path2data="/data/ksa.csv"
+  source={{
+    path2data: "/data/ksa.csv"
+  }}
   columns={[
     {
       name: "Item_Label",
@@ -199,5 +163,48 @@ Data from [Kahramanmaraş Survey](https://opencontext.org/projects/ca4f4719-f2a5
 
 ---
 
+  </div>
+    <div className="col-sm-4">
+```jsx
+<DataTb
+  source={{
+    path2data: "/data/ksa.csv"
+  }}
+  columns={[
+    {
+      name: "Item_Label",
+      sortable: true,
+      cell: item => (
+            <a href={`../record/?tb=scms_ksa&id=${item.id}`}>
+              {item["Item_Label"]} 
+            </a>
+          ),
+    },
+    {
+      name: "Site_Name",
+      selector: row => row["Site_Name"],
+      sortable: true,
+    },
+    {
+      name: "Thumbnail",
+      cell: item => (
+            <img src={item["Thumbnail"]} />
+          ),
+      sortable: true,
+    },
+    {
+      name: "Date",
+      selector: row => `${row["Early"]} — ${row["Late"]}`,
+      sortable: true,
+    },
+    {
+      name: "Collection_Summary",
+      selector: row => row["Collection_Summary"],
+      sortable: true,
+    },
+  ]}
+  
+/>
+```
   </div>
 </div>
