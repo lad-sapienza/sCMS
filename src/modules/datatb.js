@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react"
 import DataTable from "react-data-table-component"
 import getDataFromSource from "../services/getDataFromSource"
+import PropTypes from "prop-types"
 import sourcePropTypes from "../services/sourcePropTypes"
 
-const DataTb = ({source, ...props}) => {
+const DataTb = ({source, columns, ...props}) => {
   const [data, setData] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(false)
@@ -70,7 +71,6 @@ const DataTb = ({source, ...props}) => {
     return <div className="text-error">Error: {error.message}</div>
   }
 
-  // Renderizza il componente con i dati ottenuti
   return (
     <>
       <input
@@ -80,13 +80,17 @@ const DataTb = ({source, ...props}) => {
         placeholder="Search..."
         onChange={handleSearch}
       />
-      <DataTable data={filteredData} pagination {...props} />
+      <DataTable data={filteredData} pagination columns={columns} {...props} />
     </>
   )
 }
 
 DataTb.propTypes = {
-  source: sourcePropTypes.isRequired
+  source: sourcePropTypes.isRequired,
+  /**
+   * Array describing colums: https://react-data-table-component.netlify.app/?path=/docs/api-columns--docs
+   */
+  columns: PropTypes.isRequired
 }
 
 export { DataTb }

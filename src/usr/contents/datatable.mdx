@@ -8,20 +8,11 @@ menu_position: 4
 
 import { DataTb } from "../../modules/scms"
 
-`<DataTb />` component can be used in MDX pages to display a dynamic data table, which are fully customisable.
+`<DataTb />` component can be used in MDX pages to display a dynamic, fully customisable table of data from different sources, such as a static CSV file, both hosted locally or online, or a [Directus API](https://docs.directus.io/reference/introduction.html).
 
-## Parameters
+Under the hood, `DataTb` uses the [React Data Table Component](https://react-data-table-component.netlify.app/?path=/docs/getting-started-intro--docs).
 
-- `path2cvs` (**required** if `dTable` id not provided): relative or full path to a csv file to use for the data Table creation
-- `dEndPoint` (**required** if `path2data` or `dTable` are not defined): full path to a Directus endpoint, complete with table name
-- `dToken` (**required** if `dEndPoint` is provided): Directus access token, required if table is not public. If not proved GATSBY_DIRECTUS_TOKEN environment variable will be used
-- `dTable` (**required**, if `path2data` or `dEndPoint` are not provided): name of the Directus table containing geographical data
-- `columns` (**required**): list of database columns and fields
-
-## Examples
-
-### Directus data source
-
+## Directus data source
 <div className="row">
   <div className="col-sm-8">
     <DataTb
