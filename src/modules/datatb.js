@@ -90,7 +90,7 @@ DataTb.propTypes = {
   /**
    * Array describing colums: https://react-data-table-component.netlify.app/?path=/docs/api-columns--docs
    */
-  columns: PropTypes.isRequired,
+  columns: PropTypes.array.isRequired,
 }
 
 export { DataTb }
