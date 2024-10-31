@@ -36,7 +36,7 @@ const VectorLayerLibre = ({
   }
 
   if (popupTemplate) {
-    style.metadata.popupTemplate = popupTemplate.toString()
+    style.metadata.popupTemplate = popupTemplate
   }
 
   if (checked === false) {
