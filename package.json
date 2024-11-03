@@ -2,8 +2,24 @@
   "name": "@lab-archeologia-digitale/scms",
   "private": false,
   "description": "A simple starter to get up and developing quickly with Gatsby 5 and Bootstrap 5",
-  "version": "4.0.0",
-  "author": "Julian Bogdani <julian.bogdani@uniroma1.it>",
+  "version": "4.0.1",
+  "author": {
+    "name": "Julian Bogdani",
+    "email": "julian.bogdani@uniroma1.it",
+    "url": "https://lad.uniroma1.it"
+  },
+  "contributors": [
+    {
+      "name": "Eleonora Iacopini",
+      "email": "eleonora.iacopini@uniroma1.it",
+      "url": "https://lad.uniroma1.it"
+    },
+    {
+      "name": "Erasmo Di Fonso",
+      "email": "erasmo.difonso@uniroma1.it",
+      "url": "https://lad.uniroma1.it"
+    }
+  ],
   "dependencies": {
     "@mdx-js/react": "^3.1.0",
     "babel-plugin-styled-components": "^2.1.4",
@@ -40,7 +56,12 @@
     "sass": "^1.80.4"
   },
   "keywords": [
-    "gatsby"
+    "gatsby",
+    "static site builder",
+    "research data publishing",
+    "datatable",
+    "leaflet",
+    "maplibre"
   ],
   "license": "0BSD",
   "scripts": {
@@ -49,8 +70,7 @@
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md,css}\"",
     "start": "gatsby develop",
     "serve": "gatsby serve",
-    "clean": "gatsby clean",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
+    "clean": "gatsby clean"
   },
   "repository": {
     "type": "git",
@@ -59,6 +79,6 @@
   "bugs": {
     "url": "https://github.com/lab-archeologia-digitale/sCMS/issues"
   },
-  "homepage": "https://github.com/lab-archeologia-digitale/sCMS#readme",
+  "homepage": "https://scms.lad-sapienza.it",
   "main": "gatsby-browser.js"
 }
