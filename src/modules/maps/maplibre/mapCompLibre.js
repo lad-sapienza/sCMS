@@ -11,7 +11,10 @@ import Map, {
 import PropTypes from "prop-types"
 import SimpleControl from "./simpleControl"
 import { RasterLayerLibre } from "./rasterLayerLibre"
-import { defaultBaseLayers, defaultBaseLayersPropTypes } from "../../maps/defaultBaseLayers"
+import {
+  defaultBaseLayers,
+  defaultBaseLayersPropTypes,
+} from "../../maps/defaultBaseLayers"
 import parseStringTemplate from "../../../services/parseStringTemplate"
 import { withPrefix } from "gatsby"
 
@@ -31,14 +34,14 @@ const MapCompLibre = ({
     : [0, 0, 2]
 
   const [clickInfo, setClickInfo] = useState(null)
-  const interactiveLayersRef = useRef([])
+  let interactiveLayersRef = []
   const mapInstanceRef = useRef(null)
 
   const updateInteractiveLayers = useCallback(() => {
     if (!mapInstanceRef.current) return
 
     // Log per vedere tutti i layer presenti nella mappa
-    const dynamicInteractiveLayers = mapInstanceRef.current
+    interactiveLayersRef = mapInstanceRef.current
       .getStyle()
       .layers.map(layer => {
         if (layer.metadata && layer.metadata.popupTemplate) {
@@ -47,8 +50,6 @@ const MapCompLibre = ({
         return null
       })
       .filter(Boolean)
-
-    interactiveLayersRef.current = dynamicInteractiveLayers
   }, [])
 
   const onMapLoad = useCallback(
@@ -86,11 +87,11 @@ const MapCompLibre = ({
 
     // Usa queryRenderedFeatures per ottenere le feature dal punto cliccato
     const clickedFeatures = mapInstance.queryRenderedFeatures(point, {
-      layers: interactiveLayersRef.current,
+      layers: interactiveLayersRef,
     })
 
     const clickedFeature = clickedFeatures.find(feature =>
-      interactiveLayersRef.current.includes(feature.layer.id),
+      interactiveLayersRef.includes(feature.layer.id),
     )
 
     setClickInfo(
