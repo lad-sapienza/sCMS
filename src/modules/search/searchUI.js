@@ -1,13 +1,9 @@
 import React, { useState } from "react"
 import PropTypes from "prop-types"
-
 import { Button } from "react-bootstrap"
-
 import { Filter, Funnel } from "react-bootstrap-icons"
-
 import SearchUiAdv from "./searchUiAdv"
 import SearchUiSimple from "./searchUiSimple"
-
 import { defaultOperatorsProptypes } from "./defaultOperators"
 
 const SearchUI = ({ fieldList, processData, operators, connectors }) => {
@@ -28,12 +24,8 @@ const SearchUI = ({ fieldList, processData, operators, connectors }) => {
     <React.Fragment>
       <div className="text-end">
         <Button onClick={onClickSimple} variant="warning">
-          {isSimple && (
-            <Filter />
-          )}
-          {!isSimple && (
-            <Funnel />
-          )}
+          {isSimple && <Filter />}
+          {!isSimple && <Funnel />}
         </Button>
       </div>
       {isSimple && (
@@ -91,9 +83,7 @@ SearchUI.propTypes = {
      * Label for _or connector
      */
     _or: PropTypes.string,
-
   }),
 }
-
 
 export default SearchUI

@@ -26,7 +26,7 @@ const defaultOperators = {
   _nempty: "Isn't empty",
 }
 
-const defaultOperatorsProptypes = {
+const defaultOperatorsProptypes = PropTypes.shape({
   _eq: PropTypes.string,
   _neq: PropTypes.string,
   _lt: PropTypes.string,
@@ -50,6 +50,6 @@ const defaultOperatorsProptypes = {
   _niends_with: PropTypes.string,
   _empty: PropTypes.string,
   _nempty: PropTypes.string,
-}
+})
 
 export { defaultOperators, defaultOperatorsProptypes }
