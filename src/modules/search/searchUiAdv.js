@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { DashCircle, PlusCircle, Search } from "react-bootstrap-icons"
 
 import { Row, Col, Form, Button } from "react-bootstrap"
-import defaultOperators from "./defaultOperators"
+import { defaultOperators } from "./defaultOperators"
 
 const SearchUiAdv = ({ fieldList, processData, operators, connectors }) => {
   operators = Object.assign(defaultOperators, operators)

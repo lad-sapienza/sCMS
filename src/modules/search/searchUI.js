@@ -8,6 +8,8 @@ import { Filter, Funnel } from "react-bootstrap-icons"
 import SearchUiAdv from "./searchUiAdv"
 import SearchUiSimple from "./searchUiSimple"
 
+import { defaultOperatorsProptypes } from "./defaultOperators"
+
 const SearchUI = ({ fieldList, processData, operators, connectors }) => {
   const [isSimple, setIsSimple] = useState(true)
 
@@ -51,27 +53,46 @@ const SearchUI = ({ fieldList, processData, operators, connectors }) => {
 
 SearchUI.propTypes = {
   /**
-   * Required object with list of fields (field_name: field Label) to use for searching
+   * Object with list of fields (field_name: field Label) to use for searching
+   * Required.
+   * Example: {
+   *  "field_1_name": "First field label",
+   *  "field_2_name": "Second field label",
+   * }
    */
   fieldList: PropTypes.object.isRequired,
   /**
-   * Callback function to run on data
+   * Callback function to run on data.
+   * Accepts a connector as the first parameter (_and or _or) 
+   * and an array of input data as a secon parameter. Each input is an object
+   * implementing providing: field, operator, and value
+    },
    */
   processData: PropTypes.func,
 
   /**
-   * Object with connectors to implement UI in other languages
+   * Object with operators to implement UI in other languages
    */
-  operators: PropTypes.object,
+  operators: defaultOperatorsProptypes,
 
   /**
-   * Object with connectors to implement UI in other languages
+   * Object with connectors to implement UI other languages
    * Must implement {
    * "_and": "some Label"
    * "_or": "Some Label"
    * }
    */
-  connectors: PropTypes.object,
+  connectors: PropTypes.shape({
+    /**
+     * Label for _and connector
+     */
+    _and: PropTypes.string,
+    /**
+     * Label for _or connector
+     */
+    _or: PropTypes.string,
+
+  }),
 }
 
 

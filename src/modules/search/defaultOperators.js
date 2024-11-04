@@ -1,3 +1,5 @@
+import PropTypes from "prop-types"
+
 const defaultOperators = {
   _eq: "Equals",
   _neq: "Doesn't equal",
@@ -24,4 +26,30 @@ const defaultOperators = {
   _nempty: "Isn't empty",
 }
 
-export default defaultOperators;
+const defaultOperatorsProptypes = {
+  _eq: PropTypes.string,
+  _neq: PropTypes.string,
+  _lt: PropTypes.string,
+  _lte: PropTypes.string,
+  _gt: PropTypes.string,
+  _gte: PropTypes.string,
+  // "_in": PropTypes.string,
+  // "_nin": PropTypes.string,
+  _null: PropTypes.string,
+  _nnull: PropTypes.string,
+  _contains: PropTypes.string,
+  _icontains: PropTypes.string,
+  _ncontains: PropTypes.string,
+  _starts_with: PropTypes.string,
+  _istarts_with: PropTypes.string,
+  _nstarts_with: PropTypes.string,
+  _nistarts_with: PropTypes.string,
+  _ends_with: PropTypes.string,
+  _iends_with: PropTypes.string,
+  _nends_with: PropTypes.string,
+  _niends_with: PropTypes.string,
+  _empty: PropTypes.string,
+  _nempty: PropTypes.string,
+}
+
+export { defaultOperators, defaultOperatorsProptypes }
