@@ -35,29 +35,18 @@ const MapCompLibre = ({
   const mapInstanceRef = useRef(null)
 
   const updateInteractiveLayers = useCallback(() => {
-    if (!mapInstanceRef.current) {
-      console.warn(
-        "mapInstanceRef.current è null, impossibile aggiornare i layer.",
-      )
-      return
-    }
+    if (!mapInstanceRef.current) return
 
     // Log per vedere tutti i layer presenti nella mappa
-    const allLayers = mapInstanceRef.current.getStyle().layers
-    const dynamicInteractiveLayers = allLayers
-      .map(layer => {
+    const dynamicInteractiveLayers = mapInstanceRef.current
+      .getStyle()
+      .layers.map(layer => {
         if (layer.metadata && layer.metadata.popupTemplate) {
           return layer.id
         }
         return null
       })
       .filter(Boolean)
-
-    if (dynamicInteractiveLayers.length === 0) {
-      console.warn(
-        "Nessun layer interattivo trovato con metadata.popupTemplate.",
-      )
-    }
 
     interactiveLayersRef.current = dynamicInteractiveLayers
   }, [])
