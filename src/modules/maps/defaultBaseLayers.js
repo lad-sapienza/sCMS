@@ -1,4 +1,6 @@
-export const defaultBaseLayers = {
+import PropTypes from "prop-types"
+
+const defaultBaseLayers = {
   CAWM: {
     name: "Ancient World Map",
     url: "https://cawm.lib.uiowa.edu/tiles/{z}/{x}/{y}.png",
@@ -64,3 +66,25 @@ export const defaultBaseLayers = {
     url: "https://tile.thunderforest.com/cycle/{z}/{x}/{y}.png",
   },
 }
+
+const defaultBaseLayersPropTypes = PropTypes.arrayOf(
+  PropTypes.oneOf([
+    "CAWM",
+    "OSM",
+    "EsriSatellite",
+    "EsriStreets",
+    "EsriTopo",
+    "GoogleSatellite",
+    "GoogleRoadmap",
+    "GoogleTerrain",
+    "GoogleAlteredRoadmap",
+    "GoogleTerrainOnly",
+    "GoogleHybrid",
+    "CartoDb",
+    "StamenTerrain",
+    "OSMMapnick",
+    "OSMCycle",
+  ]),
+)
+
+export {defaultBaseLayers, defaultBaseLayersPropTypes}

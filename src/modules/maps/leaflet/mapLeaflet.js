@@ -4,7 +4,7 @@ import PropTypes from "prop-types"
 import { MapContainer, LayersControl } from "react-leaflet"
 
 import { RasterLayer } from "./rasterLayer"
-import { defaultBaseLayers } from "../defaultBaseLayers"
+import { defaultBaseLayers, defaultBaseLayersPropTypes } from "../defaultBaseLayers"
 
 const MapLeaflet = ({
   height,
@@ -71,25 +71,7 @@ MapLeaflet.propTypes = {
   /**
    * Array with default baselayers to show
    */
-  baseLayers: PropTypes.arrayOf(
-    PropTypes.oneOf([
-      "CAWM",
-      "OSM",
-      "EsriSatellite",
-      "EsriStreets",
-      "EsriTopo",
-      "GoogleSatellite",
-      "GoogleRoadmap",
-      "GoogleTerrain",
-      "GoogleAlteredRoadmap",
-      "GoogleTerrainOnly",
-      "GoogleHybrid",
-      "CartoDb",
-      "StamenTerrain",
-      "OSMMapnick",
-      "OSMCycle",
-    ]),
-  ),
+  baseLayers: defaultBaseLayersPropTypes,
   /**
    * Children elements
    */

@@ -11,7 +11,7 @@ import Map, {
 import PropTypes from "prop-types"
 import SimpleControl from "./simpleControl"
 import { RasterLayerLibre } from "./rasterLayerLibre"
-import { defaultBaseLayers } from "../../maps/defaultBaseLayers"
+import { defaultBaseLayers, defaultBaseLayersPropTypes } from "../../maps/defaultBaseLayers"
 import parseStringTemplate from "../../../services/parseStringTemplate"
 import { withPrefix } from "gatsby"
 
@@ -230,25 +230,7 @@ MapCompLibre.propTypes = {
    * Can be one or more of the following: "CAWM", "OSM", "EsriSatellite","EsriStreets", "EsriTopo", "GoogleSatellite", "GoogleRoadmap", "GoogleTerrain", "GoogleAlteredRoadmap", "GoogleTerrainOnly", "GoogleHybrid", "CartoDb", "StamenTerrain", "OSMMapnick", "OSMCycle",
    * Default: null
    */
-  baseLayers: PropTypes.arrayOf(
-    PropTypes.oneOf([
-      "CAWM",
-      "OSM",
-      "EsriSatellite",
-      "EsriStreets",
-      "EsriTopo",
-      "GoogleSatellite",
-      "GoogleRoadmap",
-      "GoogleTerrain",
-      "GoogleAlteredRoadmap",
-      "GoogleTerrainOnly",
-      "GoogleHybrid",
-      "CartoDb",
-      "StamenTerrain",
-      "OSMMapnick",
-      "OSMCycle",
-    ]),
-  ),
+  baseLayers: defaultBaseLayersPropTypes,
 }
 
 export { MapCompLibre }
