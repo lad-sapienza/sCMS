@@ -91,16 +91,6 @@ const MapCompLibre = ({
     }
   }, [updateInteractiveLayers])
 
-  const addNewLayer = useCallback(
-    layer => {
-      if (!mapInstanceRef.current) return
-
-      mapInstanceRef.current.addLayer(layer)
-      updateInteractiveLayers() // Aggiorna l'array dei layer interattivi dopo l'aggiunta
-    },
-    [updateInteractiveLayers],
-  )
-
   const onClick = useCallback(event => {
     const { lngLat, point } = event
     const mapInstance = event.target
