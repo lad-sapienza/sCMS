@@ -1,5 +1,5 @@
 import * as React from "react"
-import { useState, useCallback, useEffect, useRef } from "react"
+import { useState, useCallback } from "react"
 import "maplibre-gl/dist/maplibre-gl.css"
 import Map, {
   NavigationControl,
@@ -34,70 +34,51 @@ const MapCompLibre = ({
     : [0, 0, 2]
 
   const [clickInfo, setClickInfo] = useState(null)
-  let interactiveLayersRef = []
-  const mapInstanceRef = useRef(null)
-
-  const updateInteractiveLayers = useCallback(() => {
-    if (!mapInstanceRef.current) return
+  const [interactiveLyrs, setInteractiveLyrs] = useState([])
+  
+  const updateInteractiveLayers = useCallback(event => {
+    const mapInstance = event.target
 
     // Log per vedere tutti i layer presenti nella mappa
-    interactiveLayersRef = mapInstanceRef.current
-      .getStyle()
-      .layers.map(layer => {
+    const interactiveLayers = mapInstance.getStyle().layers.map(layer => {
         if (layer.metadata && layer.metadata.popupTemplate) {
           return layer.id
         }
         return null
       })
       .filter(Boolean)
+      setInteractiveLyrs(interactiveLayers)
   }, [])
 
   const onMapLoad = useCallback(
     event => {
       const mapInstance = event.target
-      mapInstanceRef.current = mapInstance // Salva l'istanza della mappa
 
       // test custom control
       const customControl = new SimpleControl()
       mapInstance.addControl(customControl, "top-right")
-
-      // Aggiungi un listener per aggiornare i layer interattivi quando vengono aggiunti nuovi source o layer
-      mapInstance.on("sourcedata", updateInteractiveLayers)
-      mapInstance.on("styledata", updateInteractiveLayers)
     },
-    [updateInteractiveLayers],
+    [],
   )
 
-  useEffect(() => {
-    if (!mapInstanceRef.current) return
-
-    mapInstanceRef.current.on("sourcedata", updateInteractiveLayers)
-    mapInstanceRef.current.on("styledata", updateInteractiveLayers)
-
-    // Cleanup quando il componente viene smontato
-    return () => {
-      mapInstanceRef.current.off("sourcedata", updateInteractiveLayers)
-      mapInstanceRef.current.off("styledata", updateInteractiveLayers)
-    }
-  }, [updateInteractiveLayers])
-
+  
   const onClick = useCallback(event => {
     const { lngLat, point } = event
     const mapInstance = event.target
 
     // Usa queryRenderedFeatures per ottenere le feature dal punto cliccato
     const clickedFeatures = mapInstance.queryRenderedFeatures(point, {
-      layers: interactiveLayersRef,
+      layers: interactiveLyrs,
     })
 
     const clickedFeature = clickedFeatures.find(feature =>
-      interactiveLayersRef.includes(feature.layer.id),
+      interactiveLyrs.includes(feature.layer.id),
     )
 
     setClickInfo(
       clickedFeature ? { feature: clickedFeature, lngLat: lngLat } : null,
     )
-  }, [])
+  }, [interactiveLyrs])
 
   // Filtra i base layers in base alla proprietà `baseLayers`
   const filteredBaseLayers = baseLayers
@@ -122,6 +103,9 @@ const MapCompLibre = ({
         }
         onLoad={onMapLoad}
         onClick={onClick}
+        onData={updateInteractiveLayers}
+        onSourceData={updateInteractiveLayers}
+        onStyleData={updateInteractiveLayers}
       >
         {filteredBaseLayers &&
           filteredBaseLayers.map((obj, i) => (
