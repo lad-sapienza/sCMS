@@ -40,7 +40,7 @@ const MapCompLibre = ({
     const mapInstance = event.target
 
     // Log per vedere tutti i layer presenti nella mappa
-    const interactiveLayers = mapInstance.getStyle().layers.map(layer => {
+    const interactiveLayers = mapInstance.getStyle()?.layers.map(layer => {
         if (layer.metadata && layer.metadata.popupTemplate) {
           return layer.id
         }
