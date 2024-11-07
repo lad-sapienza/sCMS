@@ -50,31 +50,43 @@ const VectorLayerLibre = ({
   const updateLayerStyle = useCallback(() => {
     if (mapRef) {
       const mapInstance = mapRef.getMap()
+
+      // Applica `styledata` per assicurarsi che le modifiche avvengano dopo il caricamento dello stile
       mapInstance.on("styledata", () => {
-        const styleData = mapInstance.getStyle()
-
-        // Trova e modifica direttamente il layer nel JSON dello stile usando il `refId`
-        const layer = styleData.layers.find(layer => layer.id === refId)
-
+        const layer = mapInstance.getLayer(refId)
         if (layer) {
-          // Sovrascrivi direttamente le proprietà del layer
-          Object.assign(layer, style)
-          mapInstance.setStyle(styleData)
+          // Aggiorna le proprietà layout e paint, se definite
+          if (style.layout) {
+            Object.keys(style.layout).forEach(key => {
+              mapInstance.setLayoutProperty(refId, key, style.layout[key])
+            })
+          }
+          if (style.paint) {
+            Object.keys(style.paint).forEach(key => {
+              mapInstance.setPaintProperty(refId, key, style.paint[key])
+            })
+          }
+
+          // Aggiorna direttamente i metadati
+          layer.metadata = {
+            ...layer.metadata,
+            label: name,
+            searchInFields: searchInFields,
+            popupTemplate: popupTemplate,
+          }
         }
       })
     }
-  }, [mapRef, style, refId])
+  }, [mapRef, style, refId, searchInFields, name, popupTemplate])
 
   const fitLayerToBounds = useCallback(() => {
     if (mapRef && geojsonData && fitToContent) {
       const mapInstance = mapRef.getMap()
       const [minLng, minLat, maxLng, maxLat] = bbox(geojsonData)
-      mapInstance.fitBounds(
-        [
-          [minLng, minLat],
-          [maxLng, maxLat],
-        ]
-      )
+      mapInstance.fitBounds([
+        [minLng, minLat],
+        [maxLng, maxLat],
+      ])
     }
   }, [mapRef, geojsonData, fitToContent])
 
@@ -84,11 +96,11 @@ const VectorLayerLibre = ({
       fitLayerToBounds()
     }
   }, [mapRef, updateLayerStyle, fitLayerToBounds])
-  
+
   useEffect(() => {
     const fetchGeoData = async () => {
       try {
-        source.transType = "geojson";
+        source.transType = "geojson"
         const geoJSON = await getDataFromSource(source)
         setGeojson(geoJSON) // Imposta i dati geoJSON originali
       } catch (err) {
@@ -96,11 +108,9 @@ const VectorLayerLibre = ({
         setError("Errore nel caricamento dei dati")
       }
     }
-    if (!refId){
+    if (!refId) {
       fetchGeoData() // Carica i dati quando il componente è montato
     }
-    
-
   }, [refId, source])
 
   if (error) {
@@ -120,7 +130,6 @@ const VectorLayerLibre = ({
 }
 
 VectorLayerLibre.propTypes = {
-
   source: sourcePropTypes,
 
   /**
