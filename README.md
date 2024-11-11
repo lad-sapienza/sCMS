@@ -23,7 +23,7 @@ Static sites are fast, secure, durable: no databases to manage, no code that get
 1. [Adding content](#adding-content)
 1. [Deploy your site for free on Github Pages]()
 1. [API](#api)
-   1. [Access your data](#access-your-data)
+   1. [Access data from components](#access-data-from-components)
    1. [MapLeaflet](#mapleaflet)
    1. [MapContainer](#mapcontainer)
    1. [LayersControl](#layerscontrol)
@@ -276,11 +276,32 @@ A page that displays an item's details in a simple list format and can be custom
 
 ## API
 
-### Access your data
+### Access data from components
 
-As previously mentioned, s:CMS is principally designed for the creation of web pages with dynamic content retrieved by an Ajax call from a local CSV or GeoJSON file stored in your project, or a remote database structured in Directus.
+Most of the S:CMS componens have a unified interface to access data stored in local/remote files or on a Directus instance. Thi interface also implements some default basic data transformation services. These parameters are collected in a literal object names `source` that can be provided to the single components.
 
-For complete documentation on the API system of Directus, see: https://docs.directus.io/reference/introduction.html
+The `source` object must follow the following shape:
+
+- `path2data`: string, optional (required if `dEndPoint` or `dTable` are not set).  
+Path to GeoJSON data: might be a local path or an URL.
+- `dEndPoint`: string, optional (Required if either dTable (and env GATSBY_DIRECTUS_ENDPOINT) or path2data are not set).  
+Endpoint of a Directus running instance
+- `dTable`: string, optional (required if neither path2data or dEndPoit are set).  
+The table name of a running Directus instance, to be used if the environmental variablea `GATSBY_DIRECTUS_ENDPOINT` is set.
+- `dQueryString`: string, optional.  
+A querystring formatted filter that will be appended to the endpoint to form an API filterDirectus optional filters and other, provided as querystring compatible to Directus API
+- `dToken`: string, optional (required if environmentantal variable `GATSBY_DIRECTUS_TOKEN` is not set)..  
+Access token to accedd the Directus API, if needed.
+- `id`: integer, optional (required if retrieving a record).  
+Id of a specific record to retrieve
+- `transType`: string, optional, of of the following:
+   - "text", 
+   - "csv2json",
+   - "json", 
+   - "geojson"
+
+   Tranformation to apply to data retrieved from the api of from the file system
+
 
 For integration of your data into the project, the following props must be used:
 
@@ -338,33 +359,14 @@ This is a component used to vcreate maps using Leaflet.js and it is a wrapper ar
 
 ### Vectorlayer
 
-`VectorLayer` is the component that allows you to import, display, and customize your geographical vector data. It must be used as a child of `MapLeaflet` component. A vector layer can be populated with data from different sources, such as:
+The `VectorLayer` component can be used to import, display, and customize your geographical vector data in the map. It must be used as a child of `MapLeaflet` component. A vector layer can be populated with data from different sources, such as:
 - a local GeoJSON file
 - a remote GeoJSON file
 - a table of Directus instance containing geographical data.
 
 **Properties**
 
-- `source`: Object, required, Literal object with information to source data. It is shaped as follows:
-  - `path2data`: string, optional (required if `dEndPoint` or `dTable` are not set).  
-   Path to GeoJSON data: might be a local path or an URL.
-  - `dEndPoint`: string, optional (Required if either dTable (and env GATSBY_DIRECTUS_ENDPOINT) or path2data are not set).  
-   Endpoint of a Directus running instance
-  - `dTable`: string, optional (required if neither path2data or dEndPoit are set).  
-   The table name of a running Directus instance, to be used if the environmental variablea `GATSBY_DIRECTUS_ENDPOINT` is set.
-  - `dQueryString`: string, optional.  
-   A querystring formatted filter that will be appended to the endpoint to form an API filterDirectus optional filters and other, provided as querystring compatible to Directus API
-  - `dToken`: string, optional (required if environmentantal variable `GATSBY_DIRECTUS_TOKEN` is not set)..  
-   Access token to accedd the Directus API, if needed.
-  - `id`: integer, optional (required if retrieving a record).  
-   Id of a specific record to retrieve
-  - `transType`: string, optional, of of the following:
-    - "text", 
-    - "csv2json",
-    - "json", 
-    - "geojson"
-
-    Tranformation to apply to data retrieved from the api of from the file system
+- `source`: for complete decoumebtation: [Access data from components](#access-data-from-components).
 - `name`: string, required.  
    Layer name to use in the Layer control
 - `popupTemplate`: string, optional, default: null.  
@@ -375,33 +377,31 @@ This is a component used to vcreate maps using Leaflet.js and it is a wrapper ar
   A function that will be used to decide whether to include a feature or not in the current visualisation. The default is to include all features (no filter applied)
 - `checked`: boolean, optional, default: true.  
    Boolean property to control the layer's default visibility ion the map and control panel
-- `fitToContent`: boolean, optionbal, default: false
-   * Boolean property to decide wether to zoom/pan the map to fit the layer extention or not
+- `fitToContent`: boolean, optionbal, default: false.  
+   Boolean property to decide wether to zoom/pan the map to fit the layer extention or not
 
 
-(see here: [Access your data](#access-your-data)) to know how correctly setting the path to your data.
+### Rasterlayer
 
-##### Rasterlayer and DefaultBaseLayers
+The `RasterLayer` components can be used to import and display raster tiles in the map. 
 
-These two components manage the raster base of your map. In `DefaultBaseLayers`, each possible source is defined as a prop, which can be added to your `MapLeaflet` Wrapper.
+**Properties**
 
-Each declared object has the following attributes:
+- `name`: string, required.  
+   Name of the baselayer to show in Layer control. Required
+- `url`: string, required.  
+  URL where raster tiles are found. Required
+- `checked`: boolean. optional, default: false.  
+   property to control the layer's default visibility ion the map and control panel
+- `attribution`: string, optional, default: null
+   Attribution or credits for the layer
+- `asOverlay`: boolean, optional, default: false
+   If true the layer will be listed in the Overlay list; if false (default) in the base-layers list
 
-| Field        | Type   | Required | Description                                          |
-|--------------|--------|----------|------------------------------------------------------|
-| checked      | string | y        | The name to be displayed on your website.            |
-| fitToContent | string | y        | The URL of the tiled map you want to use.            |
-| geoField     | string | n        | A string to credit the original creators of the tiled map (necessary for licensed material). |
-
-In the `MapLeaflet` Wrapper, the attributes of each item are used in the `RasterLayer` structure, which also allows you to add the following prop to your layer:
-
-| Field     | Type  | Default | Description                                           |
-|-----------|-------|---------|-------------------------------------------------------|
-| AsOverlay | bool  | N       | If true, displays the raster layer as an overlay. If false, the layer is treated as a base layer, mutually excluding other base layers. |
 
 #### dtable
 
-A component to display data in a tabular fashion that accepts as arguments data from your database(s) (see how to link your data to your table here: [Access your data](#access-your-data)). The data can also be filtered. It is built on the React Datatable component, supporting all its graphical configurations (https://primereact.org/datatable). An example of these settings is provided below:
+A component to display data in a tabular fashion that accepts as arguments data from your database(s) (see how to link your data to your table here: [Access data from components](#access-data-from-components)). The data can also be filtered. It is built on the React Datatable component, supporting all its graphical configurations (https://primereact.org/datatable). An example of these settings is provided below:
 
 | Field    | Type | Default  | Description                                                              |
 |----------|------|----------|--------------------------------------------------------------------------|
@@ -441,10 +441,10 @@ The query can be directed to selected fields using the following prop:
 
 | Parameter   | Required | Type   | Description |
 |-------------|----------|--------|-------------|
-| `dEndPoint`   |          | string | See above [Access your data](#access-your-data) |
-| `dTable`      |          | string | See above [Access your data](#access-your-data) |
-| `dToken`      |          | string | See above [Access your data](#access-your-data) |
-| `dQueryString` |         | string | See above [Access your data](#access-your-data) |
+| `dEndPoint`   |          | string | See above [Access data from components](#access-data-from-components) |
+| `dTable`      |          | string | See above [Access data from components](#access-data-from-components) |
+| `dToken`      |          | string | See above [Access data from components](#access-data-from-components) |
+| `dQueryString` |         | string | See above [Access data from components](#access-data-from-components) |
 | `fieldList`   |    Y     | object | Object containing the names of the field that will be available in tha advanced search form. Keys are database name of the fields; values the labels to be shown. In simple search, the query will be limited to these fields |
 | `resultItemTemplate` | N | func | Function to be used to show the results. It will receive the object cotaining data about a single item |
 | `operators`   |    N     | object | TODO |

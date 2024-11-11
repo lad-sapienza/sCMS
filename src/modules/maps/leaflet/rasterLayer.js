@@ -19,19 +19,22 @@ const RasterLayer = ({ name, url, checked, attribution, asOverlay }) => {
 
 RasterLayer.propTypes = {
   /**
-   * Name of the baselayer to show in Layer control. Required
+   * Name of the baselayer to show in Layer control.
+   * Required
    */
   name: PropTypes.string.isRequired,
   /**
-   * URL where raster tiles are found. Required
+   * URL where raster tiles are found.
+   * Required
    */
   url: PropTypes.string.isRequired,
   /**
-   * If true, the layer will be shown (tuned on). Default: false
+   * property to control the layer's default visibility ion the map and control panel
+   * Default: false
    */
   checked: PropTypes.bool,
   /**
-   * Attribution or credids for the layer
+   * Attribution or credits for the layer
    */
   attribution: PropTypes.string,
   /**
