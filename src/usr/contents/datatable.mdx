@@ -12,6 +12,29 @@ import { DataTb } from "../../modules/scms"
 
 Under the hood, `DataTb` uses the [React Data Table Component](https://react-data-table-component.netlify.app/?path=/docs/getting-started-intro--docs).
 
+
+<DataTb
+      source={{
+        dTable: "luogo_di_interesse",
+        dToken:"l8GBJ_2x0M7AvTJeDrUAj55cAQz_kE7N",
+        dEndPoint: "https://db.lad-sapienza.it/sabina/"
+      }}
+      striped={true}
+      columns={[
+    {
+      name: "Nome",
+      selector: row => row["nome_luogo"],
+      sortable: true,
+    },
+    {
+      name: "Tipologia",
+      selector: row => row["tipologia"],
+      sortable: true,
+    },
+  ]}
+    />
+
+
 ## Directus data source
 <div className="row">
   <div className="col-sm-8">

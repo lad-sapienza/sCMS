@@ -290,7 +290,7 @@ The `source` object must follow the following shape:
 | `dQueryString` | string | optional | null | A query-string formatted filter that will be appended to the endpoint to form an API filterDirectus optional filters and other, provided as querystring compatible to Directus API. |
 | `dToken` | string | optional (required if environmentantal variable `GATSBY_DIRECTUS_TOKEN` is not set) | null | Access token to accedd the Directus API, if needed. |
 | `id` | integer | optional (required if retrieving a record) | null | Id of a specific record to retrieve. |
-| `transType` | string | optional | null | Tranformation to apply to data retrieved from the api of from the file system. One of the following values can be used: "text", "csv2json", "json", "geojson". |
+| `transType` | string | optional | "geojson" | Tranformation to apply to data retrieved from the api of from the file system. One of the following values can be used: "text", "csv2json", "json", "geojson". |
 
    
 
@@ -329,7 +329,6 @@ The `VectorLayer` component can be used to import, display, and customize your g
 | `filter` | function | optional | null | A function that will be used to decide whether to include a feature or not in the current visualisation. The default is to include all features (no filter applied). |
 | `checked` | boolean | optional | true | Boolean property to control the layer's default visibility ion the map and control panel |
 | `fitToContent` | boolean | optional | false | Boolean property to decide wether to zoom/pan the map to fit the layer extention or not. |
-| `cluster` | boolean | optiona | false | Boolean property to decide if markers should be clustered or not. Uses react-leaflet-markercluster. |
 
 
 ### Rasterlayer
