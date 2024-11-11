@@ -300,19 +300,41 @@ For comprehensive documentation, please refer to the official Directus.io API do
 
 ### MapLeaflet
 
-This is a component used to vcreate maps using Leaflet and it is a wrapper around [`MapContainer`]((https://react-leaflet.js.org/docs/api-map/)) and [`LayersControl`](https://leafletjs.com/reference.html#control-layers) and that contains and manages the graphical display and ordering of the layers. 
+This is a component used to vcreate maps using Leaflet.js and it is a wrapper around [`MapContainer`]((https://react-leaflet.js.org/docs/api-map/)) and [`LayersControl`](https://leafletjs.com/reference.html#control-layers) and that contains and manages the graphical display and ordering of the layers. 
 
-It accepts `VectorLayer` and `RasterLayer` as children.
+**Properties**
+- `height`, string, optional, default: "800px"  
+   Height (with unit) of the map element.
+- `center`, string, optional, default: "0,0,2"  
+   Center of the map, as a string with long, lat and zoom separated by commas.
+- `baseLayers`, array, optional, default: null. 
+   Array with default baselayers to show. One, or many of the following values:
+   - "CAWM"
+   - "OSM",
+   - "EsriSatellite",
+   - "EsriStreets",
+   - "EsriTopo",
+   - "GoogleSatellite",
+   - "GoogleRoadmap",
+   - "GoogleTerrain",
+   - "GoogleAlteredRoadmap",
+   - "GoogleTerrainOnly",
+   - "GoogleHybrid",
+   - "CartoDb",
+   - "StamenTerrain",
+   - "OSMMapnick",
+   - "OSMCycle",
+- `scrollWheelZoom`, boolean, optional, default: false,
+   Boolean value that controles whether zoom wheel is active or not.
+- `layersControlPosition`, string, optional, default: "topright"
+   Position of the layers control, one of the following values:
+   - "topright",
+   - "topleft",
+   - "bottomright",
+   - "bottomleft",
 
-It accepts the following props:
+`MapLeaflet` accepts none, one or more `VectorLayer` and `RasterLayer` instances as child components
 
-| Field           | Type      | Default | Description                                                                   |
-|-----------------|-----------|---------|-------------------------------------------------------------------------------|
-| height          | String    | `600px` | The height of the map |
-| center          | String    | `0,0,2` | Defines the starting coordinates and zoom of the map: longitude,latitude,zoom level |
-| scrollWheelZoom | bool      | `false` | If true, enables the user's ability to zoom the map using the scroll wheel |
-| baseLayers      | String    | `null`  | Comma separated list of default raster base map (one or more from): `OSM`, `EsriSatellite`, `EsriStreets`, `EsriTopo`, `GoogleSatellite`, `GoogleRoadmap`, `GoogleTerrain`, `GoogleAlteredRoadmap`, `GoogleTerrainOnly`, `GoogleHybrid`, `CartoDb`, `StamenTerrain`, `OSMMapnick`, `OSMCycle`
-| layerControlPosition | String | `toptight' | Posiont of the Layer Controle. Refer to [offial Leaflet Docs](https://leafletjs.com/reference.html#control-position)
 
 ### Vectorlayer
 

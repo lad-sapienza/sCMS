@@ -61,30 +61,36 @@ const MapLeaflet = ({
 
 MapLeaflet.propTypes = {
   /**
-   * Height (with unit) of the map element: default: 800px
+   * Height (with unit) of the map element.
+   * Optional, default: 800px
    */
   height: PropTypes.string,
   /**
-   * Center of the map, as a string with long, lat and zoom separated by commas: default to 0,0,2
+   * Center of the map, as a string with long, lat and zoom separated by commas.
+   * Optional, default to 0,0,2
    */
   center: PropTypes.string,
   /**
    * Array with default baselayers to show
+   * Optional
    */
   baseLayers: defaultBaseLayersPropTypes,
   /**
    * Children elements
+   * Optional
    */
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.element),
     PropTypes.element,
   ]),
   /**
-   * Boolean to controle if wheel zoom is active or not. Default false
+   * Boolean to controle if wheel zoom is active or not.
+   * Optional, default false
    */
   scrollWheelZoom: PropTypes.bool,
   /**
    * Position of the layers control
+   * Optional, defaults
    */
   layersControlPosition: PropTypes.oneOf([
     "topright",
