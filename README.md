@@ -282,77 +282,31 @@ Most of the S:CMS componens have a unified interface to access data stored in lo
 
 The `source` object must follow the following shape:
 
-- `path2data`: string, optional (required if `dEndPoint` or `dTable` are not set).  
-Path to GeoJSON data: might be a local path or an URL.
-- `dEndPoint`: string, optional (Required if either dTable (and env GATSBY_DIRECTUS_ENDPOINT) or path2data are not set).  
-Endpoint of a Directus running instance
-- `dTable`: string, optional (required if neither path2data or dEndPoit are set).  
-The table name of a running Directus instance, to be used if the environmental variablea `GATSBY_DIRECTUS_ENDPOINT` is set.
-- `dQueryString`: string, optional.  
-A querystring formatted filter that will be appended to the endpoint to form an API filterDirectus optional filters and other, provided as querystring compatible to Directus API
-- `dToken`: string, optional (required if environmentantal variable `GATSBY_DIRECTUS_TOKEN` is not set)..  
-Access token to accedd the Directus API, if needed.
-- `id`: integer, optional (required if retrieving a record).  
-Id of a specific record to retrieve
-- `transType`: string, optional, of of the following:
-   - "text", 
-   - "csv2json",
-   - "json", 
-   - "geojson"
+| Property | Type | Required/Optional | Default value | Description |
+|----------|------|-------------------|---------------|-------------|
+| `path2data` | string | optional (required if `dEndPoint` or `dTable` are not set) | null | Path to GeoJSON data: might be a local path or an URL. |
+| `dEndPoint` | string | optional (Required if either dTable (and env GATSBY_DIRECTUS_ENDPOINT) or path2data are not set) | null | Endpoint of a Directus running instance. |
+| `dTable` | string | optional (required if neither path2data or dEndPoit are set). | null | The table name of a running Directus instance, to be used if the environmental variablea `GATSBY_DIRECTUS_ENDPOINT` is set. |
+| `dQueryString` | string | optional | null | A query-string formatted filter that will be appended to the endpoint to form an API filterDirectus optional filters and other, provided as querystring compatible to Directus API. |
+| `dToken` | string | optional (required if environmentantal variable `GATSBY_DIRECTUS_TOKEN` is not set) | null | Access token to accedd the Directus API, if needed. |
+| `id` | integer | optional (required if retrieving a record) | null | Id of a specific record to retrieve. |
+| `transType` | string | optional | null | Tranformation to apply to data retrieved from the api of from the file system. One of the following values can be used: "text", "csv2json", "json", "geojson". |
 
-   Tranformation to apply to data retrieved from the api of from the file system
-
-
-For integration of your data into the project, the following props must be used:
-
-| Field     | Type    | Description                                                          |
-|-----------|---------|----------------------------------------------------------------------|
-| `path2data`  | String  | Relative or full path to the static file containing your data        |
-| `dEndPoint` | String  | Full URL pointing to a Directus endpoint, complete with referenced table name |
-| `dToken`    | String  | Directus access token, required if the table is not public. If not provided, the `GATSBY_DIRECTUS_TOKEN` environment variable will be used |
-| `dTable`    | String  | Directus table containing geographical data. This is an alternative way to point to a Directus table and needs the the `GATSBY_DIRECTUS_TOKEN` environment variable to be set |
-| `dQueryString` | String | A string containing the filter to apply to your complete API, already inserted as `dEndPoint` or `dTable` |
-
-The preferred way to point to a Directus database is via environment variables and `dTable` parameter, both for security (it prevents exposure of your credentials) and practicality. Two or more different Directus instances can be referred at the same time, using both methods.
-
-`dQueryString` can also be used for displaying data from different tables linked through relational logic (i.e. define JOINs) or for implementing a limiter (offset) on large databases to facilitate data flow.
-
-For comprehensive documentation, please refer to the official Directus.io API documentation: https://docs.directus.io/reference/introduction.html
+   
 
 ### MapLeaflet
 
 This is a component used to vcreate maps using Leaflet.js and it is a wrapper around [`MapContainer`]((https://react-leaflet.js.org/docs/api-map/)) and [`LayersControl`](https://leafletjs.com/reference.html#control-layers) and that contains and manages the graphical display and ordering of the layers. 
 
 **Properties**
-- `height`: string, optional, default: "800px"  
-   Height (with unit) of the map element.
-- `center`: string, optional, default: "0,0,2"  
-   Center of the map, as a string with long, lat and zoom separated by commas.
-- `baseLayers`: array, optional, default: null.  
-   Array with default baselayers to show. One, or many of the following values:
-   - "CAWM"
-   - "OSM",
-   - "EsriSatellite",
-   - "EsriStreets",
-   - "EsriTopo",
-   - "GoogleSatellite",
-   - "GoogleRoadmap",
-   - "GoogleTerrain",
-   - "GoogleAlteredRoadmap",
-   - "GoogleTerrainOnly",
-   - "GoogleHybrid",
-   - "CartoDb",
-   - "StamenTerrain",
-   - "OSMMapnick",
-   - "OSMCycle",
-- `scrollWheelZoom`: boolean, optional, default: false.  
-   Boolean value that controles whether zoom wheel is active or not.
-- `layersControlPosition`: string, optional, default: "topright".  
-   Position of the layers control, one of the following values:
-   - "topright",
-   - "topleft",
-   - "bottomright",
-   - "bottomleft",
+
+| Property | Type | Required/Optional | Default value | Description |
+|----------|------|-------------------|---------------|-------------|
+| `height` | string | optional | "800px" | Height (with unit) of the map element. |
+| `center` | string | optional | "0,0,2" | Center of the map, as a string with long, lat and zoom separated by commas. |
+| `baseLayers` | array | optional | null | Array with default baselayers to show. One, or many of the following values: "CAWM" "OSM", "EsriSatellite", "EsriStreets", "EsriTopo", "GoogleSatellite", "GoogleRoadmap", "GoogleTerrain", "GoogleAlteredRoadmap", "GoogleTerrainOnly", "GoogleHybrid", "CartoDb", "StamenTerrain", "OSMMapnick", "OSMCycle". |
+| `scrollWheelZoom` | boolean | optional | false | Boolean value that controles whether zoom wheel is active or not. |
+| `layersControlPosition` | string | optional | "topright" | Position of the layers control, one of the following values: "topright", "topleft", "bottomright" "bottomleft". |
 
 `MapLeaflet` accepts none, one or more `VectorLayer` and/or `RasterLayer` instances as child components
 
@@ -366,19 +320,15 @@ The `VectorLayer` component can be used to import, display, and customize your g
 
 **Properties**
 
-- `source`: for complete decoumebtation: [Access data from components](#access-data-from-components).
-- `name`: string, required.  
-   Layer name to use in the Layer control
-- `popupTemplate`: string, optional, default: null.  
-   A string containing the HTML to render in the popup. Variable propertirs can be used using ${field_name} syntax
-- `pointToLayer`: function, optional, default: null.  
-   A function defining how GeoJSON points spawn Leaflet layers. It is internally called when data is added, passing the GeoJSON point feature and its LatLng as properties. The default is to spawn a default Marker. Full reference at https://leafletjs.com/reference.html#geojson-pointtolayer
-- `filter`: function, optional, default: null.  
-  A function that will be used to decide whether to include a feature or not in the current visualisation. The default is to include all features (no filter applied)
-- `checked`: boolean, optional, default: true.  
-   Boolean property to control the layer's default visibility ion the map and control panel
-- `fitToContent`: boolean, optionbal, default: false.  
-   Boolean property to decide wether to zoom/pan the map to fit the layer extention or not
+| Property | Type | Required/Optional | Default value | Description |
+|----------|------|-------------------|---------------|-------------|
+| `source` | object | required |  | For the complete decoumebtation: [Access data from components](#access-data-from-components). |
+| `name` | string | required |  | Layer name to use in the Layer control |
+| `popupTemplate` | string | optional | null | A string containing the HTML to render in the popup. Variable propertirs can be used using ${field_name} syntax. |
+| `pointToLayer` | function | optional | null | A function defining how GeoJSON points spawn Leaflet layers. It is internally called when data is added, passing the GeoJSON point feature and its LatLng as properties. The default is to spawn a default Marker. Full reference at https://leafletjs.com/reference.html#geojson-pointtolayer. |
+| `filter` | function | optional | null | A function that will be used to decide whether to include a feature or not in the current visualisation. The default is to include all features (no filter applied). |
+| `checked` | boolean | optional | true | Boolean property to control the layer's default visibility ion the map and control panel |
+| `fitToContent` | boolean | optional | false | Boolean property to decide wether to zoom/pan the map to fit the layer extention or not
 
 
 ### Rasterlayer
@@ -387,16 +337,13 @@ The `RasterLayer` components can be used to import and display raster tiles in t
 
 **Properties**
 
-- `name`: string, required.  
-   Name of the baselayer to show in Layer control. Required
-- `url`: string, required.  
-  URL where raster tiles are found. Required
-- `checked`: boolean. optional, default: false.  
-   property to control the layer's default visibility ion the map and control panel
-- `attribution`: string, optional, default: null
-   Attribution or credits for the layer
-- `asOverlay`: boolean, optional, default: false
-   If true the layer will be listed in the Overlay list; if false (default) in the base-layers list
+| Property | Type | Required/Optional | Default value | Description |
+|----------|------|-------------------|---------------|-------------|
+| `name` | string | required |  | Name of the baselayer to show in Layer control|
+| `url` | string | required | URL where raster tiles are found. |
+| `checked` | boolean | optional | false | Property to control the layer's default visibility ion the map and control panel. |
+| `attribution` | string | optional | null | Attribution or credits for the layer. |
+| `asOverlay` | boolean | optional | false | If true the layer will be listed in the Overlay list; if false (default) in the base-layers list. |
 
 
 #### dtable

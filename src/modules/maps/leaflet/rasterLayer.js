@@ -29,7 +29,7 @@ RasterLayer.propTypes = {
    */
   url: PropTypes.string.isRequired,
   /**
-   * property to control the layer's default visibility ion the map and control panel
+   * Property to control the layer's default visibility ion the map and control panel
    * Default: false
    */
   checked: PropTypes.bool,
