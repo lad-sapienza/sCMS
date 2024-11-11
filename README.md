@@ -328,7 +328,8 @@ The `VectorLayer` component can be used to import, display, and customize your g
 | `pointToLayer` | function | optional | null | A function defining how GeoJSON points spawn Leaflet layers. It is internally called when data is added, passing the GeoJSON point feature and its LatLng as properties. The default is to spawn a default Marker. Full reference at https://leafletjs.com/reference.html#geojson-pointtolayer. |
 | `filter` | function | optional | null | A function that will be used to decide whether to include a feature or not in the current visualisation. The default is to include all features (no filter applied). |
 | `checked` | boolean | optional | true | Boolean property to control the layer's default visibility ion the map and control panel |
-| `fitToContent` | boolean | optional | false | Boolean property to decide wether to zoom/pan the map to fit the layer extention or not
+| `fitToContent` | boolean | optional | false | Boolean property to decide wether to zoom/pan the map to fit the layer extention or not. |
+| `cluster` | boolean | optiona | false | Boolean property to decide if markers should be clustered or not. Uses react-leaflet-markercluster. |
 
 
 ### Rasterlayer
