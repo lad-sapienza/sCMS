@@ -20,7 +20,7 @@ const getDataFromSource = async source => {
   let output
 
   if (path2data) {
-    sourceUrl = path2data.startsWith('http') ? path2data : withPrefix(path2data)
+    sourceUrl = path2data.startsWith("http") ? path2data : withPrefix(path2data)
     if (path2data.toLowerCase().endsWith(".csv")) {
       transType = "csv2json"
     }
@@ -31,12 +31,21 @@ const getDataFromSource = async source => {
     if (dEndPoint) {
       sourceUrl = dEndPoint
     } else if (process.env.GATSBY_DIRECTUS_ENDPOINT && dTable) {
-      sourceUrl = `${process.env.GATSBY_DIRECTUS_ENDPOINT}items/${dTable}`
+      sourceUrl = process.env.GATSBY_DIRECTUS_ENDPOINT
     } else {
-      console.log(path2data)
       throw new Error(
-        "Either `dEndPoint` or env variable `GATSBY_DIRECTUS_ENDPOINT` AND `dTable` are needed",
+        "Either `dEndPoint` or env variable `GATSBY_DIRECTUS_ENDPOINT` are needed",
       )
+    }
+    if (sourceUrl) {
+      sourceUrl += sourceUrl.endsWith("/") ? "" : "/"
+
+      if (!dTable) {
+        throw new Error(
+          "Parameter `dTable` is requirted with `GATSBY_DIRECTUS_ENDPOINT` or dEndPoint",
+        )
+      }
+      sourceUrl += `items/${dTable}`
     }
     if (id) {
       sourceUrl += `/${id}`
