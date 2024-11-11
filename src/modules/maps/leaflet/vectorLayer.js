@@ -66,34 +66,40 @@ const VectorLayer = ({
 }
 
 VectorLayer.propTypes = {
-
+  /**
+   * Object with information to source data
+   */
   source: sourcePropTypes.isRequired,
   /**
    * Layer name to use in the Layer control
    * Required
    */
   name: PropTypes.string.isRequired,
-    /**
-   * A string containing the html to render in the popup. Variable props can be injected using ${field_name} syntax
-   * Optional
+  /**
+   * A string containing the HTML to render in the popup. Variable propertirs can be used using ${field_name} syntax
+   * Optional, default: null
    */
   popupTemplate: PropTypes.string,
   /**
-   * A Function defining how GeoJSON points spawn Leaflet layers. It is internally called when data is added, passing the GeoJSON point feature and its LatLng. The default is to spawn a default Marker:
+   * A function defining how GeoJSON points spawn Leaflet layers. It is internally called when data is added, passing the GeoJSON point feature and its LatLng as properties. The default is to spawn a default Marker.
+   * Full reference at https://leafletjs.com/reference.html#geojson-pointtolayer
    * Ref: https://leafletjs.com/reference.html#geojson-pointtolayer
+   * Optional, default: null
    */
   pointToLayer: PropTypes.func,
   /**
-   * A Function that will be used to decide whether to include a feature or not. The default is to include all features
-   * Default: null
+   * A function that will be used to decide whether to include a feature or not in the current visualisation. The default is to include all features (no filter applied)
+   * Optinal, default: null
    */
   filter: PropTypes.func,
   /**
-   * If true, the layer will be shown (tuned on).
+   * Boolean property to control the layer's default visibility ion the map and control panel
+   * Optional, default: true
    */
   checked: PropTypes.bool,
   /**
-   * If true, the map will be zoomed and panned to show full extents of the layer added
+   * Boolean property to decide wether to zoom/pan the map to fit the layer extention or not
+   * Optional, default: false
    */
   fitToContent: PropTypes.bool,
 }

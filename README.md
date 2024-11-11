@@ -303,11 +303,11 @@ For comprehensive documentation, please refer to the official Directus.io API do
 This is a component used to vcreate maps using Leaflet.js and it is a wrapper around [`MapContainer`]((https://react-leaflet.js.org/docs/api-map/)) and [`LayersControl`](https://leafletjs.com/reference.html#control-layers) and that contains and manages the graphical display and ordering of the layers. 
 
 **Properties**
-- `height`, string, optional, default: "800px"  
+- `height`: string, optional, default: "800px"  
    Height (with unit) of the map element.
-- `center`, string, optional, default: "0,0,2"  
+- `center`: string, optional, default: "0,0,2"  
    Center of the map, as a string with long, lat and zoom separated by commas.
-- `baseLayers`, array, optional, default: null. 
+- `baseLayers`: array, optional, default: null.  
    Array with default baselayers to show. One, or many of the following values:
    - "CAWM"
    - "OSM",
@@ -324,35 +324,60 @@ This is a component used to vcreate maps using Leaflet.js and it is a wrapper ar
    - "StamenTerrain",
    - "OSMMapnick",
    - "OSMCycle",
-- `scrollWheelZoom`, boolean, optional, default: false,
+- `scrollWheelZoom`: boolean, optional, default: false.  
    Boolean value that controles whether zoom wheel is active or not.
-- `layersControlPosition`, string, optional, default: "topright"
+- `layersControlPosition`: string, optional, default: "topright".  
    Position of the layers control, one of the following values:
    - "topright",
    - "topleft",
    - "bottomright",
    - "bottomleft",
 
-`MapLeaflet` accepts none, one or more `VectorLayer` and `RasterLayer` instances as child components
+`MapLeaflet` accepts none, one or more `VectorLayer` and/or `RasterLayer` instances as child components
 
 
 ### Vectorlayer
 
-`VectorLayer` is the component that allows you to import, display, and customize your geographical vector data. It must be used as a child of `MapLeaflet` component. It can be populated with data from different sources, like:
+`VectorLayer` is the component that allows you to import, display, and customize your geographical vector data. It must be used as a child of `MapLeaflet` component. A vector layer can be populated with data from different sources, such as:
 - a local GeoJSON file
 - a remote GeoJSON file
 - a table of Directus instance containing geographical data.
-Parameters for accessing data, such as `path2data`, `dEndPoint`, `dTable`, `geoField`, `dQueryString` and `dToken` are [documented above](#access-your-data).
-Other parameters are:
-  
 
-| Field         | Type                | Default       | Description                                                                  |
-|---------------|---------------------|---------------|------------------------------------------------------------------------------|
-| name          | string              |               | Specifies the name of the layer as it appears in the LayersControl tool.      |
-| popupTemplate | Accepts other props |               | A custom popup template for viewing geographical objects' attributes. Can include fields from your project. |
-| pointToLayer  | bool                | CircleMarker  | Function defining how to display point features. See: https://leafletjs.com/reference.html#circlemarker |
-| checked       | bool                | `true`        | If true, the layer is displayed by default on the map.                       |
-| fitToContent  | bool                | `true`        | If true, adjusts the map's view to fit the bounds of the current layer.      |
+**Properties**
+
+- `source`: Object, required, Literal object with information to source data. It is shaped as follows:
+  - `path2data`: string, optional (required if `dEndPoint` or `dTable` are not set).  
+   Path to GeoJSON data: might be a local path or an URL.
+  - `dEndPoint`: string, optional (Required if either dTable (and env GATSBY_DIRECTUS_ENDPOINT) or path2data are not set).  
+   Endpoint of a Directus running instance
+  - `dTable`: string, optional (required if neither path2data or dEndPoit are set).  
+   The table name of a running Directus instance, to be used if the environmental variablea `GATSBY_DIRECTUS_ENDPOINT` is set.
+  - `dQueryString`: string, optional.  
+   A querystring formatted filter that will be appended to the endpoint to form an API filterDirectus optional filters and other, provided as querystring compatible to Directus API
+  - `dToken`: string, optional (required if environmentantal variable `GATSBY_DIRECTUS_TOKEN` is not set)..  
+   Access token to accedd the Directus API, if needed.
+  - `id`: integer, optional (required if retrieving a record).  
+   Id of a specific record to retrieve
+  - `transType`: string, optional, of of the following:
+    - "text", 
+    - "csv2json",
+    - "json", 
+    - "geojson"
+
+    Tranformation to apply to data retrieved from the api of from the file system
+- `name`: string, required.  
+   Layer name to use in the Layer control
+- `popupTemplate`: string, optional, default: null.  
+   A string containing the HTML to render in the popup. Variable propertirs can be used using ${field_name} syntax
+- `pointToLayer`: function, optional, default: null.  
+   A function defining how GeoJSON points spawn Leaflet layers. It is internally called when data is added, passing the GeoJSON point feature and its LatLng as properties. The default is to spawn a default Marker. Full reference at https://leafletjs.com/reference.html#geojson-pointtolayer
+- `filter`: function, optional, default: null.  
+  A function that will be used to decide whether to include a feature or not in the current visualisation. The default is to include all features (no filter applied)
+- `checked`: boolean, optional, default: true.  
+   Boolean property to control the layer's default visibility ion the map and control panel
+- `fitToContent`: boolean, optionbal, default: false
+   * Boolean property to decide wether to zoom/pan the map to fit the layer extention or not
+
 
 (see here: [Access your data](#access-your-data)) to know how correctly setting the path to your data.
 
