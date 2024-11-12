@@ -325,7 +325,7 @@ The `VectorLayer` component can be used to import, display, and customize your g
 
 | Property | Type | Required | Default value | Description |
 |----------|------|-------------------|---------------|-------------|
-| `source` | object | yes |  | For the complete decoumebtation: [Access data from components](#access-data-from-components). |
+| `source` | object | yes |  | For the complete documentation: [Access data from components](#access-data-from-components). |
 | `name` | string | yes |  | Layer name to use in the Layer control |
 | `popupTemplate` | string | no | _null_ | A string containing the HTML to render in the popup. Variable propertirs can be used using ${field_name} syntax. |
 | `pointToLayer` | function | no | _null_ | A function defining how GeoJSON points spawn Leaflet layers. It is internally called when data is added, passing the GeoJSON point feature and its LatLng as properties. The default is to spawn a default Marker. Full reference at https://leafletjs.com/reference.html#geojson-pointtolayer. |
@@ -357,7 +357,7 @@ The `DataTb` component displays data ordered in a two-dimensional table. It can 
 
 | Property | Type | Required | Default value | Description |
 |----------|------|-------------------|---------------|-------------|
-| `source` | object | yes |  _null_ | For the complete decoumebtation: [Access data from components](#access-data-from-components). |
+| `source` | object | yes |  _null_ | For the complete documentation: [Access data from components](#access-data-from-components). |
 | `columns` | object | yes | _null_ | Object containing information on the columns of the table. The full documentation is available in the [official documentation](https://react-data-table-component.netlify.app/?path=/docs/api-columns--docs)|
 | `...` |  |  |  | All parameters described in the [official React Data Table Component documentation](https://react-data-table-component.netlify.app/?path=/docs/api-props--docs). |
 
@@ -373,14 +373,13 @@ The `Search` component provides built-in funcionality to perform a customiseable
 |----------|------|-------------------|---------------|-------------|
 | `resultItemTemplate` | function | yes |  _null_ | Template function to use to show the results. |
 | `fieldList` | object | yes | _null_ | Literal object containing field identifiers (keys) and lables (values) that will be used for searching. |
-| `operators` | object | no | `{ "_eq": "Equals", "_neq": "Doesn't equal", "_lt": "Less  than", "_lte": "Less than or equal to", "_gt": "Greater than", "_gte": "Greater than or equal to", "_null": "Is null", "_nnull": "Isn't null", "_contains": "Contains", "_icontains": "Contains (case-insensitive)", "_ncontains": "Doesn't contain", "_starts_with": "Starts with", "_istarts_with": "Starts with (case-insensitive)", "_nstarts_with": "Doesn't start with", "_nistarts_with": "Doesn't start with (case-insensitive)", "_ends_with": "Ends with", "_iends_with": "Ends with (case-insensitive)", "_nends_with": "Doesn't end with",
-  "_niends_with": "Doesn't end with (case-insensitive)", "_empty": "Is empty",
-  "_nempty": "Isn't empty", }` | Literal object containing the idetifiers of the operators (keys) and the labels to use for the UI. It can be used to overwrite default value, for example to have the UI translated in a language different from English. Its presence does not impact functionality. |
-| `connector` | object | no | { "_and": "AND", "_or": "OR"} | Literal object containing the logical connectors (keys) and the labels to use for the UI. It can be used to overwrite the default value, for example to have the UI translated in a language different from English. Its presence does not impact functionality. |
+| `operators` | object | no | <pre lang="json">{<br> "_eq": "Equals",<br> "_neq": "Doesn't equal",<br> "_lt": "Less  than",<br> "_lte": "Less than or equal to",<br> "_gt": "Greater than",<br> "_gte": "Greater than or equal to",<br> "_null": "Is null",<br> "_nnull": "Isn't null",<br> "_contains": "Contains",<br> "_icontains": "Contains (case-insensitive)",<br> "_ncontains": "Doesn't contain",<br> "_starts_with": "Starts with",<br> "_istarts_with": "Starts with (case-insensitive)",<br> "_nstarts_with": "Doesn't start with",<br> "_nistarts_with": "Doesn't start with (case-insensitive)",<br> "_ends_with": "Ends with",<br> "_iends_with": "Ends with (case-insensitive)",<br> "_nends_with": "Doesn't end with",<br> "_niends_with": "Doesn't end with (case-insensitive)",<br> "_empty": "Is empty",<br> "_nempty": "Isn't empty"<br> }</pre> | Literal object containing the idetifiers of the operators (keys) and the labels to use for the UI. It can be used to overwrite default value, for example to have the UI translated in a language different from English. Its presence does not impact functionality. |
+| `connector` | object | no | <pre lang="json">{<br> "_and": "AND",<br> "_or": "OR"<br>}</pre> | Literal object containing the logical connectors (keys) and the labels to use for the UI. It can be used to overwrite the default value, for example to have the UI translated in a language different from English. Its presence does not impact functionality. |
 
 
-### View Record
+### Record and Field
 
+The `Recods` and `Field` components can be used together to layout data pertaining to a certain record of a dataset. 
 A detailed item page that can be linked to your main pages. In its default view, it shows every key-value pair associated with the element in a simple list. It can be personalized via JSX syntax ([JSX Documentation](https://legacy.reactjs.org/docs/introducing-jsx.html)), keeping in mind that:
 - `itemEl[0]` represents the key (field`s name);
 - `itemEl[1]` represents the associated value for that item.

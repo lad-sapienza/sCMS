@@ -37,7 +37,6 @@ const RecordNotWrapped = ({ search, children }) => {
     return <div className="text-info">Loading...</div>
   }
   if (error) {
-    console.log(error)
     return (
       <div className="text-danger">
         {error.message}
