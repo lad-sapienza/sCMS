@@ -6,6 +6,7 @@ import SearchUI from "./searchUI"
 import plain2directus from "../../services/transformers/plain2directus"
 import getDataFromSource from "../../services/getDataFromSource"
 import sourcePropTypes from "../../services/sourcePropTypes"
+import { defaultOperatorsProptypes } from "./defaultOperators"
 
 const Search = ({
   source,
@@ -16,17 +17,17 @@ const Search = ({
 }) => {
   const [searchResults, setSearchResults] = useState(null)
   const [error, setError] = useState(null)
-  
+
   if (!fieldList) {
     setError("fieldList parameter is mising")
   }
-  
+
   const processData = (conn, inputs) => {
     const filter = JSON.stringify(plain2directus(conn, inputs))
 
-    source.transType = "json";
+    source.transType = "json"
     source.dQueryString = `${source.dQueryString ? `${source.dQueryString}&` : ""}filter=${filter}`
-    
+
     getDataFromSource(source)
       .then(data => {
         if (data.errors) {
@@ -70,23 +71,29 @@ const Search = ({
 }
 
 Search.propTypes = {
+  /**
+   * Object with information to source data
+   */
   source: sourcePropTypes.isRequired,
   /**
-   * Template to use for results
+   * Template function to use to show the results
    */
-  resultItemTemplate: PropTypes.func,
+  resultItemTemplate: PropTypes.func.isRequired,
   /**
    * List of fields
    */
   fieldList: PropTypes.object.isRequired,
   /**
-   * List of operators
+   * Literal object containing the idetifiers of the operators (keys) and the labels to use for the UI. It can be used to overwrite default options, for example to have the UI translated in a language different from English. Its presence does not impact functionality.
    */
-  operators: PropTypes.object,
+  operators: defaultOperatorsProptypes,
   /**
-   * List of connectors
+   * Literal object containing the logical connectors (keys) and the labels to use for the UI. It can be used to overwrite the default value, for example to have the UI translated in a language different from English. Its presence does not impact functionality.
    */
-  connector: PropTypes.object,
+  connector: PropTypes.shape({
+    _and: PropTypes.string,
+    _or: PropTypes.string,
+  }),
 }
 
 export { Search }

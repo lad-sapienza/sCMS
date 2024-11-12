@@ -282,15 +282,15 @@ Most of the S:CMS componens have a unified interface to access data stored in lo
 
 The `source` object must follow the following shape:
 
-| Property | Type | Required/Optional | Default value | Description |
+| Property | Type | Required | Default value | Description |
 |----------|------|-------------------|---------------|-------------|
-| `path2data` | string | optional (required if `dEndPoint` or `dTable` are not set) | _null_ | Path to static file of structured data (JSON, GeoJSON, CSV, etc.): might be a local, relative path or an URL. |
-| `dEndPoint` | string | optional (required if either `path2data` nor environmental variable `GATSBY_DIRECTUS_ENDPOINT` or are not set) | _null_ | Full URL of the API endpoint of a Directus running instance. |
-| `dTable` | string | optional (required if `dEndPoit` or `GATSBY_DIRECTUS_ENDPOINT` are set). | _null_ | The table name of a running Directus instance. |
-| `dToken` | string | optional (required if environmentantal variable `GATSBY_DIRECTUS_TOKEN` is not set and the Directus API requires authentication) | _null_ | Access token to accedd the Directus API, if needed. |
-| `dQueryString` | string | optional | _null_ | A query-string formatted filter that will be appended to the endpoint to form an API filter for the data. |
-| `id` | integer | optional (required if retrieving a record) | _null_ | Id of a specific record to retrieve. |
-| `transType` | string | optional | "geojson" | Tranformation to apply to data retrieved from the api of from the file system. One of the following values can be used: "text", "csv2json", "json", "geojson". |
+| `path2data` | string | no (required if `dEndPoint` or `dTable` are not set) | _null_ | Path to static file of structured data (JSON, GeoJSON, CSV, etc.): might be a local, relative path or an URL. |
+| `dEndPoint` | string | no (required if either `path2data` nor environmental variable `GATSBY_DIRECTUS_ENDPOINT` or are not set) | _null_ | Full URL of the API endpoint of a Directus running instance. |
+| `dTable` | string | no (required if `dEndPoit` or `GATSBY_DIRECTUS_ENDPOINT` are set). | _null_ | The table name of a running Directus instance. |
+| `dToken` | string | no (required if environmentantal variable `GATSBY_DIRECTUS_TOKEN` is not set and the Directus API requires authentication) | _null_ | Access token to accedd the Directus API, if needed. |
+| `dQueryString` | string | no | _null_ | A query-string formatted filter that will be appended to the endpoint to form an API filter for the data. |
+| `id` | integer | no (required if retrieving a record) | _null_ | Id of a specific record to retrieve. |
+| `transType` | string | no | "geojson" | Tranformation to apply to data retrieved from the api of from the file system. One of the following values can be used: "text", "csv2json", "json", "geojson". |
 
 s:CMS provides a way to define a default Directus API data source as [environment variables](https://www.gatsbyjs.com/docs/how-to/local-development/environment-variables/). In development, Gatsby will load environment variables from a file named `.env.development`. For builds, it will load from `.env.production`. If you are using GitHub Pages as a deployment platform, you can use [secrets](https://docs.github.com/en/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions). s:CMS handles automatically the following environmental variables:
 
@@ -303,13 +303,13 @@ This is a component used to vcreate maps using Leaflet.js and it is a wrapper ar
 
 **Properties**
 
-| Property | Type | Required/Optional | Default value | Description |
+| Property | Type | Required | Default value | Description |
 |----------|------|-------------------|---------------|-------------|
-| `height` | string | optional | "800px" | Height (with unit) of the map element. |
-| `center` | string | optional | "0,0,2" | Center of the map, as a string with long, lat and zoom separated by commas. |
-| `baseLayers` | array | optional | _null_ | Array with default baselayers to show. One, or many of the following values: "CAWM" "OSM", "EsriSatellite", "EsriStreets", "EsriTopo", "GoogleSatellite", "GoogleRoadmap", "GoogleTerrain", "GoogleAlteredRoadmap", "GoogleTerrainOnly", "GoogleHybrid", "CartoDb", "StamenTerrain", "OSMMapnick", "OSMCycle". |
-| `scrollWheelZoom` | boolean | optional | false | Boolean value that controles whether zoom wheel is active or not. |
-| `layersControlPosition` | string | optional | "topright" | Position of the layers control, one of the following values: "topright", "topleft", "bottomright" "bottomleft". |
+| `height` | string | no | "800px" | Height (with unit) of the map element. |
+| `center` | string | no | "0,0,2" | Center of the map, as a string with long, lat and zoom separated by commas. |
+| `baseLayers` | array | no | _null_ | Array with default baselayers to show. One, or many of the following values: "CAWM" "OSM", "EsriSatellite", "EsriStreets", "EsriTopo", "GoogleSatellite", "GoogleRoadmap", "GoogleTerrain", "GoogleAlteredRoadmap", "GoogleTerrainOnly", "GoogleHybrid", "CartoDb", "StamenTerrain", "OSMMapnick", "OSMCycle". |
+| `scrollWheelZoom` | boolean | no | _false_ | Boolean value that controles whether zoom wheel is active or not. |
+| `layersControlPosition` | string | no | "topright" | Position of the layers control, one of the following values: "topright", "topleft", "bottomright" "bottomleft". |
 
 `MapLeaflet` accepts none, one or more `VectorLayer` and/or `RasterLayer` instances as child components
 
@@ -323,94 +323,61 @@ The `VectorLayer` component can be used to import, display, and customize your g
 
 **Properties**
 
-| Property | Type | Required/Optional | Default value | Description |
+| Property | Type | Required | Default value | Description |
 |----------|------|-------------------|---------------|-------------|
-| `source` | object | required |  | For the complete decoumebtation: [Access data from components](#access-data-from-components). |
-| `name` | string | required |  | Layer name to use in the Layer control |
-| `popupTemplate` | string | optional | _null_ | A string containing the HTML to render in the popup. Variable propertirs can be used using ${field_name} syntax. |
-| `pointToLayer` | function | optional | _null_ | A function defining how GeoJSON points spawn Leaflet layers. It is internally called when data is added, passing the GeoJSON point feature and its LatLng as properties. The default is to spawn a default Marker. Full reference at https://leafletjs.com/reference.html#geojson-pointtolayer. |
-| `filter` | function | optional | _null_ | A function that will be used to decide whether to include a feature or not in the current visualisation. The default is to include all features (no filter applied). |
-| `checked` | boolean | optional | true | Boolean property to control the layer's default visibility ion the map and control panel |
-| `fitToContent` | boolean | optional | false | Boolean property to decide wether to zoom/pan the map to fit the layer extention or not. |
+| `source` | object | yes |  | For the complete decoumebtation: [Access data from components](#access-data-from-components). |
+| `name` | string | yes |  | Layer name to use in the Layer control |
+| `popupTemplate` | string | no | _null_ | A string containing the HTML to render in the popup. Variable propertirs can be used using ${field_name} syntax. |
+| `pointToLayer` | function | no | _null_ | A function defining how GeoJSON points spawn Leaflet layers. It is internally called when data is added, passing the GeoJSON point feature and its LatLng as properties. The default is to spawn a default Marker. Full reference at https://leafletjs.com/reference.html#geojson-pointtolayer. |
+| `filter` | function | no | _null_ | A function that will be used to decide whether to include a feature or not in the current visualisation. The default is to include all features (no filter applied). |
+| `checked` | boolean | no | true | Boolean property to control the layer's default visibility ion the map and control panel |
+| `fitToContent` | boolean | no | _false_ | Boolean property to decide wether to zoom/pan the map to fit the layer extention or not. |
 
 
-### Rasterlayer
+### RasterLayer
 
 The `RasterLayer` components can be used to import and display raster tiles in the map. 
 
 **Properties**
 
-| Property | Type | Required/Optional | Default value | Description |
+| Property | Type | Required | Default value | Description |
 |----------|------|-------------------|---------------|-------------|
-| `name` | string | required |  | Name of the baselayer to show in Layer control|
-| `url` | string | required | URL where raster tiles are found. |
-| `checked` | boolean | optional | false | Property to control the layer's default visibility ion the map and control panel. |
-| `attribution` | string | optional | _null_ | Attribution or credits for the layer. |
-| `asOverlay` | boolean | optional | false | If true the layer will be listed in the Overlay list; if false (default) in the base-layers list. |
+| `name` | string | yes | _null_ | Name of the baselayer to show in Layer control|
+| `url` | string | yes | _null_ | URL where raster tiles are found. |
+| `checked` | boolean | no | _false_ | Property to control the layer's default visibility ion the map and control panel. |
+| `attribution` | string | no | _null_ | Attribution or credits for the layer. |
+| `asOverlay` | boolean | no | _false_ | If true the layer will be listed in the Overlay list; if false (default) in the base-layers list. |
 
 
-#### dtable
+#### DataTb
 
-A component to display data in a tabular fashion that accepts as arguments data from your database(s) (see how to link your data to your table here: [Access data from components](#access-data-from-components)). The data can also be filtered. It is built on the React Datatable component, supporting all its graphical configurations (https://primereact.org/datatable). An example of these settings is provided below:
+The `DataTb` component displays data ordered in a two-dimensional table. It can be populated with data from a Directud API endpoint, a static CSV or JSON files hosted locally or in the WWW. Under the hood DataTb uses the [React Data Table Component](https://react-data-table-component.netlify.app/?path=/docs/getting-started-intro--docs) and supports out of the box all configurations and settings described on the [official documentation](https://react-data-table-component.netlify.app/?path=/docs/getting-started-intro--docs). An example of these settings is provided below:
 
-| Field    | Type | Default  | Description                                                              |
-|----------|------|----------|--------------------------------------------------------------------------|
-| striped  | bool | `true`   | If true, visualize alternative rows as striped. See: https://primereact.org/datatable/#striped |
+**Properties**
 
-##### Columns
+| Property | Type | Required | Default value | Description |
+|----------|------|-------------------|---------------|-------------|
+| `source` | object | yes |  _null_ | For the complete decoumebtation: [Access data from components](#access-data-from-components). |
+| `columns` | object | yes | _null_ | Object containing information on the columns of the table. The full documentation is available in the [official documentation](https://react-data-table-component.netlify.app/?path=/docs/api-columns--docs)|
+| `...` |  |  |  | All parameters described in the [official React Data Table Component documentation](https://react-data-table-component.netlify.app/?path=/docs/api-props--docs). |
 
-Property of `Dtable` that allows customization of data display within the module. It accepts the following arguments:
 
-| Field    | Type              | Default           | Description                                                                                                    |
-|----------|-------------------|-------------------|----------------------------------------------------------------------------------------------------------------|
-| name     | string            | `Site_name`       | Define the heading name of your column                                                                         |
-| Selector | row               | Accept a function | `row["Site_Name"]` - This property allows access to values associated with a specific key. You can modify and/or concatenate multiple arguments using expressions and variables. IMPORTANT: All data will be automatically rendered as a string. This can be modified via a custom function. See field `Date` in: https://lab-archeologia-digitale.github.io/sCMS/modulo-datatable/ |
-| cell     | Accept a function | `image, external link` | Retrieve data from columns with additional customization options for presentation using HTML/React and the ability to implement external links. See fields `item_label` and `thumbnail` in: https://lab-archeologia-digitale.github.io/sCMS/modulo-datatable/ |
-| sortable | bool              | `true`            | If true, allows the user to sort data by field`s value initials. See: https://primereact.org/datatable/#sort    |
-
-##### Query Tool
-
-Finally, `Datatb` also includes a custom search tool added to your front end to dynamically modify the displayed data. For backend data filtering see here: [Filtering and join options](#filtering-and-join-options). The attributes of the query tool are:
-
-| Field       | Type         | Default             | Description                                                                 |
-|-------------|--------------|---------------------|-----------------------------------------------------------------------------|
-| name        | datatype     | `Text`              | Define the type of data for user`s search.                                  |
-| className   | CSS styler   | `form-control mb-5` | For graphic customization of the query tool. Accepts existing and/or custom CSS classes. |
-| placeholder | Text         | `search…`           | Default value shown in the query tool placeholder.                          |
-
-NB: All data will be automatically rendered as text upon activation of the query.
-
-It is important to note that the tool does not perform case-sensitive searches and scans through all visible fields in the table module. For constructing specific search fields, see [Search](#search).
 
 ## Search
 
-The `Search` component shows a double search — both a simple and an advanced one — connected to your data that a user can use to filter them and finally list the results by defining a customised template.
+The `Search` component provides built-in funcionality to perform a customiseable simple and advanced query on a dataset and also provides means to display founded records.
 
-The query can be directed to selected fields using the following prop:
+**Properties**
 
+| Property | Type | Required | Default value | Description |
+|----------|------|-------------------|---------------|-------------|
+| `resultItemTemplate` | function | yes |  _null_ | Template function to use to show the results. |
+| `fieldList` | object | yes | _null_ | Literal object containing field identifiers (keys) and lables (values) that will be used for searching. |
+| `operators` | object | no | `{ "_eq": "Equals", "_neq": "Doesn't equal", "_lt": "Less  than", "_lte": "Less than or equal to", "_gt": "Greater than", "_gte": "Greater than or equal to", "_null": "Is null", "_nnull": "Isn't null", "_contains": "Contains", "_icontains": "Contains (case-insensitive)", "_ncontains": "Doesn't contain", "_starts_with": "Starts with", "_istarts_with": "Starts with (case-insensitive)", "_nstarts_with": "Doesn't start with", "_nistarts_with": "Doesn't start with (case-insensitive)", "_ends_with": "Ends with", "_iends_with": "Ends with (case-insensitive)", "_nends_with": "Doesn't end with",
+  "_niends_with": "Doesn't end with (case-insensitive)", "_empty": "Is empty",
+  "_nempty": "Isn't empty", }` | Literal object containing the idetifiers of the operators (keys) and the labels to use for the UI. It can be used to overwrite default value, for example to have the UI translated in a language different from English. Its presence does not impact functionality. |
+| `connector` | object | no | { "_and": "AND", "_or": "OR"} | Literal object containing the logical connectors (keys) and the labels to use for the UI. It can be used to overwrite the default value, for example to have the UI translated in a language different from English. Its presence does not impact functionality. |
 
-| Parameter   | Required | Type   | Description |
-|-------------|----------|--------|-------------|
-| `dEndPoint`   |          | string | See above [Access data from components](#access-data-from-components) |
-| `dTable`      |          | string | See above [Access data from components](#access-data-from-components) |
-| `dToken`      |          | string | See above [Access data from components](#access-data-from-components) |
-| `dQueryString` |         | string | See above [Access data from components](#access-data-from-components) |
-| `fieldList`   |    Y     | object | Object containing the names of the field that will be available in tha advanced search form. Keys are database name of the fields; values the labels to be shown. In simple search, the query will be limited to these fields |
-| `resultItemTemplate` | N | func | Function to be used to show the results. It will receive the object cotaining data about a single item |
-| `operators`   |    N     | object | TODO |
-| `connector`   |    N     | object | TODO |
-
-For more advanced query logic, see here: [Filtering and join options](#filtering-and-join-options).
-
-For the resulting template, the following arguments are given:
-
-| Field | Type | Default                            | Description                                                   |
-|-------|------|------------------------------------|---------------------------------------------------------------|
-| key   | id   | {item.id}                          | Necessary element for indexing results. Do not modify.        |
-| Item  |      | `item.Item_Label; item.Site_Name`  | Selected fields shown for each element`s template.            |
-| <a href=> | URL  | `(`https://inrome.sns.it/db/items/scms_ksa`)}&tb=scms_ksa&token=I0pT7ozY0KuK8i-vtwLQGek36s0IhQ5e&id=${item.id}`}` | A reference linking the `view` button to the item`s record page. Complete endpoint and token must be provided. |
-
-As shown in the [example`s page](https://lab-archeologia-digitale.github.io/sCMS/simple-search/), HTML/CSS syntax can be used for further customisation and organization of the results.
 
 ### View Record
 
