@@ -299,7 +299,7 @@ s:CMS provides a way to define a default Directus API data source as [environmen
 
 ### MapLeaflet
 
-This is a component used to vcreate maps using Leaflet.js and it is a wrapper around [`MapContainer`]((https://react-leaflet.js.org/docs/api-map/)) and [`LayersControl`](https://leafletjs.com/reference.html#control-layers) and that contains and manages the graphical display and ordering of the layers. 
+This is a component used to create maps using Leaflet.js and it is a wrapper around [`MapContainer`]((https://react-leaflet.js.org/docs/api-map/)) and [`LayersControl`](https://leafletjs.com/reference.html#control-layers) and that contains and manages the graphical display and ordering of the layers. 
 
 **Properties**
 
@@ -314,7 +314,7 @@ This is a component used to vcreate maps using Leaflet.js and it is a wrapper ar
 `MapLeaflet` accepts none, one or more `VectorLayer` and/or `RasterLayer` instances as child components
 
 
-### Vectorlayer
+### VectorLayer
 
 The `VectorLayer` component can be used to import, display, and customize your geographical vector data in the map. It must be used as a child of `MapLeaflet` component. A vector layer can be populated with data from different sources, such as:
 - a local GeoJSON file
@@ -336,7 +336,8 @@ The `VectorLayer` component can be used to import, display, and customize your g
 
 ### RasterLayer
 
-The `RasterLayer` components can be used to import and display raster tiles in the map. 
+The `RasterLayer` components can be used to import and display raster tiles in the map. It must be used as a child of `MapLeaflet` component.
+ 
 
 **Properties**
 
@@ -349,7 +350,19 @@ The `RasterLayer` components can be used to import and display raster tiles in t
 | `asOverlay` | boolean | no | _false_ | If true the layer will be listed in the Overlay list; if false (default) in the base-layers list. |
 
 
-#### DataTb
+### MapLibre
+
+TODO
+
+### VectorLayerLibre
+
+TODO
+
+### RasterLayerLibre
+
+TODO
+
+### DataTb
 
 The `DataTb` component displays data ordered in a two-dimensional table. It can be populated with data from a Directud API endpoint, a static CSV or JSON files hosted locally or in the WWW. Under the hood DataTb uses the [React Data Table Component](https://react-data-table-component.netlify.app/?path=/docs/getting-started-intro--docs) and supports out of the box all configurations and settings described on the [official documentation](https://react-data-table-component.netlify.app/?path=/docs/getting-started-intro--docs). An example of these settings is provided below:
 
