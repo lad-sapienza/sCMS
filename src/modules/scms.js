@@ -10,7 +10,7 @@ export { RasterLayer } from "./maps/leaflet/rasterLayer.js"
 export { VectorLayer } from "./maps/leaflet/vectorLayer.js"
 export { ListVisibleFeatures } from "./maps/leaflet/listVisibleFeatures.js"
 
-export { MapCompLibre } from "./maps/maplibre/mapCompLibre.js"
+export { MapLibre } from "./maps/maplibre/mapLibre.js"
 export { VectorLayerLibre } from "./maps/maplibre/vectorLayerLibre.js"
 export { RasterLayerLibre } from "./maps/maplibre/rasterLayerLibre.js"
 

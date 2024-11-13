@@ -5,13 +5,13 @@ slug: "maps/examples/maplibre-local-geojson-fitToContent"
 description: "MapLibre: Fitting map to the contents of a vector layer (local GeoJSON)"
 ---
 
-import { MapCompLibre, VectorLayerLibre } from "../../../modules/scms.js"
+import { MapLibre, VectorLayerLibre } from "../../../modules/scms.js"
 
 ### MapLibre: Fitting map to the contents of a vector layer (local GeoJSON)
 
 <div className="row mt-3 mb-5 border-top border-bottom py-3">
   <div className="col-6">
-    <MapCompLibre baseLayers={["EsriSatellite"]}>
+    <MapLibre baseLayers={["EsriSatellite"]}>
       <VectorLayerLibre
         name="Sites"
         source={{
@@ -40,17 +40,17 @@ import { MapCompLibre, VectorLayerLibre } from "../../../modules/scms.js"
           <small>${Item_Label}</small>
         </div>"
       />
-    </MapCompLibre>
+    </MapLibre>
     Data from [Kahramanmaraş Survey](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) created by [Elizabeth Carter](http://opencontext.org/persons/3208923d-69d0-70e9-9cc1-23ad97770aec) and published on [OpenContext](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) add distributed with [CC BY 4.0 International](https://creativecommons.org/licenses/by/4.0) license.
   </div>
   <div className="col-6">
     ```jsx
     import {
-      MapCompLibre,
+      MapLibre,
       VectorLayerLibre
     } from "../../../modules/scms.js"
 
-    <MapCompLibre baseLayers={["EsriSatellite"]}>
+    <MapLibre baseLayers={["EsriSatellite"]}>
       <VectorLayerLibre
         name="Sites"
         source={{
@@ -79,7 +79,7 @@ import { MapCompLibre, VectorLayerLibre } from "../../../modules/scms.js"
           <small>${Item_Label}</small>
         </div>"
       />
-    </MapCompLibre>
+    </MapLibre>
     ```
 
   </div>

@@ -18,7 +18,7 @@ import {
 import parseStringTemplate from "../../../services/parseStringTemplate"
 import { withPrefix } from "gatsby"
 
-const MapCompLibre = ({
+const MapLibre = ({
   children,
   height,
   center,
@@ -150,7 +150,7 @@ const MapCompLibre = ({
   )
 }
 
-MapCompLibre.propTypes = {
+MapLibre.propTypes = {
   /**
    * Height (with units) of the map to render
    * Optional. Default: "800px"
@@ -218,4 +218,4 @@ MapCompLibre.propTypes = {
   baseLayers: defaultBaseLayersPropTypes,
 }
 
-export { MapCompLibre }
+export { MapLibre }
