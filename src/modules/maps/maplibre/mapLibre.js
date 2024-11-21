@@ -20,33 +20,28 @@ import { withPrefix } from "gatsby"
 
 const MapLibre = ({
   children,
-  height,
-  center,
-  mapStyle,
+  height = "800px",
+  center = "0,0,2",
+  mapStyle = null,
   geolocateControl,
   fullscreenControl,
   navigationControl,
   scaleControl,
   baseLayers,
 }) => {
-  const [lng, lat, zoom] = center
-    ? center.split(",").map(e => parseFloat(e.trim()))
-    : [0, 0, 2]
+  const [lng, lat, zoom] = center.split(",").map(Number)
 
   const [clickInfo, setClickInfo] = useState(null)
   const [interactiveLyrs, setInteractiveLyrs] = useState([])
   
   const updateInteractiveLayers = useCallback(event => {
     const mapInstance = event.target
+    const layers = mapInstance.getStyle()?.layers || [];
 
     // Log per vedere tutti i layer presenti nella mappa
-    const interactiveLayers = mapInstance.getStyle()?.layers.map(layer => {
-        if (layer.metadata && layer.metadata.popupTemplate) {
-          return layer.id
-        }
-        return null
-      })
-      .filter(Boolean)
+    const interactiveLayers = layers
+      .filter(layer => layer.metadata?.popupTemplate)
+      .map(layer => layer.id);
       setInteractiveLyrs(interactiveLayers)
   }, [])
 
@@ -63,10 +58,9 @@ const MapLibre = ({
 
   
   const onClick = useCallback(event => {
-    const { lngLat, point } = event
-    const mapInstance = event.target
+    const { lngLat, point, target: mapInstance } = event
 
-    // Usa queryRenderedFeatures per ottenere le feature dal punto cliccato
+    // Use queryRenderedFeatures to get features at the clicked point
     const clickedFeatures = mapInstance.queryRenderedFeatures(point, {
       layers: interactiveLyrs,
     })
@@ -80,12 +74,10 @@ const MapLibre = ({
     )
   }, [interactiveLyrs])
 
-  // Filtra i base layers in base alla proprietà `baseLayers`
-  const filteredBaseLayers = baseLayers
-    ? baseLayers
-        .map(lyr => (defaultBaseLayers[lyr] ? defaultBaseLayers[lyr] : null))
-        .filter(x => x)
-    : []
+  
+  const filteredBaseLayers = baseLayers 
+    ? baseLayers.filter(lyr => defaultBaseLayers[lyr]) 
+    : [];
 
   return (
     <React.Fragment>
@@ -95,7 +87,7 @@ const MapLibre = ({
           latitude: lat,
           zoom: zoom,
         }}
-        style={{ height: height ? height : `800px` }}
+        style={{ height: height  }}
         mapStyle={
           mapStyle && mapStyle.startsWith("http")
             ? mapStyle
