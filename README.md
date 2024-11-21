@@ -299,7 +299,7 @@ s:CMS provides a way to define a default Directus API data source as [environmen
 
 ### MapLeaflet
 
-This is a component used to create maps using Leaflet.js and it is a wrapper around [`MapContainer`]((https://react-leaflet.js.org/docs/api-map/)) and [`LayersControl`](https://leafletjs.com/reference.html#control-layers) and that contains and manages the graphical display and ordering of the layers. 
+The `MapLeaflet` component is used to create maps using Leaflet.js and it is a wrapper around [`MapContainer`](https://react-leaflet.js.org/docs/api-map/) module.
 
 **Properties**
 
@@ -352,7 +352,19 @@ The `RasterLayer` components can be used to import and display raster tiles in t
 
 ### MapLibre
 
-TODO
+The `MapLibre` component is used to create maps using MapLibre and it is a wrapper around [`react-map-gl`](https://visgl.github.io/react-map-gl/) module. It aims to be a full replacement of the MapLeaflet, by maintaining the same API and possibly providing enhanced functionality, mainly related to the native support for vector tiles.
+
+**Properties**
+
+| Property | Type | Required | Default value | Description |
+|----------|------|-------------------|---------------|-------------|
+| `height` | string | no | "800px" | Height (with unit) of the map element. |
+| `center` | string | no | "0,0,2" | Center of the map, as a string with long, lat and zoom separated by commas. |
+| `baseLayers` | array | no | _null_ | Array with default baselayers to show. One, or many of the following values: "CAWM" "OSM", "EsriSatellite", "EsriStreets", "EsriTopo", "GoogleSatellite", "GoogleRoadmap", "GoogleTerrain", "GoogleAlteredRoadmap", "GoogleTerrainOnly", "GoogleHybrid", "CartoDb", "StamenTerrain", "OSMMapnick", "OSMCycle". |
+| `scrollWheelZoom` | boolean | no | _false_ | Boolean value that controles whether zoom wheel is active or not. |
+| `layersControlPosition` | string | no | "topright" | Position of the layers control, one of the following values: "topright", "topleft", "bottomright" "bottomleft". |
+
+`MapLeaflet` accepts none, one or more `VectorLayer` and/or `RasterLayer` instances as child components
 
 ### VectorLayerLibre
 
