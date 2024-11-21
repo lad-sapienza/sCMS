@@ -282,7 +282,7 @@ Most of the S:CMS componens have a unified interface to access data stored in lo
 
 The `source` object must follow the following shape:
 
-| Property | Type | Required | Default value | Description |
+| Prop Name | Type | Required | Default value | Description |
 |----------|------|-------------------|---------------|-------------|
 | `path2data` | string | no (required if `dEndPoint` or `dTable` are not set) | _null_ | Path to static file of structured data (JSON, GeoJSON, CSV, etc.): might be a local, relative path or an URL. |
 | `dEndPoint` | string | no (required if either `path2data` nor environmental variable `GATSBY_DIRECTUS_ENDPOINT` or are not set) | _null_ | Full URL of the API endpoint of a Directus running instance. |
@@ -303,7 +303,7 @@ The `MapLeaflet` component is used to create maps using Leaflet.js and it is a w
 
 **Properties**
 
-| Property | Type | Required | Default value | Description |
+| Prop Name | Type | Required | Default value | Description |
 |----------|------|-------------------|---------------|-------------|
 | `height` | string | no | "800px" | Height (with unit) of the map element. |
 | `center` | string | no | "0,0,2" | Center of the map, as a string with long, lat and zoom separated by commas. |
@@ -323,7 +323,7 @@ The `VectorLayer` component can be used to import, display, and customize your g
 
 **Properties**
 
-| Property | Type | Required | Default value | Description |
+| Prop Name | Type | Required | Default value | Description |
 |----------|------|-------------------|---------------|-------------|
 | `source` | object | yes |  | For the complete documentation: [Access data from components](#access-data-from-components). |
 | `name` | string | yes |  | Layer name to use in the Layer control |
@@ -341,7 +341,7 @@ The `RasterLayer` components can be used to import and display raster tiles in t
 
 **Properties**
 
-| Property | Type | Required | Default value | Description |
+| Prop Name | Type | Required | Default value | Description |
 |----------|------|-------------------|---------------|-------------|
 | `name` | string | yes | _null_ | Name of the baselayer to show in Layer control|
 | `url` | string | yes | _null_ | URL where raster tiles are found. |
@@ -356,7 +356,7 @@ The `MapLibre` component is used to create maps using MapLibre and it is a wrapp
 
 **Properties**
 
-| Property | Type | Required | Default value | Description |
+| Prop Name | Type | Required | Default value | Description |
 |----------|------|-------------------|---------------|-------------|
 | `height` | string | no | "800px" | Height (with unit) of the map element. |
 | `center` | string | no | "0,0,2" | Center of the map, as a string with long, lat and zoom separated by commas. |
@@ -380,7 +380,7 @@ The `DataTb` component displays data ordered in a two-dimensional table. It can 
 
 **Properties**
 
-| Property | Type | Required | Default value | Description |
+| Prop Name | Type | Required | Default value | Description |
 |----------|------|-------------------|---------------|-------------|
 | `source` | object | yes |  _null_ | For the complete documentation: [Access data from components](#access-data-from-components). |
 | `columns` | object | yes | _null_ | Object containing information on the columns of the table. The full documentation is available in the [official documentation](https://react-data-table-component.netlify.app/?path=/docs/api-columns--docs)|
@@ -390,16 +390,20 @@ The `DataTb` component displays data ordered in a two-dimensional table. It can 
 
 ## Search
 
-The `Search` component provides built-in funcionality to perform a customiseable simple and advanced query on a dataset and also provides means to display founded records.
+The `Search` component is a React component that provides a user interface for searching data from a specified source. It allows users to input search criteria and displays the results based on a provided template.
 
 **Properties**
 
-| Property | Type | Required | Default value | Description |
-|----------|------|-------------------|---------------|-------------|
-| `resultItemTemplate` | function | yes |  _null_ | Template function to use to show the results. |
-| `fieldList` | object | yes | _null_ | Literal object containing field identifiers (keys) and lables (values) that will be used for searching. |
-| `operators` | object | no | <pre lang="json">{<br> "_eq": "Equals",<br> "_neq": "Doesn't equal",<br> "_lt": "Less  than",<br> "_lte": "Less than or equal to",<br> "_gt": "Greater than",<br> "_gte": "Greater than or equal to",<br> "_null": "Is null",<br> "_nnull": "Isn't null",<br> "_contains": "Contains",<br> "_icontains": "Contains (case-insensitive)",<br> "_ncontains": "Doesn't contain",<br> "_starts_with": "Starts with",<br> "_istarts_with": "Starts with (case-insensitive)",<br> "_nstarts_with": "Doesn't start with",<br> "_nistarts_with": "Doesn't start with (case-insensitive)",<br> "_ends_with": "Ends with",<br> "_iends_with": "Ends with (case-insensitive)",<br> "_nends_with": "Doesn't end with",<br> "_niends_with": "Doesn't end with (case-insensitive)",<br> "_empty": "Is empty",<br> "_nempty": "Isn't empty"<br> }</pre> | Literal object containing the idetifiers of the operators (keys) and the labels to use for the UI. It can be used to overwrite default value, for example to have the UI translated in a language different from English. Its presence does not impact functionality. |
-| `connector` | object | no | <pre lang="json">{<br> "_and": "AND",<br> "_or": "OR"<br>}</pre> | Literal object containing the logical connectors (keys) and the labels to use for the UI. It can be used to overwrite the default value, for example to have the UI translated in a language different from English. Its presence does not impact functionality. |
+
+| Prop Name | Type | Required | Default value | Description |
+| --- |--- | --- | --- | --- |
+| `source` | Object | Yes | _null_ | An object containing information to source data. This should include the necessary properties for querying the data source. |
+| `resultItemTemplate`| Function | Yes | _null_:_ | A template function to render each result item. This function receives an item from the search results and should return a React element. |
+| `fieldList` | Object | Yes | _null_ | An object defining the fields available for querying. |
+| `operators` | Object | No | <pre lang="json">{<br> "_eq": "Equals",<br> "_neq": "Doesn't equal",<br> "_lt": "Less  than",<br> "_lte": "Less than or equal to",<br> "_gt": "Greater than",<br> "_gte": "Greater than or equal to",<br> "_null": "Is null",<br> "_nnull": "Isn't null",<br> "_contains": "Contains",<br> "_icontains": "Contains (case-insensitive)",<br> "_ncontains": "Doesn't contain",<br> "_starts_with": "Starts with",<br> "_istarts_with": "Starts with (case-insensitive)",<br> "_nstarts_with": "Doesn't start with",<br> "_nistarts_with": "Doesn't start with (case-insensitive)",<br> "_ends_with": "Ends with",<br> "_iends_with": "Ends with (case-insensitive)",<br> "_nends_with": "Doesn't end with",<br> "_niends_with": "Doesn't end with (case-insensitive)",<br> "_empty": "Is empty",<br> "_nempty": "Isn't empty"<br> }</pre> | An object containing the identifiers of the operators (keys) and the labels to use for the UI. This can be used to overwrite default options, for example, to have the UI translated in a different language. |
+| `connector` | Object | No | <pre lang="json">{<br> "_and": "AND",<br> "_or": "OR"<br>}</pre> | An object containing the logical connectors (keys) and the labels to use for the UI. This can be used to overwrite the default value, for example, to have the UI translated in a different language. |
+
+
 
 
 ### Record and Field
