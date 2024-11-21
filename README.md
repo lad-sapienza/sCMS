@@ -301,7 +301,7 @@ s:CMS provides a way to define a default Directus API data source as [environmen
 
 The `MapLeaflet` component is used to create maps using Leaflet.js and it is a wrapper around [`MapContainer`](https://react-leaflet.js.org/docs/api-map/) module.
 
-**Properties**
+**Props**
 
 | Prop Name | Type | Required | Default value | Description |
 |----------|------|-------------------|---------------|-------------|
@@ -321,7 +321,7 @@ The `VectorLayer` component can be used to import, display, and customize your g
 - a remote GeoJSON file
 - a table of Directus instance containing geographical data.
 
-**Properties**
+**Props**
 
 | Prop Name | Type | Required | Default value | Description |
 |----------|------|-------------------|---------------|-------------|
@@ -339,7 +339,7 @@ The `VectorLayer` component can be used to import, display, and customize your g
 The `RasterLayer` components can be used to import and display raster tiles in the map. It must be used as a child of `MapLeaflet` component.
  
 
-**Properties**
+**Props**
 
 | Prop Name | Type | Required | Default value | Description |
 |----------|------|-------------------|---------------|-------------|
@@ -354,7 +354,7 @@ The `RasterLayer` components can be used to import and display raster tiles in t
 
 The `MapLibre` component is used to create maps using MapLibre and it is a wrapper around [`react-map-gl`](https://visgl.github.io/react-map-gl/) module. It aims to be a full replacement of the MapLeaflet, by maintaining the same API and possibly providing enhanced functionality, mainly related to the native support for vector tiles.
 
-**Properties**
+**Props**
 
 | Prop Name | Type | Required | Default value | Description |
 |----------|------|-------------------|---------------|-------------|
@@ -372,13 +372,24 @@ TODO
 
 ### RasterLayerLibre
 
-TODO
+The `RasterLayerLibre` component is designed to render a raster layer on a MapLibre map. This documentation provides an overview of the component and its props.
+
+**Props**
+
+
+| Prop | Type | Required | Default value | Description |
+|---|---|---|---|---|
+| `name` | string | Yes | _null_ | The name of the layer to be displayed in the Control Panel. |
+| `url` | string \| string[] | Yes |  _null_ | The URL(s) of the raster tiles. Can be a single string or an array of strings. |
+| `checked` | boolean | Yes |  false | Determines if the layer is visible or not. If true, the layer is displayed. |
+| `attribution` | string | No |  _null_ |Optional attribution or credits for the layer. |
+
 
 ### DataTb
 
 The `DataTb` component displays data ordered in a two-dimensional table. It can be populated with data from a Directud API endpoint, a static CSV or JSON files hosted locally or in the WWW. Under the hood DataTb uses the [React Data Table Component](https://react-data-table-component.netlify.app/?path=/docs/getting-started-intro--docs) and supports out of the box all configurations and settings described on the [official documentation](https://react-data-table-component.netlify.app/?path=/docs/getting-started-intro--docs). An example of these settings is provided below:
 
-**Properties**
+**Props**
 
 | Prop Name | Type | Required | Default value | Description |
 |----------|------|-------------------|---------------|-------------|
@@ -392,12 +403,12 @@ The `DataTb` component displays data ordered in a two-dimensional table. It can 
 
 The `Search` component is a React component that provides a user interface for searching data from a specified source. It allows users to input search criteria and displays the results based on a provided template.
 
-**Properties**
+**Props**
 
 
 | Prop Name | Type | Required | Default value | Description |
 | --- |--- | --- | --- | --- |
-| `source` | Object | Yes | _null_ | An object containing information to source data. This should include the necessary properties for querying the data source. |
+| `source` | Object | Yes | _null_ | An object containing information to source data. This should include the necessary properties for querying the data source. [More info on source object](#access-data-from-components)|
 | `resultItemTemplate`| Function | Yes | _null_:_ | A template function to render each result item. This function receives an item from the search results and should return a React element. |
 | `fieldList` | Object | Yes | _null_ | An object defining the fields available for querying. |
 | `operators` | Object | No | <pre lang="json">{<br> "_eq": "Equals",<br> "_neq": "Doesn't equal",<br> "_lt": "Less  than",<br> "_lte": "Less than or equal to",<br> "_gt": "Greater than",<br> "_gte": "Greater than or equal to",<br> "_null": "Is null",<br> "_nnull": "Isn't null",<br> "_contains": "Contains",<br> "_icontains": "Contains (case-insensitive)",<br> "_ncontains": "Doesn't contain",<br> "_starts_with": "Starts with",<br> "_istarts_with": "Starts with (case-insensitive)",<br> "_nstarts_with": "Doesn't start with",<br> "_nistarts_with": "Doesn't start with (case-insensitive)",<br> "_ends_with": "Ends with",<br> "_iends_with": "Ends with (case-insensitive)",<br> "_nends_with": "Doesn't end with",<br> "_niends_with": "Doesn't end with (case-insensitive)",<br> "_empty": "Is empty",<br> "_nempty": "Isn't empty"<br> }</pre> | An object containing the identifiers of the operators (keys) and the labels to use for the UI. This can be used to overwrite default options, for example, to have the UI translated in a different language. |
