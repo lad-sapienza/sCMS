@@ -368,7 +368,22 @@ The `MapLibre` component is used to create maps using MapLibre and it is a wrapp
 
 ### VectorLayerLibre
 
-TODO
+The `VectorLayerLibre` component is a React component that renders a vector layer on a map using GeoJSON data. It manages the layer's style, visibility, and data fetching.
+
+**Props**
+
+| Prop | Type | Required | Default value | Description |
+|---|---|---|---|---|
+| `source` | Object | Yes | _null_ | Data source for the GeoJSON. For the complete documentation: [Access data from components](#access-data-from-components).  |
+| `refId` | string | No | _null_ | Reference ID for the layer, as defined in the external styles.json file. It is used to oveerride the layer name / style / popup etc. |
+| `style` | Object | No | _null_ | Style configuration for the layer. For the complete documentation see: [https://maplibre.org/maplibre-style-spec/layers/](https://maplibre.org/maplibre-style-spec/layers/)|
+| `name` | string | Yes | _null_ | Layer name to use in the Layer control. |
+| `searchInFields` | Array | No | _null_ | Array containing field that will be exposed to the search interface. If missing the layer will NOT be searcheable. |
+| `fitToContent` | boolean | No | false | Whether to fit the map to the content. |
+| `checked` | boolean | No | false | Whether the layer is checked/visible. |
+| `popupTemplate` | string | No | _null_ | A string containing the HTML to render in the popup. Variable props can be injected using ${field_name} syntax. |
+
+  
 
 ### RasterLayerLibre
 
