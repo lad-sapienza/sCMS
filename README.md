@@ -424,7 +424,7 @@ The `Search` component is a React component that provides a user interface for s
 | Prop Name | Type | Required | Default value | Description |
 | --- |--- | --- | --- | --- |
 | `source` | Object | Yes | _null_ | An object containing information to source data. This should include the necessary properties for querying the data source. [More info on source object](#access-data-from-components)|
-| `resultItemTemplate`| Function | Yes | _null_:_ | A template function to render each result item. This function receives an item from the search results and should return a React element. |
+| `resultItemTemplate`| Function | Yes | _null_ | A template function to render each result item. This function receives an item from the search results and should return a React element. |
 | `fieldList` | Object | Yes | _null_ | An object defining the fields available for querying. |
 | `operators` | Object | No | <pre lang="json">{<br> "_eq": "Equals",<br> "_neq": "Doesn't equal",<br> "_lt": "Less  than",<br> "_lte": "Less than or equal to",<br> "_gt": "Greater than",<br> "_gte": "Greater than or equal to",<br> "_null": "Is null",<br> "_nnull": "Isn't null",<br> "_contains": "Contains",<br> "_icontains": "Contains (case-insensitive)",<br> "_ncontains": "Doesn't contain",<br> "_starts_with": "Starts with",<br> "_istarts_with": "Starts with (case-insensitive)",<br> "_nstarts_with": "Doesn't start with",<br> "_nistarts_with": "Doesn't start with (case-insensitive)",<br> "_ends_with": "Ends with",<br> "_iends_with": "Ends with (case-insensitive)",<br> "_nends_with": "Doesn't end with",<br> "_niends_with": "Doesn't end with (case-insensitive)",<br> "_empty": "Is empty",<br> "_nempty": "Isn't empty"<br> }</pre> | An object containing the identifiers of the operators (keys) and the labels to use for the UI. This can be used to overwrite default options, for example, to have the UI translated in a different language. |
 | `connector` | Object | No | <pre lang="json">{<br> "_and": "AND",<br> "_or": "OR"<br>}</pre> | An object containing the logical connectors (keys) and the labels to use for the UI. This can be used to overwrite the default value, for example, to have the UI translated in a different language. |
@@ -432,9 +432,21 @@ The `Search` component is a React component that provides a user interface for s
 
 
 
-### Record and Field
+### Record
 
-The `Recods` and `Field` components can be used together to layout data pertaining to a certain record of a dataset. 
-A detailed item page that can be linked to your main pages. In its default view, it shows every key-value pair associated with the element in a simple list. It can be personalized via JSX syntax ([JSX Documentation](https://legacy.reactjs.org/docs/introducing-jsx.html)), keeping in mind that:
-- `itemEl[0]` represents the key (field`s name);
-- `itemEl[1]` represents the associated value for that item.
+The `Record` component is a React component that fetches and provides record data based on specified search parameters. It handles loading and error states and renders its children once the data is available. The component utilizes the React Context API to provide the fetched record data to its descendants.
+
+**Props**
+| Prop Name | Type | Required | Default value | Description |
+|---|---|----|---|---|
+| `search` | Object | Yes | _null_ | An object containing the search parameters. |
+| `search.tb` | string | YES | _null_ | The name of the Directus table to fetch data from. |
+| `search.endPoint` | string | No if env variable `dEndPoint` is set | _null_ | The Directus endpoint to fetch data from. |
+| `search.token` | string | No if env variable `dToken` is set | The Directus token for authentication (optional). |
+| `search.id` | string | Yes | _null_ | The ID of the record to fetch. |
+| `children`| ReactNode | Yes | _null_ | Child components to render once the data is fetched. `Field` component can be used to show data for specific field. |
+
+
+### Field
+
+TODO
