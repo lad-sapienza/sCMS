@@ -449,4 +449,11 @@ The `Record` component is a React component that fetches and provides record dat
 
 ### Field
 
-TODO
+The `Field` component is a React component that retrieves and displays data from the `Record`. It allows for optional transformation of the data before rendering.
+
+
+**Props**
+| Prop Name | Type | Required | Default value | Description |
+|---|---|----|---|---|
+| `name` | Array<string> | Yes | _null_ | An array of strings representing the keys or indices of the data to retrieve. <br> Example: <br> If the data is {"one": "One Value", "two": ["Two value #1", "Two value 2"]}, then name: ["one"] will return "One Value" and name: ["two", "1"] will return "Two value 2". |
+| `transformer` | Function (optional) | No | `JSON.stringify`, if data is not a string | A function that receives the retrieved data as input and performs transformation or any other type of logic. <br> Example: You can use this to loop through an array of child data. <br> If not provided, the component will use JSON.stringify on non-string data. |
