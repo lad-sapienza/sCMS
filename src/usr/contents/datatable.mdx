@@ -8,11 +8,14 @@ menu_position: 4
 
 import { DataTb } from "../../modules/scms"
 
+# Build customisable tables with data from your database or static files
+
 `<DataTb />` component can be used in MDX pages to display a dynamic, fully customisable table of data from different sources, such as a static CSV file, both hosted locally or online, or a [Directus API](https://docs.directus.io/reference/introduction.html).
 
 Under the hood, `DataTb` uses the [React Data Table Component](https://react-data-table-component.netlify.app/?path=/docs/getting-started-intro--docs).
 
-## Directus data source
+
+## Example of a Directus instance as data source
 <div className="row">
   <div className="col-sm-8">
     <DataTb
@@ -23,7 +26,7 @@ Under the hood, `DataTb` uses the [React Data Table Component](https://react-dat
       striped={true}
       columns={[
     {
-      name: "Item_Label",
+      name: "Label",
       sortable: true,
       cell: item => (
             <a href={`../record/?tb=scms_ksa&id=${item.id}`}>
@@ -32,7 +35,7 @@ Under the hood, `DataTb` uses the [React Data Table Component](https://react-dat
           ),
     },
     {
-      name: "Site_Name",
+      name: "Site name",
       selector: row => row["Site_Name"],
       sortable: true,
     },
@@ -45,11 +48,11 @@ Under the hood, `DataTb` uses the [React Data Table Component](https://react-dat
     },
     {
       name: "Date",
-      selector: row => `${row["Early"]} — ${row["Late"]}`,
+      selector: row => `${row["Early"]} / ${row["Late"]}`,
       sortable: true,
     },
     {
-      name: "Collection_Summary",
+      name: "Collection summary",
       selector: row => row["Collection_Summary"],
       sortable: true,
     },
@@ -109,7 +112,7 @@ Data from [Kahramanmaraş Survey](https://opencontext.org/projects/ca4f4719-f2a5
 
 </div>
 
-### Example with CSV data source
+### Example with a CSV file as data source
 
 <div className="row">
   <div className="col-sm-8">
