@@ -410,7 +410,7 @@ The `DataTb` component displays data ordered in a two-dimensional table. It can 
 |----------|------|-------------------|---------------|-------------|
 | `source` | object | yes |  _null_ | For the complete documentation: [Access data from components](#access-data-from-components). |
 | `columns` | object | yes | _null_ | Object containing information on the columns of the table. The full documentation is available in the [official documentation](https://react-data-table-component.netlify.app/?path=/docs/api-columns--docs)|
-| `...` |  |  |  | All parameters described in the [official React Data Table Component documentation](https://react-data-table-component.netlify.app/?path=/docs/api-props--docs). |
+| `...props` |  |  |  | All parameters described in the [official React Data Table Component documentation](https://react-data-table-component.netlify.app/?path=/docs/api-props--docs) can be used with this component. |
 
 
 
