@@ -22,7 +22,7 @@ const MapLibre = ({
   children,
   height = "800px",
   center = "0,0,2",
-  mapStyle = null,
+  mapStyle,
   geolocateControl,
   fullscreenControl,
   navigationControl,
@@ -30,54 +30,58 @@ const MapLibre = ({
   baseLayers,
 }) => {
   const [lng, lat, zoom] = center.split(",").map(Number)
+  if (mapStyle) {
+    mapStyle = mapStyle.startsWith("http") ? mapStyle : withPrefix(mapStyle)
+  }
 
   const [clickInfo, setClickInfo] = useState(null)
   const [interactiveLyrs, setInteractiveLyrs] = useState([])
-  
+
   const updateInteractiveLayers = useCallback(event => {
     const mapInstance = event.target
-    const layers = mapInstance.getStyle()?.layers || [];
+    const layers = mapInstance.getStyle()?.layers || []
 
     // Log per vedere tutti i layer presenti nella mappa
     const interactiveLayers = layers
       .filter(layer => layer.metadata?.popupTemplate)
-      .map(layer => layer.id);
-      setInteractiveLyrs(interactiveLayers)
+      .map(layer => layer.id)
+    setInteractiveLyrs(interactiveLayers)
   }, [])
 
-  const onMapLoad = useCallback(
-    event => {
-      const mapInstance = event.target
+  const onMapLoad = useCallback(event => {
+    const mapInstance = event.target
 
-      // test custom control
-      const customControl = new SimpleControl()
-      mapInstance.addControl(customControl, "top-right")
+    // test custom control
+    const customControl = new SimpleControl()
+    mapInstance.addControl(customControl, "top-right")
+  }, [])
+
+  const onClick = useCallback(
+    event => {
+      const { lngLat, point, target: mapInstance } = event
+
+      // Use queryRenderedFeatures to get features at the clicked point
+      const clickedFeatures = mapInstance.queryRenderedFeatures(point, {
+        layers: interactiveLyrs,
+      })
+
+      const clickedFeature = clickedFeatures.find(feature =>
+        interactiveLyrs.includes(feature.layer.id),
+      )
+
+      setClickInfo(
+        clickedFeature ? { feature: clickedFeature, lngLat: lngLat } : null,
+      )
     },
-    [],
+    [interactiveLyrs],
   )
 
-  
-  const onClick = useCallback(event => {
-    const { lngLat, point, target: mapInstance } = event
-
-    // Use queryRenderedFeatures to get features at the clicked point
-    const clickedFeatures = mapInstance.queryRenderedFeatures(point, {
-      layers: interactiveLyrs,
-    })
-
-    const clickedFeature = clickedFeatures.find(feature =>
-      interactiveLyrs.includes(feature.layer.id),
-    )
-
-    setClickInfo(
-      clickedFeature ? { feature: clickedFeature, lngLat: lngLat } : null,
-    )
-  }, [interactiveLyrs])
-
-  
-  const filteredBaseLayers = baseLayers 
-    ? baseLayers.filter(lyr => defaultBaseLayers[lyr]) 
-    : [];
+  // Filtra i base layers in base alla proprietà `baseLayers`
+  const filteredBaseLayers = baseLayers
+    ? baseLayers
+        .map(lyr => (defaultBaseLayers[lyr] ? defaultBaseLayers[lyr] : null))
+        .filter(x => x)
+    : []
 
   return (
     <React.Fragment>
@@ -87,12 +91,8 @@ const MapLibre = ({
           latitude: lat,
           zoom: zoom,
         }}
-        style={{ height: height  }}
-        mapStyle={
-          mapStyle && mapStyle.startsWith("http")
-            ? mapStyle
-            : withPrefix(mapStyle)
-        }
+        style={{ height: height }}
+        mapStyle={mapStyle}
         onLoad={onMapLoad}
         onClick={onClick}
         onData={updateInteractiveLayers}
