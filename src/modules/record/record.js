@@ -3,40 +3,57 @@ import PropTypes from "prop-types"
 import withLocation from "../../services/withLocation"
 import getDataFromSource from "../../services/getDataFromSource"
 
+// Create a context for the record data
 export const RecordContext = React.createContext()
 
+/**
+ * RecordNotWrapped component fetches and provides record data based on the search parameters.
+ * It handles loading and error states, and renders children once data is available.
+ *
+ * @param {Object} props - Component props
+ * @param {Object} props.search - Object containing search parameters
+ * @param {string} props.search.tb - Directus table name
+ * @param {string} props.search.endPoint - Directus endpoint
+ * @param {string} props.search.token - Directus token
+ * @param {string} props.search.id - Record ID
+ * @param {ReactNode} props.children - Child components to render
+ * @returns {JSX.Element} The rendered component
+ */
 const RecordNotWrapped = ({ search, children }) => {
-  const { tb, endPoint, token, id } = search
-  const [recordData, setRecordData] = useState([])
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
+  const { tb, endPoint, token, id } = search // Destructure search parameters
+  const [recordData, setRecordData] = useState([]) // State to hold fetched record data
+  const [loading, setLoading] = useState(false) // State to manage loading status
+  const [error, setError] = useState(null) // State to manage error messages
 
   useEffect(() => {
-    try {
-      setLoading(true)
-      getDataFromSource({
-        dEndPoint: endPoint,
-        dTable: tb,
-        transType: "json",
-        id: id,
-      })
-        .then(d => {
-          setRecordData(d)
+    // Function to fetch data from the source
+    const fetchData = async () => {
+      try {
+        const data = await getDataFromSource({
+          dEndPoint: endPoint,
+          dTable: tb,
+          transType: "json",
+          id: id,
         })
-        .catch(err => {
-          setError(err)
-        })
-    } catch (err) {
-      setError(err)
-    } finally {
-      setLoading(false)
+        setRecordData(data) // Set the fetched data to state
+      } catch (err) {
+        setError(err) // Set error if fetching fails
+      } finally {
+        setLoading(false) // Set loading to false after fetching
+      }
     }
-  }, [endPoint, tb, token, id])
 
+    fetchData() // Call the fetch function
+  }, [endPoint, tb, token, id]) // Dependencies for useEffect
+
+  // Render loading state
   if (loading) {
     return <div className="text-info">Loading...</div>
   }
+
+  // Render error state
   if (error) {
+    console.error(error) // Log the error for debugging
     return (
       <div className="text-danger">
         {error.message}
@@ -45,19 +62,23 @@ const RecordNotWrapped = ({ search, children }) => {
       </div>
     )
   }
-  if (recordData.length < 1) {
+  // Render no results found state
+  if (recordData.length === 0) {
     return <div className="text-warning">No result found</div>
-  } else {
-    return (
-      <RecordContext.Provider value={recordData}>
-        {children}
-      </RecordContext.Provider>
-    )
   }
+
+  // Render the context provider with fetched data
+  return (
+    <RecordContext.Provider value={recordData}>
+      {children}
+    </RecordContext.Provider>
+  )
 }
 
+// Wrap the component with location context
 const Record = withLocation(RecordNotWrapped)
 
+// Define prop types for the Record component
 Record.propTypes = {
   /**
    * Object with access data
@@ -78,11 +99,11 @@ Record.propTypes = {
     /**
      * Record id
      */
-    id: PropTypes.number,
+    id: PropTypes.string,
   }),
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.element),
     PropTypes.element,
-  ]),
+  ]).isRequired,
 }
 export { Record }
