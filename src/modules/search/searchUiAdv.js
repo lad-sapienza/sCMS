@@ -13,6 +13,14 @@ const SearchUiAdv = ({ fieldList, processData, operators, connectors }) => {
 
   const [inputs, setInputs] = useState([
     {
+      /**
+       * TODO
+       * Attualmente fieldlist e un oggetto: chiave (stringa) e valore (stringa)
+       * Questa funzione continua ad esserci, INOLTRE:
+       * puo anche essere chiave (stringa) e valore (oggetto: label: "Label", values: ["Value1", "Value2"])
+       * !!!!IMPORTANTE: fare poi anche un esemepio in map.md
+       * !!!!IMPORTANTE (@jbog): Aggiornare la documentazione
+       */
       field: Object.keys(fieldList)[0],
       operator: Object.keys(operators)[0],
       value: "",
@@ -74,6 +82,7 @@ const SearchUiAdv = ({ fieldList, processData, operators, connectors }) => {
             >
               {Object.entries(fieldList).map(([k, v], i) => (
                 <option key={i} value={k}>
+                  {/* Se v is string, così come'è, se oggetto: {v.label} */}
                   {v}
                 </option>
               ))}
@@ -94,6 +103,7 @@ const SearchUiAdv = ({ fieldList, processData, operators, connectors }) => {
             </Form.Select>
           </Col>
           <Col sm>
+          {/* Map su fieldlist se oggetto e fai vedere Form.Select */}
             <Form.Control
               type="input"
               name="value"
