@@ -16,10 +16,11 @@ export const RecordContext = React.createContext()
  * @param {string} props.search.endPoint - Directus endpoint
  * @param {string} props.search.token - Directus token
  * @param {string} props.search.id - Record ID
+ * @param {string} props.search.fields - Record fields to fetch
  * @param {ReactNode} props.children - Child components to render
  * @returns {JSX.Element} The rendered component
  */
-const RecordNotWrapped = ({ search, children }) => {
+const RecordNotWrapped = ({ search, children, fields }) => {
   const { tb, endPoint, token, id } = search // Destructure search parameters
   const [recordData, setRecordData] = useState([]) // State to hold fetched record data
   const [loading, setLoading] = useState(false) // State to manage loading status
@@ -32,6 +33,7 @@ const RecordNotWrapped = ({ search, children }) => {
         const data = await getDataFromSource({
           dEndPoint: endPoint,
           dTable: tb,
+          dQueryString : `fields=${fields}`,
           transType: "json",
           id: id,
         })
@@ -44,7 +46,7 @@ const RecordNotWrapped = ({ search, children }) => {
     }
 
     fetchData() // Call the fetch function
-  }, [endPoint, tb, token, id]) // Dependencies for useEffect
+  }, [endPoint, tb, token, id, fields]) // Dependencies for useEffect
 
   // Render loading state
   if (loading) {
@@ -100,6 +102,10 @@ Record.propTypes = {
      * Record id
      */
     id: PropTypes.string,
+    /**
+     * Record fields to fetch, following: https://docs.directus.io/reference/query.html#fields
+     */
+    fields: PropTypes.string,
   }),
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.element),

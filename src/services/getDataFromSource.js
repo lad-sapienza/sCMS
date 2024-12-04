@@ -47,9 +47,8 @@ const getDataFromSource = async source => {
     }
     if (id) {
       sourceUrl += `/${id}`
-    } else {
-      sourceUrl += `?${dQueryString ? dQueryString : ""}`
     }
+    sourceUrl += `?${dQueryString ? dQueryString : ""}`
 
     const token = dToken ? dToken : process.env.GATSBY_DIRECTUS_TOKEN
 
