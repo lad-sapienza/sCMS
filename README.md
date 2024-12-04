@@ -444,6 +444,7 @@ The `Record` component is a React component that fetches and provides record dat
 | `search.endPoint` | string | No if env variable `dEndPoint` is set | _null_ | The Directus endpoint to fetch data from. |
 | `search.token` | string | No if env variable `dToken` is set | The Directus token for authentication (optional). |
 | `search.id` | string | Yes | _null_ | The ID of the record to fetch. |
+| `search.fields` | string | Yes | _null_ | Record fields to fetch, following: [https://docs.directus.io/reference/query.html#fields](https://docs.directus.io/reference/query.html#fields). |
 | `children`| ReactNode | Yes | _null_ | Child components to render once the data is fetched. `Field` component can be used to show data for specific field. |
 
 
