@@ -41,30 +41,17 @@ const SearchUiAdv = ({ fieldList, processData, operators, connectors }) => {
   }
 
   const handleChange = (event, index) => {
-    const { name, value } = event.target
-    const updatedInputs = [...inputs]
-    updatedInputs[index][name] = value // Aggiorno il valore del campo specifico
-    setInputs(updatedInputs)
+    let { name, value } = event.target
+    let onChangeValue = [...inputs]
+    onChangeValue[index][name] = value
+    setInputs(onChangeValue)
   }
 
   const handleDeleteInput = index => {
-    const updatedInputs = [...inputs]
-    updatedInputs.splice(index, 1) // Rimuovo il filtro dall'elenco
-    setInputs(updatedInputs)
+    const newArray = [...inputs]
+    newArray.splice(index, 1)
+    setInputs(newArray)
   }
-
-  // const handleChange = (event, index) => {
-  //   let { name, value } = event.target
-  //   let onChangeValue = [...inputs]
-  //   onChangeValue[index][name] = value
-  //   setInputs(onChangeValue)
-  // }
-
-  // const handleDeleteInput = index => {
-  //   const newArray = [...inputs]
-  //   newArray.splice(index, 1)
-  //   setInputs(newArray)
-  // }
 
   return (
     <React.Fragment>
