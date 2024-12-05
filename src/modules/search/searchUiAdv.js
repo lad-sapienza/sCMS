@@ -15,10 +15,6 @@ const SearchUiAdv = ({ fieldList, processData, operators, connectors }) => {
     {
       /**
        * TODO
-       * Attualmente fieldlist e un oggetto: chiave (stringa) e valore (stringa)
-       * Questa funzione continua ad esserci, INOLTRE:
-       * puo anche essere chiave (stringa) e valore (oggetto: label: "Label", values: ["Value1", "Value2"])
-       * !!!!IMPORTANTE: fare poi anche un esemepio in map.md
        * !!!!IMPORTANTE (@jbog): Aggiornare la documentazione
        */
       field: Object.keys(fieldList)[0],
