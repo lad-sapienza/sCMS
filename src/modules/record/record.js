@@ -20,7 +20,7 @@ export const RecordContext = React.createContext()
  * @param {ReactNode} props.children - Child components to render
  * @returns {JSX.Element} The rendered component
  */
-const RecordNotWrapped = ({ search, children, fields }) => {
+const RecordNotWrapped = ({ search, children, fields = null }) => {
   const { tb, endPoint, token, id } = search // Destructure search parameters
   const [recordData, setRecordData] = useState([]) // State to hold fetched record data
   const [loading, setLoading] = useState(false) // State to manage loading status
@@ -33,7 +33,7 @@ const RecordNotWrapped = ({ search, children, fields }) => {
         const data = await getDataFromSource({
           dEndPoint: endPoint,
           dTable: tb,
-          dQueryString : `fields=${fields}`,
+          dQueryString : fields && `fields=${fields}`,
           transType: "json",
           id: id,
         })
