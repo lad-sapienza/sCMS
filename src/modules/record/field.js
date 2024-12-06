@@ -33,7 +33,7 @@ const Field = ({ name, transformer }) => {
     return data
   }
 
-  return JSON.stringify(data, null, 2);
+  return <React.Fragment>{JSON.stringify(data, null, 2)}</React.Fragment>
 }
 
 // Define prop types for the Field component
