@@ -25,12 +25,15 @@ const Field = ({ name, transformer }) => {
   // Get the relevant data based on the provided name
   const data = getDataFromObj(value, name)
 
-  // Render transformed data if transformer is provided, otherwise render the data directly
-  return transformer ? (
-    transformer(data)
-  ) : (
-    <>{typeof data === "string" ? data : JSON.stringify(data)}</>
-  )
+  if (transformer) {
+    return transformer(data)
+  }
+
+  if (typeof data === "string") {
+    return data
+  }
+
+  return JSON.stringify(data, null, 2);
 }
 
 // Define prop types for the Field component

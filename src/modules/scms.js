@@ -4,6 +4,7 @@ export { Search } from "./search/search.js"
 export { DataTb } from "./datatb.js"
 export { Record } from "./record/record.js"
 export { Field } from "./record/field.js"
+export { Image } from "./record/image.js"
 
 export { MapLeaflet } from "./maps/leaflet/mapLeaflet.js"
 export { RasterLayer } from "./maps/leaflet/rasterLayer.js"

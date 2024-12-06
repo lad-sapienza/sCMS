@@ -440,11 +440,11 @@ The `Record` component is a React component that fetches and provides record dat
 | Prop Name | Type | Required | Default value | Description |
 |---|---|----|---|---|
 | `search` | Object | Yes | _null_ | An object containing the search parameters. |
-| `search.tb` | string | YES | _null_ | The name of the Directus table to fetch data from. |
-| `search.endPoint` | string | No if env variable `dEndPoint` is set | _null_ | The Directus endpoint to fetch data from. |
-| `search.token` | string | No if env variable `dToken` is set | The Directus token for authentication (optional). |
-| `search.id` | string | Yes | _null_ | The ID of the record to fetch. |
-| `search.fields` | string | Yes | _null_ | Record fields to fetch, following: [https://docs.directus.io/reference/query.html#fields](https://docs.directus.io/reference/query.html#fields). |
+| `search.tb` | String | YES | _null_ | The name of the Directus table to fetch data from. |
+| `search.endPoint` | String | No if env variable `dEndPoint` is set | _null_ | The Directus endpoint to fetch data from. |
+| `search.token` | String | No if env variable `dToken` is set | The Directus token for authentication (optional). |
+| `search.id` | String | Yes | _null_ | The ID of the record to fetch. |
+| `search.fields` | String | Yes | _null_ | Record fields to fetch, following: [https://docs.directus.io/reference/query.html#fields](https://docs.directus.io/reference/query.html#fields). |
 | `children`| ReactNode | Yes | _null_ | Child components to render once the data is fetched. `Field` component can be used to show data for specific field. |
 
 
@@ -458,3 +458,19 @@ The `Field` component is a React component that retrieves and displays data from
 |---|---|----|---|---|
 | `name` | Array<string> | Yes | _null_ | An array of strings representing the keys or indices of the data to retrieve. <br> Example: <br> If the data is {"one": "One Value", "two": ["Two value #1", "Two value 2"]}, then name: ["one"] will return "One Value" and name: ["two", "1"] will return "Two value 2". |
 | `transformer` | Function (optional) | No | `JSON.stringify`, if data is not a string | A function that receives the retrieved data as input and performs transformation or any other type of logic. <br> Example: You can use this to loop through an array of child data. <br> If not provided, the component will use JSON.stringify on non-string data. |
+
+
+### Image
+
+The `Image` component is a React component that displays images based on a specified field name and index. It retrieves image data from the `RecordContext` and constructs the image URL dynamically. This component is useful for rendering images from a data source, such as a CMS.
+
+
+**Props**
+| Prop Name | Type | Required | Default value | Description |
+|---|---|----|---|---|
+| `fieldName` | String | Yes      | _null_ | The name of the field to retrieve image data from. |
+| `index`     | oneOf(['all', number]) | No       | `0`           | The index of the image to display; can be `"all"` to show all images. |
+| `dEndPoint` | string | No | `process.env.GATSBY_DIRECTUS_ENDPOINT` | Optional custom endpoint for fetching images. |
+| `preset`    | String | No | _null_ | Optional preset key for image transformation. as defined in [https://docs.directus.io/reference/files.html#preset-transformations](https://docs.directus.io/reference/files.html#preset-transformations)|
+| `custom`    | String | No | _null_ | Optional custom query parameters for the image URL, as defined in [https://docs.directus.io/reference/files.html#custom-transformations](https://docs.directus.io/reference/files.html#custom-transformations) |
+| `className` | String | No | _null_ | Optional CSS class for styling the image. |
