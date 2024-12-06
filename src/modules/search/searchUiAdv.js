@@ -13,10 +13,6 @@ const SearchUiAdv = ({ fieldList, processData, operators, connectors }) => {
 
   const [inputs, setInputs] = useState([
     {
-      /**
-       * TODO
-       * !!!!IMPORTANTE (@jbog): Aggiornare la documentazione
-       */
       field: Object.keys(fieldList)[0],
       operator: Object.keys(operators)[0],
       value: "",
@@ -109,7 +105,6 @@ const SearchUiAdv = ({ fieldList, processData, operators, connectors }) => {
                 value={item.value}
                 onChange={event => handleChange(event, index)}
               >
-                <option value="">Select</option>
                 {fieldList[item.field].values.map(value => (
                   <option key={value} value={value}>
                     {value}
