@@ -184,10 +184,10 @@ VectorLayerLibre.propTypes = {
    */
   searchInFields: PropTypes.oneOfType([
     PropTypes.objectOf(PropTypes.string),
-    PropTypes.objectOf(PropTypes.shape({
+    PropTypes.shape({
       "label": PropTypes.string,
       "values": PropTypes.arrayOf(PropTypes.string),
-    })),
+    }),
   ]),
 }
 
