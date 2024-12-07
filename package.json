@@ -2,7 +2,7 @@
   "name": "@lad-sapienza/scms",
   "private": false,
   "description": "A simple starter to get up and developing quickly with Gatsby 5 and Bootstrap 5",
-  "version": "4.4.0",
+  "version": "4.5.0",
   "author": {
     "name": "Julian Bogdani",
     "email": "julian.bogdani@uniroma1.it",
@@ -70,7 +70,9 @@
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md,css}\"",
     "start": "gatsby develop",
     "serve": "gatsby serve",
-    "clean": "gatsby clean"
+    "clean": "gatsby clean",
+    "upgrage-main": "command -v rsync >/dev/null && mkdir tmp && wget https://github.com/lab-archeologia-digitale/sCMS/archive/refs/heads/main.zip -O tmp/scms.zip && unzip tmp/scms.zip -d tmp/ && rsync -a  --exclude .cache --exclude .env.development --exclude .git --exclude .gitignore --exclude gatsby-config.js --exclude node_modules --exclude public --exclude README.md --exclude tmp --exclude src/usr --exclude static --delete --dry-run tmp/sCMS-main/ . && rm -rf tmp",
+    "upgrage-dev": "command -v rsync >/dev/null && mkdir tmp && wget https://github.com/lab-archeologia-digitale/sCMS/archive/refs/heads/dev.zip -O tmp/scms.zip && unzip tmp/scms.zip -d tmp/ && rsync -a  --exclude .cache --exclude .env.development --exclude .git --exclude .gitignore --exclude gatsby-config.js --exclude node_modules --exclude public --exclude README.md --exclude tmp --exclude src/usr --exclude static --delete --dry-run tmp/sCMS-dev/ . && rm -rf tmp"
   },
   "repository": {
     "type": "git",
