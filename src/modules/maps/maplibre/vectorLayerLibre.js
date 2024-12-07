@@ -182,7 +182,13 @@ VectorLayerLibre.propTypes = {
    * Array containing field that will be exposed to the search interface
    * If missing the layer will NOT be searcheable
    */
-  searchInFields: PropTypes.object,
+  searchInFields: PropTypes.oneOfType([
+    PropTypes.objectOf(PropTypes.string),
+    PropTypes.objectOf(PropTypes.shape({
+      "label": PropTypes.string,
+      "values": PropTypes.arrayOf(PropTypes.string),
+    })),
+  ]),
 }
 
 export { VectorLayerLibre }

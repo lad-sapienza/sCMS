@@ -378,7 +378,7 @@ The `VectorLayerLibre` component is a React component that renders a vector laye
 | `refId` | string | No | _null_ | Reference ID for the layer, as defined in the external styles.json file. It is used to oveerride the layer name / style / popup etc. |
 | `style` | Object | No | _null_ | Style configuration for the layer. For the complete documentation see: [https://maplibre.org/maplibre-style-spec/layers/](https://maplibre.org/maplibre-style-spec/layers/)|
 | `name` | string | Yes | _null_ | Layer name to use in the Layer control. |
-| `searchInFields` | Array | No | _null_ | Array containing field that will be exposed to the search interface. If missing the layer will NOT be searcheable. |
+| `searchInFields` | Object | No | _null_ | It can be a flat key:value object, the fieldname being the key and the shown label the value (`"Site_Name": "Site name"`). Or a more complex object with fieldname as the key and an object as the value; label holds the shown lavel and values is an array of predefined values used to populate a select input (`"Item_Label": { label: "Label", values: ["KM 50", "KM 40", "KM 55"] },`). |
 | `fitToContent` | boolean | No | false | Whether to fit the map to the content. |
 | `checked` | boolean | No | false | Whether the layer is checked/visible. |
 | `popupTemplate` | string | No | _null_ | A string containing the HTML to render in the popup. Variable props can be injected using ${field_name} syntax. |
