@@ -15,19 +15,20 @@ const SearchUiAdv = ({ fieldList, processData, operators, connectors }) => {
     {
       field: Object.keys(fieldList)[0],
       operator: Object.keys(operators)[0],
-      value: "",
+      value: fieldList[Object.keys(fieldList)[0]]?.values?.[0] || "",
     },
   ])
 
   const [conn, setConn] = useState("_and")
 
   const handleAddInput = () => {
+    const firstField = Object.keys(fieldList)[0]
     setInputs([
       ...inputs,
       {
         field: Object.keys(fieldList)[0],
         operator: Object.keys(operators)[0],
-        value: "",
+        value: fieldList[firstField]?.values?.[0] || "",
       },
     ])
   }
@@ -36,6 +37,12 @@ const SearchUiAdv = ({ fieldList, processData, operators, connectors }) => {
     let { name, value } = event.target
     let onChangeValue = [...inputs]
     onChangeValue[index][name] = value
+
+    // Se il campo cambia, aggiorna il valore di default per il terzo input
+    if (name === "field") {
+      onChangeValue[index].value = fieldList[value]?.values?.[0] || "" // Valore predefinito
+    }
+
     setInputs(onChangeValue)
   }
 
