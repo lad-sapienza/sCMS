@@ -17,7 +17,7 @@ module.exports = {
     title: `s:CMS`,
     description: `S:CMS | Static site Content Managemt System is developend and maintained by LAD: Laboratorio di Archeologia Digitale alla Sapienza`,
     author: `Julian Bogdani <julian.bogdani@uniroma1.it>`,
-    siteUrl: `https://github.com/lab-archeologia-digitale/sCSM#readme`,
+    siteUrl: `https://github.com/lad-sapienza/sCSM#readme`,
   },
   plugins: [
     `gatsby-plugin-image`,

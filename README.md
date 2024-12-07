@@ -83,7 +83,7 @@ Now you can create your own s:CMS project!
 Just open the terminal or command prompt and type
 
 ```bash
-npx gatsby new my-new-site https://github.com/lab-archeologia-digitale/sCMS
+npx gatsby new my-new-site https://github.com/lad-sapienza/sCMS
 ```
 (Make sure to replace `my-new-site` with the name of your own project). 
 
@@ -153,7 +153,7 @@ You can customise the header, the footer, the general layout and stying by editi
 <Link to={"/"}> Something</Link>
 ```
 
-`<a href="https://github.com/lab-archeologia-digitale/sCMS/issues" target="_blank" rel="noreferrer">Issues</a>`
+`<a href="https://github.com/lad-sapienza/sCMS/issues" target="_blank" rel="noreferrer">Issues</a>`
 
 - style: At the bottom of the page inside the Header constant there is the possibility to add the CSS rules directly
 
@@ -196,7 +196,7 @@ const Header = styled.header`
 <Link to={"/"}> Something</Link>
 ```
 
-`<a href="https://github.com/lab-archeologia-digitale/sCMS/issues" target="_blank" rel="noreferrer">Issues</a>`
+`<a href="https://github.com/lad-sapienza/sCMS/issues" target="_blank" rel="noreferrer">Issues</a>`
 
 - style: At the bottom of the page inside the Footer constant there is the possibility to add the CSS rules directly
 
