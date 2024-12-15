@@ -4,39 +4,6 @@
  * A React component that provides a search interface for querying data from a specified source.
  * It allows users to input search criteria and displays the results based on the provided template.
  *
- * @component
- * @example
- * const source = {
- *   dQueryString: "some_query_string",
- *   // other source properties
- * };
- *
- * const resultItemTemplate = (item) => (
- *   <div key={item.id}>{item.name}</div>
- * );
- *
- * const fieldList = {
- *   // define fields for search
- * };
- *
- * const operators = {
- *   // define operators for search
- * };
- *
- * const connector = {
- *   _and: "AND",
- *   _or: "OR",
- * };
- *
- * return (
- *   <Search
- *     source={source}
- *     resultItemTemplate={resultItemTemplate}
- *     fieldList={fieldList}
- *     operators={operators}
- *     connector={connector}
- *   />
- * );
  */
 
 import React, { useState, useEffect } from "react"
@@ -52,6 +19,12 @@ import fieldsPropTypes from "../../services/fieldsPropTypes"
 const Search = ({
   source,
   resultItemTemplate,
+  resultsHeaderTemplate = tot => (
+    <>
+      <h1 className="mt-5">Results</h1>
+      <p className="text-secondary">— {tot} records found</p>
+    </>
+  ),
   fieldList,
   operators,
   connector,
@@ -70,7 +43,7 @@ const Search = ({
     try {
       const filter = JSON.stringify(plain2directus(conn, inputs))
 
-      const newSource = createNewSource(source, filter);
+      const newSource = createNewSource(source, filter)
 
       const data = await getDataFromSource(newSource)
       setQueryRun(true)
@@ -87,11 +60,11 @@ const Search = ({
     }
   }
   const createNewSource = (source, filter) => {
-    const newSource = structuredClone(source);
-    newSource.transType = "json";
-    newSource.dQueryString = `${source.dQueryString ? `${newSource.dQueryString}&` : ""}filter=${filter}`;
-    return newSource;
-  };
+    const newSource = structuredClone(source)
+    newSource.transType = "json"
+    newSource.dQueryString = `${source.dQueryString ? `${newSource.dQueryString}&` : ""}filter=${filter}`
+    return newSource
+  }
 
   return (
     <>
@@ -110,7 +83,7 @@ const Search = ({
 
       {searchResults.length > 0 && !error && (
         <>
-          <h1 className="mt-5">Results</h1>
+          {resultsHeaderTemplate(searchResults.length)}
           <div className="resultsContainer">
             {searchResults.map(item => resultItemTemplate(item))}
           </div>
@@ -133,18 +106,23 @@ Search.propTypes = {
    */
   resultItemTemplate: PropTypes.func.isRequired,
   /**
+   * Template function to render the header of the results.
+   * Default is a simple header in English with the number of results.
+   */
+  resultsHeaderTemplate: PropTypes.func,
+  /**
    * List of fields to be used in the search.
    * This should be an object defining the fields available for querying.
    */
   fieldList: fieldsPropTypes,
-  
+
   /**
    * Object containing the identifiers of the operators (keys) and the labels to use for the UI.
    * This can be used to overwrite default options, for example, to have the UI translated in a language different from English.
    * Its presence does not impact functionality.
    */
   operators: defaultOperatorsProptypes,
-  
+
   /**
    * Object containing the logical connectors (keys) and the labels to use for the UI.
    * This can be used to overwrite the default value, for example, to have the UI translated in a language different from English.
