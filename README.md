@@ -16,12 +16,10 @@ Think of s:CMS as the *public, fully-customiseable front-end of your research da
 
 ## Table of contents
 
-1. [What can I do with s:CMS?](#what-can-i-do-with-sCMS?)
-1. [Preliminary operations](#preliminary-operations)
-   1. [Installing Visual Studio Code](#installing-visual-studio-code)
-   1. [Installing Node.js](#installing-node-js)
-1. [Installing sCMS](#installing-scms)
-1. [General concepts](#general-concepts)
+1. [Environment setup](#environment-setup)
+1. [Installing s:CMS](#installing-scms)
+1. [Edit site's metadata](#edit-sites-metadata)
+1. [Connecting to a default Directus instance](#connecting-to-a-default-directus-instance)
 1. [Customise site's layout and look & feel](#customise-sites-layout-and-look--feel)
 1. [Adding content](#adding-content)
 1. [Deploy your site for free on Github Pages]()
@@ -40,77 +38,90 @@ Think of s:CMS as the *public, fully-customiseable front-end of your research da
 1. [Built with s:CMS](#build-with-sCMS)
 
 
-## Preliminary operations
-The following preliminary operations are meant to help to be productive *from scratch*. Feel free to skip, if you already have a delevoping-oriented environment based on
-- [Node.js](https://nodejs.org/), 
-- [Gatsby.js](https://www.gatsbyjs.com/), 
-- [Visual Studio Code](https://code.visualstudio.com/) or similar code editors, and
-- [Git](https://git-scm.com/) on your computer.
+## Environment setup
+To use s:CMS, you need to have a working environment. s:CMS is basically a Gatsby starter ([more about starters](https://www.gatsbyjs.com/docs/how-to/local-development/starters/)), completed with custom components that are already ready to use. 
+[Gatsby.js](https://www.gatsbyjs.com/) is a static site generator that allows you to create static websites by using React and GraphQL. It is a great tool for creating websites that are fast, secure, and durable. It is also a great tool for creating websites that are easy to maintain. It runs on [Node.js](https://nodejs.org/), a free, open-source, cross-platform JavaScript runtime environment that lets developers create servers, web apps, command line tools and scripts and [React](https://react.dev/), a library for web and native user interfaces developed by Meta.
 
-### Installing Visual Studio Code
+You need to install [Node.js](https://nodejs.org/en/learn/getting-started/how-to-install-nodejs) ans the [Gatsby CLI](https://www.gatsbyjs.com/docs/reference/gatsby-cli) (command line interface) to be anbe to install and customise s:CMS.
 
-To download Visual Studio Code, visit the official [web site](https://code.visualstudio.com/) and down the appropriate version for your operating system. VS Code is available for Windows, MacOS, and Linux.
-
-Run the downloaded file and follow the instructions to complete the installation.
-
-### Installing Node.js
-
-There are diffetent ways to install Node.js, depending on your operating system and on your preferences.
-An official tutorial is available at [https://nodejs.org/en/learn/getting-started/how-to-install-nodejs](https://nodejs.org/en/learn/getting-started/how-to-install-nodejs)
-1. **Download Node.js**:
-   - Go to the official Node.js website: [https://nodejs.org/en/download/prebuilt-installer](https://nodejs.org/en/download/prebuilt-installer)
-   - Download the latest stable version (LTS) for your operating system.
-2. **Install Node.js**:
-   - Run the downloaded file and follow the instructions to complete the installation.
-   - During the installation, ensure the option to add Node.js to the PATH environment variable is selected.
-3. **Verify the installation**:
-   - Open a terminal window or command prompt.
-   - Run the command `node -v` to check the installed version of Node.js.
-   - Run the command `npm -v` to check the installed version of npm (Node Package Manager).
-
-### Installing Gatsby CLI
-
-- Open a terminal or command prompt.
-- Run the command `npm install -g gatsby-cli` to install Gatsby CLI **globally**.
-- Run the command `gatsby --version` to ensure Gatsby CLI is installed correctly.
-
-By following these preliminary steps, you'll be ready to start developing with Gatsby JS on your computer.
 
 ## Installing sCMS
 
-Now you can create your own s:CMS project!
-
-Just open the terminal or command prompt and type
+Open a terminal or command prompt window and type (or copy/paste)
 
 ```bash
-npx gatsby new my-new-site https://github.com/lad-sapienza/sCMS
+npx gatsby new {my-new-site} https://github.com/lad-sapienza/sCMS
 ```
-(Make sure to replace `my-new-site` with the name of your own project). 
 
-In the terminal, change the working directory to geet inside your project:
+Make sure to replace `{my-new-site}` in the command above with the name of your own project. The gatsby CLI will create e new folder, named {my-new-site} and will download into it the s:CMS starter.
+
+After, change the working directory to get inside your project:
+
 ```bash
-cd my-new-site
+cd {my-new-site}
 ```
-and then install all the dependencies of sCMS by running:
+
+and finally install all the dependencies by running:
+
 ```bash
-npm i
+npm install
 ```
-Finally type:
+
+**Please note**: `npm i` is a shorthand for `npm install` so you can use it instead of typing the full command.
+
+The installing of the dependencies might require up to few minutes, depending on your connection. When it finishes, run:
+
 ```bash
 npm start
 ```
-to start the development server. The site will be served at the URL [http://localhost:8000](http://localhost:8000).
+
+to start the development server. The site will be available at the the default URL [http://localhost:8000](http://localhost:8000). To stop the server type `CTRL + C`.
+
+Open the `{my-new-site}` folder with your favorite code editor and start editing the code tu customise the site. Your edits will be previewed in real time at [http://localhost:8000](http://localhost:8000).
 
 ## Edit site's metadata
-The main metadata of the site can be changed by editing `gatsby-config.js`. Edit lines 16-19 and add custom values to:
-- `siteMetadata.title`: the default title attribute of the site
-- `siteMetadata.description`: the default descriprion attribute of the site
-- `siteMetadata.author`: the default author attribute of the site
-- `siteMetadata.siteUrl`: The URL where the site is available
+The principal metadata of the site can be changed by editing `gatsby-config.js` file located in the root of your installation. Lines 15-21 are the ones that define the metadata of the site and look by defauld as follows:
+
+```json
+...
+pathPrefix: process.env.NODE_ENV === "production" ? "/sCMS/" : "/",
+siteMetadata: {
+    title: `s:CMS`,
+    description: `S:CMS | Static site Content Managemt System is developend and maintained by LAD: Laboratorio di Archeologia Digitale alla Sapienza`,
+    author: `Julian Bogdani <julian.bogdani@uniroma1.it>`,
+    siteUrl: `https://github.com/lad-sapienza/sCSM#readme`,
+  },
+...
+```
+
+Feel free to change
+- `title`: the default title attribute of the site
+- `description`: the default descriprion attribute of the site
+- `author`: the default author attribute of the site
+- `siteUrl`: The URL where the site is available
 
 If is also important to change at line 15: `pathPrefix` to match the relative URL where the site will be published.
 
 This is a very impornt passage, since its misconfiguration might determine wrong paths for internal links.
+
+> Edits of the `gatsby-config.js` file will require the restart of the developing server to get updated. Get back to the terminal window, stop the running server by typig `CTRL + C` and start it again by entering `npm start`.
+
+## Connecting to a default Directus instance
+
+s:CMS is designed to work seemlessly with [Directius.io](https://directus.io/), a composable data platform purpose-built for democratizing the world's data.
+
+To access the data stored in a Directus instance you need typically a Directus endpoint, i.e. the URL where Directus is running and an [authentication token](https://docs.directus.io/reference/authentication.html).
+
+Create a file in the root of your project named `.env.development` and add two lines with the following content:
+
+```env
+GATSBY_DIRECTUS_ENDPOINT={url-of-your-directus-instance}
+GATSBY_DIRECTUS_TOKEN={directus-token}
+```
+
+and replace `{url-of-your-directus-instance}` and `directus-token` with the URL of your Directus instance and the token of your instance.
+
+Save and close the file and re-start the development server by typing `CTRL + C` and then `npm start` in the terminal.
 
 ## Customise site's layout and look & feel
 
