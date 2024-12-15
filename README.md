@@ -1,15 +1,18 @@
 # s:CMS
 
+A static site Content Management System developend and maintained by LAD: Laboratorio di Archeologia Digitale alla Sapienza 
+
 s:CMS is an easy, open source and ready-to-use content management system for [generating static sites](https://www.cloudflare.com/en-gb/learning/performance/static-site-generator/) based on [Gatsby.js](https://www.gatsbyjs.com/). It also implements data-oriented components for easily **connecting**, **displaying** and **analysing** research data stored in databases, in flat files or remotely, in an easy, informative and efficient way: maps, searchable tables, and soon to come charts. 
 
 Our aim is to enable researchers to publish online rich data portals, by pulling the information from a wide range of sources, be them flat static files, remotely accessible services, or online databases. We try to build components — resuing as much as possible well known open source projects — to make the integration seemless and to offer a simplified workflow to securely publish contents.
 
-### What is Gatsby.js
-> Gatsby is a React-based open source framework for creating websites. Whether your site has 100 pages or 100,000 pages — if you care deeply about performance, scalability, and built-in security — you'll love building with us. Start pulling data from your favorite headless CMS easily!  
-— [https://www.gatsbyjs.com/docs](https://www.gatsbyjs.com/docs)
-
-### Why static sites
 Static sites are fast, secure, durable: no databases to manage, no code that gets outdated, no performace issues. Once you have build and deployed your site, you are sure it will never stop working.
+
+### What can I do with s:CMS?
+You can setup in few minutes a fully working and secure website containing static pages, with text and images describing your project and also rich data pulled in real time from remote databases and or self-hosted as static files, with which you can build maps, and fully searcheable tables. You are fully enabled to customise the layout and look&feel of your site to perfectly fit your needs.
+
+Think of s:CMS as the *public, fully-customiseable front-end of your research database*
+
 
 ## Table of contents
 
@@ -34,11 +37,8 @@ Static sites are fast, secure, durable: no databases to manage, no code that get
    1. [Query Tool](#query-tool)
    1. [Search](#search)
    1. [View Record](#view-record)
+1. [Built with s:CMS](#build-with-sCMS)
 
-## What can I do with s:CMS?
-You can setup in few minutes a fully working and secure website containing static pages, with text and images describing your project and also rich data pulled in real time from remote databases and or self-hosted as static files, with which you can build maps, and fully searcheable tables. You are fully enabled to customise the layout and look&feel of your site to perfectly fit your needs.
-
-Think of s:CMS as the *public, fully-customiseable front-end of your research database*
 
 ## Preliminary operations
 The following preliminary operations are meant to help to be productive *from scratch*. Feel free to skip, if you already have a delevoping-oriented environment based on
@@ -474,3 +474,10 @@ The `Image` component is a React component that displays images based on a speci
 | `preset`    | String | No | _null_ | Optional preset key for image transformation. as defined in [https://docs.directus.io/reference/files.html#preset-transformations](https://docs.directus.io/reference/files.html#preset-transformations)|
 | `custom`    | String | No | _null_ | Optional custom query parameters for the image URL, as defined in [https://docs.directus.io/reference/files.html#custom-transformations](https://docs.directus.io/reference/files.html#custom-transformations) |
 | `className` | String | No | _null_ | Optional CSS class for styling the image. |
+
+---
+
+## Built with s:CMS
+- [Borderscape](https://webgis.borderscapeproject.org/): WebGIS State Formation and Settlement Patterns in the Ancient Egyptian Southern Border, 4th-3rd millennia BCE
+- [ElaMortuary](https://lad-sapienza.github.io/elamortuary/): Villages to Empire: 4,000 Years of Death and Society in Elam (4500-525 BCE)
+- [Pre-Islamic Afghanistan](https://lad-sapienza.github.io/pre-islamic-afghanistan/): Archaeology and cultural heritage of pre-Islamic Afghanistan: Sites and materials. With a focus on the Buddhist clay sculptures

@@ -47,6 +47,7 @@ import plain2directus from "../../services/transformers/plain2directus"
 import getDataFromSource from "../../services/getDataFromSource"
 import sourcePropTypes from "../../services/sourcePropTypes"
 import { defaultOperatorsProptypes } from "./defaultOperators"
+import fieldsPropTypes from "../../services/fieldsPropTypes"
 
 const Search = ({
   source,
@@ -135,7 +136,7 @@ Search.propTypes = {
    * List of fields to be used in the search.
    * This should be an object defining the fields available for querying.
    */
-  fieldList: PropTypes.object.isRequired,
+  fieldList: fieldsPropTypes,
   
   /**
    * Object containing the identifiers of the operators (keys) and the labels to use for the UI.

@@ -4,6 +4,7 @@ import PropTypes from "prop-types"
 import * as bbox from "geojson-bbox"
 import getDataFromSource from "../../../services/getDataFromSource"
 import sourcePropTypes from "../../../services/sourcePropTypes"
+import fieldsPropTypes from "../../../services/fieldsPropTypes"
 
 /**
  * VectorLayerLibre component renders a vector layer on a map using GeoJSON data.
@@ -179,16 +180,10 @@ VectorLayerLibre.propTypes = {
    */
   style: PropTypes.object,
   /**
-   * Array containing field that will be exposed to the search interface
+   * List of fields that will be exposed to the search interface
    * If missing the layer will NOT be searcheable
    */
-  searchInFields: PropTypes.oneOfType([
-    PropTypes.objectOf(PropTypes.string),
-    PropTypes.shape({
-      "label": PropTypes.string,
-      "values": PropTypes.arrayOf(PropTypes.string),
-    }),
-  ]),
+  searchInFields: fieldsPropTypes,
 }
 
 export { VectorLayerLibre }
