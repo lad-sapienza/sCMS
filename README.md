@@ -22,7 +22,8 @@ Think of s:CMS as the *public, fully-customiseable front-end of your research da
 1. [Connecting to a default Directus instance](#connecting-to-a-default-directus-instance)
 1. [Customise site's layout and look & feel](#customise-sites-layout-and-look--feel)
 1. [Adding content](#adding-content)
-1. [Deploy your site for free on Github Pages]()
+1. [Deploy your site for free on Github Pages](#deploy-your-site-for-free-on-github-pages)
+1. [Update the site to the latest version](#update-the-site-to-the-latest-version)
 1. [API](#api)
    1. [Access data from components](#access-data-from-components)
    1. [MapLeaflet](#mapleaflet)
@@ -82,7 +83,7 @@ Open the `{my-new-site}` folder with your favorite code editor and start editing
 ## Edit site's metadata
 The principal metadata of the site can be changed by editing `gatsby-config.js` file located in the root of your installation. Lines 15-21 are the ones that define the metadata of the site and look by defauld as follows:
 
-```json
+```js
 ...
 pathPrefix: process.env.NODE_ENV === "production" ? "/sCMS/" : "/",
 siteMetadata: {
@@ -125,127 +126,37 @@ Save and close the file and re-start the development server by typing `CTRL + C`
 
 ## Customise site's layout and look & feel
 
-sCMS comes with a default template and a minimum set of example pages. By design, we are not aiming at developing templates: layout and graphics are entirely on your own. Nevertheless sCMS is delivered with a set of tools — such as [React Bootstrap](https://react-bootstrap.github.io/) — that make it easy to write your own templates or customise the default one.
+sCMS comes with a default template and a set of example pages. By design, we are not aiming at developing templates: layout and graphics are entirely on your own. Nevertheless sCMS is delivered with a set of tools — such as [React Bootstrap](https://react-bootstrap.github.io/) — that make it easy to write your own templates or customise the default one.
 
-The files responsible for layouting are collected in the `src/layout/` directory.
+The files responsible for layouting are collected in the `src/usr/layout/` directory.
 You can customise the header, the footer, the general layout and stying by editing:
-- `header.js`
-- `footer.js`
-- `layout.js`
-- `layout.scss`
-- `slide.js`
+- `header.js`: the component used to display the header
+- `footer.js`: the component used to display the footer
+- `layout.js`: the scaffold component of the layout. You ba create highly customised layouts **without** the need to edit the main layout.js file.
+- `layout.scss`: the [SASS](https://sass-lang.com/documentation/syntax/) file containing the styling.
 
-> **Please note** that you should not edit `layout.css`, `layout.css.map` since this files are being created and updated from the system each time that layout.scss is being updated.
+> **Please note** that you should not edit `layout.css`, `layout.css.map` since this files are being created and updated by the system each time that layout.scss is being updated.
 
+Other assets, such as static image files can be added in the `src/usr/images/` folder or in the `static/` folder. Add to `src/usr/images/` files to be used with the [Gatsby Image Plugin](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image/) and similar. Images ad other files saved in the `static/` folder will be copied as they (and without any transformation) are in the publically available version of the site.
 
-### **layout.js**
-   The main structure of the site consists of the layout.js page. On this page, the header and footer of the site are declared and there is the possibility of activating the slide by changing the tag from `{/_ <Slide /> _/}` in `<Slide />`
-
-### **header.js**
-   It is possible to change the header graphics by modifying this file. The code to change is the one contained within the <Container> tag. Through html code it is possible to insert divs, images and links.
-
-- div: As for divs you can use bootstrap classes
-- images: here is an example of the <staticImage> tag. The images must be contained in the images folder.
-
-```jsx
-<StaticImage
-  src="../../images/scms-lad.png"
-  width={150}
-  quality={80}
-  formats={["AUTO", "WEBP"]}
-  alt={siteTitle}
-  className="img-fluid"
-/>
-```
-
-- link: here is an example of the <Link> tag for the internal page and <a></a> to external links
-
-```jsx
-<Link to={"/"}> Something</Link>
-```
-
-`<a href="https://github.com/lad-sapienza/sCMS/issues" target="_blank" rel="noreferrer">Issues</a>`
-
-- style: At the bottom of the page inside the Header constant there is the possibility to add the CSS rules directly
-
-```jsx
-const Header = styled.header`
-  background-color: #fe04fc;
-  color: #ffffff;
-  margin-bottom: 5rem;
-
-  .gatsby-image-wrapper {
-    background-color: #ffffff;
-    img {
-      padding-left: 1rem;
-      padding-right: 1rem;
-    }
-  }
-`
-```
-
-### **footer.js**
-   It is possible to change the footer graphics by modifying this file. The code to change is the one contained within the <Container> tag. Through html code it is possible to insert divs, images and links.
-
-- div: As for divs you can use bootstrap classes
-- images: here is an example of the <staticImage> tag. The images must be contained in the images folder.
-
-```jsx
-<StaticImage
-  src="../../images/scms-lad.png"
-  width={150}
-  quality={80}
-  formats={["AUTO", "WEBP"]}
-  alt={siteTitle}
-  className="img-fluid"
-/>
-```
-
-- link: here is an example of the <Link> tag for the interal page and <a></a> to external links
-
-```jsx
-<Link to={"/"}> Something</Link>
-```
-
-`<a href="https://github.com/lad-sapienza/sCMS/issues" target="_blank" rel="noreferrer">Issues</a>`
-
-- style: At the bottom of the page inside the Footer constant there is the possibility to add the CSS rules directly
-
-```jsx
-const Footer = styled.footer`
-  background-color: #ececec;
-  border-top: #000 solid 0.5rem;
-  min-height: auto;
-  margin-top: 3rem;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-`
-```
-
-### **slide.js**
-
-On the slide page you can edit the StaticImage inside CarouselItems or add a new CarouselItems element. The images also in this case must be saved in the images folder.
-
-### **navbar.js**
-
-To enhance site navigation, a horizontal Navbar has been implemented. On mobile devices, the Navbar becomes vertical and collapsible. This feature automatically collects information on titles and internal positioning from the Front Matter of various pages  (Learn how: [Front Matter](#1-front-matter) ). As the Navbar is built using a React-Bootstrap component, please refer to the official documentation for styling modifications or further implementations: https://react-bootstrap.netlify.app/docs/components/navbar/ 
 
 ## Adding content
 
-s:CMS also provide tools for easily build and personalize the pages of your website. Being based on Gatsby, every such page works with the [*.mdx Markdown extension](https://www.gatsbyjs.com/docs/glossary/mdx/#:~:text=MDX%20is%20an%20extension%20to,but%20still%20supports%20inline%20HTML). 
+s:CMS also provide tools for easily build and personalize the pages of your website. Being based on Gatsby, every such page works with the M[DX Markdown extension](https://www.gatsbyjs.com/docs/glossary/mdx/). 
 
-Five example pages are provided in the contents section of the default project that fully explore the potentiality of s:CMS.
+Each MD or MDX file saved in `src/usr/contents/` folder will be automatically processed to become a publically available page of the site.
+
 
 ### 1. Front Matter
 
 Firstly, it is important that you can configure every page's visualization using metadata that are disposed by default:
 
-| Field           | Required | Example     | Description                                                                 |
-|-----------------|----------|-------------|-----------------------------------------------------------------------------|
-| `title`           | Y        | homepage  | Define the name shown for the page and on the navbar                        |
-| `date`            | N        | 2024-04-10 | Define the date of creation/last update of the page                         |
-| `slug`            | Y        | home      | Define the personalized ending of the URL address specific to the page.     |
-| `menu_position`   | Y        | 0         | Define the internal indexing of the page used for the correct ordering in the navbar. |
+| Field | Required | Example | Description |
+|---|---|---|---|
+| `title` | Yes | `Welcome to or new and shiny s:CMS based web site`  | Define the name shown for the page and on the navbar                        |
+| `date` | no | 2024-04-10 | Define the date of creation/last update of the page |
+| `slug` | yes | `welcome` | Define the personalized ending of the URL address specific to the page.  |
+| `menu_position`   | No | 0 | Define the internal indexing of the page used for the correct ordering in the navbar. |
 
 ### 2. Static page
 
@@ -282,6 +193,25 @@ A page that displays an item's details in a simple list format and can be custom
 ## Deploy your site for free on Github Pages
 
 `Documentation to be completed`
+
+## Update the site to the latest version
+
+S:CMS comes with two commands to update the site to the latest version:
+
+```bash
+npm run upgrage-main
+```
+
+will updated the site using the [`main` branch](https://github.com/lad-sapienza/sCMS/) as the suource for the files, and 
+
+```bash
+npm run upgrage-dev
+```
+
+will use the [`dev` branch](https://github.com/lad-sapienza/sCMS/tree/dev).
+
+> Please note that the upgrade command requires `rsync` to run. [rsync](https://en.wikipedia.org/wiki/Rsync) is a utility for transferring and synchronizing files between a computer and a storage drive and across networked computers by comparing the modification times and sizes of files. It is commonly found on Unix-like operating systems and is under the GPL-3.0-or-later license.  
+> Run `which rsync` in your terminal to check if `rsync` is available.
 
 ---
 
@@ -480,7 +410,7 @@ The `Image` component is a React component that displays images based on a speci
 **Props**
 | Prop Name | Type | Required | Default value | Description |
 |---|---|----|---|---|
-| `fieldName` | String | Yes      | _null_ | The name of the field to retrieve image data from. |
+| `fieldName` | String | Yes  | _null_ | The name of the field to retrieve image data from. |
 | `index`     | oneOf(['all', number]) | No       | `0`           | The index of the image to display; can be `"all"` to show all images. |
 | `dEndPoint` | string | No | `process.env.GATSBY_DIRECTUS_ENDPOINT` | Optional custom endpoint for fetching images. |
 | `preset`    | String | No | _null_ | Optional preset key for image transformation. as defined in [https://docs.directus.io/reference/files.html#preset-transformations](https://docs.directus.io/reference/files.html#preset-transformations)|
