@@ -5,6 +5,29 @@ slug: "home"
 description: "Homepage project"
 ---
 
+import GraphVizComponent from "../../modules/graph/GraphVizComponent"
+
+<GraphVizComponent 
+  containerClassNames="border"
+  data={[
+    ["uno", "due"],
+    ["due", "tre"]
+  ]}
+
+  dot={`digraph G {
+    "1126" -> "833"; 
+    "1018" -> "1102"; 
+    "1018" -> "1085"; 
+    "1171" -> "1160"; 
+    "1171" -> "1159";
+    }
+  `}
+/>
+
+
+
+
+
 # Meet s:CMS
 
 Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
