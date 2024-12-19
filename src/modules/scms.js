@@ -15,3 +15,5 @@ export { MapLibre } from "./maps/maplibre/mapLibre.js"
 export { VectorLayerLibre } from "./maps/maplibre/vectorLayerLibre.js"
 export { RasterLayerLibre } from "./maps/maplibre/rasterLayerLibre.js"
 
+
+export { HarrisMatrix } from "./graph/harrisMatrix.js"
