@@ -142,7 +142,7 @@ Other assets, such as static image files can be added in the `src/usr/images/` f
 
 ## Adding content
 
-s:CMS also provide tools for easily build and personalize the pages of your website. Being based on Gatsby, every such page works with the M[DX Markdown extension](https://www.gatsbyjs.com/docs/glossary/mdx/). 
+s:CMS also provide tools for easily build and personalize the pages of your website. Being based on Gatsby, every such page works with the [MDX Markdown extension](https://www.gatsbyjs.com/docs/glossary/mdx/). 
 
 Each MD or MDX file saved in `src/usr/contents/` folder will be automatically processed to become a publically available page of the site.
 
