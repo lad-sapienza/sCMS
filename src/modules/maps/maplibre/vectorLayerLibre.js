@@ -162,9 +162,9 @@ VectorLayerLibre.propTypes = {
    */
   name: PropTypes.string.isRequired,
   /**
-   * The template for the popup content. It can be either a string (Variable properties can be used using ${field_name} syntax) or a function receving as parameters the properties of the clicked feature.
+   * The template for the popup content. It is a string and variable properties can be used using ${field_name} syntax
    */
-  popupTemplate: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+  popupTemplate: PropTypes.string,
   /**
    * If true, the layer will be shown (tuned on).
    */
