@@ -120,10 +120,10 @@ const MapLibre = ({
           >
             <div
               dangerouslySetInnerHTML={{
-                __html: parseStringTemplate(
+                __html: typeof clickInfo.feature.layer.metadata.popupTemplate === "string" ? parseStringTemplate(
                   clickInfo.feature.layer.metadata.popupTemplate,
                   clickInfo.feature.properties,
-                ),
+                ) : clickInfo.feature.layer.metadata.popupTemplate(clickInfo.feature.properties),
               }}
             />
           </Popup>

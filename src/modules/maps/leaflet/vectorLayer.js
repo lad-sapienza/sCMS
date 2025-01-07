@@ -54,10 +54,15 @@ const VectorLayer = ({
           pointToLayer={pointToLayer ? pointToLayer : null}
           onEachFeature={
             popupTemplate
-              ? (feature, layer) =>
-                  layer.bindPopup(
-                    parseStringTemplate(popupTemplate, feature.properties),
-                  )
+              ? typeof popupTemplate === "string"
+                ? (feature, layer) =>
+                    layer.bindPopup(
+                      parseStringTemplate(popupTemplate, feature.properties),
+                    )
+                : typeof popupTemplate === "function"
+                  ? (feature, layer) =>
+                      layer.bindPopup(popupTemplate(feature.properties))
+                  : null
               : null
           }
           filter={filter ? filter : null}
@@ -78,10 +83,9 @@ VectorLayer.propTypes = {
    */
   name: PropTypes.string.isRequired,
   /**
-   * A string containing the HTML to render in the popup. Variable propertirs can be used using ${field_name} syntax
-   * Optional, default: null
+   * The template for the popup content. It can be either a string (Variable properties can be used using ${field_name} syntax) or a function receving as parameters the properties of the clicked feature.
    */
-  popupTemplate: PropTypes.string,
+  popupTemplate: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   /**
    * A function defining how GeoJSON points spawn Leaflet layers. It is internally called when data is added, passing the GeoJSON point feature and its LatLng as properties. The default is to spawn a default Marker.
    * Full reference at https://leafletjs.com/reference.html#geojson-pointtolayer
