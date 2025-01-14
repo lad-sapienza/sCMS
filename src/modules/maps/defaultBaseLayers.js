@@ -67,23 +67,27 @@ const defaultBaseLayers = {
   },
 }
 
+/**
+ * PropTypes for default base layers.
+ * This defines the allowed values for the base layers.
+ */
 const defaultBaseLayersPropTypes = PropTypes.arrayOf(
   PropTypes.oneOf([
-    "CAWM",
-    "OSM",
-    "EsriSatellite",
-    "EsriStreets",
-    "EsriTopo",
-    "GoogleSatellite",
-    "GoogleRoadmap",
-    "GoogleTerrain",
-    "GoogleAlteredRoadmap",
-    "GoogleTerrainOnly",
-    "GoogleHybrid",
-    "CartoDb",
-    "StamenTerrain",
-    "OSMMapnick",
-    "OSMCycle",
+    "CAWM", // Ancient World Map
+    "OSM", // Open Street Map
+    "EsriSatellite", // Esri Imagery/Satellite
+    "EsriStreets", // Esri Streets
+    "EsriTopo", // Esri Topo
+    "GoogleSatellite", // Google Satellite
+    "GoogleRoadmap", // Google Roadmap
+    "GoogleTerrain", // Google Terrain
+    "GoogleAlteredRoadmap", // Google Altered Roadmap
+    "GoogleTerrainOnly", // Google Terrain Only
+    "GoogleHybrid", // Google Hybrid
+    "CartoDb", // Carto DB
+    "StamenTerrain", // Stamen Terrain
+    "OSMMapnick", // OpenStreetMap Mapnick
+    "OSMCycle", // OSM Cycle Map
   ]),
 )
 
