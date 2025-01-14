@@ -15,6 +15,7 @@ import getDataFromSource from "../../services/getDataFromSource"
 import sourcePropTypes from "../../services/sourcePropTypes"
 import { defaultOperatorsProptypes } from "./defaultOperators"
 import fieldsPropTypes from "../../services/fieldsPropTypes"
+import queryString from "query-string"
 
 const Search = ({
   source,
@@ -41,7 +42,7 @@ const Search = ({
 
   const processData = async (conn, inputs) => {
     try {
-      const filter = JSON.stringify(plain2directus(conn, inputs))
+      const filter = plain2directus(conn, inputs)
 
       const newSource = createNewSource(source, filter)
 
@@ -59,10 +60,40 @@ const Search = ({
       setError("Error in querying remote data")
     }
   }
+  
+  /** 
+   * Creates a new source object with an updated filter in the query string.
+   *
+   * @param {Object} source - The original source object.
+   * @param {Object} filter - The filter object to be added to the query string.
+   * @returns {Object} - The new source object with the updated filter.
+   */
   const createNewSource = (source, filter) => {
     const newSource = structuredClone(source)
     newSource.transType = "json"
-    newSource.dQueryString = `${source.dQueryString ? `${newSource.dQueryString}&` : ""}filter=${filter}`
+
+    // Source already has a dQueryString
+    if (typeof newSource.dQueryString !== "undefined") {
+      const queryObj = queryString.parse(newSource.dQueryString)
+      // Check if filter is available in the query
+      if (queryObj.filter) {
+        // dQueryString has a filter: parse it and add the new filter to the existing one
+        const mainFilterObj = JSON.parse(queryObj.filter)
+        queryObj.filter = JSON.stringify({
+          "_and": [mainFilterObj, filter]
+        });
+        newSource.dQueryString = queryString.stringify(queryObj)
+
+      } else {
+        // Source has a dQueryString but no filter: add filter to query object
+        queryObj.filter = JSON.stringify(filter);
+        newSource.dQueryString = queryString.stringify(queryObj)
+      }
+    } else {
+      // Source does not have a dQueryString: provide filter, as is
+      newSource.dQueryString = queryString.stringify({filter: filter})
+    }
+
     return newSource
   }
 
