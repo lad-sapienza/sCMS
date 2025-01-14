@@ -47,7 +47,6 @@ const Search = ({
       const filter = plain2directus(conn, inputs)
 
       const newSource = createNewSource(source, filter)
-      console.log(newSource)
 
       const data = await getDataFromSource(newSource)
       setQueryRun(true)
