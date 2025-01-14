@@ -32,6 +32,7 @@ const Search = ({
 }) => {
   const [searchResults, setSearchResults] = useState([])
   const [error, setError] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
   const [queryRun, setQueryRun] = useState(false)
 
   useEffect(() => {
@@ -42,9 +43,11 @@ const Search = ({
 
   const processData = async (conn, inputs) => {
     try {
+      setIsLoading(true)
       const filter = plain2directus(conn, inputs)
 
       const newSource = createNewSource(source, filter)
+      console.log(newSource)
 
       const data = await getDataFromSource(newSource)
       setQueryRun(true)
@@ -58,6 +61,8 @@ const Search = ({
     } catch (err) {
       console.error(err)
       setError("Error in querying remote data")
+    } finally {
+      setIsLoading(false)
     }
   }
   
@@ -91,7 +96,7 @@ const Search = ({
       }
     } else {
       // Source does not have a dQueryString: provide filter, as is
-      newSource.dQueryString = queryString.stringify({filter: filter})
+      newSource.dQueryString = queryString.stringify({filter: JSON.stringify(filter)})
     }
 
     return newSource
@@ -107,11 +112,10 @@ const Search = ({
       />
 
       {error && <div className="text-danger">{error}</div>}
-
-      {queryRun && searchResults.length === 0 && !error && (
+      {isLoading && <div className="text-info">Loading...</div>}
+      {queryRun && searchResults.length === 0 && !error && !isLoading && (
         <div className="text-warning">No results found</div>
       )}
-
       {searchResults.length > 0 && !error && (
         <>
           {resultsHeaderTemplate(searchResults.length)}
