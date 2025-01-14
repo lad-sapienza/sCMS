@@ -433,6 +433,24 @@ The `HarrisMatrix` component renders a directed graph using viz.js from a DOT st
 | `containerClassNames` | string | no | _null_ | Additional class names for the container. |
 | `onClickNode` | function | no | `nodeText => { console.log(nodeText) }` | Function to call when a node is clicked. The node's text is passed as a parameter. |
 
+
+### SimpleSlider Component
+
+The `SimpleSlider` component is a React component that renders a carousel slider using the `react-bootstrap` Carousel component. It is designed to display a series of images with optional captions and custom interval times for each slide.
+
+**Props**
+| Prop Name | Type | Required | Default value | Description |
+|----------|------|-------------------|---------------|-------------|
+| `data` | array | Yes | null | An array of objects containing image URLs, optional captions, and optional intervals. |
+
+For each element of `data`, the following `props` are available:
+| Prop Name | Type | Required | Default value | Description |
+|----------|------|-------------------|---------------|-------------|
+|`img` | string | Yes | null | URL of the image to display. |
+| `caption` | string | No | null | Optional caption for the image.|
+|`interval` | number | No | 5000 | Optional interval time for the slide in milliseconds.
+
+
 ---
 
 ## Built with s:CMS
