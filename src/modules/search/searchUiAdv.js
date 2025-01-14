@@ -1,165 +1,107 @@
 import React, { useState } from "react"
+import PropTypes from "prop-types"
+import { Button, Form, Row, Col, Spinner } from "react-bootstrap"
 import { DashCircle, PlusCircle, Search } from "react-bootstrap-icons"
+import { defaultOperatorsProptypes } from "./defaultOperators"
 
-import { Row, Col, Form, Button } from "react-bootstrap"
-import { defaultOperators } from "./defaultOperators"
+const SearchUiAdv = ({ fieldList, processData, operators, connectors, isLoading }) => {
+  const [filters, setFilters] = useState([{ field: "", operator: "", value: "" }])
 
-const SearchUiAdv = ({ fieldList, processData, operators, connectors }) => {
-  operators = Object.assign(defaultOperators, operators)
-  connectors = {
-    _and: connectors?._and || "AND",
-    _or: connectors?._or || "OR",
+  const addFilter = () => {
+    setFilters([...filters, { field: "", operator: "", value: "" }])
   }
 
-  const [inputs, setInputs] = useState([
-    {
-      field: Object.keys(fieldList)[0],
-      operator: Object.keys(operators)[0],
-      value: fieldList[Object.keys(fieldList)[0]]?.values?.[0] || "",
-    },
-  ])
-
-  const [conn, setConn] = useState("_and")
-
-  const handleAddInput = () => {
-    const firstField = Object.keys(fieldList)[0]
-    setInputs([
-      ...inputs,
-      {
-        field: Object.keys(fieldList)[0],
-        operator: Object.keys(operators)[0],
-        value: fieldList[firstField]?.values?.[0] || "",
-      },
-    ])
+  const removeFilter = index => {
+    setFilters(filters.filter((_, i) => i !== index))
   }
 
-  const handleChange = (event, index) => {
-    let { name, value } = event.target
-    let onChangeValue = [...inputs]
-    onChangeValue[index][name] = value
-
-    // Se il campo cambia, aggiorna il valore di default per il terzo input
-    if (name === "field") {
-      onChangeValue[index].value = fieldList[value]?.values?.[0] || "" // Valore predefinito
-    }
-
-    setInputs(onChangeValue)
+  const handleChange = (index, event) => {
+    const { name, value } = event.target
+    const newFilters = filters.map((filter, i) => (i === index ? { ...filter, [name]: value } : filter))
+    setFilters(newFilters)
   }
 
-  const handleDeleteInput = index => {
-    const newArray = [...inputs]
-    newArray.splice(index, 1)
-    setInputs(newArray)
+  const handleSubmit = event => {
+    event.preventDefault()
+    processData(connectors, filters)
   }
 
   return (
-    <React.Fragment>
-      {inputs.length > 1 && (
-        <React.Fragment>
-          {Object.entries(connectors).map(([k, v]) => (
-            <Form.Check
-              key={k}
-              inline
-              type="radio"
-              name="connector"
-              value={k}
-              label={v}
-              checked={k === conn}
-              onChange={event => setConn(event.target.value)}
-            />
-          ))}
-        </React.Fragment>
-      )}
-      {inputs.map((item, index) => (
-        <Row key={index} className="my-2">
-          <Col sm>
-            <Form.Select
-              aria-label="Select field"
+    <Form onSubmit={handleSubmit}>
+      {filters.map((filter, index) => (
+        <Row key={index} className="mb-3">
+          <Col>
+            <Form.Control
+              as="select"
               name="field"
-              value={item.field}
-              onChange={event => handleChange(event, index)}
+              value={filter.field}
+              onChange={event => handleChange(index, event)}
+              required
             >
-              {Object.entries(fieldList).map(([k, v]) => (
-                <option key={k} value={k}>
-                  {typeof v === "string" ? v : v.label}
-                  {/* Verifico se il valore è stringa o oggetto */}
+              <option value="">Select Field</option>
+              {fieldList.map(field => (
+                <option key={field} value={field}>
+                  {field}
                 </option>
               ))}
-            </Form.Select>
+            </Form.Control>
           </Col>
-          <Col sm>
-            <Form.Select
-              aria-label="Operator"
+          <Col>
+            <Form.Control
+              as="select"
               name="operator"
-              value={item.operator}
-              onChange={event => handleChange(event, index)}
+              value={filter.operator}
+              onChange={event => handleChange(index, event)}
+              required
             >
-              {Object.entries(operators).map(([k, v]) => (
-                <option key={k} value={k}>
-                  {v}
+              <option value="">Select Operator</option>
+              {operators.map(operator => (
+                <option key={operator} value={operator}>
+                  {operator}
                 </option>
               ))}
-            </Form.Select>
+            </Form.Control>
           </Col>
-          {/* Campo per i valori */}
-          <Col sm>
-            {fieldList[item.field] &&
-            typeof fieldList[item.field] === "object" &&
-            Array.isArray(fieldList[item.field]?.values) ? (
-              <Form.Select
-                aria-label="Select value"
-                name="value"
-                value={item.value}
-                onChange={event => handleChange(event, index)}
-              >
-                {fieldList[item.field].values.map(value => (
-                  <option key={value} value={value}>
-                    {value}
-                  </option>
-                ))}
-              </Form.Select>
-            ) : (
-              <Form.Control
-                type="text"
-                name="value"
-                value={item.value}
-                onChange={event => handleChange(event, index)}
-              />
-            )}
+          <Col>
+            <Form.Control
+              type="text"
+              name="value"
+              value={filter.value}
+              onChange={event => handleChange(index, event)}
+              required
+            />
           </Col>
-          <Col sm>
-            {index > 0 && (
-              <Button
-                variant="danger"
-                onClick={() => handleDeleteInput(index)}
-                className="mx-1"
-              >
-                <DashCircle />
-              </Button>
-            )}
-            {index === inputs.length - 1 && (
-              <React.Fragment>
-                <Button
-                  variant="info"
-                  className="mx-1"
-                  onClick={() => handleAddInput()}
-                >
-                  <PlusCircle />
-                </Button>
-                <Button
-                  onClick={() => processData(conn, inputs)}
-                  variant="success"
-                  className="mx-1"
-                >
-                  <Search />
-                </Button>
-              </React.Fragment>
-            )}
+          <Col xs="auto">
+            <Button variant="danger" onClick={() => removeFilter(index)}>
+              <DashCircle />
+            </Button>
           </Col>
         </Row>
       ))}
-    </React.Fragment>
+      <Row className="mb-3">
+        <Col>
+          <Button variant="success" onClick={addFilter}>
+            <PlusCircle /> Add Filter
+          </Button>
+        </Col>
+      </Row>
+      <Row className="mb-3">
+        <Col>
+          <Button type="submit" variant="primary" disabled={isLoading}>
+            {isLoading ? <Spinner animation="border" size="sm" /> : <Search />} Search
+          </Button>
+        </Col>
+      </Row>
+    </Form>
   )
+}
+
+SearchUiAdv.propTypes = {
+  fieldList: PropTypes.array.isRequired,
+  processData: PropTypes.func.isRequired,
+  operators: defaultOperatorsProptypes.isRequired,
+  connectors: PropTypes.object.isRequired,
+  isLoading: PropTypes.bool,
 }
 
 export default SearchUiAdv

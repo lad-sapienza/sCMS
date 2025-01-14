@@ -1,9 +1,10 @@
 import React, { useState } from "react"
-import { Button, Col, Form, Row } from "react-bootstrap"
+import { Button, Col, Form, Row, Spinner } from "react-bootstrap"
 import { Search } from "react-bootstrap-icons"
 
-const SearchUiSimple = ({ fieldList, processData }) => {
-  const [searchText, setSearchText] = useState()
+const SearchUiSimple = ({ fieldList, processData, isLoading }) => {
+  const [searchText, setSearchText] = useState("")
+
   const handleChange = event => {
     let { value } = event.target
     setSearchText(value)
@@ -21,23 +22,31 @@ const SearchUiSimple = ({ fieldList, processData }) => {
     processData("_or", filters)
   }
 
+  const handleSubmit = event => {
+    event.preventDefault()
+    preProcessData(searchText)
+  }
+
   return (
     <React.Fragment>
-      <Row>
-        <Col>
-          <Form.Control type="search" onChange={e => handleChange(e)} />
-        </Col>
-        <Col>
-          <Button
-            variant="success"
-            onClick={e => {
-              preProcessData(searchText)
-            }}
-          >
-            <Search />
-          </Button>
-        </Col>
-      </Row>
+      <Form onSubmit={handleSubmit}>
+        <Row>
+          <Col>
+            <Form.Control
+              type="search"
+              value={searchText}
+              onChange={handleChange}
+              placeholder="Enter search text"
+              required
+            />
+          </Col>
+          <Col xs="auto">
+            <Button type="submit" variant="success" disabled={isLoading}>
+              {isLoading ? <Spinner animation="border" size="sm" /> : <Search />} Search
+            </Button>
+          </Col>
+        </Row>
+      </Form>
     </React.Fragment>
   )
 }
