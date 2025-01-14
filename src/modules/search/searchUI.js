@@ -1,12 +1,12 @@
 import React, { useState } from "react"
 import PropTypes from "prop-types"
-import { Button } from "react-bootstrap"
+import { Button, Spinner } from "react-bootstrap"
 import { Filter, Funnel } from "react-bootstrap-icons"
 import SearchUiAdv from "./searchUiAdv"
 import SearchUiSimple from "./searchUiSimple"
 import { defaultOperatorsProptypes } from "./defaultOperators"
 
-const SearchUI = ({ fieldList, processData, operators, connectors }) => {
+const SearchUI = ({ fieldList, processData, operators, connectors, isLoading }) => {
   const [isSimple, setIsSimple] = useState(true)
 
   const onClickSimple = () => setIsSimple(!isSimple)
@@ -24,20 +24,24 @@ const SearchUI = ({ fieldList, processData, operators, connectors }) => {
     <React.Fragment>
       <div className="text-end">
         <Button onClick={onClickSimple} variant="warning">
-          {isSimple && <Filter />}
-          {!isSimple && <Funnel />}
+          {isSimple ? <Filter /> : <Funnel />}
         </Button>
       </div>
-      {isSimple && (
-        <SearchUiSimple fieldList={fieldList} processData={processData} />
+      {isLoading && (
+        <div className="text-center my-3">
+          <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        </div>
       )}
-      {!isSimple && (
-        <SearchUiAdv
-          fieldList={fieldList}
-          operators={operators}
-          connectors={connectors}
-          processData={processData}
-        />
+      {!isLoading && (
+        <>
+          {isSimple ? (
+            <SearchUiSimple fieldList={fieldList} processData={processData} />
+          ) : (
+            <SearchUiAdv fieldList={fieldList} processData={processData} operators={operators} connectors={connectors} />
+          )}
+        </>
       )}
     </React.Fragment>
   )
@@ -84,6 +88,10 @@ SearchUI.propTypes = {
      */
     _or: PropTypes.string,
   }),
+  /**
+   * Boolean to indicate if the component is in loading state
+   */
+  isLoading: PropTypes.bool,
 }
 
 export default SearchUI
