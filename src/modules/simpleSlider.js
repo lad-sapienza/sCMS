@@ -2,7 +2,16 @@ import React from "react"
 import Carousel from "react-bootstrap/Carousel"
 import PropTypes from "prop-types"
 
-const SimpleSlider = ({ data, children }) => (
+/**
+ * SimpleSlider component
+ * This component renders a carousel slider using the 'react-bootstrap' Carousel component.
+ * It takes an array of data objects, each containing an image URL and an optional caption.
+ *
+ * @param {Object[]} data - Array of objects containing image URLs and optional captions.
+ * @param {string} data[].img - URL of the image to display.
+ * @param {string} [data[].caption] - Optional caption for the image.
+ */
+const SimpleSlider = ({ data }) => (
   <Carousel>
     {data.map((el, key) => (
       <Carousel.Item key={key}>
@@ -21,8 +30,9 @@ SimpleSlider.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
       img: PropTypes.string.isRequired,
-      capion: PropTypes.string,
+      caption: PropTypes.string,
     }),
   ).isRequired,
 }
+
 export { SimpleSlider }
