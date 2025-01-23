@@ -2,22 +2,22 @@
   "name": "@lad-sapienza/scms",
   "private": false,
   "description": "A simple starter to get up and developing quickly with Gatsby 5 and Bootstrap 5",
-  "version": "4.7.6",
+  "version": "5.0.0",
   "author": {
     "name": "Julian Bogdani",
     "email": "julian.bogdani@uniroma1.it",
-    "url": "https://lad.uniroma1.it"
+    "url": "https://lad.saras.uniroma1.it"
   },
   "contributors": [
     {
       "name": "Eleonora Iacopini",
       "email": "eleonora.iacopini@uniroma1.it",
-      "url": "https://lad.uniroma1.it"
+      "url": "https://lad.saras.uniroma1.it"
     },
     {
       "name": "Erasmo Di Fonso",
       "email": "erasmo.difonso@uniroma1.it",
-      "url": "https://lad.uniroma1.it"
+      "url": "https://lad.saras.uniroma1.it"
     }
   ],
   "dependencies": {
