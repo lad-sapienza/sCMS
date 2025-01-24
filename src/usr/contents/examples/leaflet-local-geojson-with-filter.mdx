@@ -20,7 +20,9 @@ This example demonstrates how to add a GeoJSON layer to a Leaflet map and apply 
       <VectorLayer 
         name="Filtered Sites"
         source={{
-          path2data: "/data/ksa.geojson"
+          path2data: {
+            path: "/data/ksa.geojson"
+          }
         }}
         fitToContent={true}
         checked={true}
@@ -42,7 +44,9 @@ This example demonstrates how to add a GeoJSON layer to a Leaflet map and apply 
       <VectorLayer
         name="Filtered Sites"
         source={{
-          path2data: "/data/ksa.geojson"
+          path2data: {
+            path: "/data/ksa.geojson"
+          }
         }}
         fitToContent={true}
         checked={true}

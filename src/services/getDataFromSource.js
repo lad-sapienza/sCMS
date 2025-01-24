@@ -1,8 +1,7 @@
-import csv from "csvtojson"
 import json2geoJson from "./transformers/json2geojson.js"
 import sourcePropTypes from "./sourcePropTypes.js"
-import { withPrefix } from "gatsby"
 import DirectusService from "./directus/directus.js"
+import Path2DataService from "./path2data/path2data.js"
 
 const getDataFromSource = async ({
   path2data,
@@ -15,21 +14,18 @@ const getDataFromSource = async ({
   let options = {}
   let output
 
+  // path2data source
   if (path2data) {
-    sourceUrl = path2data.startsWith("http") ? path2data : withPrefix(path2data)
-    if (path2data.toLowerCase().endsWith(".csv")) {
-      transType = "csv2json"
-    }
-    if (path2data.toLowerCase().endsWith(".geojson")) {
-      transType = "json"
-    }
+    const p2tRet = Path2DataService.formatUrl(path2data);
+    sourceUrl = p2tRet.sourceUrl
+    options = p2tRet.options
   // Directus source
   } else if (directus) {
     const dirRet = DirectusService.formatUrl(directus)
     sourceUrl = dirRet.sourceUrl
     options = dirRet.options
   
-    // CustomApi source
+  // CustomApi source
   } else  if (customApi && customApi.formatUrl) {
     const customRet = customApi.formatUrl()
     sourceUrl = customRet.sourceUrl
@@ -43,20 +39,15 @@ const getDataFromSource = async ({
 
     if (directus){
       return await DirectusService.parseResponse(response, directus.geoField);
+    
+    } else if (path2data) {
+      return await Path2DataService.parseResponse(response, path2data.path)
+    
     } else if (customApi && customApi.parseResponse) {
       return await customApi.parseResponse(response, customApi.geoField)
     }
 
     switch (transType) {
-      case "text":
-        output = await response.text()
-        break
-
-      case "csv2json":
-        const csvText = await response.text()
-        output = await csv().fromString(csvText)
-        break
-
       case "geojson":
         const respJson = await response.json()
         output = json2geoJson(respJson.data, geoField)
