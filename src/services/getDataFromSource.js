@@ -1,4 +1,3 @@
-import json2geoJson from "./transformers/json2geojson.js"
 import sourcePropTypes from "./sourcePropTypes.js"
 import DirectusService from "./directus/directus.js"
 import Path2DataService from "./path2data/path2data.js"
@@ -7,12 +6,9 @@ const getDataFromSource = async ({
   path2data,
   directus,
   customApi,
-  transType,
-  geoField,
 }) => {
   let sourceUrl
   let options = {}
-  let output
 
   // path2data source
   if (path2data) {
@@ -47,25 +43,6 @@ const getDataFromSource = async ({
       return await customApi.parseResponse(response, customApi.geoField)
     }
 
-    switch (transType) {
-      case "geojson":
-        const respJson = await response.json()
-        output = json2geoJson(respJson.data, geoField)
-        break
-
-      case "json":
-      default:
-        output = await response.json()
-        break
-    }
-
-    if (output.errors) {
-      throw new Error(
-        `Error communicating with server: ${output.errors[0].message}`,
-      )
-    }
-
-    return Object.hasOwn(output, "data") ? output.data : output
   } catch (error) {
     // console.log(error)
     throw Error(error)

@@ -12,12 +12,7 @@ const sourcePropTypes = PropTypes.shape({
   customApi: PropTypes.shape({
     formatUrl: PropTypes.func.isRequired,
     parseResponse: PropTypes.func.isRequired,
-  }),
-
-  /**
-   * Tranformation to apply to data
-   */
-  transType: PropTypes.oneOf(["text", "csv2json", "json", "geojson"]),
+  })
 })
 
 export default sourcePropTypes

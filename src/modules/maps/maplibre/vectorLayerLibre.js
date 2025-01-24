@@ -112,7 +112,6 @@ const VectorLayerLibre = ({
   useEffect(() => {
     const fetchGeoData = async () => {
       try {
-        source.transType = "geojson"
         const geoJSON = await getDataFromSource(source)
         setGeojson(geoJSON) // Imposta i dati geoJSON originali
       } catch (err) {

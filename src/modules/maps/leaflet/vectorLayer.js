@@ -20,7 +20,6 @@ const VectorLayer = ({
   const [error, setError] = useState(false)
   const map = useMap()
 
-  source.transType = "geojson"
 
   useEffect(() => {
     getDataFromSource(source)
