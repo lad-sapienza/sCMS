@@ -45,18 +45,31 @@ const Search = ({
     try {
       setIsLoading(true)
       let filter
+      let data
       if (source.directus) {
+        // Genera la query string usando DirectusService
         filter = DirectusService.form2querystring(conn, inputs)
+        const newSource = createNewSource(source, filter, "directus")
+        data = await getDataFromSource(newSource)
       } else if (source.customApi) {
+        // Usa il servizio personalizzato (EdrService)
         filter = source.customApi.form2querystring(conn, inputs)
+        const { sourceUrl, options } = source.customApi.formatUrl({
+          query: filter,
+          token: source.token, // Passa il token, se disponibile
+        })
+        const response = await fetch(sourceUrl, options)
+        data = await source.customApi.parseResponse(response)
+      } else {
+        throw new Error("Invalid source configuration")
       }
 
-      const newSource = createNewSource(source, filter)
+      //const newSource = createNewSource(source, filter)
 
-      const data = await getDataFromSource(newSource)
+      // const data = await getDataFromSource(newSource)
       setQueryRun(true)
 
-      if (data.errors) {
+      if (!data || data.errors) {
         throw new Error("Error in querying remote data")
       }
 
@@ -77,33 +90,36 @@ const Search = ({
    * @param {Object} filter - The filter object to be added to the query string.
    * @returns {Object} - The new source object with the updated filter.
    */
-  const createNewSource = (source, filter) => {
-    const newSource = structuredClone(source)
+  const createNewSource = (source, filter, type) => {
+    if (type === "directus") {
+      const newSource = { ...source } // Copia l'oggetto senza clonare funzioni
 
-    // Source already has a directus.queryString
-    if (typeof newSource.directus.queryString !== "undefined") {
-      const queryObj = queryString.parse(newSource.directus.queryString)
-      // Check if filter is available in the query
-      if (queryObj.filter) {
-        // directus.queryString has a filter: parse it and add the new filter to the existing one
-        const mainFilterObj = JSON.parse(queryObj.filter)
-        queryObj.filter = JSON.stringify({
-          _and: [mainFilterObj, filter],
-        })
-        newSource.directus.queryString = queryString.stringify(queryObj)
+      // Source already has a directus.queryString
+      if (typeof newSource.directus.queryString !== "undefined") {
+        const queryObj = queryString.parse(newSource.directus.queryString)
+        // Check if filter is available in the query
+        if (queryObj.filter) {
+          // directus.queryString has a filter: parse it and add the new filter to the existing one
+          const mainFilterObj = JSON.parse(queryObj.filter)
+          queryObj.filter = JSON.stringify({
+            _and: [mainFilterObj, filter],
+          })
+          newSource.directus.queryString = queryString.stringify(queryObj)
+        } else {
+          // Source has a directus.queryString but no filter: add filter to query object
+          queryObj.filter = JSON.stringify(filter)
+          newSource.directus.queryString = queryString.stringify(queryObj)
+        }
       } else {
-        // Source has a directus.queryString but no filter: add filter to query object
-        queryObj.filter = JSON.stringify(filter)
-        newSource.directus.queryString = queryString.stringify(queryObj)
+        // Source does not have a directus.queryString: provide filter, as is
+        newSource.directus.queryString = queryString.stringify({
+          filter: JSON.stringify(filter),
+        })
       }
-    } else {
-      // Source does not have a directus.queryString: provide filter, as is
-      newSource.directus.queryString = queryString.stringify({
-        filter: JSON.stringify(filter),
-      })
-    }
 
-    return newSource
+      return newSource
+    }
+    return source // Per customApi non serve modificare nulla
   }
 
   return (
