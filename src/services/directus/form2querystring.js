@@ -7,7 +7,6 @@ import PropTypes from 'prop-types'
  * @returns {Object}      Object with query compatible to Directus API
  */
 const form2querystring = (conn, plain) => {
-  console.log(plain)
   const directus = {}
 
   if (plain.length === 1) {
