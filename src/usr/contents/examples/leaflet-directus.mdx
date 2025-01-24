@@ -23,8 +23,10 @@ import {
       <VectorLayer
         name="All Sites"
         source={{
-          dTable: "scms_ksa",
-          geoField: "geometry"
+          directus: {
+            table: "scms_ksa",
+            geoField: "geometry"
+          }
         }}
         checked={true}
         fitToContent={true}
@@ -48,7 +50,7 @@ import {
       <VectorLayer
         name="All Sites"
         source= {{
-          dTable: "scms_ksa",
+          table: "scms_ksa",
           geoField: "geometry"
         }}
         

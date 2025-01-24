@@ -20,8 +20,10 @@ Under the hood, `DataTb` uses the [React Data Table Component](https://react-dat
   <div className="col-sm-8">
     <DataTb
       source={{
-        dTable: "scms_ksa",
-        dQueryString: "limit=1000&offset=0",
+        directus: {
+          table: "scms_ksa",
+          queryString: "limit=1000&offset=0",
+        }
       }}
       striped={true}
       columns={[
@@ -66,8 +68,10 @@ Under the hood, `DataTb` uses the [React Data Table Component](https://react-dat
 <DataTb
   striped={true}
   source={{
-    dTable: "scms_ksa",
-    dQueryString :"limit=1000&offset=0"
+    directus: {
+      table: "scms_ksa",
+      queryString :"limit=1000&offset=0"
+    }
   }}
   columns={[
     {

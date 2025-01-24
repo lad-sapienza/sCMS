@@ -2,26 +2,18 @@ import csv from "csvtojson"
 import json2geoJson from "./transformers/json2geojson.js"
 import sourcePropTypes from "./sourcePropTypes.js"
 import { withPrefix } from "gatsby"
-import { FormatUrl } from "./directus/directus.js"
+import DirectusService from "./directus/directus.js"
 
-const getDataFromSource = async source => {
-  let {
-    path2data,
-    directus,
-    dEndPoint,
-    dToken,
-    dTable,
-    id,
-    dQueryString,
-    transType,
-    geoField,
-  } = source
-
+const getDataFromSource = async ({
+  path2data,
+  directus,
+  transType,
+  geoField,
+}) => {
   let sourceUrl
   let options = {}
   let output
 
-  // 1: path to static data
   if (path2data) {
     sourceUrl = path2data.startsWith("http") ? path2data : withPrefix(path2data)
     if (path2data.toLowerCase().endsWith(".csv")) {
@@ -30,46 +22,19 @@ const getDataFromSource = async source => {
     if (path2data.toLowerCase().endsWith(".geojson")) {
       transType = "json"
     }
-  } else if (directus){
-    const { dSourceUrl, dOptions } = FormatUrl(directus)
-    sourceUrl = dSourceUrl;
-    options = dOptions;
+  } else if (directus) {
+    const dirRet = DirectusService.formatUrl(directus)
+    sourceUrl = dirRet.sourceUrl
+    options = dirRet.options
   } else {
-    if (dEndPoint) {
-      sourceUrl = dEndPoint
-    } else if (process.env.GATSBY_DIRECTUS_ENDPOINT) {
-      sourceUrl = process.env.GATSBY_DIRECTUS_ENDPOINT
-    } else {
-      throw new Error(
-        "Either `dEndPoint` or env variable `GATSBY_DIRECTUS_ENDPOINT` are needed",
-      )
-    }
-    if (dEndPoint || process.env.GATSBY_DIRECTUS_ENDPOINT) {
-      if (!dTable) {
-        throw new Error(
-          "Parameter `dTable` is requirted with `GATSBY_DIRECTUS_ENDPOINT` or `dEndPoint`",
-        )
-      }
-      sourceUrl += `${sourceUrl.endsWith("/") ? "" : "/"}items/${dTable}`
-    }
-    if (id) {
-      sourceUrl += `/${id}`
-    }
-    sourceUrl += `?${dQueryString ? dQueryString : ""}`
-
-    const token = dToken ? dToken : process.env.GATSBY_DIRECTUS_TOKEN
-
-    if (token) {
-      options = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    }
   }
 
   try {
     const response = await fetch(sourceUrl, options)
+
+    if (directus){
+      return await DirectusService.parseResponse(response, directus.geoField);
+    }
 
     switch (transType) {
       case "text":
@@ -105,8 +70,6 @@ const getDataFromSource = async source => {
   }
 }
 
-getDataFromSource.PropTypes = {
-  source: sourcePropTypes,
-}
+getDataFromSource.PropTypes = sourcePropTypes
 
 export default getDataFromSource
