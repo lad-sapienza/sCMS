@@ -1,0 +1,61 @@
+---
+title: "Search custom API"
+date: "2023-10-01"
+slug: "search_custom_api"
+description: ""
+menu_position: 6
+---
+
+import { Search } from "../../modules/scms.js"
+import { Link } from "gatsby"
+import EdrService from "../../usr/services/edr/edr.js"
+
+# Easily build a search engine with custom templates to show results
+
+`<Search />` component connecting to the Directus default instance by using only the name of the Directus table
+
+<div className="row">
+  <div className="col-sm-4">
+```jsx
+ <Search
+      source={{ customApi: EdrService}}
+      fieldList={{
+"record_number": "record_number",
+    "discovery_location": "discovery_location"
+        }}
+      resultItemTemplate = { item => {
+        return      <div className="card my-3" key={item.id}>
+      <div className="card-body">
+        <h5 className="card-title">
+          {item.record_number} — {item.discovery_location}
+        </h5>
+      </div>
+    </div>
+      }}
+    />
+
+```
+  </div>
+  <div className="col-sm-8">
+    <Search
+      source={{ customApi: EdrService}}
+      fieldList={{
+"record_number": "record_number",
+    "discovery_location": "discovery_location"
+        }}
+      resultItemTemplate = { item => {
+        return      <div className="card my-3" key={item.id}>
+      <div className="card-body">
+        <h5 className="card-title">
+          {item.record_number} — {item.discovery_location}
+        </h5>
+      </div>
+    </div>
+      }}
+    />
+
+---
+
+  </div>
+</div>
+```
