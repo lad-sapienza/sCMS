@@ -2,10 +2,12 @@ import csv from "csvtojson"
 import json2geoJson from "./transformers/json2geojson.js"
 import sourcePropTypes from "./sourcePropTypes.js"
 import { withPrefix } from "gatsby"
+import { FormatUrl } from "./directus/directus.js"
 
 const getDataFromSource = async source => {
   let {
     path2data,
+    directus,
     dEndPoint,
     dToken,
     dTable,
@@ -19,6 +21,7 @@ const getDataFromSource = async source => {
   let options = {}
   let output
 
+  // 1: path to static data
   if (path2data) {
     sourceUrl = path2data.startsWith("http") ? path2data : withPrefix(path2data)
     if (path2data.toLowerCase().endsWith(".csv")) {
@@ -27,6 +30,10 @@ const getDataFromSource = async source => {
     if (path2data.toLowerCase().endsWith(".geojson")) {
       transType = "json"
     }
+  } else if (directus){
+    const { dSourceUrl, dOptions } = FormatUrl(directus)
+    sourceUrl = dSourceUrl;
+    options = dOptions;
   } else {
     if (dEndPoint) {
       sourceUrl = dEndPoint

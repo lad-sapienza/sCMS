@@ -6,6 +6,13 @@ const sourcePropTypes = PropTypes.shape({
    * Required if dEndPoint or dTable are not set
    */
   path2data: PropTypes.string,
+  
+  directus: PropTypes.shape({
+    endpoint: PropTypes,
+    table: PropTypes.string,
+    queryString: PropTypes.string,
+    token: PropTypes.string,
+  }),
   /**
    * Directus endpoint.
    * Required if either dTable (and env GATSBY_DIRECTUS_ENDPOINT) or path2data are not set
