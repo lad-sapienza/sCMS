@@ -1,3 +1,10 @@
+/**
+ * Converts a JSON array to a GeoJSON FeatureCollection.
+ *
+ * @param {Array} json - The JSON array to convert.
+ * @param {string} geoDataField - The field in the JSON objects that contains the geographic data.
+ * @returns {Object} The GeoJSON FeatureCollection.
+ */
 const json2geoJson = (json, geoDataField) => {
   return {
     type: "FeatureCollection",
@@ -15,4 +22,4 @@ const json2geoJson = (json, geoDataField) => {
   }
 }
 
-export default json2geoJson;
+export default json2geoJson
