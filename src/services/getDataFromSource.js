@@ -7,6 +7,7 @@ import DirectusService from "./directus/directus.js"
 const getDataFromSource = async ({
   path2data,
   directus,
+  customApi,
   transType,
   geoField,
 }) => {
@@ -22,11 +23,19 @@ const getDataFromSource = async ({
     if (path2data.toLowerCase().endsWith(".geojson")) {
       transType = "json"
     }
+  // Directus source
   } else if (directus) {
     const dirRet = DirectusService.formatUrl(directus)
     sourceUrl = dirRet.sourceUrl
     options = dirRet.options
+  
+    // CustomApi source
+  } else  if (customApi && customApi.formatUrl) {
+    const customRet = customApi.formatUrl()
+    sourceUrl = customRet.sourceUrl
+    options = customRet.options
   } else {
+    throw new Error("No valid source provided")
   }
 
   try {
@@ -34,6 +43,8 @@ const getDataFromSource = async ({
 
     if (directus){
       return await DirectusService.parseResponse(response, directus.geoField);
+    } else if (customApi && customApi.parseResponse) {
+      return await customApi.parseResponse(response, customApi.geoField)
     }
 
     switch (transType) {

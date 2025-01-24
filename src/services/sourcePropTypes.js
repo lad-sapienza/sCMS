@@ -10,6 +10,12 @@ const sourcePropTypes = PropTypes.shape({
   path2data: PropTypes.string,
   
   directus: directusSourceProptypes,
+
+  customApi: PropTypes.shape({
+    formatUrl: PropTypes.func.isRequired,
+    parseResponse: PropTypes.func.isRequired,
+  }),
+
   /**
    * Tranformation to apply to data
    */
