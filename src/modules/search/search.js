@@ -74,28 +74,27 @@ const Search = ({
    */
   const createNewSource = (source, filter) => {
     const newSource = structuredClone(source)
-    newSource.transType = "json"
 
-    // Source already has a dQueryString
-    if (typeof newSource.dQueryString !== "undefined") {
-      const queryObj = queryString.parse(newSource.dQueryString)
+    // Source already has a directus.queryString
+    if (typeof newSource.directus.queryString !== "undefined") {
+      const queryObj = queryString.parse(newSource.directus.queryString)
       // Check if filter is available in the query
       if (queryObj.filter) {
-        // dQueryString has a filter: parse it and add the new filter to the existing one
+        // directus.queryString has a filter: parse it and add the new filter to the existing one
         const mainFilterObj = JSON.parse(queryObj.filter)
         queryObj.filter = JSON.stringify({
           "_and": [mainFilterObj, filter]
         });
-        newSource.dQueryString = queryString.stringify(queryObj)
+        newSource.directus.queryString = queryString.stringify(queryObj)
 
       } else {
-        // Source has a dQueryString but no filter: add filter to query object
+        // Source has a directus.queryString but no filter: add filter to query object
         queryObj.filter = JSON.stringify(filter);
-        newSource.dQueryString = queryString.stringify(queryObj)
+        newSource.directus.queryString = queryString.stringify(queryObj)
       }
     } else {
-      // Source does not have a dQueryString: provide filter, as is
-      newSource.dQueryString = queryString.stringify({filter: JSON.stringify(filter)})
+      // Source does not have a directus.queryString: provide filter, as is
+      newSource.directus.queryString = queryString.stringify({filter: JSON.stringify(filter)})
     }
 
     return newSource

@@ -3,7 +3,6 @@ import PropTypes from "prop-types"
 const directusSourceProptypes = PropTypes.shape({
   /**
    * Directus endpoint.
-   * Required if either dTable (and env GATSBY_DIRECTUS_ENDPOINT) or path2data are not set
    */
   endPoint: PropTypes.string,
   
