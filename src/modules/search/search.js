@@ -10,12 +10,12 @@ import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 
 import SearchUI from "./searchUI"
-import plain2directus from "../../services/transformers/plain2directus"
 import getDataFromSource from "../../services/getDataFromSource"
 import sourcePropTypes from "../../services/sourcePropTypes"
 import { defaultOperatorsProptypes } from "./defaultOperators"
 import fieldsPropTypes from "../../services/fieldsPropTypes"
 import queryString from "query-string"
+import DirectusService from "../../services/directus/directus"
 
 const Search = ({
   source,
@@ -44,7 +44,12 @@ const Search = ({
   const processData = async (conn, inputs) => {
     try {
       setIsLoading(true)
-      const filter = plain2directus(conn, inputs)
+      let filter
+      if (source.directus) {
+        filter = DirectusService.form2querystring(conn, inputs)
+      } else if (source.customApi) {
+        filter = source.customApi.form2querystring(conn, inputs)
+      }
 
       const newSource = createNewSource(source, filter)
 
@@ -64,8 +69,8 @@ const Search = ({
       setIsLoading(false)
     }
   }
-  
-  /** 
+
+  /**
    * Creates a new source object with an updated filter in the query string.
    *
    * @param {Object} source - The original source object.
@@ -83,18 +88,19 @@ const Search = ({
         // directus.queryString has a filter: parse it and add the new filter to the existing one
         const mainFilterObj = JSON.parse(queryObj.filter)
         queryObj.filter = JSON.stringify({
-          "_and": [mainFilterObj, filter]
-        });
+          _and: [mainFilterObj, filter],
+        })
         newSource.directus.queryString = queryString.stringify(queryObj)
-
       } else {
         // Source has a directus.queryString but no filter: add filter to query object
-        queryObj.filter = JSON.stringify(filter);
+        queryObj.filter = JSON.stringify(filter)
         newSource.directus.queryString = queryString.stringify(queryObj)
       }
     } else {
       // Source does not have a directus.queryString: provide filter, as is
-      newSource.directus.queryString = queryString.stringify({filter: JSON.stringify(filter)})
+      newSource.directus.queryString = queryString.stringify({
+        filter: JSON.stringify(filter),
+      })
     }
 
     return newSource

@@ -5,7 +5,7 @@
  * @param {Array} plain  Array of objects with field, operator and value keys
  * @returns {Object}      Object with query compatible to Directus API
  */
-const plain2directus = (conn, plain) => {
+const form2querystring = (conn, plain) => {
   const directus = {}
 
   if (plain.length === 1) {
@@ -26,4 +26,4 @@ const plain2directus = (conn, plain) => {
   return directus
 }
 
-export default plain2directus
+export default form2querystring
