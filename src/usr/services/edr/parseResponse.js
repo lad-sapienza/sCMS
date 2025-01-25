@@ -10,8 +10,8 @@ const parseResponse = async response => {
 
     // Trasforma i risultati per adattarli alla struttura desiderata
     const transformedData = output.results.map(item => ({
-      id: item.record_id || item.id, // ID univoco del record
-      record_number: item.record_number || "N/A", // Numero del record
+      id: item.identification.record_id,
+      record_number: item.identification.record_number || "N/A", // Numero del record
       discovery_location: item.localization?.discovery_location || "Unknown", // Localizzazione
     }))
 
