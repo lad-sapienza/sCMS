@@ -10,9 +10,9 @@ import { Search } from "../../modules/scms.js"
 import { Link } from "gatsby"
 import EdrService from "../../usr/services/edr/edr.js"
 
-# Easily build a search engine with custom templates to show results
+# This example shows how to use the `<Search />` component connecting to a custom API
 
-`<Search />` component connecting to the Directus default instance by using only the name of the Directus table
+To this end a custom API service is created in the `edr.js` file. The service is used to fetch data from the API and return it in the format required by the `<Search />` component.
 
 <div className="row">
   <div className="col-sm-4">
@@ -20,8 +20,8 @@ import EdrService from "../../usr/services/edr/edr.js"
   <Search
       source={{ customApi: EdrService}}
       fieldList={{
-        "record_number": "record_number",
-        "discovery_location": "discovery_location"
+        "record_number": "Record number",
+        "discovery_location": "Discovery location"
       }}
       resultItemTemplate = { item =>  <div className="card my-3" key={item.record_number}>
       <div className="card-body">
@@ -38,14 +38,17 @@ import EdrService from "../../usr/services/edr/edr.js"
     <Search
       source={{ customApi: EdrService}}
       fieldList={{
-        "record_number": "record_number",
-        "discovery_location": "discovery_location"
+        "record_number": "Record number",
+        "discovery_location": "Discovery location"
       }}
-      resultItemTemplate = { item =>  <div className="card my-3" key={item.record_number}>
+      resultItemTemplate = { item =>  <div className="card my-3" key={item.identification.record_number}>
       <div className="card-body">
         <h5 className="card-title">
-          {item.record_number} — {item.discovery_location}
+          {item.identification.record_number} — {item.localization.discovery_location}
         </h5>
+        {item.Material_evidence.object_type} | {item.Material_evidence.material}
+        <hr />
+        <a href={item.identification.url}>{item.identification.url}</a>
       </div>
     </div>
       }
