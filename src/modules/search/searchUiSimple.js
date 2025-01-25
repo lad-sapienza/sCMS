@@ -30,7 +30,7 @@ const SearchUiSimple = ({ fieldList, processData, isLoading, toggleSearchType })
   return (
     <React.Fragment>
       <Form onSubmit={handleSubmit}>
-        <Row>
+        <Row className="my-2">
           <Col>
             <Form.Control
               type="search"
@@ -40,13 +40,11 @@ const SearchUiSimple = ({ fieldList, processData, isLoading, toggleSearchType })
               required
             />
           </Col>
-          <Col xs="auto">
+          <Col xs="auto" className="text-end">
             <Button type="submit" variant="success" disabled={isLoading}>
-              {isLoading ? <Spinner animation="border" size="sm" /> : <Search />} Search
+              {isLoading ? <Spinner animation="border" size="sm" /> : <Search />}
             </Button>
-          </Col>
-          <Col xs={1}>
-            <Button onClick={toggleSearchType} variant="warning"><Filter /></Button>
+            <Button onClick={toggleSearchType} variant="warning" className="mx-1"><Filter /></Button>
           </Col>
         </Row>
       </Form>

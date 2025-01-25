@@ -154,16 +154,18 @@ const SearchUiAdv = ({
                   >
                     <Search />
                   </Button>
-                  <Button
-                    className="mx-1"
-                    onClick={toggleSearchType}
-                    variant="warning"
-                  >
-                    <Funnel />
-                  </Button>
                 </React.Fragment>
               )}
             </ButtonGroup>
+            {index === inputs.length - 1 && (
+              <Button
+                className="mx-1"
+                onClick={toggleSearchType}
+                variant="warning"
+              >
+                <Funnel />
+              </Button>
+            )}
           </Col>
         </Row>
       ))}
