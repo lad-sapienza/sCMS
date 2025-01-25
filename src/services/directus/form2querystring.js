@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types'
+import uiFilterPropTypes from "../uiFilterPropTypes";
 /**
  * Transforms plain object to Directus Filter rule syntax
  * https://docs.directus.io/reference/filter-rules.html
@@ -27,15 +27,6 @@ const form2querystring = (conn, plain) => {
   return directus
 }
 
-form2querystring.propTypes = {
-  conn: PropTypes.oneOf(['_and', '_or']).isRequired,
-  plain: PropTypes.arrayOf(
-    PropTypes.shape({
-      field: PropTypes.string.isRequired,
-      operator: PropTypes.string.isRequired,
-      value: PropTypes.any.isRequired,
-    })
-  ).isRequired,
-}
+form2querystring.propTypes = uiFilterPropTypes
 
 export default form2querystring

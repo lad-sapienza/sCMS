@@ -1,25 +1,28 @@
 import sourcePropTypes from "./sourcePropTypes.js"
 import DirectusService from "./directus/directus.js"
 import Path2DataService from "./path2data/path2data.js"
+import uiFilterPropTypes from "./uiFilterPropTypes.js"
 
-const getDataFromSource = async ({ path2data, directus, customApi }) => {
+const getDataFromSource = async (source, uiFilter) => {
+  const { path2data, directus, customApi } = source
+
   let sourceUrl
   let options = {}
 
   // path2data source
   if (path2data) {
-    const p2tRet = Path2DataService.formatUrl(path2data)
+    const p2tRet = Path2DataService.formatUrl(path2data, uiFilter)
     sourceUrl = p2tRet.sourceUrl
     options = p2tRet.options
     // Directus source
   } else if (directus) {
-    const dirRet = DirectusService.formatUrl(directus)
+    const dirRet = DirectusService.formatUrl(directus, uiFilter)
     sourceUrl = dirRet.sourceUrl
     options = dirRet.options
 
     // CustomApi source
   } else if (customApi && customApi.formatUrl) {
-    const customRet = customApi.formatUrl()
+    const customRet = customApi.formatUrl(uiFilter)
     sourceUrl = customRet.sourceUrl
     options = customRet.options
   } else {
@@ -42,6 +45,9 @@ const getDataFromSource = async ({ path2data, directus, customApi }) => {
   }
 }
 
-getDataFromSource.PropTypes = sourcePropTypes
+getDataFromSource.propTypes = {
+  source: sourcePropTypes,
+  uiFilter: uiFilterPropTypes,
+}
 
 export default getDataFromSource

@@ -1,42 +1,25 @@
-import PropTypes from "prop-types"
+import form2querystring from "./form2querystring"
 
-const formatUrl = ({ endPoint, query, token }) => {
-  // Imposta valori di default
-  const defaultEndPoint =
-    "http://www.edr-edr.it/edr_programmi/edr_api.php?ancient_city=roma"
+const formatUrl = uiFilter => {
+
+  const {conn, inputs} = uiFilter
 
   let ret = {
-    sourceUrl: "",
+    sourceUrl:
+      "http://www.edr-edr.it/edr_programmi/edr_api.php?ancient_city=roma",
     options: {},
   }
 
-  // Usa `endPoint` passato o un valore di default
-  ret.sourceUrl = endPoint || defaultEndPoint
+  const filter = form2querystring(conn, inputs)
 
-  // Serializza la query string
-  if (query && typeof query === "object") {
-    const serializedQuery = Object.entries(query)
+  if (filter && typeof filter === "object") {
+    const serializedQuery = Object.entries(filter)
       .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
       .join("&")
     ret.sourceUrl += `&${serializedQuery}`
   }
 
-  // Aggiunge il token di autenticazione, se presente
-  if (token) {
-    ret.options = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  }
-
   return ret
-}
-
-formatUrl.propTypes = {
-  endPoint: PropTypes.string, // Endpoint opzionale
-  query: PropTypes.object.isRequired, // Oggetto query, ad esempio { record_number: "EDR000001" }
-  token: PropTypes.string, // Token opzionale
 }
 
 export default formatUrl
