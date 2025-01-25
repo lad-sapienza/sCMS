@@ -1,15 +1,20 @@
 import React, { useState } from "react"
 import PropTypes from "prop-types"
-import { Button, Spinner } from "react-bootstrap"
-import { Filter, Funnel } from "react-bootstrap-icons"
+import { Spinner } from "react-bootstrap"
 import SearchUiAdv from "./searchUiAdv"
 import SearchUiSimple from "./searchUiSimple"
 import { defaultOperatorsProptypes } from "./defaultOperators"
 
-const SearchUI = ({ fieldList, processData, operators, connectors, isLoading }) => {
+const SearchUI = ({
+  fieldList,
+  processData,
+  operators,
+  connectors,
+  isLoading,
+}) => {
   const [isSimple, setIsSimple] = useState(true)
 
-  const onClickSimple = () => setIsSimple(!isSimple)
+  const toggleSearchType = () => setIsSimple(!isSimple)
 
   if (!fieldList) {
     return (
@@ -22,14 +27,9 @@ const SearchUI = ({ fieldList, processData, operators, connectors, isLoading }) 
 
   return (
     <React.Fragment>
-      <div className="text-end">
-        <Button onClick={onClickSimple} variant="warning">
-          {isSimple ? <Filter /> : <Funnel />}
-        </Button>
-      </div>
       {isLoading && (
         <div className="text-center my-3">
-          <Spinner animation="border" role="status">
+          <Spinner animation="grow" role="status">
             <span className="visually-hidden">Loading...</span>
           </Spinner>
         </div>
@@ -37,9 +37,19 @@ const SearchUI = ({ fieldList, processData, operators, connectors, isLoading }) 
       {!isLoading && (
         <>
           {isSimple ? (
-            <SearchUiSimple fieldList={fieldList} processData={processData} />
+            <SearchUiSimple
+              fieldList={fieldList}
+              processData={processData}
+              toggleSearchType={toggleSearchType}
+            />
           ) : (
-            <SearchUiAdv fieldList={fieldList} processData={processData} operators={operators} connectors={connectors} />
+            <SearchUiAdv
+              fieldList={fieldList}
+              processData={processData}
+              operators={operators}
+              connectors={connectors}
+              toggleSearchType={toggleSearchType}
+            />
           )}
         </>
       )}
