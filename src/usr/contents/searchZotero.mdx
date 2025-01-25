@@ -26,21 +26,26 @@ This example shows how to use the `<Search />` component to query Zotero's API. 
       creatorSummary: "Author(s)",
       date: "Publication Date",
     }}
-    resultItemTemplate={(item) => (
-      <div className="card my-3" key={item.key}>
+   resultItemTemplate={(item) =>
+    item ? (
+      <div key={item.key} className="card my-3">
         <div className="card-body">
           <h5 className="card-title">{item.title}</h5>
-          <p><strong>Author(s):</strong> {item.creatorSummary}</p>
+          <p>
+            <strong>Authors:</strong> {item.creators?.map((c) => c.lastName).join(", ")}
+          </p>
           <p><strong>Publication Date:</strong> {item.date}</p>
-          <p><strong>Book Title:</strong> {item.bookTitle}</p>
       
-          <a href={item.links?.alternate?.href} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
-            View Details
+          <a href={item.links?.alternate?.href} target="_blank" rel="noopener noreferrer">
+            More Details
           </a>
         </div>
       </div>
-    )}
-  />
+    ) : (
+      <div className="text-muted">No results found.</div>
+    )
+  }
+/>
 ```
   </div>
 
@@ -55,21 +60,26 @@ This example shows how to use the `<Search />` component to query Zotero's API. 
         creatorSummary: "Author(s)",
         date: "Publication Date",
       }}
-      resultItemTemplate={(item) => (
-        <div className="card my-3" key={item.key}>
-          <div className="card-body">
-            <h5 className="card-title">{item.title}</h5>
-            <p><strong>Author(s):</strong> {item.creatorSummary}</p>
-            <p><strong>Publication Date:</strong> {item.date}</p>
-            <p><strong>Book Title:</strong> {item.bookTitle}</p>
-            <p><strong>Abstract:</strong> {item.abstractNote}</p>
-            <a href={item.links?.alternate?.href} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
-              View Details
-            </a>
-          </div>
+     resultItemTemplate={(item) =>
+    item ? (
+      <div key={item.key} className="card my-3">
+        <div className="card-body">
+          <h5 className="card-title">{item.title}</h5>
+          <p>
+            <strong>Authors:</strong> {item.creators?.map((c) => c.lastName).join(", ")}
+          </p>
+          <p><strong>Publication Date:</strong> {item.date}</p>
+      
+          <a href={item.links?.alternate?.href} target="_blank" rel="noopener noreferrer">
+            More Details
+          </a>
         </div>
-      )}
-    />
+      </div>
+    ) : (
+      <div className="text-muted">No results found.</div>
+    )
+  }
+/>
 
 <div className="text-muted small mt-3">
   Data fetched from the [Zotero

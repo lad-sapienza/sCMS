@@ -2,8 +2,10 @@ const parseResponse = async response => {
   try {
     const output = await response.json()
 
-    if (!output || output.length === 0) {
-      throw new Error("La risposta dell'API Zotero non contiene risultati.")
+    // Controlla se l'output è valido e contiene risultati
+    if (!output || !Array.isArray(output) || output.length === 0) {
+      console.warn("Nessun risultato trovato per la ricerca.")
+      return [] // Restituisce un array vuoto senza lanciare errori
     }
 
     // Trasforma i dati
@@ -33,7 +35,7 @@ const parseResponse = async response => {
     return transformedData
   } catch (error) {
     console.error("Errore durante l'elaborazione della risposta Zotero:", error)
-    throw new Error("Errore nel parsing della risposta Zotero.")
+    return [] // Restituisce un array vuoto in caso di errore
   }
 }
 
