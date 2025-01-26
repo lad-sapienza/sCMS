@@ -15,18 +15,34 @@ import EdrService from "../../usr/services/edr/edr.js"
 
 To this end a custom API service is created in the `edr.js` file. The service is used to fetch data from the API and return it in the format required by the `<Search />` component.
 
-<Documenter>
+<Documenter rawCode={`<Search
+    source={{ customApi: EdrService}}
+    fieldList={{
+      "record_number": "Record number",
+      "discovery_location": "Discovery location"
+    }}
+    resultItemTemplate = { item =>  <div className="card my-3" key={item.identification.record_number}>
+    <div className="card-body">
+      <h5 className="card-title">
+        {item.identification.record_number} — {item.localization.discovery_location}
+      </h5>
+      <a href={item.identification.url} target="_blank">{item.identification.url}</a>
+    </div>
+  </div>
+    }
+/>`}>
   <Search
       source={{ customApi: EdrService}}
       fieldList={{
         "record_number": "Record number",
         "discovery_location": "Discovery location"
       }}
-      resultItemTemplate = { item =>  <div className="card my-3" key={item.record_number}>
+      resultItemTemplate = { item =>  <div className="card my-3" key={item.identification.record_number}>
       <div className="card-body">
         <h5 className="card-title">
-          {item.record_number} — {item.discovery_location}
+          {item.identification.record_number} — {item.localization.discovery_location}
         </h5>
+        <a href={item.identification.url} target="_blank">{item.identification.url}</a>
       </div>
     </div>
       }

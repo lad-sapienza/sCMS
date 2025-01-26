@@ -17,7 +17,17 @@ The component can be used to display any kind of DAG.
 ### Basic example with DOT notation data
 
 
-<Documenter>
+<Documenter rawCode={`<HarrisMatrix 
+      containerClassNames="border"
+      dot='digraph G {
+        "1126" -> "833"; 
+        "1018" -> "1102"; 
+        "1018" -> "1085"; 
+        "1171" -> "1160"; 
+        "1171" -> "1159";
+        }
+      '
+  />`}>
   <HarrisMatrix 
       containerClassNames="border"
       dot='digraph G {
@@ -33,7 +43,13 @@ The component can be used to display any kind of DAG.
 
 ### Basic example with data array
 
-<Documenter>
+<Documenter rawCode={`<HarrisMatrix 
+    containerClassNames="border"
+    data={[
+      ["uno", "due"],
+      ["due", "tre"]
+    ]}
+  />`}>
   <HarrisMatrix 
     containerClassNames="border"
     data={[
@@ -46,13 +62,20 @@ The component can be used to display any kind of DAG.
 
 ### Example with onClickNode event
 
-<Documenter>
+<Documenter rawCode={`<HarrisMatrix 
+    containerClassNames="border"
+    data={[
+      ["uno", "due"],
+      ["due", "tre"]
+    ]}
+    onClickNode={ text => alert(\`Hai cliccato il nodo con testo: \${text}\`) }
+  />`}>
   <HarrisMatrix 
     containerClassNames="border"
     data={[
       ["uno", "due"],
       ["due", "tre"]
     ]}
-    onClickNode={ text => console.log(text) }
-    />
+    onClickNode={ text => alert(`Hai cliccato il nodo con testo: ${text}`) }
+  />
 </Documenter>

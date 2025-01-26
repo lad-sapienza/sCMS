@@ -16,50 +16,90 @@ Under the hood, `DataTb` uses the [React Data Table Component](https://react-dat
 
 
 ## Example of a Directus instance as data source
-<Documenter>
+<Documenter rawCode={`<DataTb
+    source={{
+      directus: {
+        table: "scms_ksa",
+        queryString: "limit=1000&offset=0",
+      }
+    }}
+    striped={true}
+    columns={[
+      {
+        name: "Label",
+        sortable: true,
+        cell: item => (
+              <a href={\`../record/?tb=scms_ksa&id=\${item.id}\`}>
+                {item["Item_Label"]} 
+              </a>
+            ),
+      },
+      {
+        name: "Site name",
+        selector: row => row["Site_Name"],
+        sortable: true,
+      },
+      {
+        name: "Thumbnail",
+        cell: item => (
+              <img src={item["Thumbnail"]} />
+            ),
+        sortable: true,
+      },
+      {
+        name: "Date",
+        selector: row => \`\${row["Early"]} / \${row["Late"]}\`,
+        sortable: true,
+      },
+      {
+        name: "Collection summary",
+        selector: row => row["Collection_Summary"],
+        sortable: true,
+      },
+    ]}
+  />`}>
   <DataTb
-      source={{
-        directus: {
-          table: "scms_ksa",
-          queryString: "limit=1000&offset=0",
-        }
-      }}
-      striped={true}
-      columns={[
-    {
-      name: "Label",
-      sortable: true,
-      cell: item => (
-            <a href={`../record/?tb=scms_ksa&id=${item.id}`}>
-              {item["Item_Label"]} 
-            </a>
-          ),
-    },
-    {
-      name: "Site name",
-      selector: row => row["Site_Name"],
-      sortable: true,
-    },
-    {
-      name: "Thumbnail",
-      cell: item => (
-            <img src={item["Thumbnail"]} />
-          ),
-      sortable: true,
-    },
-    {
-      name: "Date",
-      selector: row => `${row["Early"]} / ${row["Late"]}`,
-      sortable: true,
-    },
-    {
-      name: "Collection summary",
-      selector: row => row["Collection_Summary"],
-      sortable: true,
-    },
-    
-  ]}
-    />
+    source={{
+      directus: {
+        table: "scms_ksa",
+        queryString: "limit=1000&offset=0",
+      }
+    }}
+    striped={true}
+    columns={[
+      {
+        name: "Label",
+        sortable: true,
+        cell: item => (
+              <a href={`../record/?tb=scms_ksa&id=${item.id}`}>
+                {item["Item_Label"]} 
+              </a>
+            ),
+      },
+      {
+        name: "Site name",
+        selector: row => row["Site_Name"],
+        sortable: true,
+      },
+      {
+        name: "Thumbnail",
+        cell: item => (
+              <img src={item["Thumbnail"]} />
+            ),
+        sortable: true,
+      },
+      {
+        name: "Date",
+        selector: row => `${row["Early"]} / ${row["Late"]}`,
+        sortable: true,
+      },
+      {
+        name: "Collection summary",
+        selector: row => row["Collection_Summary"],
+        sortable: true,
+      },
+    ]}
+  />
 </Documenter>
 <div className="text-muted small mt-3">
   Data from [Kahramanmaraş Survey](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) created by [Elizabeth Carter](http://opencontext.org/persons/3208923d-69d0-70e9-9cc1-23ad97770aec) and published on [OpenContext](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) add distributed with [CC BY 4.0 International](https://creativecommons.org/licenses/by/4.0) license.
@@ -71,9 +111,8 @@ Under the hood, `DataTb` uses the [React Data Table Component](https://react-dat
 
 ### Example with a CSV file as data source
 
-<Documenter>
-  <DataTb
-  source={{
+<Documenter rawCode={`<DataTb
+    source={{
     path2data: {
       path: "/data/ksa.csv"
     }
@@ -82,11 +121,41 @@ Under the hood, `DataTb` uses the [React Data Table Component](https://react-dat
     {
       name: "Item_Label",
       sortable: true,
-      cell: item => (
-        <a href={`../record/?tb=scms_ksa&id=${item.id}`}>
-              {item["Item_Label"]} 
-            </a>
-      ),
+      selector: row => row["Item_Label"],
+    },
+    {
+      name: "Site_Name",
+      selector: row => row["Site_Name"],
+      sortable: true,
+    },
+    {
+      name: "Thumbnail",
+      cell: item => <img src={item["Thumbnail"]} />,
+      sortable: true,
+    },
+    {
+      name: "Date",
+      selector: row => \`\${row["Early"]} — \${row["Late"]}\`,
+      sortable: true,
+    },
+    {
+      name: "Collection_Summary",
+      selector: row => row["Collection_Summary"],
+      sortable: true,
+    },
+  ]}
+/>`}>
+  <DataTb
+    source={{
+    path2data: {
+      path: "/data/ksa.csv"
+    }
+  }}
+  columns={[
+    {
+      name: "Item_Label",
+      sortable: true,
+      selector: row => row["Item_Label"],
     },
     {
       name: "Site_Name",
