@@ -6,7 +6,7 @@ description: ""
 menu_position: 4
 ---
 
-import { HarrisMatrix } from "../../modules/scms"
+import { HarrisMatrix, Documenter } from "../../modules/scms"
 
 # Easily build and display interactive ‘Matrices of Harris’
 
@@ -16,88 +16,43 @@ The component can be used to display any kind of DAG.
 
 ### Basic example with DOT notation data
 
-<div className="row">
-  <div className="col-sm-6">
-    ```jsx
-    <HarrisMatrix 
+
+<Documenter>
+  <HarrisMatrix 
       containerClassNames="border"
-      dot={`digraph G {
+      dot='digraph G {
         "1126" -> "833"; 
         "1018" -> "1102"; 
         "1018" -> "1085"; 
         "1171" -> "1160"; 
         "1171" -> "1159";
         }
-      `}
-/>
-    ```
-  </div>
-  <div className="col-sm-6">
-    <HarrisMatrix 
-      containerClassNames="border"
-      dot={`digraph G {
-        "1126" -> "833"; 
-        "1018" -> "1102"; 
-        "1018" -> "1085"; 
-        "1171" -> "1160"; 
-        "1171" -> "1159";
-        }
-      `}
-    />
-  </div>
-</div>
+      '
+  />
+</Documenter>
 
 ### Basic example with data array
-<div className="row">
-  <div className="col-sm-6">
-    ```jsx
-    <HarrisMatrix 
-      containerClassNames="border"
-      data={[
-        ["uno", "due"],
-        ["due", "tre"]
-      ]}
-    />
-    ```
-  </div>
-  <div className="col-sm-6">
-    <HarrisMatrix 
-      containerClassNames="border"
-      data={[
-        ["uno", "due"],
-        ["due", "tre"]
-      ]}
-    />
-  </div>
-</div>
+
+<Documenter>
+  <HarrisMatrix 
+    containerClassNames="border"
+    data={[
+      ["uno", "due"],
+      ["due", "tre"]
+    ]}
+  />
+</Documenter>
 
 
 ### Example with onClickNode event
-<div className="row">
-  <div className="col-sm-6">
-    ```jsx
-    <HarrisMatrix 
-      containerClassNames="border"
-      onClickNode={ text => console.log(text) }
-      dot={`digraph G {
-        "1126" -> "833"; 
-        "1018" -> "1102"; 
-        "1018" -> "1085"; 
-        "1171" -> "1160"; 
-        "1171" -> "1159";
-        }
-      `}
+
+<Documenter>
+  <HarrisMatrix 
+    containerClassNames="border"
+    data={[
+      ["uno", "due"],
+      ["due", "tre"]
+    ]}
+    onClickNode={ text => console.log(text) }
     />
-    ```
-  </div>
-  <div className="col-sm-6">
-    <HarrisMatrix 
-      containerClassNames="border"
-      data={[
-        ["uno", "due"],
-        ["due", "tre"]
-      ]}
-      onClickNode={ text => console.log(text) }
-      />
-  </div>
-</div>
+</Documenter>
