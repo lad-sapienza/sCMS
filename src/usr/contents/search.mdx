@@ -6,32 +6,40 @@ description: ""
 menu_position: 3
 ---
 
-import { Search } from "../../modules/scms.js"
-import { Link } from "gatsby"
+import { Search, Documenter } from "../../modules/scms.js"
 
+import SearchUiTest from "../../modules/search/searchUiTest.js"
+
+# Test
+
+<SearchUiTest 
+  source={{
+    directus: {
+      table: "scms_ksa"
+    }
+  }}
+  fieldList={{
+    "Item_Label": "Label",
+    "Site_Name": "Site name",
+    "Site_Description": "Site description"
+  }} />
 
 # Easily build a search engine with custom templates to show results
 
 `<Search />` component connecting to the Directus default instance by using only the name of the Directus table
 
 
-<div className="row">
-  <div className="col-sm-4">
-```jsx
-<Search
-
+<Documenter rawCode={`<Search
   source={{
     directus: {
       table: "scms_ksa"
     }
   }}
-
   fieldList={{
     "Item_Label": "Label",
     "Site_Name": "Site name",
     "Site_Description": "Site description"
-  }}
-
+    }}
   resultItemTemplate = { item => {
     return  <div className="card my-3" key={item.id}>
       <div className="card-body">
@@ -44,19 +52,15 @@ import { Link } from "gatsby"
           <div className="col-9">
             {item.Site_Description}
             <hr />
-            <a href={`../record/?tb=scms_ksa&id=${item.id}`} className="btn btn-primary">View</a>
+            <a href={\`../record/?tb=scms_ksa&id=\${item.id}\`} className="btn btn-primary">View</a>
           </div>
         </div>
       </div>
     </div>
   </div>
-  
   }}
-/>
-```
-  </div>
-  <div className="col-sm-8">
-    <Search
+/>`}>
+<Search
       source={{
         directus: {
           table: "scms_ksa"
@@ -87,12 +91,9 @@ import { Link } from "gatsby"
       </div>
       }}
     />
+</Documenter>
+    
 
 <div className="text-muted small mt-3">
   Data from [Kahramanmaraş Survey](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) created by [Elizabeth Carter](http://opencontext.org/persons/3208923d-69d0-70e9-9cc1-23ad97770aec) and published on [OpenContext](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) add distributed with [CC BY 4.0 International](https://creativecommons.org/licenses/by/4.0) license.
-</div>
-
----
-
-  </div>
 </div>
