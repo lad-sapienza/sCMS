@@ -8,22 +8,6 @@ menu_position: 3
 
 import { Search, Documenter } from "../../modules/scms.js"
 
-import SearchUiTest from "../../modules/search/searchUiTest.js"
-
-# Test
-
-<SearchUiTest 
-  source={{
-    directus: {
-      table: "scms_ksa"
-    }
-  }}
-  fieldList={{
-    "Item_Label": "Label",
-    "Site_Name": "Site name",
-    "Site_Description": "Site description"
-  }} />
-
 # Easily build a search engine with custom templates to show results
 
 `<Search />` component connecting to the Directus default instance by using only the name of the Directus table

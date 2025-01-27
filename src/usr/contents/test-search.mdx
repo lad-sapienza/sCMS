@@ -1,0 +1,23 @@
+---
+title: "Test search"
+date: "2025-01-27"
+slug: "test-search"
+description: ""
+menu_position: 3
+---
+
+import SearchUiTest from "../../modules/search/searchUiTest.js"
+
+# Test
+
+<SearchUiTest 
+  source={{
+    directus: {
+      table: "scms_ksa"
+    }
+  }}
+  fieldList={{
+    "Item_Label": "Label",
+    "Site_Name": "Site name",
+    "Site_Description": "Site description"
+  }} />
