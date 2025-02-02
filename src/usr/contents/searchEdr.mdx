@@ -33,6 +33,7 @@ To this end a custom API service is created in the `edr.js` file. The service is
 />`}>
   <Search
       source={{ customApi: EdrService}}
+      operators={{"_eq": "Equals"}}
       fieldList={{
         "record_number": "Record number",
         "discovery_location": "Discovery location"
