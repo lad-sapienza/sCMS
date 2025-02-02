@@ -5,7 +5,7 @@ import { Row, Col, Form, Button } from "react-bootstrap"
 import { defaultOperators } from "./defaultOperators"
 
 const SearchUiAdv = ({ fieldList, processData, operators, connectors }) => {
-  operators = Object.assign(defaultOperators, operators)
+  operators = operators  || defaultOperators
   connectors = {
     _and: connectors?._and || "AND",
     _or: connectors?._or || "OR",
