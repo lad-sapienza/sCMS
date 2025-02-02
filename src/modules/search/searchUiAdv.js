@@ -11,7 +11,7 @@ const SearchUiAdv = ({
   connectors,
   toggleSearchType,
 }) => {
-  operators = Object.assign(defaultOperators, operators)
+  operators = operators  || defaultOperators //Object.assign(defaultOperators, operators)
   connectors = {
     _and: connectors?._and || "AND",
     _or: connectors?._or || "OR",
