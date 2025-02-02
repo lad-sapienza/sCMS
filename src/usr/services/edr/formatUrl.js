@@ -9,8 +9,6 @@ const formatUrl = (uiFilter) => {
     options: {},
   };
 
-  console.log("Inputs received in formatUrl:", inputs);
-
   // Itera sui filtri e si ferma al primo filtro valido
   for (let input of inputs) {
     // Adatta il filtro per l'API EDR 
@@ -19,10 +17,8 @@ const formatUrl = (uiFilter) => {
       operator: "", // vuoto non necessario
     };
 
-    console.log("Adjusted Input:", adjustedInput);
-
     // Genera il filtro con `form2querystring`
-    const filter = form2querystring("_and", [adjustedInput]); // Usa il filtro corrente
+    const filter = form2querystring(conn, [adjustedInput]); // Usa il filtro corrente
     console.log("Filter generated for current input:", filter);
 
     // Verifica che il filtro sia valido
@@ -33,12 +29,9 @@ const formatUrl = (uiFilter) => {
 
       // Costruisce l'URL con il primo filtro valido e si interrompe
       ret.sourceUrl += `&${serializedQuery}`;
-      console.log("Valid filter found. URL:", ret.sourceUrl);
       break; // Interrompe il ciclo dopo il primo filtro valido
     }
   }
-
-  console.log("Final URL generated to pass to getDataFromSource:", ret.sourceUrl);
 
   return ret;
 };
