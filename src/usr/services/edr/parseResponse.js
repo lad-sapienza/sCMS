@@ -1,68 +1,73 @@
 /**
- * parseResponse - Scarica tutti i risultati EDR con paginazione `&start=...`.
- * Gestisce più chiamate se l'API EDR limita i risultati a blocchi di 100.
+ * parseResponse - Scarica tutti i risultati EDR con paginazione `&start=...`,
+ * unisce i record in un array e filtra i risultati contenenti "ignoratur" in `discovery_location`.
  *
- * @param {Response} response - Prima risposta già fetchata da getDataFromSource
- * @returns {Array} - Un array con tutti i risultati concatenati.
+ * @param {Response} response - Prima risposta già fetchata da getDataFromSource (relativa a ?start=0).
+ * @param {string} [geoField] - Parametro inattivo qui, ma presente in getDataFromSource.
+ * @returns {Array} - Un array con tutti i risultati filtrati.
  */
-const parseResponse = async (response) => {
+const parseResponse = async (response, geoField) => {
   try {
     if (!response.ok) {
       throw new Error(`HTTP error: ${response.status}`);
     }
 
-    // Leggi l'URL effettivo chiamato (include ?start=0 ...?)
+    // Base URL della prima risposta (potrebbe contenere &start=0, se l'hai messo in formatUrl)
     const baseUrl = response.url;
     console.log("[parseResponse] baseUrl:", baseUrl);
 
-    // Decodifica la prima risposta
+    // Decodifico la prima risposta
     let data = await response.json();
     console.log("[parseResponse] first data:", data);
 
     // Unisci i risultati in un array
     let allResults = data?.results || [];
 
-    // Se non ci sono risultati, errore -> "No results"
+    // Se la lunghezza è 0, lancia eccezione => "No results"
     if (allResults.length === 0) {
       throw new Error("La risposta dell'API EDR non contiene risultati.");
     }
 
-    // Esempio di soglia: se EDR restituisce esattamente 100 in data.results, potremmo averne altri
-    // Decodifica param "start" dall'URL
+    // Leggo il parametro start dall'URL. Se assente, assumo 0
     let start = getStartParam(baseUrl) || 0;
 
-    // Finché ottengo blocchi di 100, continuo a fare fetch
-    while (allResults.length % 100 === 0) {
-      start += 100; // Incremento
+    // Se l'API restituisce blocchi di 100 e c'è una prossima pagina
+    // puoi usare la logica: while (data.results.length === 100)
+    while (data.results && data.results.length === 100) {
+      start += 100;
       const nextUrl = setStartParam(baseUrl, start);
-      console.log("[parseResponse] nextUrl:", nextUrl);
 
-      // Eseguo una nuova fetch
+      console.log("[parseResponse] fetching next page:", nextUrl);
       const nextResp = await fetch(nextUrl);
       if (!nextResp.ok) {
-        // Fine, se la fetch non va a buon fine o l'API non supporta offset
         console.warn(`[parseResponse] HTTP Error fetching ${nextUrl}`);
         break;
       }
-      const nextData = await nextResp.json();
+      data = await nextResp.json();
 
-      if (!nextData.results || nextData.results.length === 0) {
+      if (!data?.results?.length) {
         console.log("[parseResponse] no more results in next page");
         break;
       }
 
-      console.log(`[parseResponse] page start=${start}, results:`, nextData.results.length);
-
-      // Concatena i nuovi record
-      allResults = allResults.concat(nextData.results);
-
-      // Se la nuova pagina non è 100 record, fine
-      if (nextData.results.length < 100) {
-        break;
-      }
+      console.log(`[parseResponse] page start=${start}, results:`, data.results.length);
+      allResults = allResults.concat(data.results);
     }
 
-    // Ritorno l'array unito
+    // Filtro i risultati per escludere 'ignoratur' in discovery_location
+    allResults = allResults.filter((item) => {
+      const location = String(item.localization?.discovery_location || "").toLowerCase();
+      // Escludi i record che contengono "ignoratur"
+      return !location.includes("ignoratur")&& !location.includes("roma?");
+    });
+
+    // Se dopo il filtro è vuoto, lancia eccezione => "No results"
+    if (allResults.length === 0) {
+      throw new Error(
+        "La risposta dell'API EDR non contiene risultati dopo aver filtrato 'ignoratur'."
+      );
+    }
+
     return allResults;
   } catch (error) {
     console.error("Errore durante l'elaborazione della risposta EDR:", error);
@@ -71,7 +76,7 @@ const parseResponse = async (response) => {
 };
 
 /**
- * getStartParam - estrae il parametro &start=N da una URL
+ * getStartParam - Estrae il parametro &start=N da una URL
  */
 function getStartParam(url) {
   const match = url.match(/[?&]start=(\d+)/);
@@ -82,14 +87,14 @@ function getStartParam(url) {
 }
 
 /**
- * setStartParam - sostituisce o aggiunge &start=N in baseUrl
+ * setStartParam - Sostituisce o aggiunge &start=N in baseUrl
  */
 function setStartParam(baseUrl, start) {
   if (baseUrl.includes("start=")) {
-    // sostituisco
+    // Sostituisco start=? con start=nuovo
     return baseUrl.replace(/start=\d+/, `start=${start}`);
   } else {
-    // aggiungo
+    // Aggiungo se non esiste
     return baseUrl + `&start=${start}`;
   }
 }
