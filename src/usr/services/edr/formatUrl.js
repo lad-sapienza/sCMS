@@ -5,7 +5,7 @@ const formatUrl = (uiFilter) => {
 
   let ret = {
     sourceUrl:
-      "http://www.edr-edr.it/edr_programmi/edr_api.php?ancient_city=roma",
+      "http://www.edr-edr.it/edr_programmi/edr_api.php?ancient_city=roma&start=0",
     options: {},
   };
 
