@@ -37,13 +37,14 @@ To this end a custom API service is created in the `edr.js` file. The service is
       fieldList={{
         "record_number": "Record number",
         "discovery_location": "Discovery location",
-        "text": "Ricerca nel testo",
+        "text": "Ricerca nel testo",  // @TODO da controllare l'operatore non deve essere Equal ma contiene insensitive
         "inscription_type": { label: "Inscription type", values: ["sacer", "cetera", "fasti, leges, acta", "honorarius", "ignoratur", "inscr. parietariae", "oper. publ. priv.que","sepulcralis","term. non sep.", "tit. in artis operib. inscr."] },
         "material	": { label: "Rei materia", values: ["aes", "arenatum", "argentum", "aurum","cera","ceterum","creta","eburneus","ferrum","ignoratur","lapis","lignum","marmor","musivum","plumbum","tectorium","vitrum"] },
         "language		": { label: "Lingua", values: ["latina", "graeca", "latina-graeca", "incerta","ignoratur","alia"] },
         "religion		": { label: "Religione", values: ["Christiana", "Hebraica", "Pagana", "Incerta"] },
         "type_of_persons_mentionated	": { label: "Virorum distributio", values: ["imp.", "reges, viri notab. exter. gent.", "ord. sen.", "ord. eq.","ord. mun.","mil.","eccl.","offic. magg., Augg., mun.","offic. pag., vic., colleg.","offic. priv.","cet.","ignoratur","imp.?", "reges, viri notab. exter. gent.?", "ord. sen.?", "ord. eq.?","ord. mun.?","mil.?","eccl.?","offic. magg., Augg., mun.?","offic. pag., vic., colleg.?","offic. priv.?","cet.?" ] },
-
+"year_from": "Data inizio", // @TODO da controllare l'operatore nella query EDR era => e <= 
+"year_to": "Data fine"
       }}
       resultItemTemplate = { item =>  <div className="card my-3" key={item.identification.record_number}>
       <div className="card-body">
