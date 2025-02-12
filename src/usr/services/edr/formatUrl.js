@@ -9,28 +9,31 @@ const formatUrl = (uiFilter) => {
     options: {},
   };
 
-  // Itera sui filtri e si ferma al primo filtro valido
-  for (let input of inputs) {
-    // Adatta il filtro per l'API EDR 
-    const adjustedInput = {
-      ...input,
-      operator: "", // vuoto non necessario
-    };
+  // 🔹 Se la ricerca è semplice (SOLO per "text"), usa solo quel campo
+  if (
+    inputs.length === 1 &&
+    inputs[0].field === "text" &&
+    inputs[0].value
+  ) {
+    ret.sourceUrl += `&text=${encodeURIComponent(inputs[0].value)}`;
+    return ret; // 🔹 Restituisce subito l'URL senza altri filtri
+  }
 
-    // Genera il filtro con `form2querystring`
-    const filter = form2querystring(conn, [adjustedInput]); // Usa il filtro corrente
-    console.log("Filter generated for current input:", filter);
+  // 🔹 Se la ricerca è avanzata (AND/OR), processa tutti i filtri
+  const filters = inputs.map(input => form2querystring(conn, [input]));
 
-    // Verifica che il filtro sia valido
-    if (filter && typeof filter === "object" && Object.keys(filter).length > 0) {
-      const serializedQuery = Object.entries(filter)
+  // 🔹 Rimuove eventuali filtri vuoti
+  const validFilters = filters.filter(filter => Object.keys(filter).length > 0);
+
+  if (validFilters.length > 0) {
+    const serializedQuery = validFilters
+      .map(filter => Object.entries(filter)
         .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
-        .join("&");
+        .join("&")
+      )
+      .join(conn === "_or" ? "&or=" : "&");
 
-      // Costruisce l'URL con il primo filtro valido e si interrompe
-      ret.sourceUrl += `&${serializedQuery}`;
-      break; // Interrompe il ciclo dopo il primo filtro valido
-    }
+    ret.sourceUrl += `&${serializedQuery}`;
   }
 
   return ret;
