@@ -11,11 +11,16 @@ const getDataFromSource = async (source, uiFilter) => {
 
   // path2data source
   if (path2data) {
+    // TODO: nota per paginazione: path2data prende tutto, quindi niente paginazione
     const p2tRet = Path2DataService.formatUrl(path2data, uiFilter)
     sourceUrl = p2tRet.sourceUrl
     options = p2tRet.options
     // Directus source
   } else if (directus) {
+    // TODO: nota per paginazione:
+    // Directus usa la sinatassi: ?aggregate[count]=*&filter=... che restituisce una oggetto del tipo: {"data":[{"count":"n"}]}
+    // eseguire qui una query di conta, prendere i risultati e restituirli come numero di pagine (tot risultati / limit se c'è e se non è -1 (= tutti), altrimenti 100)
+    // poi eseguire la query vera e propria
     const dirRet = DirectusService.formatUrl(directus, uiFilter)
     sourceUrl = dirRet.sourceUrl
     options = dirRet.options
@@ -33,6 +38,7 @@ const getDataFromSource = async (source, uiFilter) => {
     const response = await fetch(sourceUrl, options)
 
     if (directus) {
+      // Qui deve essere restituito {pagina di pagine}
       return await DirectusService.parseResponse(response, directus.geoField)
     } else if (path2data) {
       return await Path2DataService.parseResponse(response, path2data.path)
