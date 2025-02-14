@@ -11,6 +11,7 @@ const SearchUI = ({
   operators,
   connectors,
   isLoading,
+  limitTo,
 }) => {
   const [isSimple, setIsSimple] = useState(true)
 
@@ -24,7 +25,7 @@ const SearchUI = ({
       </div>
     )
   }
-
+  console.log(limitTo)
   return (
     <React.Fragment>
       {isLoading && (
@@ -36,7 +37,16 @@ const SearchUI = ({
       )}
       {!isLoading && (
         <>
-          {isSimple ? (
+          {limitTo === "simple" ? (
+            <SearchUiSimple fieldList={fieldList} processData={processData} />
+          ) : limitTo === "advanced" ? (
+            <SearchUiAdv
+              fieldList={fieldList}
+              processData={processData}
+              operators={operators}
+              connectors={connectors}
+            />
+          ) : isSimple ? (
             <SearchUiSimple
               fieldList={fieldList}
               processData={processData}
@@ -102,6 +112,8 @@ SearchUI.propTypes = {
    * Boolean to indicate if the component is in loading state
    */
   isLoading: PropTypes.bool,
+
+  limitTo: PropTypes.oneOf(["simple", "advanced"]),
 }
 
 export default SearchUI

@@ -157,7 +157,7 @@ const SearchUiAdv = ({
                 </React.Fragment>
               )}
             </ButtonGroup>
-            {index === inputs.length - 1 && (
+            {toggleSearchType && index === inputs.length - 1 && (
               <Button
                 className="mx-1"
                 onClick={toggleSearchType}

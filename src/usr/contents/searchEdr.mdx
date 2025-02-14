@@ -44,6 +44,7 @@ To this end a custom API service is created in the `edr.js` file. The service is
 />`}>
 
   <Search
+    limitTo="advanced"
     source={{ customApi: EdrService}}
     operators={{"_eq": "Equals", "_gte": "Greater or Equal", "_lte": "Less or Equal"}}
     fieldList={{

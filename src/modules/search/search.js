@@ -27,6 +27,7 @@ const Search = ({
   fieldList,
   operators,
   connector,
+  limitTo,
 }) => {
   const [searchResults, setSearchResults] = useState([])
   const [error, setError] = useState(null)
@@ -69,6 +70,7 @@ const Search = ({
         operators={operators}
         connector={connector}
         processData={processData}
+        limitTo={limitTo}
       />
 
       {error && <div className="text-danger">{error}</div>}
@@ -127,6 +129,8 @@ Search.propTypes = {
     _and: PropTypes.string,
     _or: PropTypes.string,
   }),
+
+  limitTo: PropTypes.oneOf(["simple", "advanced"]),
 }
 
 export { Search }
