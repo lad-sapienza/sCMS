@@ -22,7 +22,7 @@ const Layout = ({ children }) => {
   return (
     <>
       <div className="container-fluid p-0">
-        <Navbar siteTitle={data.site.siteMetadata?.title || `Title`} />
+        <Navbar />
         
         <Header siteTitle={data.site.siteMetadata?.title || `Title`} />
         <main>
