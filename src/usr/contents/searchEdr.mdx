@@ -18,7 +18,7 @@ To this end a custom API service is created in the `edr.js` file. The service is
 <Documenter rawCode={` <Search
     limitTo="advanced"
     source={{ customApi: EdrService}}
-    operators={{"_eq": "Equals", "_gte": "Greater or Equal", "_lte": "Less or Equal"}}
+    operators={{"_contains": "Contains", "_gte": "Greater or Equal", "_lte": "Less or Equal"}}
     fieldList={{
       "text": "Text",
       "record_number": "Record number",
@@ -47,7 +47,7 @@ To this end a custom API service is created in the `edr.js` file. The service is
   <Search
     limitTo="advanced"
     source={{ customApi: EdrService}}
-    operators={{"_eq": "Equals", "_gte": "Greater or Equal", "_lte": "Less or Equal"}}
+    operators={{"_contains": "Contains", "_gte": "Greater or Equal", "_lte": "Less or Equal"}}
     fieldList={{
       "text": "Text",
       "record_number": "Record number",
