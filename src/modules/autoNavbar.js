@@ -4,7 +4,7 @@ import { withPrefix } from "gatsby"
 import styled from "styled-components"
 import { useStaticQuery, graphql } from "gatsby"
 
-function AutoNavbar(props) {
+function AutoNavbar({ currentLang }) {
   const data = useStaticQuery(graphql`
     {
       allMdx(
@@ -29,16 +29,21 @@ function AutoNavbar(props) {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              {data.allMdx.nodes.map((menuItem, index) => (
-                <div className="containerLink" key={index}>
-                  <Nav.Link
-                    href={withPrefix(`/${menuItem.frontmatter.slug}`)}
-                    className="nav-item my-2"
-                  >
-                    {menuItem.frontmatter.title}
-                  </Nav.Link>
-                </div>
-              ))}
+              {data.allMdx.nodes.map(
+                (menuItem, index) =>
+                  ((currentLang &&
+                    menuItem.frontmatter.slug.includes(`${currentLang}/`)) ||
+                    !currentLang) && (
+                    <div className="containerLink" key={index}>
+                      <Nav.Link
+                        href={withPrefix(`/${menuItem.frontmatter.slug}`)}
+                        className="nav-item my-2"
+                      >
+                        {menuItem.frontmatter.title}
+                      </Nav.Link>
+                    </div>
+                  ),
+              )}
             </Nav>
           </Navbar.Collapse>
         </Container>
