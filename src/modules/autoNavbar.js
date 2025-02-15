@@ -1,10 +1,9 @@
 import * as React from "react"
 import { Container, Nav, Navbar } from "react-bootstrap"
-import { withPrefix } from "gatsby"
 import styled from "styled-components"
-import { useStaticQuery, graphql } from "gatsby"
+import { useStaticQuery, graphql, withPrefix } from "gatsby"
 
-function AutoNavbar({ currentLang }) {
+function AutoNavbar({ currentLang, siteTitle }) {
   const data = useStaticQuery(graphql`
     {
       allMdx(
@@ -26,6 +25,7 @@ function AutoNavbar({ currentLang }) {
     <Menu>
       <Navbar expand="lg" className="bg-body-tertiary">
         <Container>
+          <Navbar.Brand href={withPrefix(`/`)}>{siteTitle}</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">

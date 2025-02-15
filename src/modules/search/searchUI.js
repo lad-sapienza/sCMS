@@ -25,8 +25,8 @@ const SearchUI = ({
       </div>
     )
   }
-  console.log(limitTo)
-  return (
+
+    return (
     <React.Fragment>
       {isLoading && (
         <div className="text-center my-3">
