@@ -1,5 +1,5 @@
 ---
-title: "DataTb"
+title: "DataTable"
 date: "2023-10-01"
 slug: "datatable"
 description: ""
@@ -7,20 +7,27 @@ menu_position: 4
 ---
 
 import { DataTb, Documenter } from "../../modules/scms"
+import SourceDocs from "./source-docs.mdx"
+
 
 # Build customisable tables with data from your database or static files
 
-`<DataTb />` component can be used in MDX pages to display a dynamic, fully customisable table of data from different sources, such as a static CSV file, both hosted locally or online, or a [Directus API](https://docs.directus.io/reference/introduction.html).
+The `DataTb` component displays data ordered in a two-dimensional table. It can be populated with data from a Directud API endpoint, a static CSV or JSON files hosted locally or in the WWW. Under the hood DataTb uses the [React Data Table Component](https://react-data-table-component.netlify.app/?path=/docs/getting-started-intro--docs) and supports out of the box all configurations and settings described on the [official documentation](https://react-data-table-component.netlify.app/?path=/docs/getting-started-intro--docs).
 
-Under the hood, `DataTb` uses the [React Data Table Component](https://react-data-table-component.netlify.app/?path=/docs/getting-started-intro--docs).
 
+In this page:
+- [Example of a Directus instance as data source](#example-of-a-directus-instance-as-data-source)
+- [Example with a CSV file as data source](#example-with-a-csv-file-as-data-source)
+- [API documentation: props](#api-documentation-props)
+
+---
 
 ## Example of a Directus instance as data source
 <Documenter rawCode={`<DataTb
     source={{
       directus: {
         table: "scms_ksa",
-        queryString: "limit=1000&offset=0",
+        queryString: "limit=-1&offset=0",
       }
     }}
     striped={true}
@@ -48,7 +55,7 @@ Under the hood, `DataTb` uses the [React Data Table Component](https://react-dat
       },
       {
         name: "Date",
-        selector: row => \`\${row["Early"]} / \${row["Late"]}\`,
+        selector: row => \`\${row["Early"]} — \${row["Late"]}\`,
         sortable: true,
       },
       {
@@ -62,7 +69,7 @@ Under the hood, `DataTb` uses the [React Data Table Component](https://react-dat
     source={{
       directus: {
         table: "scms_ksa",
-        queryString: "limit=1000&offset=0",
+        queryString: "limit=-1&offset=0",
       }
     }}
     striped={true}
@@ -90,7 +97,7 @@ Under the hood, `DataTb` uses the [React Data Table Component](https://react-dat
       },
       {
         name: "Date",
-        selector: row => `${row["Early"]} / ${row["Late"]}`,
+        selector: row => `${row["Early"]} — ${row["Late"]}`,
         sortable: true,
       },
       {
@@ -184,3 +191,22 @@ Under the hood, `DataTb` uses the [React Data Table Component](https://react-dat
 <div className="text-muted small mt-3">
   Data from [Kahramanmaraş Survey](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) created by [Elizabeth Carter](http://opencontext.org/persons/3208923d-69d0-70e9-9cc1-23ad97770aec) and published on [OpenContext](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) add distributed with [CC BY 4.0 International](https://creativecommons.org/licenses/by/4.0) license.
 </div>
+
+
+### API documentation: props
+
+<SourceDocs />
+---
+
+#### `columns`
+- object
+-required
+- Default: _null_
+
+Object containing information on the columns of the table. The full documentation is available in the [official documentation](https://react-data-table-component.netlify.app/?path=/docs/api-columns--docs)|
+
+---
+
+#### `...props`
+
+All parameters described in the [official React Data Table Component documentation](https://react-data-table-component.netlify.app/?path=/docs/api-props--docs) can be used with this component.

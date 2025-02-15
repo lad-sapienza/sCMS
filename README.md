@@ -31,7 +31,7 @@ Think of s:CMS as the *public, fully-customiseable front-end of your research da
    1. [LayersControl](#layerscontrol)
    1. [Vectorlayer](#vectorlayer)
    1. [Rasterlayer and DefaultBaseLayers](#rasterlayer-and-defaultbaselayers)
-   1. [Dtable](#dtable)
+   1. [DataTb](https://scms.lad-sapienza.it/datatable/)
    1. [Columns](#columns)
    1. [Query Tool](#query-tool)
    1. [Search](https://scms.lad-sapienza.it/search/)
@@ -340,19 +340,6 @@ The `RasterLayerLibre` component is designed to render a raster layer on a MapLi
 | `url` | string \| string[] | Yes |  _null_ | The URL(s) of the raster tiles. Can be a single string or an array of strings. |
 | `checked` | boolean | Yes |  false | Determines if the layer is visible or not. If true, the layer is displayed. |
 | `attribution` | string | No |  _null_ |Optional attribution or credits for the layer. |
-
-
-### DataTb
-
-The `DataTb` component displays data ordered in a two-dimensional table. It can be populated with data from a Directud API endpoint, a static CSV or JSON files hosted locally or in the WWW. Under the hood DataTb uses the [React Data Table Component](https://react-data-table-component.netlify.app/?path=/docs/getting-started-intro--docs) and supports out of the box all configurations and settings described on the [official documentation](https://react-data-table-component.netlify.app/?path=/docs/getting-started-intro--docs). An example of these settings is provided below:
-
-**Props**
-
-| Prop Name | Type | Required | Default value | Description |
-|----------|------|-------------------|---------------|-------------|
-| `source` | object | yes |  _null_ | For the complete documentation: [Access data from components](#access-data-from-components). |
-| `columns` | object | yes | _null_ | Object containing information on the columns of the table. The full documentation is available in the [official documentation](https://react-data-table-component.netlify.app/?path=/docs/api-columns--docs)|
-| `...props` |  |  |  | All parameters described in the [official React Data Table Component documentation](https://react-data-table-component.netlify.app/?path=/docs/api-props--docs) can be used with this component. |
 
 
 
