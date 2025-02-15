@@ -34,7 +34,7 @@ Think of s:CMS as the *public, fully-customiseable front-end of your research da
    1. [Dtable](#dtable)
    1. [Columns](#columns)
    1. [Query Tool](#query-tool)
-   1. [Search](#search)
+   1. [Search](https://scms.lad-sapienza.it/search/)
    1. [View Record](#view-record)
 1. [Built with s:CMS](#build-with-sCMS)
 
@@ -352,25 +352,6 @@ The `DataTb` component displays data ordered in a two-dimensional table. It can 
 | `source` | object | yes |  _null_ | For the complete documentation: [Access data from components](#access-data-from-components). |
 | `columns` | object | yes | _null_ | Object containing information on the columns of the table. The full documentation is available in the [official documentation](https://react-data-table-component.netlify.app/?path=/docs/api-columns--docs)|
 | `...props` |  |  |  | All parameters described in the [official React Data Table Component documentation](https://react-data-table-component.netlify.app/?path=/docs/api-props--docs) can be used with this component. |
-
-
-
-## Search
-
-The `Search` component is a React component that provides a user interface for searching data from a specified source. It allows users to input search criteria and displays the results based on a provided template.
-
-**Props**
-
-
-| Prop Name | Type | Required | Default value | Description |
-| --- |--- | --- | --- | --- |
-| `source` | Object | Yes | _null_ | An object containing information to source data. This should include the necessary properties for querying the data source. [More info on source object](#access-data-from-components)|
-| `resultItemTemplate`| Function | Yes | _null_ | A template function to render each result item. This function receives an item from the search results and should return a React element. |
-| `resultsHeaderTemplate` | Function | No | `tot => ( <> <h1 className="mt-5">Results</h1> <p className="text-secondary">— {tot} records found</p> </> )` | Template function to render the header of the results. Default is a simple header in English with the number of results.|
-| `fieldList` | Object | Yes | _null_ | An object defining the fields available for querying. |
-| `operators` | Object | No | <pre lang="json">{<br> "_eq": "Equals",<br> "_neq": "Doesn't equal",<br> "_lt": "Less  than",<br> "_lte": "Less than or equal to",<br> "_gt": "Greater than",<br> "_gte": "Greater than or equal to",<br> "_null": "Is null",<br> "_nnull": "Isn't null",<br> "_contains": "Contains",<br> "_icontains": "Contains (case-insensitive)",<br> "_ncontains": "Doesn't contain",<br> "_starts_with": "Starts with",<br> "_istarts_with": "Starts with (case-insensitive)",<br> "_nstarts_with": "Doesn't start with",<br> "_nistarts_with": "Doesn't start with (case-insensitive)",<br> "_ends_with": "Ends with",<br> "_iends_with": "Ends with (case-insensitive)",<br> "_nends_with": "Doesn't end with",<br> "_niends_with": "Doesn't end with (case-insensitive)",<br> "_empty": "Is empty",<br> "_nempty": "Isn't empty"<br> }</pre> | An object containing the identifiers of the operators (keys) and the labels to use for the UI. This can be used to overwrite default options, for example, to have the UI translated in a different language. |
-| `connector` | Object | No | <pre lang="json">{<br> "_and": "AND",<br> "_or": "OR"<br>}</pre> | An object containing the logical connectors (keys) and the labels to use for the UI. This can be used to overwrite the default value, for example, to have the UI translated in a different language. |
-
 
 
 

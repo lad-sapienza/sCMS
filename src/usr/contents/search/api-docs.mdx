@@ -1,0 +1,177 @@
+---
+title: "Search"
+date: "2025-02-15"
+slug: "search/api-docs"
+description: ""
+---
+
+
+### API Documentation: props
+
+#### `source`
+- Object
+- Required
+- Default: _null_
+
+An object containing information to source data. This should include the necessary properties for querying the data source.
+Data can be sourced from a static file (typically a CSV file stored locally or available on the web), a Directus API, or a custom API.
+
+If a static file is used, the `source` object should contain the following properties:
+```jsx
+{
+  path2data: "path/to/data.csv"
+}
+```
+
+Id a Directus API is used, the `source` object should contain the following properties:
+```jsx
+{
+  directus: {
+    /**
+     * Directus endpoint. It can be omitted if env variable GATSBY_DIRECTUS_ENDPOINT is set.
+     */
+    endPoint: "URL to Directus instance",
+  
+    /**
+     * Directus table name.
+     * Required
+     */
+    table: "Directus referenced table name",
+    
+    /**
+     * Directus optional filters and other, provided as querystring compatible to Directus API
+     * Optional
+     */
+    queryString: "Some filters etc., compliant to Directus API",
+    
+    /**
+     * Directus access token. It can be omitted if env variable GATSBY_DIRECTUS_TOKEN is set.
+     */
+    token: PropTypes.string,
+    
+    /**
+     * Id of a specific record to retrieve
+     */
+    id: PropTypes.number,
+
+    /**
+     * Field that contains geographical data to display on map
+     */
+    geoField:PropTypes.string,
+  }
+}
+```
+
+Finally, if a custom API is used, the `source` object should contain the following properties:
+```jsx
+{
+  customApi: {
+    /**
+     * Function to format the URL
+     * Required
+     */
+    formatUrl: (searchString) => {
+      return `https://api.example.com/search?q=${searchString}`;
+    },
+    
+    /**
+     * Function to parse the response
+     * Required
+     */
+    parseResponse: (response) => {
+      return response.data;
+    }
+  }
+}
+```
+
+---
+
+#### `resultItemTemplate`
+- Function
+- Required
+- Default: _null_
+
+A template function to render each result item. This function receives an item from the search results and should return a React element.
+
+---
+
+#### `resultsHeaderTemplate`
+- Function
+- Optional
+- Default:
+  ```jsx
+  tot => ( <> <h1 className="mt-5">Results</h1> <p className="text-secondary">— {tot} records found</p> </> )
+  ```
+
+Template function to render the header of the results. Default is a simple header in English with the number of results.
+
+---
+
+#### `fieldList`
+- Object
+- Required
+- Default: _null_ 
+
+An object defining the fields available for querying. It can be a plain key-value object, where the key is the field name and the value is the label to display in the UI.
+But it can also be a key-object object where the key is the field name and the value is an object with the following properties:
+```jsx
+{
+  "field_name": {
+    label: "Field label",
+    values: ["Value 1", "Value 2", "Value 3"],
+  }
+}
+```
+
+The label key will be used to display the field name in the UI, while the values key will be used to display a dropdown with predefined values for the field.
+
+---
+
+#### `operators`
+- Object
+- Optional
+- Default:
+```json
+{
+  "_eq": "Equals",
+  "_neq": "Doesn't equal",
+  "_lt": "Less  than",
+  "_lte": "Less than or equal to",
+  "_gt": "Greater than",
+  "_gte": "Greater than or equal to",
+  "_null": "Is null",
+  "_nnull": "Isn't null",
+  "_contains": "Contains",
+  "_icontains": "Contains (case-insensitive)",
+  "_ncontains": "Doesn't contain",
+  "_starts_with": "Starts with",
+  "_istarts_with": "Starts with (case-insensitive)",
+  "_nstarts_with": "Doesn't start with",
+  "_nistarts_with": "Doesn't start with (case-insensitive)",
+  "_ends_with": "Ends with",
+  "_iends_with": "Ends with (case-insensitive)",
+  "_nends_with": "Doesn't end with",
+  "_niends_with": "Doesn't end with (case-insensitive)",
+  "_empty": "Is empty",
+  "_nempty": "Isn't empty"
+}
+```
+
+An object containing the identifiers of the operators (keys) and the labels to use for the UI.
+This can be used to overwrite the default options, for example, to have the UI translated in a different language, or to provided a their limited list.
+
+---
+
+#### `connector`
+- Object
+- Optional
+- Default:
+```json
+{
+  "_and": "AND",
+  "_or": "OR"
+}
+```
+An object containing the logical connectors (keys) and the labels to use for the UI. This can be used to overwrite the default value, for example, to have the UI translated in a different language.
+

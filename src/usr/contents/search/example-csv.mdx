@@ -1,0 +1,53 @@
+---
+title: "Search"
+date: "2025-02-15"
+slug: "search/eample-csv"
+description: ""
+menu_position: 3
+---
+
+import { Search, Documenter } from "../../../modules/scms.js"
+
+### Example of a search component using a ststic CSV file
+
+This example shows how to use the `Search` component to search data from a static CSV file. The `Search` component takes a `source` prop that specifies the source of the data to search. In this example, the source is a CSV file that provides data from a file named `ksa.csv`. The `fieldList` prop specifies the fields to search in the data, and the `resultItemTemplate` prop specifies the template to use to display the search results.
+
+<Documenter rawCode={`<Search
+  source={{
+        path2data: {path: "/data/ksa.csv"}
+  }}
+      
+  fieldList={{
+    "Item_Label": "Label",
+    "Site_Name": "Site name",
+    "Site_Description": "Site description"
+    }}
+  resultItemTemplate = { item => {
+        return  <div key={item.id} className="border-bottom py-3">
+          <strong>{item.Item_Label} — {item.Site_Name}</strong>
+          <p>{item.Site_Description}</p>
+      </div>
+      }}
+/>`}>
+<Search
+      source={{
+        path2data: {path: "/data/ksa.csv"}
+      }}
+      fieldList={{
+        "Item_Label": "Label",
+        "Site_Name": "Site name",
+        "Site_Description": "Site description"
+        }}
+      resultItemTemplate = { item => {
+        return  <div key={item.id} className="border-bottom py-3">
+          <strong>{item.Item_Label} — {item.Site_Name}</strong>
+          <p>{item.Site_Description}</p>
+      </div>
+      }}
+    />
+</Documenter>
+    
+
+<div className="text-muted small mt-3">
+  Data from [Kahramanmaraş Survey](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) created by [Elizabeth Carter](http://opencontext.org/persons/3208923d-69d0-70e9-9cc1-23ad97770aec) and published on [OpenContext](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) add distributed with [CC BY 4.0 International](https://creativecommons.org/licenses/by/4.0) license.
+</div>
