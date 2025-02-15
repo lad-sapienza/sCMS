@@ -35,6 +35,7 @@ Think of s:CMS as the *public, fully-customiseable front-end of your research da
    1. [Columns](#columns)
    1. [Query Tool](#query-tool)
    1. [Search](https://scms.lad-sapienza.it/search/)
+   1. [Harris Matrix](https://scms.lad-sapienza.it/harris-matrix/)
    1. [View Record](#view-record)
 1. [Built with s:CMS](#build-with-sCMS)
 
@@ -397,22 +398,6 @@ The `Image` component is a React component that displays images based on a speci
 | `preset`    | String | No | _null_ | Optional preset key for image transformation. as defined in [https://docs.directus.io/reference/files.html#preset-transformations](https://docs.directus.io/reference/files.html#preset-transformations)|
 | `custom`    | String | No | _null_ | Optional custom query parameters for the image URL, as defined in [https://docs.directus.io/reference/files.html#custom-transformations](https://docs.directus.io/reference/files.html#custom-transformations) |
 | `className` | String | No | _null_ | Optional CSS class for styling the image. |
-
-
-### HarrisMatrix
-
-The `HarrisMatrix` component renders a directed graph using viz.js from a DOT string or an array of edges. It supports zoom controls and node click events.
-
-**Props**
-
-| Prop Name | Type | Required | Default value | Description |
-|----------|------|-------------------|---------------|-------------|
-| `dot` | string | no (required if `data` is not set) | _null_ | The DOT string representing the graph. |
-| `data` | array | no (required if `dot` is not set) | [] | The array of edges representing the graph. Each edge is represented as an array of two strings. |
-| `width` | string | no | "100%" | The width of the graph container. |
-| `height` | string | no | "400px" | The height of the graph container. |
-| `containerClassNames` | string | no | _null_ | Additional class names for the container. |
-| `onClickNode` | function | no | `nodeText => { console.log(nodeText) }` | Function to call when a node is clicked. The node's text is passed as a parameter. |
 
 
 ### SimpleSlider Component
