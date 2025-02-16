@@ -6,9 +6,12 @@
  * @returns {Object} The GeoJSON FeatureCollection.
  */
 const json2geoJson = (json, geoDataField) => {
+
+  const filtered_json = json.filter( i => i[geoDataField] !== null )
+
   return {
     type: "FeatureCollection",
-    features: json.map(item => ({
+    features: filtered_json.map(item => ({
       type: "Feature",
       properties: item,
       geometry: {
