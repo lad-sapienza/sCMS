@@ -1,19 +1,19 @@
 ---
 title: "Search EDR API"
 date: "2025-01-26"
-slug: "search_edr"
+slug: "search/edr"
 description: ""
 menu_position: 7
 ---
 
-import { Search, Documenter } from "../../modules/scms.js"
-import { Link } from "gatsby"
-import EdrService from "../../usr/services/edr/edr.js"
+import { Search, Documenter } from "../../../modules/scms.js"
+import EdrService from "../../services/edr/edr.js"
 
 
-# This example shows how to use the `<Search />` component connecting to a custom API
+### Example of `Search` component using a custom service: EDR API
 
-To this end a custom API service is created in the `edr.js` file. The service is used to fetch data from the API and return it in the format required by the `<Search />` component.
+This example uses a custom search service, created in the `/usr/services/edr` directory and implementing the search service interface
+
 
 <Documenter rawCode={` <Search
     limitTo="advanced"
@@ -28,8 +28,8 @@ To this end a custom API service is created in the `edr.js` file. The service is
       "language": { label: "Language (Lingua)", values: ["latina", "graeca", "latina-graeca", "incerta","ignoratur","alia"] },
       "religion": { label: "Religion (Religione)", values: ["Christiana", "Hebraica", "Pagana", "Incerta"] },
       "type_of_persons_mentionated": { label: "Type of persons mentionated (Virorum distributio)", values: ["imp.", "reges, viri notab. exter. gent.", "ord. sen.", "ord. eq.","ord. mun.","mil.","eccl.","offic. magg., Augg., mun.","offic. pag., vic., colleg.","offic. priv.","cet.","ignoratur","imp.?", "reges, viri notab. exter. gent.?", "ord. sen.?", "ord. eq.?","ord. mun.?","mil.?","eccl.?","offic. magg., Augg., mun.?","offic. pag., vic., colleg.?","offic. priv.?","cet.?" ] },
-      "year_from": { label: "Year from", operator: "_gte" }, // Modificato per supportare =>
-      "year_to": { label: "Year to", operator: "_lte" } // Modificato per supportare =<
+      "year_from": { label: "Year from", operator: "_gte" },
+      "year_to": { label: "Year to", operator: "_lte" }
     }}
     resultItemTemplate = { item =>  
       <div className="card my-3" key={item.identification.record_number}>
@@ -38,7 +38,7 @@ To this end a custom API service is created in the `edr.js` file. The service is
             {item.identification.record_number} — {item.localization.discovery_location}
           </h5>
           <a href={item.identification.url} target="_blank">{item.identification.url}</a>
-          <pre className="mt-2 ps-5">{item.text.text.replace(/\<br\>/gi, "\n")}</pre>
+          <pre className="mt-2 ps-5">{item.text.text.replace(/\<br\>/gi, "\\n")}</pre>
         </div>
       </div>
     }
@@ -57,8 +57,8 @@ To this end a custom API service is created in the `edr.js` file. The service is
       "language": { label: "Language (Lingua)", values: ["latina", "graeca", "latina-graeca", "incerta","ignoratur","alia"] },
       "religion": { label: "Religion (Religione)", values: ["Christiana", "Hebraica", "Pagana", "Incerta"] },
       "type_of_persons_mentionated": { label: "Type of persons mentionated (Virorum distributio)", values: ["imp.", "reges, viri notab. exter. gent.", "ord. sen.", "ord. eq.","ord. mun.","mil.","eccl.","offic. magg., Augg., mun.","offic. pag., vic., colleg.","offic. priv.","cet.","ignoratur","imp.?", "reges, viri notab. exter. gent.?", "ord. sen.?", "ord. eq.?","ord. mun.?","mil.?","eccl.?","offic. magg., Augg., mun.?","offic. pag., vic., colleg.?","offic. priv.?","cet.?" ] },
-      "year_from": { label: "Year from", operator: "_gte" }, // Modificato per supportare =>
-      "year_to": { label: "Year to", operator: "_lte" } // Modificato per supportare =<
+      "year_from": { label: "Year from", operator: "_gte" },
+      "year_to": { label: "Year to", operator: "_lte" }
     }}
     resultItemTemplate = { item =>  
       <div className="card my-3" key={item.identification.record_number}>
