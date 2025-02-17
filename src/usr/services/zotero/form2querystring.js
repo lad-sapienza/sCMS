@@ -8,24 +8,19 @@ import PropTypes from "prop-types"
  * @returns {Object}      Object with query parameters compatible with the Zotero API
  */
 const form2querystring = (conn, plain) => {
+
+  if (!plain || plain.length === 0) {
+    return {}; // 🔹 Ritorna un oggetto vuoto se non ci sono filtri
+  }
+
   const zoteroQuery = {}
 
-  // Aggiungi i filtri specifici definiti in `plain`
-  plain.forEach(el => {
-    if (el.field === "q") {
-      // Aggiungi ricerca rapida
-      zoteroQuery.q = el.value
-    } else if (el.field === "tag") {
-      // Filtra per tag
-      zoteroQuery.tag = el.value
-    } else if (el.field === "since") {
-      // Filtra per versione modificata
-      zoteroQuery.since = el.value
-    } else {
-      // Aggiungi altri filtri generici
-      zoteroQuery[el.field] = el.value
-    }
-  })
+  
+  // 🔹 Applica gli operatori speciali per l'API EDR
+  plain.forEach(({ field, operator, value }) => {
+    zoteroQuery[field] = value; // 🔹 Operatore di default "="
+  });
+
 
   return zoteroQuery
 }

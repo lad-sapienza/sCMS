@@ -16,26 +16,28 @@ This example shows how to use the `<Search />` component to query Zotero's API. 
 <div className="row">
   <div className="col-sm-4">
 ```jsx
-  <Search
-    source={{ customApi: ZoteroService }}
-    fieldList={{
-      q: "Search Query",
-      tag: "Tags",
-      title: "Title",
-      bookTitle: "Book Title",
-      creatorSummary: "Author(s)",
-      date: "Publication Date",
-    }}
-   resultItemTemplate={(item) =>
-    item ? (
+     <Search
+  limitTo="advanced"
+  source={{ customApi: ZoteroService }}
+  operators={{"_contains": "Contains"}}
+  fieldList={{
+    q: "Search Query",
+    tag: "Tags",
+  }}
+  resultItemTemplate={(item) => {
+
+    return item ? (
       <div key={item.key} className="card my-3">
         <div className="card-body">
           <h5 className="card-title">{item.title}</h5>
           <p>
-            <strong>Authors:</strong> {item.creators?.map((c) => c.lastName).join(", ")}
+            <strong>Authors:</strong> {item.authors}
+          </p>
+          <p>
+            <strong>Tags:</strong> {item.tags}
           </p>
           <p><strong>Publication Date:</strong> {item.date}</p>
-      
+
           <a href={item.links?.alternate?.href} target="_blank" rel="noopener noreferrer">
             More Details
           </a>
@@ -43,33 +45,35 @@ This example shows how to use the `<Search />` component to query Zotero's API. 
       </div>
     ) : (
       <div className="text-muted">No results found.</div>
-    )
-  }
+    );
+  }}
 />
+
 ```
   </div>
 
   <div className="col-sm-8">
     <Search
-      source={{ customApi: ZoteroService }}
-      fieldList={{
-        q: "Search Query",
-        tag: "Tags",
-        title: "Title",
-        bookTitle: "Book Title",
-        creatorSummary: "Author(s)",
-        date: "Publication Date",
-      }}
-     resultItemTemplate={(item) =>
-    item ? (
+  limitTo="advanced"
+  source={{ customApi: ZoteroService }}
+  operators={{"_contains": "Contains"}}
+  fieldList={{
+    q: "Search Query",
+    tag: "Tags",
+  }}
+  resultItemTemplate={(item) => {
+    return item ? (
       <div key={item.key} className="card my-3">
         <div className="card-body">
           <h5 className="card-title">{item.title}</h5>
           <p>
-            <strong>Authors:</strong> {item.creators?.map((c) => c.lastName).join(", ")}
+            <strong>Authors:</strong> {item.authors}
+          </p>
+          <p>
+            <strong>Tags:</strong> {item.tags}
           </p>
           <p><strong>Publication Date:</strong> {item.date}</p>
-      
+
           <a href={item.links?.alternate?.href} target="_blank" rel="noopener noreferrer">
             More Details
           </a>
@@ -77,9 +81,10 @@ This example shows how to use the `<Search />` component to query Zotero's API. 
       </div>
     ) : (
       <div className="text-muted">No results found.</div>
-    )
-  }
+    );
+  }}
 />
+
 
 <div className="text-muted small mt-3">
   Data fetched from the [Zotero
