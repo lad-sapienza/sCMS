@@ -1,36 +1,33 @@
-const parseResponse = async response => {
+const parseResponse = async (response) => {
   try {
-    // Parsing della risposta JSON dall'API EDR
     const output = await response.json();
 
-    // L'API EDR restituisce i dati nei campi specifici
-    if (!output.results || output.results.length === 0) {
-      throw new Error("La risposta dell'API EDR non contiene risultati.");
+    // 🔹 Se la risposta API è vuota, restituisce un array vuoto senza errori
+    if (!output || (output.results && output.results.length === 0)) {
+      console.warn("No result found");
+      return [];
     }
 
-    // 1. Ottengo i risultati di base
-    let allResults = output.results;
+    // 🔹 Determina i risultati di base (usa `results` per EDR)
+    let allResults = output.results || output;
 
-    // 2. Filtro i record che contengono "ignoratur" o "Roma?" in discovery_location
+    // 🔹 Filtra i record che contengono "ignoratur", "Roma?"
     allResults = allResults.filter(item => {
       const loc = (item.localization?.discovery_location || "").toLowerCase();
-      // Escludiamo se contiene "ignoratur" O se contiene "roma?"
-      // => manteniamo solo quelli che NON contengono nessuno dei due
       return !loc.includes("ignoratur") && !loc.includes("roma?");
     });
 
-    // 3. Se dopo il filtro è vuoto => errore => "No results"
+    // 🔹 Se dopo il filtro non rimangono risultati, mostra un avviso ma non genera un errore
     if (allResults.length === 0) {
-      throw new Error("Dopo il filtro 'ignoratur'/'Roma?' non rimangono risultati.");
+      console.warn("No result found.");
+      return [];
     }
 
-    // Ritorno i risultati finali filtrati
     return allResults;
   } catch (error) {
-    console.error("Errore durante l'elaborazione della risposta EDR:", error);
-    throw new Error("Errore nel parsing della risposta EDR.");
+    console.error("Errore durante il parsing della risposta API:", error);
+    return []; // 🔹 Evita il crash restituendo un array vuoto
   }
 };
 
 export default parseResponse;
-
