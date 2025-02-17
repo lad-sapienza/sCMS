@@ -4,37 +4,24 @@ const formatUrl = (uiFilter) => {
   const { conn, inputs } = uiFilter;
 
   let ret = {
-    sourceUrl:
-      "http://www.edr-edr.it/edr_programmi/edr_api.php?ancient_city=roma",
+    sourceUrl: "http://www.edr-edr.it/edr_programmi/edr_api.php?ancient_city=roma",
     options: {},
   };
 
-  // 🔹 Se la ricerca è semplice (SOLO per "text"), usa solo quel campo
-  if (
-    inputs.length === 1 &&
-    inputs[0].field === "text" &&
-    inputs[0].value
-  ) {
-    ret.sourceUrl += `&text=${encodeURIComponent(inputs[0].value)}`;
-    return ret; // 🔹 Restituisce subito l'URL senza altri filtri
-  }
+  // 🔹 Processa i filtri avanzati con form2querystring
+  const filterQuery = form2querystring(conn, inputs);
 
-  // 🔹 Se la ricerca è avanzata (AND/OR), processa tutti i filtri
-  const filters = inputs.map(input => form2querystring(conn, [input]));
-
-  // 🔹 Rimuove eventuali filtri vuoti
-  const validFilters = filters.filter(filter => Object.keys(filter).length > 0);
-
-  if (validFilters.length > 0) {
-    const serializedQuery = validFilters
-      .map(filter => Object.entries(filter)
-        .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
-        .join("&")
-      )
-      .join(conn === "_or" ? "&or=" : "&");
+  // 🔹 Verifica che ci siano filtri validi
+  if (filterQuery && Object.keys(filterQuery).length > 0) {
+    const serializedQuery = Object.entries(filterQuery)
+      .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
+      .join("&");
 
     ret.sourceUrl += `&${serializedQuery}`;
   }
+
+  // 🔹 LOG della URL generata
+  console.log("Generated URL:", ret.sourceUrl);
 
   return ret;
 };
