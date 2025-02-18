@@ -31,10 +31,11 @@ Think of s:CMS as the *public, fully-customiseable front-end of your research da
    1. [LayersControl](#layerscontrol)
    1. [Vectorlayer](#vectorlayer)
    1. [Rasterlayer and DefaultBaseLayers](#rasterlayer-and-defaultbaselayers)
-   1. [Dtable](#dtable)
+   1. [DataTb](https://scms.lad-sapienza.it/datatable/)
    1. [Columns](#columns)
    1. [Query Tool](#query-tool)
-   1. [Search](#search)
+   1. [Search](https://scms.lad-sapienza.it/search/)
+   1. [Harris Matrix](https://scms.lad-sapienza.it/harris-matrix/)
    1. [View Record](#view-record)
 1. [Built with s:CMS](#build-with-sCMS)
 
@@ -341,38 +342,6 @@ The `RasterLayerLibre` component is designed to render a raster layer on a MapLi
 | `attribution` | string | No |  _null_ |Optional attribution or credits for the layer. |
 
 
-### DataTb
-
-The `DataTb` component displays data ordered in a two-dimensional table. It can be populated with data from a Directud API endpoint, a static CSV or JSON files hosted locally or in the WWW. Under the hood DataTb uses the [React Data Table Component](https://react-data-table-component.netlify.app/?path=/docs/getting-started-intro--docs) and supports out of the box all configurations and settings described on the [official documentation](https://react-data-table-component.netlify.app/?path=/docs/getting-started-intro--docs). An example of these settings is provided below:
-
-**Props**
-
-| Prop Name | Type | Required | Default value | Description |
-|----------|------|-------------------|---------------|-------------|
-| `source` | object | yes |  _null_ | For the complete documentation: [Access data from components](#access-data-from-components). |
-| `columns` | object | yes | _null_ | Object containing information on the columns of the table. The full documentation is available in the [official documentation](https://react-data-table-component.netlify.app/?path=/docs/api-columns--docs)|
-| `...props` |  |  |  | All parameters described in the [official React Data Table Component documentation](https://react-data-table-component.netlify.app/?path=/docs/api-props--docs) can be used with this component. |
-
-
-
-## Search
-
-The `Search` component is a React component that provides a user interface for searching data from a specified source. It allows users to input search criteria and displays the results based on a provided template.
-
-**Props**
-
-
-| Prop Name | Type | Required | Default value | Description |
-| --- |--- | --- | --- | --- |
-| `source` | Object | Yes | _null_ | An object containing information to source data. This should include the necessary properties for querying the data source. [More info on source object](#access-data-from-components)|
-| `resultItemTemplate`| Function | Yes | _null_ | A template function to render each result item. This function receives an item from the search results and should return a React element. |
-| `resultsHeaderTemplate` | Function | No | `tot => ( <> <h1 className="mt-5">Results</h1> <p className="text-secondary">— {tot} records found</p> </> )` | Template function to render the header of the results. Default is a simple header in English with the number of results.|
-| `fieldList` | Object | Yes | _null_ | An object defining the fields available for querying. |
-| `operators` | Object | No | <pre lang="json">{<br> "_eq": "Equals",<br> "_neq": "Doesn't equal",<br> "_lt": "Less  than",<br> "_lte": "Less than or equal to",<br> "_gt": "Greater than",<br> "_gte": "Greater than or equal to",<br> "_null": "Is null",<br> "_nnull": "Isn't null",<br> "_contains": "Contains",<br> "_icontains": "Contains (case-insensitive)",<br> "_ncontains": "Doesn't contain",<br> "_starts_with": "Starts with",<br> "_istarts_with": "Starts with (case-insensitive)",<br> "_nstarts_with": "Doesn't start with",<br> "_nistarts_with": "Doesn't start with (case-insensitive)",<br> "_ends_with": "Ends with",<br> "_iends_with": "Ends with (case-insensitive)",<br> "_nends_with": "Doesn't end with",<br> "_niends_with": "Doesn't end with (case-insensitive)",<br> "_empty": "Is empty",<br> "_nempty": "Isn't empty"<br> }</pre> | An object containing the identifiers of the operators (keys) and the labels to use for the UI. This can be used to overwrite default options, for example, to have the UI translated in a different language. |
-| `connector` | Object | No | <pre lang="json">{<br> "_and": "AND",<br> "_or": "OR"<br>}</pre> | An object containing the logical connectors (keys) and the labels to use for the UI. This can be used to overwrite the default value, for example, to have the UI translated in a different language. |
-
-
-
 
 ### Record
 
@@ -416,22 +385,6 @@ The `Image` component is a React component that displays images based on a speci
 | `preset`    | String | No | _null_ | Optional preset key for image transformation. as defined in [https://docs.directus.io/reference/files.html#preset-transformations](https://docs.directus.io/reference/files.html#preset-transformations)|
 | `custom`    | String | No | _null_ | Optional custom query parameters for the image URL, as defined in [https://docs.directus.io/reference/files.html#custom-transformations](https://docs.directus.io/reference/files.html#custom-transformations) |
 | `className` | String | No | _null_ | Optional CSS class for styling the image. |
-
-
-### HarrisMatrix
-
-The `HarrisMatrix` component renders a directed graph using viz.js from a DOT string or an array of edges. It supports zoom controls and node click events.
-
-**Props**
-
-| Prop Name | Type | Required | Default value | Description |
-|----------|------|-------------------|---------------|-------------|
-| `dot` | string | no (required if `data` is not set) | _null_ | The DOT string representing the graph. |
-| `data` | array | no (required if `dot` is not set) | [] | The array of edges representing the graph. Each edge is represented as an array of two strings. |
-| `width` | string | no | "100%" | The width of the graph container. |
-| `height` | string | no | "400px" | The height of the graph container. |
-| `containerClassNames` | string | no | _null_ | Additional class names for the container. |
-| `onClickNode` | function | no | `nodeText => { console.log(nodeText) }` | Function to call when a node is clicked. The node's text is passed as a parameter. |
 
 
 ### SimpleSlider Component

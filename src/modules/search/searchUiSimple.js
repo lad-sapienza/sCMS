@@ -1,8 +1,8 @@
 import React, { useState } from "react"
 import { Button, Col, Form, Row, Spinner } from "react-bootstrap"
-import { Search } from "react-bootstrap-icons"
+import { Filter, Search } from "react-bootstrap-icons"
 
-const SearchUiSimple = ({ fieldList, processData, isLoading }) => {
+const SearchUiSimple = ({ fieldList, processData, isLoading, toggleSearchType }) => {
   const [searchText, setSearchText] = useState("")
 
   const handleChange = event => {
@@ -30,7 +30,7 @@ const SearchUiSimple = ({ fieldList, processData, isLoading }) => {
   return (
     <React.Fragment>
       <Form onSubmit={handleSubmit}>
-        <Row>
+        <Row className="my-2">
           <Col>
             <Form.Control
               type="search"
@@ -40,10 +40,11 @@ const SearchUiSimple = ({ fieldList, processData, isLoading }) => {
               required
             />
           </Col>
-          <Col xs="auto">
+          <Col xs="auto" className="text-end">
             <Button type="submit" variant="success" disabled={isLoading}>
-              {isLoading ? <Spinner animation="border" size="sm" /> : <Search />} Search
+              {isLoading ? <Spinner animation="border" size="sm" /> : <Search />}
             </Button>
+            {toggleSearchType && <Button onClick={toggleSearchType} variant="warning" className="mx-1"><Filter /></Button>}
           </Col>
         </Row>
       </Form>

@@ -3,10 +3,10 @@ title: "Harris Matrix"
 date: "2023-12-19"
 slug: "harris-matrix"
 description: ""
-menu_position: 4
+menu_position: 5
 ---
 
-import { HarrisMatrix } from "../../modules/scms"
+import { HarrisMatrix, Documenter } from "../../modules/scms"
 
 # Easily build and display interactive ‘Matrices of Harris’
 
@@ -14,90 +14,126 @@ The Harris Matrix is a tool used in archaeology to depict the temporal successio
 
 The component can be used to display any kind of DAG.
 
+In this page:
+- [Basic example with DOT notation data](#basic-example-with-dot-notation-data)
+- [Basic example with data array](#basic-example-with-data-array)
+- [Example with onClickNode event](#example-with-onclicknode-event)
+- [API Documentation](#api-documentation-props)
+
+---
+
+
 ### Basic example with DOT notation data
 
-<div className="row">
-  <div className="col-sm-6">
-    ```jsx
-    <HarrisMatrix 
+<Documenter rawCode={`<HarrisMatrix 
       containerClassNames="border"
-      dot={`digraph G {
+      dot='digraph G {
         "1126" -> "833"; 
         "1018" -> "1102"; 
         "1018" -> "1085"; 
         "1171" -> "1160"; 
         "1171" -> "1159";
         }
-      `}
-/>
-    ```
-  </div>
-  <div className="col-sm-6">
-    <HarrisMatrix 
+      '
+  />`}>
+  <HarrisMatrix 
       containerClassNames="border"
-      dot={`digraph G {
+      dot='digraph G {
         "1126" -> "833"; 
         "1018" -> "1102"; 
         "1018" -> "1085"; 
         "1171" -> "1160"; 
         "1171" -> "1159";
         }
-      `}
-    />
-  </div>
-</div>
+      '
+  />
+</Documenter>
+
+---
 
 ### Basic example with data array
-<div className="row">
-  <div className="col-sm-6">
-    ```jsx
-    <HarrisMatrix 
-      containerClassNames="border"
-      data={[
-        ["uno", "due"],
-        ["due", "tre"]
-      ]}
-    />
-    ```
-  </div>
-  <div className="col-sm-6">
-    <HarrisMatrix 
-      containerClassNames="border"
-      data={[
-        ["uno", "due"],
-        ["due", "tre"]
-      ]}
-    />
-  </div>
-</div>
 
+<Documenter rawCode={`<HarrisMatrix 
+    containerClassNames="border"
+    data={[
+      ["uno", "due"],
+      ["due", "tre"]
+    ]}
+  />`}>
+  <HarrisMatrix 
+    containerClassNames="border"
+    data={[
+      ["uno", "due"],
+      ["due", "tre"]
+    ]}
+  />
+</Documenter>
+
+---
 
 ### Example with onClickNode event
-<div className="row">
-  <div className="col-sm-6">
-    ```jsx
-    <HarrisMatrix 
-      containerClassNames="border"
-      onClickNode={ text => console.log(text) }
-      dot={`digraph G {
-        "1126" -> "833"; 
-        "1018" -> "1102"; 
-        "1018" -> "1085"; 
-        "1171" -> "1160"; 
-        "1171" -> "1159";
-        }
-      `}
-    />
-    ```
-  </div>
-  <div className="col-sm-6">
-    <HarrisMatrix 
-      containerClassNames="border"
-      data={[
-        ["uno", "due"],
-        ["due", "tre"]
-      ]}
-      onClickNode={ text => console.log(text) }
-      />
-  </div>
-</div>
+
+<Documenter rawCode={`<HarrisMatrix 
+    containerClassNames="border"
+    data={[
+      ["uno", "due"],
+      ["due", "tre"]
+    ]}
+    onClickNode={ text => alert(\`Hai cliccato il nodo con testo: \${text}\`) }
+  />`}>
+  <HarrisMatrix 
+    containerClassNames="border"
+    data={[
+      ["uno", "due"],
+      ["due", "tre"]
+    ]}
+    onClickNode={ text => alert(`Hai cliccato il nodo con testo: ${text}`) }
+  />
+</Documenter>
+
+### API documentation: props
+
+#### `dot`
+- string
+- required if `data` is not set
+- Default: _null_ 
+
+The DOT string representing the graph.
+
+#### `data`
+- array
+- required if `dot` is not set
+- Default: `[]`
+
+The array of edges representing the graph. Each edge is represented as an array of two strings.
+
+#### `width`
+- string
+- optional
+- Default: `"100%"`
+
+The width of the graph container
+
+#### `height`
+- string
+- optional
+- Default: `"400px"`
+
+The height of the graph container.
+
+#### `containerClassNames`
+- string
+- optional
+- Default: _null_
+
+Additional class names for the container.
+
+
+#### `onClickNode`
+- function
+- optional
+- Default:
+  ```js
+  nodeText => { console.log(nodeText) }
+  ```
+  Function to call when a node is clicked. The node's text is passed as a parameter.

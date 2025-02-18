@@ -31,11 +31,12 @@ const RecordNotWrapped = ({ search, children, fields = null }) => {
     const fetchData = async () => {
       try {
         const data = await getDataFromSource({
-          dEndPoint: endPoint,
-          dTable: tb,
-          dQueryString : fields && `fields=${fields}`,
-          transType: "json",
-          id: id,
+          directus: {
+            endPoint: endPoint,
+            table: tb,
+            queryString : fields && `fields=${fields}`,
+            id: id,
+          }
         })
         setRecordData(data) // Set the fetched data to state
       } catch (err) {

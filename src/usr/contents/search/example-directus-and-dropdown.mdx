@@ -1,0 +1,57 @@
+---
+title: "Search"
+date: "2025-02-15"
+slug: "search/example-directus-and-dropdown"
+description: ""
+---
+
+import { Search, Documenter } from "../../../modules/scms.js"
+
+### Example of `Search` component using Directus API, with predefined values and only advanced search UI
+
+This example shows how to use the `Search` component to search data from a Directus API. The `Search` component takes a `source` prop that specifies the source of the data to search. In this example, the source is a Directus API that provides data from a table named `scms_ksa`. The `fieldList` prop specifies the fields to search in the data, the `resultItemTemplate` prop specifies the template to use to display the search results, and the `limitTo` prop is set to `advanced`, on order to limit the view of the only advanced form. The `fieldList` prop also includes a dropdown list of predefined values for the `Item_Label` field.
+
+<Documenter rawCode={`<Search
+  source={{
+    directus: {
+      table: "scms_ksa"
+    }
+  }}
+  fieldList={{
+    "Item_Label": {label: "Label", values: ["KM 50", "KM 55"]},
+    "Site_Name": "Site name",
+    "Site_Description": "Site description"
+    }}
+    limitTo="advanced"
+    resultItemTemplate = { item => {
+      return  <div key={item.id} className="border-bottom py-3">
+        <strong>{item.Item_Label} — {item.Site_Name}</strong>
+        <p>{item.Site_Description}</p>
+    </div>
+    }}
+/>`}>
+<Search
+  source={{
+    directus: {
+      table: "scms_ksa"
+    }
+  }}
+  fieldList={{
+    "Item_Label": {label: "Label", values: ["KM 50", "KM 55"]},
+    "Site_Name": "Site name",
+    "Site_Description": "Site description"
+    }}
+    limitTo="advanced"
+    resultItemTemplate = { item => {
+      return  <div key={item.id} className="border-bottom py-3">
+        <strong>{item.Item_Label} — {item.Site_Name}</strong>
+        <p>{item.Site_Description}</p>
+    </div>
+    }}
+/>
+</Documenter>
+    
+
+<div className="text-muted small mt-3">
+  Data from [Kahramanmaraş Survey](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) created by [Elizabeth Carter](http://opencontext.org/persons/3208923d-69d0-70e9-9cc1-23ad97770aec) and published on [OpenContext](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) add distributed with [CC BY 4.0 International](https://creativecommons.org/licenses/by/4.0) license.
+</div>

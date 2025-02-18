@@ -59,10 +59,12 @@ const ControlPanel = ({ mapInstance }) => {
 
   const removeFilter = layerId => {
     if (mapInstance) {
-      if (checkLayerExists(layerId) && checkLayerTypeSupportsFilter(layerId)) {
-        mapInstance.setFilter(layerId, null)
+      if (!checkLayerExists(layerId)){
+        console.error(`Il layer ${layerId} non esiste.`)
+      } else if (!checkLayerTypeSupportsFilter(layerId)){
+        console.error(`Il layer ${layerId} non supporta i filtri.`)
       } else {
-        console.error(`Il layer ${layerId} non supporta i filtri o non esiste.`)
+        mapInstance.setFilter(layerId, null)
       }
     }
     setFilters([])
@@ -79,7 +81,8 @@ const ControlPanel = ({ mapInstance }) => {
       layer &&
       (layer.type === "fill" ||
         layer.type === "line" ||
-        layer.type === "circle")
+        layer.type === "circle" ||
+        layer.type === "symbol")
     )
   }
 
@@ -88,13 +91,12 @@ const ControlPanel = ({ mapInstance }) => {
     setFilters(mapLibreFilters)
 
     if (mapInstance) {
-      const layerExists = checkLayerExists(activeLayer.id)
-      if (layerExists && checkLayerTypeSupportsFilter(activeLayer.id)) {
-        mapInstance.setFilter(activeLayer.id, mapLibreFilters)
+      if (!checkLayerExists(activeLayer.id)){
+        console.error( `Il layer ${activeLayer.id} non esiste.`,)
+      } else if (!checkLayerTypeSupportsFilter(activeLayer.id)){
+        console.error(`Il layer ${activeLayer.id} non supporta i filtri.`)
       } else {
-        console.error(
-          `Il layer ${activeLayer.id} non supporta i filtri o non esiste.`,
-        )
+        mapInstance.setFilter(activeLayer.id, mapLibreFilters)
       }
     } else {
       console.error("mapInstance non è definito o la mappa non è pronta.")

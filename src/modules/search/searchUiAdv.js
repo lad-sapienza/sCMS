@@ -1,11 +1,17 @@
 import React, { useState } from "react"
-import { DashCircle, PlusCircle, Search } from "react-bootstrap-icons"
+import { DashCircle, Funnel, PlusCircle, Search } from "react-bootstrap-icons"
 
-import { Row, Col, Form, Button } from "react-bootstrap"
+import { Row, Col, Form, Button, ButtonGroup } from "react-bootstrap"
 import { defaultOperators } from "./defaultOperators"
 
-const SearchUiAdv = ({ fieldList, processData, operators, connectors }) => {
-  operators = operators  || defaultOperators
+const SearchUiAdv = ({
+  fieldList,
+  processData,
+  operators,
+  connectors,
+  toggleSearchType,
+}) => {
+  operators = operators  || defaultOperators //Object.assign(defaultOperators, operators)
   connectors = {
     _and: connectors?._and || "AND",
     _or: connectors?._or || "OR",
@@ -127,33 +133,38 @@ const SearchUiAdv = ({ fieldList, processData, operators, connectors }) => {
               />
             )}
           </Col>
-          <Col sm>
-            {index > 0 && (
+          <Col sm className="text-end">
+            <ButtonGroup>
+              {index > 0 && (
+                <Button
+                  variant="danger"
+                  onClick={() => handleDeleteInput(index)}
+                >
+                  <DashCircle />
+                </Button>
+              )}
+              {index === inputs.length - 1 && (
+                <React.Fragment>
+                  <Button variant="info" onClick={() => handleAddInput()}>
+                    <PlusCircle />
+                  </Button>
+                  <Button
+                    onClick={() => processData(conn, inputs)}
+                    variant="success"
+                  >
+                    <Search />
+                  </Button>
+                </React.Fragment>
+              )}
+            </ButtonGroup>
+            {toggleSearchType && index === inputs.length - 1 && (
               <Button
-                variant="danger"
-                onClick={() => handleDeleteInput(index)}
                 className="mx-1"
+                onClick={toggleSearchType}
+                variant="warning"
               >
-                <DashCircle />
+                <Funnel />
               </Button>
-            )}
-            {index === inputs.length - 1 && (
-              <React.Fragment>
-                <Button
-                  variant="info"
-                  className="mx-1"
-                  onClick={() => handleAddInput()}
-                >
-                  <PlusCircle />
-                </Button>
-                <Button
-                  onClick={() => processData(conn, inputs)}
-                  variant="success"
-                  className="mx-1"
-                >
-                  <Search />
-                </Button>
-              </React.Fragment>
             )}
           </Col>
         </Row>

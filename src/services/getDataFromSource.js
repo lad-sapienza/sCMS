@@ -1,105 +1,59 @@
-import csv from "csvtojson"
-import json2geoJson from "./transformers/json2geojson.js"
 import sourcePropTypes from "./sourcePropTypes.js"
-import { withPrefix } from "gatsby"
+import DirectusService from "./directus/directus.js"
+import Path2DataService from "./path2data/path2data.js"
+import uiFilterPropTypes from "./uiFilterPropTypes.js"
 
-const getDataFromSource = async source => {
-  let {
-    path2data,
-    dEndPoint,
-    dToken,
-    dTable,
-    id,
-    dQueryString,
-    transType,
-    geoField,
-  } = source
+const getDataFromSource = async (source, uiFilter) => {
+  const { path2data, directus, customApi } = source
 
   let sourceUrl
   let options = {}
-  let output
 
+  // path2data source
   if (path2data) {
-    sourceUrl = path2data.startsWith("http") ? path2data : withPrefix(path2data)
-    if (path2data.toLowerCase().endsWith(".csv")) {
-      transType = "csv2json"
-    }
-    if (path2data.toLowerCase().endsWith(".geojson")) {
-      transType = "json"
-    }
+    // TODO: nota per paginazione: path2data prende tutto, quindi niente paginazione
+    const p2tRet = Path2DataService.formatUrl(path2data, uiFilter)
+    sourceUrl = p2tRet.sourceUrl
+    options = p2tRet.options
+    // Directus source
+  } else if (directus) {
+    // TODO: nota per paginazione:
+    // Directus usa la sinatassi: ?aggregate[count]=*&filter=... che restituisce una oggetto del tipo: {"data":[{"count":"n"}]}
+    // eseguire qui una query di conta, prendere i risultati e restituirli come numero di pagine (tot risultati / limit se c'è e se non è -1 (= tutti), altrimenti 100)
+    // poi eseguire la query vera e propria
+    const dirRet = DirectusService.formatUrl(directus, uiFilter)
+    sourceUrl = dirRet.sourceUrl
+    options = dirRet.options
+
+    // CustomApi source
+  } else if (customApi && customApi.formatUrl) {
+    const customRet = customApi.formatUrl(uiFilter)
+    sourceUrl = customRet.sourceUrl
+    options = customRet.options
   } else {
-    if (dEndPoint) {
-      sourceUrl = dEndPoint
-    } else if (process.env.GATSBY_DIRECTUS_ENDPOINT) {
-      sourceUrl = process.env.GATSBY_DIRECTUS_ENDPOINT
-    } else {
-      throw new Error(
-        "Either `dEndPoint` or env variable `GATSBY_DIRECTUS_ENDPOINT` are needed",
-      )
-    }
-    if (dEndPoint || process.env.GATSBY_DIRECTUS_ENDPOINT) {
-      if (!dTable) {
-        throw new Error(
-          "Parameter `dTable` is requirted with `GATSBY_DIRECTUS_ENDPOINT` or `dEndPoint`",
-        )
-      }
-      sourceUrl += `${sourceUrl.endsWith("/") ? "" : "/"}items/${dTable}`
-    }
-    if (id) {
-      sourceUrl += `/${id}`
-    }
-    sourceUrl += `?${dQueryString ? dQueryString : ""}`
-
-    const token = dToken ? dToken : process.env.GATSBY_DIRECTUS_TOKEN
-
-    if (token) {
-      options = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    }
+    throw new Error("No valid source provided")
   }
 
   try {
     const response = await fetch(sourceUrl, options)
 
-    switch (transType) {
-      case "text":
-        output = await response.text()
-        break
-
-      case "csv2json":
-        const csvText = await response.text()
-        output = await csv().fromString(csvText)
-        break
-
-      case "geojson":
-        const respJson = await response.json()
-        output = json2geoJson(respJson.data, geoField)
-        break
-
-      case "json":
-      default:
-        output = await response.json()
-        break
+    if (directus) {
+      // Qui deve essere restituito {pagina di pagine}
+      return await DirectusService.parseResponse(response, directus.geoField)
+    } else if (path2data) {
+      return await Path2DataService.parseResponse(response, path2data.path)
+    } else if (customApi && customApi.parseResponse) {
+      return await customApi.parseResponse(response, customApi.geoField)
     }
-
-    if (output.errors) {
-      throw new Error(
-        `Error communicating with server: ${output.errors[0].message}`,
-      )
-    }
-
-    return Object.hasOwn(output, "data") ? output.data : output
   } catch (error) {
     // console.log(error)
     throw Error(error)
   }
 }
 
-getDataFromSource.PropTypes = {
+getDataFromSource.propTypes = {
   source: sourcePropTypes,
+  uiFilter: uiFilterPropTypes,
 }
 
 export default getDataFromSource

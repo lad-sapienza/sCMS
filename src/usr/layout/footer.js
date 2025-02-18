@@ -1,8 +1,7 @@
 import * as React from "react"
-import { StaticImage } from "gatsby-plugin-image"
 import styled from "styled-components"
-import { Link } from "gatsby"
 import { Container } from "react-bootstrap"
+import SCMSLogo from "../../modules/scmsLogo"
 
 const FooterSection = () => {
   return (
@@ -10,16 +9,7 @@ const FooterSection = () => {
       <Container>
         <div className="d-flex flex-row align-items-center mb-3">
           <div className="p-3">
-            <Link to="/">
-              <StaticImage
-                src="../images/scms-lad.png"
-                width={100}
-                quality={80}
-                formats={["AUTO", "WEBP"]}
-                alt="LAD: Laboratorio di Archeologia Digitale alla Sapienza"
-                className="img-fluid"
-              />
-            </Link>
+          <SCMSLogo links={true} />
           </div>
           <div className="p-3 border-start border-primary">
             <p className="p-s-3">

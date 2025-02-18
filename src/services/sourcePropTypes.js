@@ -1,38 +1,22 @@
-import PropTypes from "prop-types"
+import PropTypes from 'prop-types'
+import directusSourceProptypes from "./directus/directusSourceProptypes"
+import path2dataSourceProptypes from "./path2data/path2dataSourceProptypes"
 
+// Define the shape of the sourcePropTypes object
 const sourcePropTypes = PropTypes.shape({
-  /**
-   * Path to GeoJSON data: might be a local path or an URL.
-   * Required if dEndPoint or dTable are not set
-   */
-  path2data: PropTypes.string,
-  /**
-   * Directus endpoint.
-   * Required if either dTable (and env GATSBY_DIRECTUS_ENDPOINT) or path2data are not set
-   */
-  dEndPoint: PropTypes.string,
-  /**
-   * Directus table name, to be used if env variable GATSBY_DIRECTUS_ENDPOINT is set.
-   * Required if neither path2data or dEndPoit are set
-   */
-  dTable: PropTypes.string,
-  /**
-   * Directus optional filters and other, provided as querystring compatible to Directus API
-   */
-  dQueryString: PropTypes.string,
-  /**
-   * Directus access token.
-   * Required if env variable GATSBY_DIRECTUS_TOKEN is not set
-   */
-  dToken: PropTypes.string,
-  /**
-   * Id of a specific record to retrieve
-   */
-  id: PropTypes.number,
-  /**
-   * Tranformation to apply to data
-   */
-  transType: PropTypes.oneOf(["text", "csv2json", "json", "geojson"]),
+  // PropTypes for path2data source
+  path2data: path2dataSourceProptypes,
+  
+  // PropTypes for directus source
+  directus: directusSourceProptypes,
+
+  // PropTypes for custom API source
+  customApi: PropTypes.shape({
+    // Function to format the URL
+    formatUrl: PropTypes.func.isRequired,
+    // Function to parse the response
+    parseResponse: PropTypes.func.isRequired,
+  })
 })
 
 export default sourcePropTypes
