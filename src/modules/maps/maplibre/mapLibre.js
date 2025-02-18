@@ -28,6 +28,7 @@ const MapLibre = ({
   navigationControl,
   scaleControl,
   baseLayers,
+  sprite,
 }) => {
   const [lng, lat, zoom] = center.split(",").map(Number)
   if (mapStyle) {
@@ -51,10 +52,15 @@ const MapLibre = ({
   const onMapLoad = useCallback(event => {
     const mapInstance = event.target
 
+    // Add sprite reference, if provided
+    if (sprite){
+      mapInstance.setSprite(sprite)
+    }
+
     // test custom control
     const customControl = new SimpleControl()
     mapInstance.addControl(customControl, "top-right")
-  }, [])
+  }, [sprite])
 
   const onClick = useCallback(
     event => {
@@ -208,6 +214,10 @@ MapLibre.propTypes = {
    * Default: null
    */
   baseLayers: defaultBaseLayersPropTypes,
+  /**
+   * URL to the sprite resource
+   */
+  sprite: PropTypes.string
 }
 
 export { MapLibre }
