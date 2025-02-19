@@ -44,6 +44,7 @@ const formatUrl = (source, uiFilter) => {
 
   if (id) {
     ret.sourceUrl += `/${id}`
+    ret.queryString = "fields=*.*.*"
   }
 
   if (uiFilter) {
