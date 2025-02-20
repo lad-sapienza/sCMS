@@ -26,7 +26,7 @@ Think of s:CMS as the *public, fully-customiseable front-end of your research da
 1. [Update the site to the latest version](#update-the-site-to-the-latest-version)
 1. [API](#api)
    1. [Access data from components](#access-data-from-components)
-   1. [MapLeaflet](#mapleaflet)
+   1. [MapLeaflet](https://scms.lad-sapienza.it/leaflet-maps/)
    1. [MapContainer](#mapcontainer)
    1. [LayersControl](#layerscontrol)
    1. [Vectorlayer](#vectorlayer)
@@ -239,57 +239,6 @@ s:CMS provides a way to define a default Directus API data source as [environmen
 - `GATSBY_DIRECTUS_ENDPOINT`: a replacement of the parameter `source.dEndPoint`
 - `GATSBY_DIRECTUS_TOKEN`: a replacements of the paramater `source.dToken`
 
-### MapLeaflet
-
-The `MapLeaflet` component is used to create maps using Leaflet.js and it is a wrapper around [`MapContainer`](https://react-leaflet.js.org/docs/api-map/) module.
-
-**Props**
-
-| Prop Name | Type | Required | Default value | Description |
-|----------|------|-------------------|---------------|-------------|
-| `height` | string | no | "800px" | Height (with unit) of the map element. |
-| `center` | string | no | "0,0,2" | Center of the map, as a string with long, lat and zoom separated by commas. |
-| `baseLayers` | array | no | _null_ | Array with default baselayers to show. One, or many of the following values: "CAWM" "OSM", "EsriSatellite", "EsriStreets", "EsriTopo", "GoogleSatellite", "GoogleRoadmap", "GoogleTerrain", "GoogleAlteredRoadmap", "GoogleTerrainOnly", "GoogleHybrid", "CartoDb", "StamenTerrain", "OSMMapnick", "OSMCycle". |
-| `scrollWheelZoom` | boolean | no | _false_ | Boolean value that controles whether zoom wheel is active or not. |
-| `layersControlPosition` | string | no | "topright" | Position of the layers control, one of the following values: "topright", "topleft", "bottomright" "bottomleft". |
-
-`MapLeaflet` accepts none, one or more `VectorLayer` and/or `RasterLayer` instances as child components
-
-
-### VectorLayer
-
-The `VectorLayer` component can be used to import, display, and customize your geographical vector data in the map. It must be used as a child of `MapLeaflet` component. A vector layer can be populated with data from different sources, such as:
-- a local GeoJSON file
-- a remote GeoJSON file
-- a table of Directus instance containing geographical data.
-
-**Props**
-
-| Prop Name | Type | Required | Default value | Description |
-|----------|------|-------------------|---------------|-------------|
-| `source` | object | yes |  | For the complete documentation: [Access data from components](#access-data-from-components). |
-| `name` | string | yes |  | Layer name to use in the Layer control |
-| `popupTemplate` | string | no | _null_ | A string containing the HTML to render in the popup. Variable propertirs can be used using ${field_name} syntax. |
-| `pointToLayer` | function | no | _null_ | A function defining how GeoJSON points spawn Leaflet layers. It is internally called when data is added, passing the GeoJSON point feature and its LatLng as properties. The default is to spawn a default Marker. Full reference at https://leafletjs.com/reference.html#geojson-pointtolayer. |
-| `filter` | function | no | _null_ | A function that will be used to decide whether to include a feature or not in the current visualisation. The default is to include all features (no filter applied). |
-| `checked` | boolean | no | true | Boolean property to control the layer's default visibility ion the map and control panel |
-| `fitToContent` | boolean | no | _false_ | Boolean property to decide wether to zoom/pan the map to fit the layer extention or not. |
-
-
-### RasterLayer
-
-The `RasterLayer` components can be used to import and display raster tiles in the map. It must be used as a child of `MapLeaflet` component.
- 
-
-**Props**
-
-| Prop Name | Type | Required | Default value | Description |
-|----------|------|-------------------|---------------|-------------|
-| `name` | string | yes | _null_ | Name of the baselayer to show in Layer control|
-| `url` | string | yes | _null_ | URL where raster tiles are found. |
-| `checked` | boolean | no | _false_ | Property to control the layer's default visibility ion the map and control panel. |
-| `attribution` | string | no | _null_ | Attribution or credits for the layer. |
-| `asOverlay` | boolean | no | _false_ | If true the layer will be listed in the Overlay list; if false (default) in the base-layers list. |
 
 
 ### MapLibre

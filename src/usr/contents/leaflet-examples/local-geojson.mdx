@@ -1,24 +1,28 @@
 ---
-title: "Leaflet: Adding a Vector Layer with a Filter"
-date: "2024-10-26"
-slug: "maps/examples/leaflet-local-geojson-with-filter"
-description: "Leaflet: Adding a vector layer with a dynamic filter"
+title: "Leaflet: Adding a vector layer from a local GeoJSON file"
+date: "2024-10-01"
+slug: "maps/leaflet-examples/local-geojson"
+description: "Leaflet: Adding a vector layer from a local GeoJSON file"
 ---
 
-import { MapLeaflet, VectorLayer } from "../../../modules/scms.js"
+import {
+  MapLeaflet,
+  VectorLayer
+} from "../../../modules/scms.js"
 
-### Adding a vector layer with a dynamic filter
 
-This example demonstrates how to add a GeoJSON layer to a Leaflet map and apply a filter to show only features that meet certain criteria.
+### Adding a vector layer from a local GeoJSON file
+
 
 <div className="row mt-3 mb-5 border-top border-bottom py-3">
   <div className="col-6">
     <MapLeaflet
       height="400px"
       baseLayers={["OSM"]}
-    >
+      >
+      
       <VectorLayer 
-        name="Filtered Sites"
+        name="Sites"
         source={{
           path2data: {
             path: "/data/ksa.geojson"
@@ -26,26 +30,27 @@ This example demonstrates how to add a GeoJSON layer to a Leaflet map and apply 
         }}
         fitToContent={true}
         checked={true}
-        filter={(feature) => feature.properties.Survey_Year === "1994"}
-        popupTemplate="<p><strong>${Item_Label}</strong>. ${Site_Name} <br /> Survey years: ${Survey_Year}<br> Date: ${Early} — ${Late}</p>"
+        popupTemplate="<p><strong>${Item_Label}</strong>. ${Site_Name} <br />Date: ${Early} — ${Late}</p>"
       />
     </MapLeaflet>
     <div className="text-muted small mt-3">
       Data from [Kahramanmaraş Survey](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) created by [Elizabeth Carter](http://opencontext.org/persons/3208923d-69d0-70e9-9cc1-23ad97770aec) and published on [OpenContext](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) add distributed with [CC BY 4.0 International](https://creativecommons.org/licenses/by/4.0) license.
     </div>
-
   </div>
-
   <div className="col-6">
     ```jsx
-    import { MapLeaflet, VectorLayer } from "../../../modules/scms.js"
+    import {
+      MapLeaflet,
+      VectorLayer
+    } from "../../../modules/scms.js"
 
     <MapLeaflet
       height="400px"
       baseLayers={["OSM"]}
-    >
-      <VectorLayer
-        name="Filtered Sites"
+      >
+      
+      <VectorLayer 
+        name="Sites"
         source={{
           path2data: {
             path: "/data/ksa.geojson"
@@ -53,11 +58,9 @@ This example demonstrates how to add a GeoJSON layer to a Leaflet map and apply 
         }}
         fitToContent={true}
         checked={true}
-        filter={(feature) => feature.properties.Survey_Year === "1994"}
-        popupTemplate="<p><strong>${Item_Label}</strong>. ${Site_Name} <br /> Survey years: ${Survey_Year}<br> Date: ${Early} — ${Late}</p>"
+        popupTemplate="<p><strong>${Item_Label}</strong>. ${Site_Name} <br />Date: ${Early} — ${Late}</p>"
       />
     </MapLeaflet>
     ```
-
   </div>
 </div>
