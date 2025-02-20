@@ -1,8 +1,8 @@
 ---
-title: "Leaflet: Adding a vector layer from a local GeoJSON file, and styling it on the base of the attributes"
+title: "Leaflet: Adding a vector layer from a local GeoJSON file"
 date: "2024-10-01"
-slug: "maps/examples/leaflet-local-geojson-with-styling"
-description: "Leaflet: Adding a vector layer from a local GeoJSON file, and styling it on the base of the attributes"
+slug: "maps/leaflet-examples/local-geojson-popup-function"
+description: "Leaflet: Adding a vector layer from a local GeoJSON file"
 ---
 
 import {
@@ -11,7 +11,7 @@ import {
 } from "../../../modules/scms.js"
 
 
-### Adding a vector layer from a local GeoJSON file, and styling it on the base of the attributes
+### Adding a vector layer from a local GeoJSON file using a function for the popup template
 
 
 <div className="row mt-3 mb-5 border-top border-bottom py-3">
@@ -30,18 +30,7 @@ import {
         }}
         fitToContent={true}
         checked={true}
-        popupTemplate="<p><strong>${Item_Label}</strong>. ${Site_Name} <br /> Date: ${Early} — ${Late}</p>"
-        pointToLayer={
-          (f, ll) => {
-            return L.circleMarker(ll, {
-              radius: 4,
-              fillColor: !Object.hasOwn(f.properties, "Late") ? '#ebebeb' : (f.properties["Late"] < 0 ? "#FE04FC" : '#1B64F7'),
-              color: "#000",
-              weight: 1,
-              opacity: 1,
-              fillOpacity: 0.8
-            });
-          }}
+        popupTemplate={ (props) => `<p><strong>${props.Item_Label}</strong>. ${props.Site_Name} <br />Date: ${props.Early} — ${props.Late}</p>`}
       />
     </MapLeaflet>
     <div className="text-muted small mt-3">
@@ -71,18 +60,7 @@ import {
         }}
         fitToContent={true}
         checked={true}
-        popupTemplate="<p><strong>${Item_Label}</strong>. ${Site_Name} <br /> Date: ${Early} — ${Late}</p>"
-        pointToLayer={
-          (f, ll) => {
-            return L.circleMarker(ll, {
-              radius: 4,
-              fillColor: !Object.hasOwn(f.properties, "Late") ? '#ebebeb' : (f.properties["Late"] < 0 ? "#FE04FC" : '#1B64F7'),
-              color: "#000",
-              weight: 1,
-              opacity: 1,
-              fillOpacity: 0.8
-            });
-          }}
+        popupTemplate={ (props) => `<p><strong>${props.Item_Label}</strong>. ${props.Site_Name} <br />Date: ${props.Early} — ${props.Late}</p>`}
       />
     </MapLeaflet>
     ```

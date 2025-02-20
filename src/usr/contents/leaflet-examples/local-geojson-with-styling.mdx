@@ -1,8 +1,8 @@
 ---
-title: "Leaflet: Adding a vector layer from a local GeoJSON file"
+title: "Leaflet: Adding a vector layer from a local GeoJSON file, and styling it on the base of the attributes"
 date: "2024-10-01"
-slug: "maps/examples/leaflet-local-geojson"
-description: "Leaflet: Adding a vector layer from a local GeoJSON file"
+slug: "maps/leaflet-examples/local-geojson-with-styling"
+description: "Leaflet: Adding a vector layer from a local GeoJSON file, and styling it on the base of the attributes"
 ---
 
 import {
@@ -11,7 +11,7 @@ import {
 } from "../../../modules/scms.js"
 
 
-### Adding a vector layer from a local GeoJSON file
+### Adding a vector layer from a local GeoJSON file, and styling it on the base of the attributes
 
 
 <div className="row mt-3 mb-5 border-top border-bottom py-3">
@@ -30,12 +30,25 @@ import {
         }}
         fitToContent={true}
         checked={true}
-        popupTemplate="<p><strong>${Item_Label}</strong>. ${Site_Name} <br />Date: ${Early} — ${Late}</p>"
+        popupTemplate="<p><strong>${Item_Label}</strong>. ${Site_Name} <br /> Date: ${Early} — ${Late}</p>"
+        pointToLayer={
+          (f, ll) => {
+            return L.circleMarker(ll, {
+              radius: 4,
+              fillColor: !Object.hasOwn(f.properties, "Late") ? '#ebebeb' : (f.properties["Late"] < 0 ? "#FE04FC" : '#1B64F7'),
+              color: "#000",
+              weight: 1,
+              opacity: 1,
+              fillOpacity: 0.8
+            });
+          }}
       />
     </MapLeaflet>
     <div className="text-muted small mt-3">
       Data from [Kahramanmaraş Survey](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) created by [Elizabeth Carter](http://opencontext.org/persons/3208923d-69d0-70e9-9cc1-23ad97770aec) and published on [OpenContext](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) add distributed with [CC BY 4.0 International](https://creativecommons.org/licenses/by/4.0) license.
     </div>
+
+
   </div>
   <div className="col-6">
     ```jsx
@@ -58,7 +71,18 @@ import {
         }}
         fitToContent={true}
         checked={true}
-        popupTemplate="<p><strong>${Item_Label}</strong>. ${Site_Name} <br />Date: ${Early} — ${Late}</p>"
+        popupTemplate="<p><strong>${Item_Label}</strong>. ${Site_Name} <br /> Date: ${Early} — ${Late}</p>"
+        pointToLayer={
+          (f, ll) => {
+            return L.circleMarker(ll, {
+              radius: 4,
+              fillColor: !Object.hasOwn(f.properties, "Late") ? '#ebebeb' : (f.properties["Late"] < 0 ? "#FE04FC" : '#1B64F7'),
+              color: "#000",
+              weight: 1,
+              opacity: 1,
+              fillOpacity: 0.8
+            });
+          }}
       />
     </MapLeaflet>
     ```
