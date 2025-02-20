@@ -6,15 +6,14 @@ description: ""
 ---
 
 
-#### `source`
+##### source
+An object containing information to source data. This should include the necessary properties for querying the data source. Data can be sourced from a static file (typically a CSV file stored locally or available on the web), a Directus API, or a custom API.
 - Object
 - Required
 - Default: _null_
 
-An object containing information to source data. This should include the necessary properties for querying the data source.
-Data can be sourced from a static file (typically a CSV file stored locally or available on the web), a Directus API, or a custom API.
 
-If a static file is used, the `source` object should contain the following properties:
+If a static file is used, the `source` object should implement the `path2data` property, structued as a key: value object with a single `path` key poniting to the static file path, eg.:
 ```jsx
 {
   path2data: {
@@ -23,61 +22,39 @@ If a static file is used, the `source` object should contain the following prope
 }
 ```
 
-Id a Directus API is used, the `source` object should contain the following properties:
+If a Directus API is used, the `source` object should implement the `directus` property, structured as a key: value object with the following keys:
+- **endpoint**: Optional Directus endpoint. It can be omitted if env variable GATSBY_DIRECTUS_ENDPOINT is set.
+- **table**: Required Directus table name.
+- **queryString**: Optional Directus filters and other, provided as querystring compatible to [Directus API](https://directus.io/docs/api).
+- **token**: Optional Directus access token. It can be omitted if env variable GATSBY_DIRECTUS_TOKEN is set.
+- **id**: Optional Id of a specific record to retrieve. Required for record data displaying.
+- **geoField**: Field that contains geographical data to display on map.
+
+Example:
 ```jsx
 {
   directus: {
-    /**
-     * Directus endpoint. It can be omitted if env variable GATSBY_DIRECTUS_ENDPOINT is set.
-     */
-    endPoint: "URL to Directus instance",
-  
-    /**
-     * Directus table name.
-     * Required
-     */
-    table: "Directus referenced table name",
-    
-    /**
-     * Directus optional filters and other, provided as querystring compatible to Directus API
-     * Optional
-     */
-    queryString: "Some filters etc., compliant to Directus API",
-    
-    /**
-     * Directus access token. It can be omitted if env variable GATSBY_DIRECTUS_TOKEN is set.
-     */
-    token: PropTypes.string,
-    
-    /**
-     * Id of a specific record to retrieve
-     */
-    id: PropTypes.number,
-
-    /**
-     * Field that contains geographical data to display on map
-     */
-    geoField:PropTypes.string,
+    endPoint: "https://example.com/directus",
+    table: "my_table",
+    queryString: "filter[my_field][_eq]=something&limit=-1",
+    token: "my-random-string-access-token",
+    id: "id-oth-the-record-to-display",
+    geoField:"coordinates",
   }
 }
 ```
 
-Finally, if a custom API is used, the `source` object should contain the following properties:
+Finally, if a custom API is used, the `source` object should implement the `customApi` property, structured as an object with the following keys:
+- **formatUrl**: Required function to format the URL. It accepts a string as a parameter and should return a string rappresenting the URL to get data from
+- **parseResponse**: Required function to parse the response. it accepts the response object and should return the data to display on the map.
+
+Example:
 ```jsx
 {
   customApi: {
-    /**
-     * Function to format the URL
-     * Required
-     */
     formatUrl: (searchString) => {
       return `https://api.example.com/search?q=${searchString}`;
-    },
-    
-    /**
-     * Function to parse the response
-     * Required
-     */
+    },    
     parseResponse: (response) => {
       return response.data;
     }
