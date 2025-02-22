@@ -1,0 +1,78 @@
+---
+title: "SuperSearch"
+date: "2023-10-01"
+slug: "SuperSearch"
+description: ""
+menu_position: 9
+---
+
+import { SuperMapSearch, VectorLayerLibre } from "../../modules/scms.js"
+
+# Mappa + Ricerca
+
+<SuperMapSearch
+  center="37.00416,37.48551,9"
+  baseLayers={["CAWM","EsriSatellite"]}
+  limitTo="advanced"
+
+  fieldList={{
+    "Item_Label": "Label",
+    "Site_Name": "Site name",
+    "Site_Description": "Site description"
+  }}
+
+  source={{
+    directus: {
+      table: "scms_ksa",
+      geoField: "geometry",
+      queryString: ""  // Vuoto inizialmente
+    }
+  }}
+
+  searchProps={{
+    placeholder: "Search a site...",
+    caseSensitive: false
+  }}
+
+resultItemTemplate={(item) => (
+    <div>
+      <h4>{item.Site_Name}</h4>
+      <p>{item.Site_Description}</p>
+    </div>
+  )}
+>
+  <VectorLayerLibre
+    name="Hellenistic and Roman Sites"
+
+    source={{
+      directus: {
+        table: "scms_ksa",
+        geoField: "geometry",
+        // Filtro iniziale: siti Hellenistic_Roman = true
+        queryString: "filter[Hellenistic_Roman][_eq]=true"
+      }
+    }}
+
+    checked={true}
+    fitToContent={true}
+    type="geojson"
+    searchInFields={{
+      "Item_Label": "Label",
+      "Site_Name": "Site name",
+      "Site_Description": "Site description"
+    }}
+    style={{
+      id: "ksa-directus",
+      type: "circle",
+      paint: {
+        "circle-radius": 4,
+        "circle-color": "#ff0000",
+        "circle-stroke-width": 1.5,
+        "circle-stroke-color": "#000000"
+      },
+    }}
+    popupTemplate="<h4>${Site_Name}</h4>
+                   <p>${Site_Description}</p>
+                   <small>${Item_Label}</small>"
+  />
+</SuperMapSearch>
