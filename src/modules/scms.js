@@ -19,3 +19,5 @@ export { RasterLayerLibre } from "./maps/maplibre/rasterLayerLibre.js"
 export { HarrisMatrix } from "./graph/harrisMatrix.js"
 
 export { Documenter } from "./documenter.js"
+
+export { SuperMapSearch } from "./superMapSearch/superMapSearch.js";
