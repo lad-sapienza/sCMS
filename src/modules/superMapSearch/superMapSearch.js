@@ -28,7 +28,7 @@ const SuperMapSearch = ({
 
     // 1) Creiamo l’oggetto Directus con plain2directus
     //    Passiamo `mapSource` o `source` come conn, e `newFilters` come inputs
-    const directusObj = plain2directus(mapSource, newFilters);
+    const directusObj = plain2directus(source, newFilters);
     console.log(" directusObj come in search.js:", directusObj);
 
     // 2) Convertiamo in stringa JSON
@@ -37,17 +37,16 @@ const SuperMapSearch = ({
     console.log("`resultItemTemplate` ricevuto in SuperMapSearch:", resultItemTemplate);
   
     // 3) Aggiorniamo mapSource.directus.queryString
-    setMapSource((prev) => {
-      const updatedSource = {
-        ...prev,
-        directus: {
-          ...prev.directus,
-          queryString: directusFilterString ? `filter=${encodeURIComponent(directusFilterString)}` : ""
-        }
-      };
-      console.log("Nuovo stato di mapSource:", updatedSource);
-      return updatedSource;
-    });
+    setMapSource((prev) => ({
+      ...prev,
+      directus: {
+        ...prev.directus,
+        // Sovrascriviamo eventuali query precedenti
+        queryString: `filter=${directusFilterString}`
+        
+      }
+      
+    }));
     
   };
 
@@ -68,11 +67,10 @@ const SuperMapSearch = ({
         </MapLibre>
       </MapContainer>
 
-
       <SearchContainer>
         <Search
         limitTo={limitTo}
-          source={mapSource} // la query per l’elenco la fa "search.js"
+          source={source} // la query per l’elenco la fa "search.js"
           fieldList={fieldList}
           onSearch={handleSearch} // callback che aggiorna mapSource e filters
           resultItemTemplate={resultItemTemplate}
