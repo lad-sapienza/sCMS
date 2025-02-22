@@ -28,6 +28,7 @@ const Search = ({
   operators,
   connector,
   limitTo,
+  onSearch,
 }) => {
   const [searchResults, setSearchResults] = useState([])
   const [error, setError] = useState(null)
@@ -54,7 +55,14 @@ const Search = ({
         throw new Error("Error in querying remote data")
       }
       setSearchResults(data)
+      console.log("📡 [Search] Query Directus inviata:", JSON.stringify(source));
       setError(null)
+           // UNICA MODIFICA ALLA STRUTTURA ORIGINALE
+      // Passiamo "inputs" (l'array di condizioni) così il parent li conosce
+      if (onSearch) {
+        console.log("SEARCH: sto passando i filtri al parent via onSearch:", inputs)
+        onSearch(inputs)  
+      }
     } catch (err) {
       console.error(err)
       setError("Error in querying remote data")
