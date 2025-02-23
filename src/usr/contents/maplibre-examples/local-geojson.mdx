@@ -1,13 +1,13 @@
 ---
 title: "MapLibre: Adding a vector layer from a local GeoJSON file"
 date: "2024-10-01"
-slug: "maps/examples/maplibre-local-geojson-dropdown"
+slug: "maplibre-examples/local-geojson"
 description: "MapLibre: Adding a vector layer from a local GeoJSON file"
 ---
 
 import { MapLibre, VectorLayerLibre } from "../../../modules/scms.js"
 
-### MapLibre: Adding a vector layer from a local GeoJSON with advanced search implementing drop-down select
+### Adding a vector layer from a local GeoJSON file
 
 <div className="row mt-3 mb-5 border-top border-bottom py-3">
   <div className="col-6">
@@ -24,7 +24,7 @@ import { MapLibre, VectorLayerLibre } from "../../../modules/scms.js"
         }}
         checked={true}
         searchInFields={{
-          "Item_Label": { label: "Label", values: ["KM 50", "KM 40", "KM 55"] },
+          "Item_Label": "Label",
           "Site_Name": "Site name",
           "Site_Description": "Site description"
         }}
@@ -55,7 +55,7 @@ import { MapLibre, VectorLayerLibre } from "../../../modules/scms.js"
       VectorLayerLibre
     } from "../../../modules/scms.js"
 
-    <MapLibre
+    <MapLibre 
       center="37.00416,37.48551,9"
       baseLayers={["EsriSatellite", "CAWM"]}
     >
@@ -68,7 +68,7 @@ import { MapLibre, VectorLayerLibre } from "../../../modules/scms.js"
         }}
         checked={true}
         searchInFields={{
-          "Item_Label": { label: "Label", values: ["KM 50", "KM 40", "KM 55"] },
+          "Item_Label": "Label",
           "Site_Name": "Site name",
           "Site_Description": "Site description"
         }}
@@ -84,7 +84,7 @@ import { MapLibre, VectorLayerLibre } from "../../../modules/scms.js"
         }}
         popupTemplate="<h4>${Site_Name}</h4><p>${Site_Description}</p><small>${Item_Label}</small>"
       />
-
+     
     </MapLibre>
     ```
 

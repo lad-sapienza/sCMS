@@ -1,52 +1,46 @@
 ---
-title: "Maplibre: Adding a vector layer from a Directus API with filter"
-date: "2024-10-01"
-slug: "maps/examples/maplibre-directus-with-filter"
-description: "Maplibre: Adding a vector layer from a Directus API with filter"
+title: "MapLibre: Fitting map to the contents of a vector layer (local GeoJSON)"
+date: "2024-10-26"
+slug: "maplibre-examples/local-geojson-fitToContent"
+description: "MapLibre: Fitting map to the contents of a vector layer (local GeoJSON)"
 ---
 
 import { MapLibre, VectorLayerLibre } from "../../../modules/scms.js"
 
-### Maplibre: Adding a vector layer from a Directus API with filter
-
-Only Hellenistic and Roman sites are being displayed
+### Fitting map to the contents of a vector layer (local GeoJSON)
 
 <div className="row mt-3 mb-5 border-top border-bottom py-3">
   <div className="col-6">
-    <MapLibre 
-      center="37.00416,37.48551,9"
-      baseLayers={["CAWM", "EsriSatellite"]}
-    >
+    <MapLibre baseLayers={["EsriSatellite"]}>
       <VectorLayerLibre
-        name="Hellenistic and Roman Sites"
+        name="Sites"
         source={{
-          directus: {
-            table: "scms_ksa",
-            geoField: "geometry",
-            queryString: "filter[Hellenistic_Roman][_eq]=true"
+          path2data: {
+            path: "/data/ksa.geojson"
           }
         }}
-        checked={true}
         fitToContent={true}
-        type="geojson"
+        checked={true}
         searchInFields={{
           "Item_Label": "Label",
           "Site_Name": "Site name",
           "Site_Description": "Site description"
         }}
         style={{
-          id: "ksa-directus",
+          id: "ksaSites",
           type: "circle",
           paint: {
             "circle-radius": 4,
-            "circle-color": "#ff0000",
+            "circle-color": "#007cbf",
             "circle-stroke-width": 1.5,
             "circle-stroke-color": "#000000"
           },
         }}
-        popupTemplate="<h4>${Site_Name}</h4>
-            <p>${Site_Description}</p>
-            <small>${Item_Label}</small>"
+        popupTemplate="<div>
+          <h4>${Site_Name}</h4>
+          <p>${Site_Description}</p>
+          <small>${Item_Label}</small>
+        </div>"
       />
     </MapLibre>
     <div className="text-muted small mt-3">
@@ -58,44 +52,39 @@ Only Hellenistic and Roman sites are being displayed
     ```jsx
     import {
       MapLibre,
-      VectorLayerLibre,
+      VectorLayerLibre
     } from "../../../modules/scms.js"
 
-    <MapLibre
-        center="37.00416,37.48551,9"
-        baseLayers={["CAWM", "EsriSatellite"]}
-      >
-
+    <MapLibre baseLayers={["EsriSatellite"]}>
       <VectorLayerLibre
-        name="Hellenistic and Roman Sites"
+        name="Sites"
         source={{
-          directus: {
-            table: "scms_ksa",
-            geoField: "geometry",
-            queryString: "filter[Hellenistic_Roman][_eq]=true"
+          path2data: {
+            path: "/data/ksa.geojson"
           }
         }}
-        checked={true}
         fitToContent={true}
-        type="geojson"
+        checked={true}
         searchInFields={{
           "Item_Label": "Label",
           "Site_Name": "Site name",
           "Site_Description": "Site description"
         }}
         style={{
-          id: "ksa-directus",
+          id: "ksaSites",
           type: "circle",
           paint: {
             "circle-radius": 4,
-            "circle-color": "#ff0000",
+            "circle-color": "#007cbf",
             "circle-stroke-width": 1.5,
             "circle-stroke-color": "#000000"
           },
         }}
-        popupTemplate="<h4>${Site_Name}</h4>
-            <p>${Site_Description}</p>
-            <small>${Item_Label}</small>"
+        popupTemplate="<div>
+          <h4>${Site_Name}</h4>
+          <p>${Site_Description}</p>
+          <small>${Item_Label}</small>
+        </div>"
       />
     </MapLibre>
     ```
