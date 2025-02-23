@@ -9,63 +9,64 @@ menu_position: 2
 # Build advanced maps with data fetched form a variety of sources using MapLibre JS library
 
 
-import RasterBasemaps from "./maplibre-examples/adding-raster-basemaps.mdx"
-import RasterBasemapsShorthand from "./maplibre-examples/adding-raster-basemaps-shorthand.mdx"
-import FromJsonStyle from "./maplibre-examples/from-json-style.mdx"
-import FromJsonStyleExpanding from "./maplibre-examples/from-json-style-expanding.mdx"
-import FromJsonStyleCustom from "./maplibre-examples/from-json-style-custom.mdx"
-import AddingControls from "./maplibre-examples/adding-controls.mdx"
+import RasterBasemaps from "./maplibre-examples/raster-basemaps.mdx"
+import RasterBasemapsShorthand from "./maplibre-examples/raster-basemaps-shorthand.mdx"
+import AddingControls from "./maplibre-examples/controls.mdx"
+
 import LocalGeoJSON from "./maplibre-examples/local-geojson.mdx"
-import FitToContentLocalGeoJSON from "./maplibre-examples/local-geojson-fitToContent.mdx"
+import LocalGeoJSONFitToContent from "./maplibre-examples/local-geojson-fitToContent.mdx"
+
+import JsonStyle from "./maplibre-examples/json-style.mdx"
+import JsonStyleExpanding from "./maplibre-examples/json-style-expanding.mdx"
+import JsonStyleCustom from "./maplibre-examples/json-style-custom.mdx"
 import DirectusWithFilter from "./maplibre-examples/directus-with-filter.mdx"
 import LocalGeoJSONDropDown from "./maplibre-examples/local-geojson-dropdown.mdx"
 
 import {BoxArrowUpRight} from 'react-bootstrap-icons'
 
 
-
 In this page:
 
-- [Adding raster basemaps](#adding-raster-basemaps) | [<BoxArrowUpRight />](../maplibre-examples/adding-raster-basemaps)
-- [Shorthand syntax to add default raster basemaps](#shorthand-syntax-to-add-default-raster-basemaps) | [<BoxArrowUpRight />](../maplibre-examples/all-shorthand-basemaps)
+- [Adding raster basemaps](#adding-raster-basemaps) | [<BoxArrowUpRight />](../maplibre-examples/raster-basemaps)
+- [Shorthand syntax to add default raster basemaps](#shorthand-syntax-to-add-default-raster-basemaps) | [<BoxArrowUpRight />](../maplibre-examples/raster-basemaps-shorthand)
+- [Adding controls](#adding-controls-to-a-map) | [<BoxArrowUpRight />](../maplibre-examples/controls)
 - [Adding a vector layer from a local GeoJSON file](#adding-a-vector-layer-from-a-local-geojson-file) | [<BoxArrowUpRight />](../maplibre-examples/local-geojson)
-- [Adding a vector layer from a local GeoJSON file using a function for the popup template](#adding-a-vector-layer-from-a-local-geojson-file-using-a-function-for-the-popup-template) | [<BoxArrowUpRight />](../maplibre-examples/local-geojson-popup-function)
-- [Adding a vector layer from a local GeoJSON file, and styling it on the base of the attributes](#adding-a-vector-layer-from-a-local-geojson-file-and-styling-it-on-the-base-of-the-attributes) | [<BoxArrowUpRight />](../maplibre-examples/local-geojson-with-styling)
-- [Adding a vector layer from a remote GeoJSON file](#adding-a-vector-layer-from-a-remote-geojson-file) | [<BoxArrowUpRight />](../maplibre-examples/remote-geojson)
-- [Adding a vector layer from a remote GeoJSON file with experimental `ListVisibleFeatures`](#adding-a-vector-layer-from-a-remote-geojson-file-with-experimental-listvisiblefeatures) | [<BoxArrowUpRight />](../maplibre-examples/remote-geojson-with-list-features)
-- [Adding a vector layer from a Directus API](#adding-a-vector-layer-from-a-directus-api) | [<BoxArrowUpRight />](../maplibre-examples/directus)
-- [Adding a vector layer with filter from a Directus API](#adding-a-vector-layer-with-filter-from-a-directus-api) | [<BoxArrowUpRight />](../maplibre-examples/directus-with-filter)
-- [Adding a vector layer with a dynamic filter](#adding-a-vector-layer-with-a-dynamic-filter) | [<BoxArrowUpRight />](../maplibre-examples/local-geojson-dropdown)
+- [Adding a vector layer from a local GeoJSON file and fitting the map to its content](#fitting-map-to-the-contents-of-a-vector-layer-local-geojson) | [<BoxArrowUpRight />](../maplibre-examples/local-geojson-fitToContent)
+- [Adding a vector layer with a JSON style](#building-a-map-from-a-json-style) | [<BoxArrowUpRight />](../maplibre-examples/json-style)
+- [Adding a vector layer with an expanding JSON style](#building-a-map-from-a-json-style-and-expanding-it) | [<BoxArrowUpRight />](../maplibre-examples/json-style-expanding)
+- [Adding a vector layer with a custom JSON style](#building-a-map-from-a-custom-json-style) | [<BoxArrowUpRight />](../maplibre-examples/json-style-custom)
+- [Adding a vector layer with filter from a Directus API](#adding-a-vector-layer-from-a-directus-api-with-filter) | [<BoxArrowUpRight />](../maplibre-examples/directus-with-filter)
+- [Adding a vector layer from a local GeoJSON file with a dropdown filter](#adding-a-vector-layer-from-a-local-geojson-with-advanced-search-implementing-drop-down-select) | [<BoxArrowUpRight />](../maplibre-examples/local-geojson-dropdown)
 - [API Documentation](#api-documentation)
 
 ---
 
-[Open in example in new page <BoxArrowUpRight />](./maplibre-examples/adding-raster-basemaps)
+[Open in example in new page <BoxArrowUpRight />](../maplibre-examples/raster-basemaps)
 <RasterBasemaps />
 
-[Open in example in new page <BoxArrowUpRight />](./maplibre-examples/all-shorthand-basemaps)
+[Open in example in new page <BoxArrowUpRight />](../maplibre-examples/raster-basemaps-shorthand)
 <RasterBasemapsShorthand />
 
-[Open in example in new page <BoxArrowUpRight />](./maplibre-examples/local-geojson)
-<LocalGeoJSON />
-
-[Open in example in new page <BoxArrowUpRight />](./maplibre-examples/-from-json-style)
-<FromJsonStyle />
-
-[Open in example in new page <BoxArrowUpRight />](.maplibre-examples/from-json-style-expanding)
-<FromJsonStyleExpanding />
-
-[Open in example in new page <BoxArrowUpRight />](./maplibre-examples/from-json-style-custom)
-<FromJsonStyleCustom />
-
-[Open in example in new page <BoxArrowUpRight />](./maplibre-examples/adding-controls)
+[Open in example in new page <BoxArrowUpRight />](../maplibre-examples/controls)
 <AddingControls />
 
-[Open in example in new page <BoxArrowUpRight />](./maplibre-examples/local-geojson-fitToContent)
-<FitToContentLocalGeoJSON />
+[Open in example in new page <BoxArrowUpRight />](../maplibre-examples/local-geojson)
+<LocalGeoJSON />
 
-[Open in example in new page <BoxArrowUpRight />](./maplibre-examples/directus-with-filter)
+[Open in example in new page <BoxArrowUpRight />](../maplibre-examples/local-geojson-fitToContent)
+<LocalGeoJSONFitToContent />
+
+[Open in example in new page <BoxArrowUpRight />](../maplibre-examples/json-style)
+<JsonStyle />
+
+[Open in example in new page <BoxArrowUpRight />](../maplibre-examples/json-style-expanding)
+<JsonStyleExpanding />
+
+[Open in example in new page <BoxArrowUpRight />](../maplibre-examples/json-style-custom)
+<JsonStyleCustom />
+
+[Open in example in new page <BoxArrowUpRight />](../maplibre-examples/directus-with-filter)
 <DirectusWithFilter />
 
-[Open in example in new page <BoxArrowUpRight />](./maplibre-examples/local-geojson-dropdown)
+[Open in example in new page <BoxArrowUpRight />](../maplibre-examples/local-geojson-dropdown)
 <LocalGeoJSONDropDown />

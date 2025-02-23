@@ -26,14 +26,9 @@ Think of s:CMS as the *public, fully-customiseable front-end of your research da
 1. [Update the site to the latest version](#update-the-site-to-the-latest-version)
 1. [API](#api)
    1. [Access data from components](#access-data-from-components)
-   1. [MapLeaflet](https://scms.lad-sapienza.it/leaflet-maps/)
-   1. [MapContainer](#mapcontainer)
-   1. [LayersControl](#layerscontrol)
-   1. [Vectorlayer](#vectorlayer)
-   1. [Rasterlayer and DefaultBaseLayers](#rasterlayer-and-defaultbaselayers)
+   1. [MapLeaflet](https://scms.lad-sapienza.it/maps-leaflet/)
+   1. [MapLibre](https://scms.lad-sapienza.it/maps-maplibre/)
    1. [DataTb](https://scms.lad-sapienza.it/datatable/)
-   1. [Columns](#columns)
-   1. [Query Tool](#query-tool)
    1. [Search](https://scms.lad-sapienza.it/search/)
    1. [Harris Matrix](https://scms.lad-sapienza.it/harris-matrix/)
    1. [View Record](#view-record)
@@ -238,57 +233,6 @@ s:CMS provides a way to define a default Directus API data source as [environmen
 
 - `GATSBY_DIRECTUS_ENDPOINT`: a replacement of the parameter `source.dEndPoint`
 - `GATSBY_DIRECTUS_TOKEN`: a replacements of the paramater `source.dToken`
-
-
-
-### MapLibre
-
-The `MapLibre` component is used to create maps using MapLibre and it is a wrapper around [`react-map-gl`](https://visgl.github.io/react-map-gl/) module. It aims to be a full replacement of the MapLeaflet, by maintaining the same API and possibly providing enhanced functionality, mainly related to the native support for vector tiles.
-
-**Props**
-
-| Prop Name | Type | Required | Default value | Description |
-|----------|------|-------------------|---------------|-------------|
-| `height` | string | no | "800px" | Height (with unit) of the map element. |
-| `center` | string | no | "0,0,2" | Center of the map, as a string with long, lat and zoom separated by commas. |
-| `baseLayers` | array | no | _null_ | Array with default baselayers to show. One, or many of the following values: "CAWM" "OSM", "EsriSatellite", "EsriStreets", "EsriTopo", "GoogleSatellite", "GoogleRoadmap", "GoogleTerrain", "GoogleAlteredRoadmap", "GoogleTerrainOnly", "GoogleHybrid", "CartoDb", "StamenTerrain", "OSMMapnick", "OSMCycle". |
-| `scrollWheelZoom` | boolean | no | _false_ | Boolean value that controles whether zoom wheel is active or not. |
-| `layersControlPosition` | string | no | "topright" | Position of the layers control, one of the following values: "topright", "topleft", "bottomright" "bottomleft". |
-
-`MapLeaflet` accepts none, one or more `VectorLayer` and/or `RasterLayer` instances as child components
-
-### VectorLayerLibre
-
-The `VectorLayerLibre` component is a React component that renders a vector layer on a map using GeoJSON data. It manages the layer's style, visibility, and data fetching.
-
-**Props**
-
-| Prop | Type | Required | Default value | Description |
-|---|---|---|---|---|
-| `source` | Object | Yes | _null_ | Data source for the GeoJSON. For the complete documentation: [Access data from components](#access-data-from-components).  |
-| `refId` | string | No | _null_ | Reference ID for the layer, as defined in the external styles.json file. It is used to oveerride the layer name / style / popup etc. |
-| `style` | Object | No | _null_ | Style configuration for the layer. For the complete documentation see: [https://maplibre.org/maplibre-style-spec/layers/](https://maplibre.org/maplibre-style-spec/layers/)|
-| `name` | string | Yes | _null_ | Layer name to use in the Layer control. |
-| `searchInFields` | Object | No | _null_ | It can be a flat key:value object, the fieldname being the key and the shown label the value (`"Site_Name": "Site name"`). Or a more complex object with fieldname as the key and an object as the value; label holds the shown lavel and values is an array of predefined values used to populate a select input (`"Item_Label": { label: "Label", values: ["KM 50", "KM 40", "KM 55"] },`). |
-| `fitToContent` | boolean | No | false | Whether to fit the map to the content. |
-| `checked` | boolean | No | false | Whether the layer is checked/visible. |
-| `popupTemplate` | string | No | _null_ | A string containing the HTML to render in the popup. Variable props can be injected using ${field_name} syntax. |
-
-  
-
-### RasterLayerLibre
-
-The `RasterLayerLibre` component is designed to render a raster layer on a MapLibre map. This documentation provides an overview of the component and its props.
-
-**Props**
-
-
-| Prop | Type | Required | Default value | Description |
-|---|---|---|---|---|
-| `name` | string | Yes | _null_ | The name of the layer to be displayed in the Control Panel. |
-| `url` | string \| string[] | Yes |  _null_ | The URL(s) of the raster tiles. Can be a single string or an array of strings. |
-| `checked` | boolean | Yes |  false | Determines if the layer is visible or not. If true, the layer is displayed. |
-| `attribution` | string | No |  _null_ |Optional attribution or credits for the layer. |
 
 
 
