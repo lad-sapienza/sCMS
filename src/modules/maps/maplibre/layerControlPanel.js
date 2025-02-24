@@ -7,10 +7,10 @@ import {
   Stack,
   Search,
 } from "react-bootstrap-icons"
-import SearchUI from "../../search/searchUI"
+import SearchUI from "../../search/searchUI.js"
 import plain2maplibre from "../../../services/transformers/plain2maplibre.js"
 
-const ControlPanel = ({ mapInstance }) => {
+const LayerControlPanel = ({ mapInstance }) => {
   const [isVisible, setIsVisible] = useState(false)
   const [activeLayer, setActiveLayer] = useState(null)
   const [modalIsOpen, setModalIsOpen] = useState(false)
@@ -25,13 +25,13 @@ const ControlPanel = ({ mapInstance }) => {
     if (isRaster) {
       mapInstance.getStyle().layers.forEach(lyr => {
         if (lyr.type === "raster") {
-          mapInstance.setLayoutProperty(lyr.id, "visibility", "none")
+          mapInstance.getMap().setLayoutProperty(lyr.id, "visibility", "none")
         }
       })
     }
     const isVisible =
       mapInstance.getLayoutProperty(lyrId, "visibility") !== "none"
-    mapInstance.setLayoutProperty(
+    mapInstance.getMap().setLayoutProperty(
       lyrId,
       "visibility",
       isVisible ? "none" : "visible",
@@ -56,10 +56,10 @@ const ControlPanel = ({ mapInstance }) => {
 
   const removeFilter = layerId => {
     if (mapInstance) {
-      if (!checkLayerExists(layerId)){
-        console.error(`Il layer ${layerId} non esiste.`)
-      } else if (!checkLayerTypeSupportsFilter(layerId)){
-        console.error(`Il layer ${layerId} non supporta i filtri.`)
+      if (!checkLayerExists(layerId)) {
+        console.error(`Layer ${layerId} does not exist.`)
+      } else if (!checkLayerTypeSupportsFilter(layerId)) {
+        console.error(`Layer ${layerId} does not support filters.`)
       } else {
         mapInstance.setFilter(layerId, null)
       }
@@ -69,7 +69,7 @@ const ControlPanel = ({ mapInstance }) => {
 
   const checkLayerExists = layerId => {
     const layers = mapInstance.getStyle().layers
-    return layers.some(layer => layer.id === layerId) // Verifica usando l'ID
+    return layers.some(layer => layer.id === layerId)
   }
 
   const checkLayerTypeSupportsFilter = layerId => {
@@ -88,15 +88,15 @@ const ControlPanel = ({ mapInstance }) => {
     setFilters(mapLibreFilters)
 
     if (mapInstance) {
-      if (!checkLayerExists(activeLayer.id)){
-        console.error( `Il layer ${activeLayer.id} non esiste.`,)
-      } else if (!checkLayerTypeSupportsFilter(activeLayer.id)){
-        console.error(`Il layer ${activeLayer.id} non supporta i filtri.`)
+      if (!checkLayerExists(activeLayer.id)) {
+        console.error(`Layer ${activeLayer.id} does not exist.`)
+      } else if (!checkLayerTypeSupportsFilter(activeLayer.id)) {
+        console.error(`Layer ${activeLayer.id} does not support filters.`)
       } else {
         mapInstance.setFilter(activeLayer.id, mapLibreFilters)
       }
     } else {
-      console.error("mapInstance non è definito o la mappa non è pronta.")
+      console.error("mapInstance is not defined or the map is not ready.")
     }
   }
 
@@ -131,7 +131,7 @@ const ControlPanel = ({ mapInstance }) => {
                           "visibility",
                         ) !== "none"
                       }
-                      onChange={() => toggleLayerVisibility(layer.id, "true")}
+                      onChange={() => toggleLayerVisibility(layer.id, true)}
                     />
                     {layer.metadata.label}
                   </label>
@@ -205,4 +205,4 @@ const StyledControl = styled.div`
   max-height: 300px;
   overflow-y: auto;
 `
-export default ControlPanel
+export default LayerControlPanel
