@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import { MapLibre, Search, VectorLayerLibre } from "../scms";
 
 // Funzioni di conversione
@@ -51,8 +50,8 @@ const SuperMapSearch = ({
   };
 
   return (
-    <Container>
-      <MapContainer>
+    <div className="row">
+      <div className="col-sm-7">
         <MapLibre center={center} baseLayers={baseLayers}>
           {React.Children.map(children, (child) => {
             if (child.type === VectorLayerLibre) {
@@ -65,40 +64,20 @@ const SuperMapSearch = ({
             return child;
           })}
         </MapLibre>
-      </MapContainer>
+      </div>
 
-      <SearchContainer>
+      <div className="col-sm-5">
         <Search
-        limitTo={limitTo}
+          limitTo={limitTo}
           source={source} // la query per l’elenco la fa "search.js"
           fieldList={fieldList}
           onSearch={handleSearch} // callback che aggiorna mapSource e filters
           resultItemTemplate={resultItemTemplate}
           {...searchProps}
         />
-      </SearchContainer>
-    </Container>
+      </div>
+    </div>
   );
 };
 
 export { SuperMapSearch };
-
-
-const Container = styled.div`
-  display: flex;
-  width: 100%;
-  height: 100vh;
-`;
-
-const MapContainer = styled.div`
-  flex: 2;
-  border-right: 1px solid #ccc;
-  background: #f0f0f0;
-`;
-
-const SearchContainer = styled.div`
-  flex: 1;
-  padding: 1rem;
-  overflow-y: auto;
-  background: white;
-`;
