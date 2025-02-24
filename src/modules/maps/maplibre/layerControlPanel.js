@@ -61,7 +61,7 @@ const LayerControlPanel = ({ mapInstance }) => {
       } else if (!checkLayerTypeSupportsFilter(layerId)) {
         console.error(`Layer ${layerId} does not support filters.`)
       } else {
-        mapInstance.setFilter(layerId, null)
+        mapInstance.getMap().setFilter(layerId, null)
       }
     }
     setFilters([])
@@ -93,7 +93,7 @@ const LayerControlPanel = ({ mapInstance }) => {
       } else if (!checkLayerTypeSupportsFilter(activeLayer.id)) {
         console.error(`Layer ${activeLayer.id} does not support filters.`)
       } else {
-        mapInstance.setFilter(activeLayer.id, mapLibreFilters)
+        mapInstance.getMap().setFilter(activeLayer.id, mapLibreFilters)
       }
     } else {
       console.error("mapInstance is not defined or the map is not ready.")
