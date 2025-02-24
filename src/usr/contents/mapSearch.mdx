@@ -6,7 +6,7 @@ description: ""
 menu_position: 9
 ---
 
-import { SuperMapSearch, VectorLayerLibre } from "../../modules/scms.js"
+import { SuperMapSearch, VectorLayerLibre, Search } from "../../modules/scms.js"
 
 # Mappa + Ricerca
 
@@ -34,12 +34,12 @@ import { SuperMapSearch, VectorLayerLibre } from "../../modules/scms.js"
     caseSensitive: false
   }}
 
-resultItemTemplate={(item) => (
-    <div>
-      <h4>{item.Site_Name}</h4>
-      <p>{item.Site_Description}</p>
-    </div>
-  )}
+  resultItemTemplate={item => (
+      <div key={item.id}>
+        <h4>{item.Site_Name}</h4>
+        <p>{item.Site_Description}</p>
+      </div>
+    )}
 >
   <VectorLayerLibre
     name="Hellenistic and Roman Sites"
@@ -76,3 +76,28 @@ resultItemTemplate={(item) => (
                    <small>${Item_Label}</small>"
   />
 </SuperMapSearch>
+
+Aggiunto il componente `Search` per test aggiuntivo.
+<Search
+  source={{
+    directus: {
+      table: "scms_ksa"
+    }
+  }}
+
+  fieldList={{
+    "Item_Label": "Label",
+    "Site_Name": "Site name",
+    "Site_Description": "Site description"
+  }}
+
+  resultItemTemplate={item => (
+    <div key={item.id}>
+      <h4>{item.Site_Name}</h4>
+      <p>{item.Site_Description}</p>
+    </div>
+  )}
+
+  limitTo="advanced"
+
+  />
