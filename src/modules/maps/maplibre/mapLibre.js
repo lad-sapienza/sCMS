@@ -10,7 +10,6 @@ import Map, {
   useControl
 } from "@vis.gl/react-maplibre"
 import PropTypes from "prop-types"
-import SimpleControl from "./simpleControl"
 import { RasterLayerLibre } from "./rasterLayerLibre"
 import {
   defaultBaseLayers,
@@ -18,8 +17,8 @@ import {
 } from "../../maps/defaultBaseLayers"
 import parseStringTemplate from "../../../services/parseStringTemplate"
 import { withPrefix } from "gatsby"
-import ControlPanel from "./controlPanel"
 
+import LayerControl from "./layerControl"
 
 
 const MapLibre = ({
@@ -35,8 +34,7 @@ const MapLibre = ({
   sprite,
 }) => {
 
-  const CCC = useControl(()=> <ControlPanel />)
-
+  
   const [lng, lat, zoom] = center.split(",").map(Number)
   if (mapStyle) {
     mapStyle = mapStyle.startsWith("http") ? mapStyle : withPrefix(mapStyle)
@@ -146,8 +144,9 @@ const MapLibre = ({
           <NavigationControl position={navigationControl} />
         )}
         {scaleControl && <ScaleControl position={scaleControl} />}
-        
-        <CCC interactiveLyrs={interactiveLyrs} />
+
+        <LayerControl />
+
       </Map>
     </React.Fragment>
   )
