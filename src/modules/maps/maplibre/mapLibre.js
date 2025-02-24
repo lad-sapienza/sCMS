@@ -7,7 +7,7 @@ import Map, {
   ScaleControl,
   GeolocateControl,
   Popup,
-} from "react-map-gl/maplibre"
+} from "@vis.gl/react-maplibre"
 import PropTypes from "prop-types"
 import SimpleControl from "./simpleControl"
 import { RasterLayerLibre } from "./rasterLayerLibre"

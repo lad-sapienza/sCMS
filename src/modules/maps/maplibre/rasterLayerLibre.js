@@ -1,5 +1,5 @@
 import React from "react"
-import { Source, Layer } from "react-map-gl//maplibre"
+import { Source, Layer } from "@vis.gl/react-maplibre"
 import PropTypes from "prop-types"
 
 /**

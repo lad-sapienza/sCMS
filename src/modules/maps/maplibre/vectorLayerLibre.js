@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react"
-import { Source, Layer, useMap } from "react-map-gl/maplibre"
+import { Source, Layer, useMap } from "@vis.gl/react-maplibre"
 import PropTypes from "prop-types"
 import * as bbox from "geojson-bbox"
 import getDataFromSource from "../../../services/getDataFromSource"
