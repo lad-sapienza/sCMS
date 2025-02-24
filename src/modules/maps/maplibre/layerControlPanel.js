@@ -9,7 +9,6 @@ import {
 } from "react-bootstrap-icons"
 import SearchUI from "../../search/searchUI.js"
 import plain2maplibre from "../../../services/transformers/plain2maplibre.js"
-import { useMap } from "@vis.gl/react-maplibre"
 
 /**
  * LayerControlPanel component
@@ -151,60 +150,30 @@ const LayerControlPanel = ({ mapInstance }) => {
   }
 
   return (
-    <div className="maplibregl-ctrl maplibregl-ctrl-group">
-      <StyledControl
-        className={`control-panel ${isVisible ? "visible" : "hidden"} p-2`}
-        onMouseEnter={() => toggleVisibility(true)}
-        onMouseLeave={() => toggleVisibility(false)}
-      >
-        <div className="text-end">
-          {!isVisible && (
-            <button className="btn btn-light btn-sm">
-              <Stack />
-            </button>
-          )}
-        </div>
+    <StyledControl
+      className={`control-panel ${isVisible ? "visible" : "hidden"} p-2`}
+      onMouseEnter={() => toggleVisibility(true)}
+      onMouseLeave={() => toggleVisibility(false)}
+    >
+      <div className="text-end">
+        {!isVisible && (
+          <button className="btn btn-light btn-sm">
+            <Stack />
+          </button>
+        )}
+      </div>
 
-        {isVisible && (
-          <div className="layer-controls">
-            {mapInstance.getStyle().layers.map(
-              (layer, key) =>
-                layer.type === "raster" && (
-                  <div key={key} className="form-check">
-                    <label className="form-check-label">
-                      <input
-                        type="radio"
-                        name="base-raster"
-                        className="form-check-input"
-                        defaultChecked={
-                          mapInstance.getLayoutProperty(
-                            layer.id,
-                            "visibility",
-                          ) !== "none"
-                        }
-                        onChange={() => toggleLayerVisibility(layer.id, "true")}
-                      />
-                      {layer.metadata.label}
-                    </label>
-                  </div>
-                ),
-            )}
-
-            {mapInstance.getStyle().layers.filter(l => l.type === "raster")
-              .length > 0 &&
-              mapInstance.getStyle().layers.filter(l => l.type !== "raster")
-                .length > 0 && <hr />}
-
-            {mapInstance.getStyle().layers.map(
-              (layer, k) =>
-                layer.metadata &&
-                layer.metadata.label &&
-                layer.type !== "raster" && (
-                  <div key={k} className="form-check">
+      {isVisible && (
+        <div className="layer-controls">
+          {mapInstance.getStyle().layers.map(
+            (layer, key) =>
+              layer.type === "raster" && (
+                <div key={key} className="form-check">
+                  <label className="form-check-label">
                     <input
-                      type="checkbox"
+                      type="radio"
+                      name="base-raster"
                       className="form-check-input"
-                      id={layer.id}
                       defaultChecked={
                         mapInstance.getLayoutProperty(
                           layer.id,
@@ -255,9 +224,7 @@ const LayerControlPanel = ({ mapInstance }) => {
                     layer.metadata?.searchInFields && (
                       <FilterSquare
                         className="ms-3"
-                        onClick={() => {
-                          removeFilter(layer.id)
-                        }}
+                        onClick={() => openModal(layer)}
                       />
                     )
                   )}
