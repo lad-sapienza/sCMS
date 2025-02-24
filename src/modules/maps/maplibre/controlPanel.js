@@ -17,9 +17,6 @@ const ControlPanel = ({ mapInstance }) => {
   const [activeFieldList, setActiveFieldList] = useState(null)
   const [filters, setFilters] = useState([])
 
-  // const { current: mapRef } = useMap()
-  // const mapInstance = mapRef.getMap()
-
   const toggleVisibility = boolVal => {
     setIsVisible(boolVal === true)
   }
