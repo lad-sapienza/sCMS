@@ -28,6 +28,7 @@ const Search = ({
   operators,
   connector,
   limitTo,
+  onSearchRun,
 }) => {
   const [searchResults, setSearchResults] = useState([])
   const [error, setError] = useState(null)
@@ -54,6 +55,9 @@ const Search = ({
         throw new Error("Error in querying remote data")
       }
       setSearchResults(data)
+      if (typeof onSearchRun === "function") {
+        onSearchRun(source, filter)
+      }
       setError(null)
     } catch (err) {
       console.error(err)

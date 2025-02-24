@@ -1,0 +1,73 @@
+---
+title: "MapSearch test"
+date: "2025-02-24"
+slug: "map-search"
+description: "A"
+menu_position: 10
+---
+
+import MapSearch from "../../modules/mapSearch"
+
+
+<MapSearch 
+  
+  mapProps={{
+    center: "37.00416,37.48551,9",
+    baseLayers: ["EsriSatellite", "CAWM"]
+  }} 
+  
+  searchProps={{
+    source: {
+      directus: {
+        table: "scms_ksa"
+      }
+    },
+    resultItemTemplate: item => (<div className="card my-3" key={item.id}>
+      <div className="card-body">
+        <h5 className="card-title">{item.Item_Label} — {item.Site_Name}</h5>
+        <div className="card-text">
+        <div className="row">
+          <div className="col-3">
+            <img src={item.Thumbnail} className="card-img-top img-fluid" alt={item.Site_Name} style={{maxWidth: 200}} />
+          </div>
+          <div className="col-9">
+            {item.Site_Description}
+            <hr />
+            <a href={`../record/?tb=scms_ksa&id=${item.id}`} className="btn btn-primary">View</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  ),
+    fieldList: {
+      "Item_Label": "Label",
+    "Site_Name": "Site name",
+    "Site_Description": "Site description"
+    }
+  }} 
+  
+  vectorLayerProps={{
+    source: { directus: {
+        table: "scms_ksa",
+        geoField: "geometry",
+        queryString: "filter[Hellenistic_Roman][_eq]=true"
+      } },
+    name: 'Hellenistic and Roman Sites',
+    checked: true,
+    fitToContent: true,
+    style: {
+      id: "ksa-directus",
+      type: "circle",
+      paint: {
+        "circle-radius": 4,
+        "circle-color": "#ff0000",
+        "circle-stroke-width": 1.5,
+        "circle-stroke-color": "#000000"
+      },
+    },
+    searchInFields: {"Item_Label": "Label",
+      "Site_Name": "Site name",
+      "Site_Description": "Site description"},
+    popupTemplate: '<h4>${Site_Name}</h4><p>${Site_Description}</p><small>${Item_Label}</small>',
+  }} />

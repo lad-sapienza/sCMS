@@ -7,6 +7,7 @@ import Map, {
   ScaleControl,
   GeolocateControl,
   Popup,
+  useControl
 } from "@vis.gl/react-maplibre"
 import PropTypes from "prop-types"
 import SimpleControl from "./simpleControl"
@@ -17,6 +18,9 @@ import {
 } from "../../maps/defaultBaseLayers"
 import parseStringTemplate from "../../../services/parseStringTemplate"
 import { withPrefix } from "gatsby"
+import ControlPanel from "./controlPanel"
+
+
 
 const MapLibre = ({
   children,
@@ -30,6 +34,9 @@ const MapLibre = ({
   baseLayers,
   sprite,
 }) => {
+
+  const CCC = useControl(()=> <ControlPanel />)
+
   const [lng, lat, zoom] = center.split(",").map(Number)
   if (mapStyle) {
     mapStyle = mapStyle.startsWith("http") ? mapStyle : withPrefix(mapStyle)
@@ -56,10 +63,6 @@ const MapLibre = ({
     if (sprite){
       mapInstance.setSprite(sprite)
     }
-
-    // test custom control
-    const customControl = new SimpleControl()
-    mapInstance.addControl(customControl, "top-right")
   }, [sprite])
 
   const onClick = useCallback(
@@ -143,6 +146,8 @@ const MapLibre = ({
           <NavigationControl position={navigationControl} />
         )}
         {scaleControl && <ScaleControl position={scaleControl} />}
+        
+        <CCC interactiveLyrs={interactiveLyrs} />
       </Map>
     </React.Fragment>
   )

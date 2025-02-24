@@ -9,13 +9,16 @@ import {
 } from "react-bootstrap-icons"
 import SearchUI from "../../search/searchUI"
 import plain2maplibre from "../../../services/transformers/plain2maplibre.js"
+import { useMap } from "@vis.gl/react-maplibre"
 
-const ControlPanel = ({ mapInstance }) => {
+const ControlPanel = () => {
   const [isVisible, setIsVisible] = useState(false)
   const [activeLayer, setActiveLayer] = useState(null)
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const [activeFieldList, setActiveFieldList] = useState(null)
   const [filters, setFilters] = useState([])
+
+  const {current: mapInstance} = useMap()
 
   // const { current: mapRef } = useMap()
   // const mapInstance = mapRef.getMap()
@@ -59,9 +62,9 @@ const ControlPanel = ({ mapInstance }) => {
 
   const removeFilter = layerId => {
     if (mapInstance) {
-      if (!checkLayerExists(layerId)){
+      if (!checkLayerExists(layerId)) {
         console.error(`Il layer ${layerId} non esiste.`)
-      } else if (!checkLayerTypeSupportsFilter(layerId)){
+      } else if (!checkLayerTypeSupportsFilter(layerId)) {
         console.error(`Il layer ${layerId} non supporta i filtri.`)
       } else {
         mapInstance.setFilter(layerId, null)
@@ -91,9 +94,9 @@ const ControlPanel = ({ mapInstance }) => {
     setFilters(mapLibreFilters)
 
     if (mapInstance) {
-      if (!checkLayerExists(activeLayer.id)){
-        console.error( `Il layer ${activeLayer.id} non esiste.`,)
-      } else if (!checkLayerTypeSupportsFilter(activeLayer.id)){
+      if (!checkLayerExists(activeLayer.id)) {
+        console.error(`Il layer ${activeLayer.id} non esiste.`)
+      } else if (!checkLayerTypeSupportsFilter(activeLayer.id)) {
         console.error(`Il layer ${activeLayer.id} non supporta i filtri.`)
       } else {
         mapInstance.setFilter(activeLayer.id, mapLibreFilters)
@@ -104,103 +107,107 @@ const ControlPanel = ({ mapInstance }) => {
   }
 
   return (
-    <StyledControl
-      className={`control-panel ${isVisible ? "visible" : "hidden"} p-2`}
-      onMouseEnter={() => toggleVisibility(true)}
-      onMouseLeave={() => toggleVisibility(false)}
-    >
-      <div className="text-end">
-        {!isVisible && (
-          <button className="btn btn-light btn-sm">
-            <Stack />
-          </button>
-        )}
-      </div>
+    <div className="maplibregl-ctrl maplibregl-ctrl-group">
+      <StyledControl
+        className={`control-panel ${isVisible ? "visible" : "hidden"} p-2`}
+        onMouseEnter={() => toggleVisibility(true)}
+        onMouseLeave={() => toggleVisibility(false)}
+      >
+        <div className="text-end">
+          {!isVisible && (
+            <button className="btn btn-light btn-sm">
+              <Stack />
+            </button>
+          )}
+        </div>
 
-      {isVisible && (
-        <div className="layer-controls">
-          {mapInstance.getStyle().layers.map(
-            (layer, key) =>
-              layer.type === "raster" && (
-                <div key={key} className="form-check">
-                  <label className="form-check-label">
+        {isVisible && (
+          <div className="layer-controls">
+            {mapInstance.getStyle().layers.map(
+              (layer, key) =>
+                layer.type === "raster" && (
+                  <div key={key} className="form-check">
+                    <label className="form-check-label">
+                      <input
+                        type="radio"
+                        name="base-raster"
+                        className="form-check-input"
+                        defaultChecked={
+                          mapInstance.getLayoutProperty(
+                            layer.id,
+                            "visibility",
+                          ) !== "none"
+                        }
+                        onChange={() => toggleLayerVisibility(layer.id, "true")}
+                      />
+                      {layer.metadata.label}
+                    </label>
+                  </div>
+                ),
+            )}
+
+            {mapInstance.getStyle().layers.filter(l => l.type === "raster")
+              .length > 0 &&
+              mapInstance.getStyle().layers.filter(l => l.type !== "raster")
+                .length > 0 && <hr />}
+
+            {mapInstance.getStyle().layers.map(
+              (layer, k) =>
+                layer.metadata &&
+                layer.metadata.label &&
+                layer.type !== "raster" && (
+                  <div key={k} className="form-check">
                     <input
-                      type="radio"
-                      name="base-raster"
+                      type="checkbox"
                       className="form-check-input"
+                      id={layer.id}
                       defaultChecked={
                         mapInstance.getLayoutProperty(
                           layer.id,
                           "visibility",
                         ) !== "none"
                       }
-                      onChange={() => toggleLayerVisibility(layer.id, "true")}
+                      onChange={() => toggleLayerVisibility(layer.id)}
                     />
-                    {layer.metadata.label}
-                  </label>
-                </div>
-              ),
-          )}
-
-          {mapInstance.getStyle().layers.filter(l => l.type === "raster")
-            .length > 0 &&
-            mapInstance.getStyle().layers.filter(l => l.type !== "raster")
-              .length > 0 && <hr />}
-
-          {mapInstance.getStyle().layers.map(
-            (layer, k) =>
-              layer.metadata &&
-              layer.metadata.label &&
-              layer.type !== "raster" && (
-                <div key={k} className="form-check">
-                  <input
-                    type="checkbox"
-                    className="form-check-input"
-                    id={layer.id}
-                    defaultChecked={
-                      mapInstance.getLayoutProperty(layer.id, "visibility") !==
-                      "none"
-                    }
-                    onChange={() => toggleLayerVisibility(layer.id)}
-                  />
-                  <label htmlFor={layer.name} className="form-check-label">
-                    {layer.metadata?.label ? layer.metadata.label : layer.id}
-                  </label>
-                  {/* Mostra l'icona di ricerca solo se `searchInFields` è definito */}
-                  {filters.length > 0 ? (
-                    <FilterSquareFill
-                      className="ms-3"
-                      onClick={() => {
-                        removeFilter(layer.id)
-                      }}
-                    />
-                  ) : (
-                    layer.metadata?.searchInFields && (
-                      <FilterSquare
+                    <label htmlFor={layer.name} className="form-check-label">
+                      {layer.metadata?.label ? layer.metadata.label : layer.id}
+                    </label>
+                    {/* Mostra l'icona di ricerca solo se `searchInFields` è definito */}
+                    {filters.length > 0 ? (
+                      <FilterSquareFill
                         className="ms-3"
-                        onClick={() => openModal(layer)}
+                        onClick={() => {
+                          removeFilter(layer.id)
+                        }}
                       />
-                    )
-                  )}
-                </div>
-              ),
-          )}
-        </div>
-      )}
-      {/* Modal per la ricerca */}
-      <Modal show={modalIsOpen} onHide={closeModal} size="lg">
-        <Modal.Header closeButton>
-          <Modal.Title>
-            <Search /> {activeLayer?.metadata.label}
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {activeLayer && (
-            <SearchUI fieldList={activeFieldList} processData={processData} />
-          )}
-        </Modal.Body>
-      </Modal>
-    </StyledControl>
+                    ) : (
+                      layer.metadata?.searchInFields && (
+                        <FilterSquare
+                          className="ms-3"
+                          onClick={() => openModal(layer)}
+                        />
+                      )
+                    )}
+                  </div>
+                ),
+            )}
+          </div>
+        )}
+        {/* Modal per la ricerca */}
+        <Modal show={modalIsOpen} onHide={closeModal} size="lg">
+          <Modal.Header closeButton>
+            <Modal.Title>
+              <Search /> {activeLayer?.metadata.label}
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            {activeLayer && (
+              <SearchUI fieldList={activeFieldList} processData={processData} />
+            )}
+          </Modal.Body>
+        </Modal>
+      </StyledControl>
+    </div>
   )
 }
 
