@@ -67,7 +67,7 @@ const VectorLayerLibre = ({
         // Update layout properties if defined
         if (style.layout) {
           Object.keys(style.layout).forEach(key => {
-            mapInstance.setLayoutProperty(refId, key, style.layout[key])
+            mapInstance.getMap().setLayoutProperty(refId, key, style.layout[key])
           })
         }
         // Update paint properties if defined
