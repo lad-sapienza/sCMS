@@ -50,10 +50,9 @@ import MapSearch from "../../modules/mapSearch"
   vectorLayerProps={{
     source: { directus: {
         table: "scms_ksa",
-        geoField: "geometry",
-        queryString: "filter[Hellenistic_Roman][_eq]=true"
+        geoField: "geometry"
       } },
-    name: 'Hellenistic and Roman Sites',
+    name: 'All sites',
     checked: true,
     fitToContent: true,
     style: {

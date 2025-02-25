@@ -5,26 +5,14 @@ import sourcePropTypes from '../services/sourcePropTypes'
 import fieldsPropTypes from '../services/fieldsPropTypes'
 import PropTypes from "prop-types"
 
-import DirectusService from '../services/directus/directus'
-
 const MapSearch = ({ mapProps, searchProps, vectorLayerProps }) => {
-  const [stateVectorLayerProps, setStateVectorLayerProps] = useState(null)
+  const [filter, setFilter] = useState(null)
 
   const processData = async (source, filter) => {
-
-    try {
-      const qs = `filter=${JSON.stringify(DirectusService.form2querystring(filter.conn, filter.inputs))}`
-      const vectorLayerPropsCopy = structuredClone(vectorLayerProps);
-      vectorLayerPropsCopy.source.directus.queryString = qs
-
-      console.log('vectorLayerPropsCopy', vectorLayerPropsCopy)
-      setStateVectorLayerProps(vectorLayerPropsCopy)
-    } catch (err) {
-      console.error('Error in querying remote data', err)
-    }
+    console.log(`filter updated`)
+    setFilter(filter)
   }
 
-  console.log(stateVectorLayerProps)
 
   return (
     <div>
@@ -34,7 +22,7 @@ const MapSearch = ({ mapProps, searchProps, vectorLayerProps }) => {
         </Col>
         <Col md={8}>
           <MapLibre {...mapProps}>
-          stateVectorLayerProps && <VectorLayerLibre {...stateVectorLayerProps} />
+          <VectorLayerLibre {...vectorLayerProps} filter={filter} /> )
           </MapLibre>
         </Col>
       </Row>

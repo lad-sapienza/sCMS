@@ -5,6 +5,7 @@ import * as bbox from "geojson-bbox"
 import getDataFromSource from "../../../services/getDataFromSource"
 import sourcePropTypes from "../../../services/sourcePropTypes"
 import fieldsPropTypes from "../../../services/fieldsPropTypes"
+import DirectusService from "../../../services/directus/directus"
 
 /**
  * VectorLayerLibre component renders a vector layer on a map using GeoJSON data.
@@ -30,6 +31,7 @@ const VectorLayerLibre = ({
   fitToContent,
   checked,
   popupTemplate,
+  filter,
 }) => {
   // State to hold GeoJSON data and error messages
   const [geojsonData, setGeojson] = useState(null)
@@ -43,6 +45,17 @@ const VectorLayerLibre = ({
     searchInFields,
     popupTemplate,
   }
+  if (filter) {
+    if (source.directus) {
+      const qs = `filter=${JSON.stringify(DirectusService.form2querystring(filter.conn, filter.inputs))}`
+      if (source.directus.queryString) {
+        source.directus.queryString += `&${qs}`
+      } else {
+        source.directus.queryString = qs
+      }
+    }
+  }
+
 
   // Set layer visibility based on the checked prop
   if (checked === false) {
@@ -122,7 +135,7 @@ const VectorLayerLibre = ({
     if (!refId) {
       fetchGeoData() // Fetch data if refId is not provided
     }
-  }, [refId, source])
+  }, [refId, source, filter])
 
   // Render error message if there's an error
   if (error) {
