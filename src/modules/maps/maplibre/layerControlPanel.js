@@ -42,13 +42,13 @@ const LayerControlPanel = ({ mapInstance }) => {
     if (isRaster) {
       mapInstance.getStyle().layers.forEach(lyr => {
         if (lyr.type === "raster") {
-          mapInstance.setLayoutProperty(lyr.id, "visibility", "none")
+          mapInstance.getMap().setLayoutProperty(lyr.id, "visibility", "none")
         }
       })
     }
     const isVisible =
       mapInstance.getLayoutProperty(lyrId, "visibility") !== "none"
-    mapInstance.setLayoutProperty(
+    mapInstance.getMap().setLayoutProperty(
       lyrId,
       "visibility",
       isVisible ? "none" : "visible",
