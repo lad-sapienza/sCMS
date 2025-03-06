@@ -133,8 +133,16 @@ Search.propTypes = {
     _and: PropTypes.string,
     _or: PropTypes.string,
   }),
-
+  /**
+   * Limit the search UI to a simple or advanced version.
+   * Default is "simple".
+   */
   limitTo: PropTypes.oneOf(["simple", "advanced"]),
+  /**
+   * Callback function to run when the search is executed.
+   * This function receives the filter object used in the query.
+   */
+  onSearchRun: PropTypes.func,
 }
 
 export { Search }
