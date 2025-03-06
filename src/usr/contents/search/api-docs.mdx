@@ -14,7 +14,7 @@ import SourceDocs from "../source-docs.mdx"
 
 ---
 
-#### `resultItemTemplate`
+##### resultItemTemplate
 - Function
 - Required
 - Default: _null_
@@ -23,7 +23,7 @@ A template function to render each result item. This function receives an item f
 
 ---
 
-#### `resultsHeaderTemplate`
+##### resultsHeaderTemplate
 - Function
 - Optional
 - Default:
@@ -35,7 +35,7 @@ Template function to render the header of the results. Default is a simple heade
 
 ---
 
-#### `fieldList`
+##### fieldList
 - Object
 - Required
 - Default: _null_ 
@@ -55,7 +55,7 @@ The label key will be used to display the field name in the UI, while the values
 
 ---
 
-#### `operators`
+##### operators
 - Object
 - Optional
 - Default:
@@ -90,7 +90,7 @@ This can be used to overwrite the default options, for example, to have the UI t
 
 ---
 
-#### `connector`
+##### connector
 - Object
 - Optional
 - Default:
@@ -102,3 +102,19 @@ This can be used to overwrite the default options, for example, to have the UI t
 ```
 An object containing the logical connectors (keys) and the labels to use for the UI. This can be used to overwrite the default value, for example, to have the UI translated in a different language.
 
+
+---
+
+##### onSearchRun
+- Function
+- Optional
+- Default: _null_
+A hook function that will be called when the search is run. It receives the search parameters as an object.
+
+---
+
+##### limitTo
+- String: "simple" | "advanced"
+- Optional
+- Default: "simple"
+Limit the search UI to a simple or advanced version. Default is "simple".
