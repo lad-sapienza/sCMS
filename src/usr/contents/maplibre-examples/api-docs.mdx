@@ -13,93 +13,9 @@ import SourceDocs from "../source-docs.mdx"
 ---
 
 
-
-### VectorLayer
-
-The `VectorLayer` component can be used to import, display, and customize your geographical vector data in the map. It must be used as a child of `MapLeaflet` component. A vector layer can be populated with data from different sources, such as:
-- a local GeoJSON file
-- a remote GeoJSON file
-- a table of Directus instance containing geographical data.
-- eventually, any other JSON API that returns GeoJSON data or that can be mapped to GeoJSON format.
-
-<SourceDocs />
-
-##### name
-Layer name to use in the Layer control
-- string
-- required
-- default: _null_
-
-##### popupTemplate
-A string containing the HTML to render in the popup. Variable properties can be used using \$\{field_name\} syntax. A function can also be provided, receving as parameters the properties of the clicked feature and returning an HTML-formatted string.
-- string | function
-- optional
-- default: _null_
-
-##### pointToLayer
-A function defining how GeoJSON points spawn Leaflet layers. It is internally called when data is added, passing the GeoJSON point feature and its LatLng as properties. The default is to spawn a default Marker. Full reference at [Leaflet documentation](https://leafletjs.com/reference.html#geojson-pointtolayer).
-- function
-- optional
-- default: _null_ 
-
-
-##### filter
-A function that will be used to decide whether to include a feature or not in the current visualisation. The default is to include all features (no filter applied).
-- function
-- optional
-- default: _null_
-
-##### checked
-Boolean property to control the layer's default visibility on the map and control panel.
-- boolean
-- optional
-- default: _true_
-
-##### fitToContent
-Boolean property to decide whether to zoom/pan the map to fit the layer extension or not.
-- boolean
-- optional
-- default: _false_
-
-### RasterLayer
-
-The `RasterLayer` components can be used to import and display raster tiles in the map. It must be used as a child of `MapLeaflet` component.
-
-##### name
-Layer name to use in the Layer control
-- string
-- required
-- default: _null_
-
-##### url
-URL where raster tiles are found.
-- string
-- required
-- default: _null_
-
-##### checked
-Boolean property to control the layer's default visibility on the map and control panel.
-- boolean
-- optional
-- default: _false_
-
-##### attribution
-Attribution or credits for the layer.
-- string
-- optional
-- default: _null_
-
-##### asOverlay
-If true the layer will be listed in the Overlay list; if false (default) in the base-layers list.
-- boolean
-- optional
-- default: _false_
-
-
-
 ### MapLibre
 
-The `MapLibre` component is used to create maps using MapLibre and it is a wrapper around [`react-map-gl`](https://visgl.github.io/react-map-gl/) module. It aims to be a full replacement of the MapLeaflet, by maintaining the same API and possibly providing enhanced functionality, mainly related to the native support for vector tiles.
+The `MapLibre` component is used to create maps using MapLibre and it is a wrapper around [`@vis.gl/react-maplibre`](https://visgl.github.io/react-maplibre/) module. It aims to be a full replacement of the MapLeaflet, by maintaining the same API and possibly providing enhanced functionality, mainly related to the native support for vector tiles.
 
 ##### height
 Height (with units) of the map element.
@@ -124,12 +40,6 @@ Array with default baselayers to show. One, or many of the following values: "CA
 - array
 - optional
 - default: _null_
-
-##### scrollWheelZoom
-Boolean value that controles whether zoom wheel is active or not.
-- boolean
-- optional
-- default: _false_
 
 ##### layersControlPosition
 Position of the layers control, one of the following values: "topright", "topleft", "bottomright" "bottomleft".
@@ -168,7 +78,11 @@ URL of the sprite file to use.
 - default: _null_
 
 
+---
+
 `MapLeaflet` accepts none, one or more `VectorLayer` and/or `RasterLayer` instances as child components
+
+---
 
 ### VectorLayerLibre
 
@@ -213,6 +127,13 @@ It can be a flat key:value object, the fieldname being the key and the shown lab
 - optional
 - default: _null_
   
+##### filter
+Filter configuration for the layer. For the complete documentation see: [https://maplibre.org/maplibre-style-spec/expressions/](https://maplibre.org/maplibre-style-spec/expressions/)
+- array
+- optional
+- default: _null_
+
+---
 
 ### RasterLayerLibre
 

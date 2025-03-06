@@ -13,12 +13,13 @@ import plain2maplibre from "../../../services/transformers/plain2maplibre"
  *
  * @param {Object} props - Component properties
  * @param {Object} props.source - Data source for the GeoJSON
- * @param {Object} props.style - Style configuration for the layer
  * @param {string} props.name - Name of the layer
- * @param {Array} props.searchInFields - Fields to search in
- * @param {boolean} props.fitToContent - Whether to fit the map to the content
- * @param {boolean} props.checked - Whether the layer is checked/visible
  * @param {string} props.popupTemplate - Template for popups
+ * @param {boolean} props.checked - Whether the layer is checked/visible
+ * @param {boolean} props.fitToContent - Whether to fit the map to the content
+ * @param {Object} props.style - Style configuration for the layer
+ * @param {Array} props.searchInFields - Fields to search in
+ * @param {Array} props.filter - Fields to search in
  * @returns {JSX.Element} Rendered component
  */
 const VectorLayerLibre = ({
@@ -184,6 +185,10 @@ VectorLayerLibre.propTypes = {
    * If missing the layer will NOT be searcheable
    */
   searchInFields: fieldsPropTypes,
+  /**
+   * Filter Array to apply to the layer
+   */
+  filter: PropTypes.any,
 }
 
 export { VectorLayerLibre }
