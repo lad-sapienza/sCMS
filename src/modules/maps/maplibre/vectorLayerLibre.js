@@ -13,7 +13,6 @@ import plain2maplibre from "../../../services/transformers/plain2maplibre"
  *
  * @param {Object} props - Component properties
  * @param {Object} props.source - Data source for the GeoJSON
- * @param {string} props.refId - Reference ID for the layer
  * @param {Object} props.style - Style configuration for the layer
  * @param {string} props.name - Name of the layer
  * @param {Array} props.searchInFields - Fields to search in
@@ -24,7 +23,6 @@ import plain2maplibre from "../../../services/transformers/plain2maplibre"
  */
 const VectorLayerLibre = ({
   source,
-  refId,
   style = {},
   name,
   searchInFields,
@@ -70,18 +68,18 @@ const VectorLayerLibre = ({
 
     // Applica `styledata` per assicurarsi che le modifiche avvengano dopo il caricamento dello stile
     mapInstance.on("styledata", () => {
-      const layer = mapInstance.getLayer(refId)
+      const layer = mapInstance.getLayer(style.id)
       if (layer) {
         // Update layout properties if defined
         if (style.layout) {
           Object.keys(style.layout).forEach(key => {
-            mapInstance.getMap().setLayoutProperty(refId, key, style.layout[key])
+            mapInstance.getMap().setLayoutProperty(style.id, key, style.layout[key])
           })
         }
         // Update paint properties if defined
         if (style.paint) {
           Object.keys(style.paint).forEach(key => {
-            mapInstance.setPaintProperty(refId, key, style.paint[key])
+            mapInstance.setPaintProperty(style.id, key, style.paint[key])
           })
         }
 
@@ -92,7 +90,7 @@ const VectorLayerLibre = ({
         }
       }
     })
-  }, [mapRef, style, refId])
+  }, [mapRef, style])
 
   /**
    * Fits the map view to the bounds of the GeoJSON data.
@@ -116,7 +114,7 @@ const VectorLayerLibre = ({
     }
   }, [mapRef, updateLayerStyle, fitLayerToBounds])
 
-  // Effect to fetch GeoJSON data when the component mounts or refId changes
+  // Effect to fetch GeoJSON data when the component mounts
   useEffect(() => {
     const fetchGeoData = async () => {
       try {
@@ -127,10 +125,10 @@ const VectorLayerLibre = ({
         setError("Errore nel caricamento dei dati")
       }
     }
-    if (!refId) {
-      fetchGeoData() // Fetch data if refId is not provided
+    if (source) {
+      fetchGeoData() // Fetch data if source is provided
     }
-  }, [refId, source, filter])
+  }, [source, filter])
 
   // Render error message if there's an error
   if (error) {
@@ -159,10 +157,6 @@ VectorLayerLibre.propTypes = {
    * Object with information to source data
    */
   source: sourcePropTypes,
-  /**
-   * Reference ID for the layer, as defined in the external styles.json file. It is used to oveerride the layer name / style / popup etc.
-   */
-  refId: PropTypes.string,
   /**
    * Layer name to use in the Layer control
    * Required

@@ -40,7 +40,6 @@ MapSearch.propTypes = {
   }).isRequired,
   vectorLayerProps: PropTypes.shape({
     source: sourcePropTypes.isRequired,
-    refId: PropTypes.string,
     style: PropTypes.object,
     name: PropTypes.string.isRequired,
     searchInFields: fieldsPropTypes,
