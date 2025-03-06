@@ -15,31 +15,25 @@ import SourceDocs from "../source-docs.mdx"
 ---
 
 ##### resultItemTemplate
+A template function to render each result item. This function receives an item from the search results and should return a React element.
 - Function
 - Required
 - Default: _null_
 
-A template function to render each result item. This function receives an item from the search results and should return a React element.
 
 ---
 
 ##### resultsHeaderTemplate
+Template function to render the header of the results. Default is a simple header in English with the number of results.
 - Function
 - Optional
 - Default:
   ```jsx
   tot => ( <> <h1 className="mt-5">Results</h1> <p className="text-secondary">— {tot} records found</p> </> )
   ```
-
-Template function to render the header of the results. Default is a simple header in English with the number of results.
-
 ---
 
 ##### fieldList
-- Object
-- Required
-- Default: _null_ 
-
 An object defining the fields available for querying. It can be a plain key-value object, where the key is the field name and the value is the label to display in the UI.
 But it can also be a key-object object where the key is the field name and the value is an object with the following properties:
 ```jsx
@@ -52,10 +46,17 @@ But it can also be a key-object object where the key is the field name and the v
 ```
 
 The label key will be used to display the field name in the UI, while the values key will be used to display a dropdown with predefined values for the field.
+- Object
+- Required
+- Default: _null_ 
+
 
 ---
 
 ##### operators
+An object containing the identifiers of the operators (keys) and the labels to use for the UI.
+This can be used to overwrite the default options, for example, to have the UI translated in a different language, or to provided a their limited list.
+
 - Object
 - Optional
 - Default:
@@ -85,12 +86,10 @@ The label key will be used to display the field name in the UI, while the values
 }
 ```
 
-An object containing the identifiers of the operators (keys) and the labels to use for the UI.
-This can be used to overwrite the default options, for example, to have the UI translated in a different language, or to provided a their limited list.
-
 ---
 
 ##### connector
+An object containing the logical connectors (keys) and the labels to use for the UI. This can be used to overwrite the default value, for example, to have the UI translated in a different language.
 - Object
 - Optional
 - Default:
@@ -100,21 +99,20 @@ This can be used to overwrite the default options, for example, to have the UI t
   "_or": "OR"
 }
 ```
-An object containing the logical connectors (keys) and the labels to use for the UI. This can be used to overwrite the default value, for example, to have the UI translated in a different language.
 
 
 ---
 
 ##### onSearchRun
+A hook function that will be called when the search is run. It receives the search parameters as an object.
 - Function
 - Optional
 - Default: _null_
-A hook function that will be called when the search is run. It receives the search parameters as an object.
 
 ---
 
 ##### limitTo
+Limit the search UI to a simple or advanced version. Default is "simple".
 - String: "simple" | "advanced"
 - Optional
 - Default: "simple"
-Limit the search UI to a simple or advanced version. Default is "simple".
