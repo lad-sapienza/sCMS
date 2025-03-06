@@ -18,7 +18,7 @@ In this page:
 - [Basic example with DOT notation data](#basic-example-with-dot-notation-data)
 - [Basic example with data array](#basic-example-with-data-array)
 - [Example with onClickNode event](#example-with-onclicknode-event)
-- [API Documentation](#api-documentation-props)
+- [API Documentation](#api-documentation)
 
 ---
 
@@ -91,49 +91,49 @@ In this page:
   />
 </Documenter>
 
-### API documentation: props
+### API documentation
 
-#### `dot`
-- string
-- required if `data` is not set
+##### dot
+The [DOT](https://graphviz.org/doc/info/lang.html) string representing the graph.
+- String
+- Required if `data` is not set
 - Default: _null_ 
 
-The DOT string representing the graph.
 
-#### `data`
-- array
-- required if `dot` is not set
+##### data
+The array of edges representing the graph. Each edge is represented as an array of two strings.
+- Array
+- Required if `dot` is not set
 - Default: `[]`
 
-The array of edges representing the graph. Each edge is represented as an array of two strings.
 
-#### `width`
-- string
-- optional
+##### width
+The width of the graph container
+- String
+- Optional
 - Default: `"100%"`
 
-The width of the graph container
 
-#### `height`
-- string
-- optional
+##### height
+The height of the graph container.
+- String
+- Optional
 - Default: `"400px"`
 
-The height of the graph container.
 
-#### `containerClassNames`
-- string
-- optional
+##### containerClassNames
+Additional class names for the container.
+- String
+- Optional
 - Default: _null_
 
-Additional class names for the container.
 
 
-#### `onClickNode`
-- function
-- optional
+##### onClickNode
+Function to call when a node is clicked. The node's text is passed as a parameter.
+- Function
+- Optional
 - Default:
   ```js
   nodeText => { console.log(nodeText) }
   ```
-  Function to call when a node is clicked. The node's text is passed as a parameter.
