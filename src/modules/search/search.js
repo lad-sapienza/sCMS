@@ -56,7 +56,7 @@ const Search = ({
       }
       setSearchResults(data)
       if (typeof onSearchRun === "function") {
-        onSearchRun(source, filter)
+        onSearchRun(filter)
       }
       setError(null)
     } catch (err) {

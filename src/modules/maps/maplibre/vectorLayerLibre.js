@@ -5,7 +5,7 @@ import * as bbox from "geojson-bbox"
 import getDataFromSource from "../../../services/getDataFromSource"
 import sourcePropTypes from "../../../services/sourcePropTypes"
 import fieldsPropTypes from "../../../services/fieldsPropTypes"
-import DirectusService from "../../../services/directus/directus"
+import plain2maplibre from "../../../services/transformers/plain2maplibre"
 
 /**
  * VectorLayerLibre component renders a vector layer on a map using GeoJSON data.
@@ -45,15 +45,10 @@ const VectorLayerLibre = ({
     searchInFields,
     popupTemplate,
   }
+
   if (filter) {
-    if (source.directus) {
-      const qs = `filter=${JSON.stringify(DirectusService.form2querystring(filter.conn, filter.inputs))}`
-      if (source.directus.queryString) {
-        source.directus.queryString += `&${qs}`
-      } else {
-        source.directus.queryString = qs
-      }
-    }
+    const mapLIbreFilter = plain2maplibre(filter.conn, filter.inputs)
+    mapRef.getMap().setFilter(style.id, mapLIbreFilter)
   }
 
 

@@ -8,8 +8,7 @@ import PropTypes from "prop-types"
 const MapSearch = ({ mapProps, searchProps, vectorLayerProps }) => {
   const [filter, setFilter] = useState(null)
 
-  const processData = async (source, filter) => {
-    console.log(`filter updated`)
+  const processData = async (filter) => {
     setFilter(filter)
   }
 
