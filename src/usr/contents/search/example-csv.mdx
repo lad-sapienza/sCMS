@@ -7,7 +7,7 @@ description: ""
 
 import { Search, Documenter } from "../../../modules/scms.js"
 
-### Example of `Search` component using a ststic CSV file
+### Example of `Search` component using a static CSV file
 
 This example shows how to use the `Search` component to search data from a static CSV file. The `Search` component takes a `source` prop that specifies the source of the data to search. In this example, the source is a CSV file that provides data from a file named `ksa.csv`. The `fieldList` prop specifies the fields to search in the data, and the `resultItemTemplate` prop specifies the template to use to display the search results.
 
@@ -38,7 +38,7 @@ This example shows how to use the `Search` component to search data from a stati
         "Site_Description": "Site description"
         }}
       resultItemTemplate = { item => {
-        return  <div key={item.id} className="border-bottom py-3">
+        return  <div key={item.Item_Label} className="border-bottom py-3">
           <strong>{item.Item_Label} — {item.Site_Name}</strong>
           <p>{item.Site_Description}</p>
       </div>
