@@ -23,7 +23,7 @@ export const RecordContext = React.createContext()
 const RecordNotWrapped = ({ search, children, fields = null }) => {
   const { tb, endPoint, token, id } = search // Destructure search parameters
   const [recordData, setRecordData] = useState([]) // State to hold fetched record data
-  const [loading, setLoading] = useState(false) // State to manage loading status
+  const [loading, setLoading] = useState(true) // State to manage loading status
   const [error, setError] = useState(null) // State to manage error messages
 
   useEffect(() => {
