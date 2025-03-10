@@ -1,0 +1,76 @@
+{
+  "type": "FeatureCollection",
+  "name": "map",
+  "features": [
+        {
+      "type": "Feature",
+      "id": 2,
+      "properties": {
+        "name": "@Çuka e Ajtoit",
+        "altLabel": "Cestria, Monte Aetòs, Monte Aetos",
+        "broader": "Cestrine"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [20.12361921335895, 39.681466609028035]
+      }
+    },
+        {
+      "type": "Feature",
+      "properties": {
+        "name": "@Butrint",
+        "altLabel": "Butrinti, Butrinto, Bouthrotos, Butrint",
+        "broader": "Chaonia"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [20.021199991303941, 39.745799250980319]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "@Phoinike",
+        "altLabel": "Foinike,  Fenice,  Phoenice,  Finiq, Finiqi",
+        "broader": "Chaonia"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [20.05848758388035, 39.913126796055622]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "@Gramata",
+        "altLabel": "Grammata",
+        "broader": "Chaonia"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [19.473866599582735, 40.216092733071093]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "@Saranda",
+        "altLabel": "Onchesmos, Anchiasmos, Ankiasmi, Onhesmi, Santi Quaranta, Porto Edda",
+        "broader": "Chaonia"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [20.007668385144491, 39.875003963760321]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "@Malathrea",
+        "altLabel": "Malathre, Amaltheion",
+        "broader": null
+      },
+      "geometry": { "type": "Point", "coordinates": [20.101685, 39.710401] }
+    }
+  ]
+}
