@@ -22,6 +22,7 @@ import {
 searchProps={{
     // **Ricerca**: usa il parse SEMPLICE (titolo, authors, tags, etc.)
     source: { customApi: ZoteroService },
+    limitTo: 'advanced',
     resultItemTemplate: item => (
       <div className="card my-3" key={item.id}>
         <div className="card-body">
@@ -29,22 +30,18 @@ searchProps={{
             {item.title} {item.date ? `(${item.date})` : ""}
           </h5>
           <div className="card-text">
-            <p><strong>Authors:</strong> {item.authors || "Unknown"}</p>
-            <p>
-              <strong>Tags:</strong>{" "}
-              {item.tags?.length > 0 ? item.tags.join(", ") : "No tags"}
-            </p>
-            <p>
-              <strong>Source:</strong>{" "}
-              <a href={item.url} target="_blank" rel="noopener noreferrer">
+            <dl>
+            { item.authors && <><dt>Authors:</dt><dd>{item.authors }</dd></> }
+            
+            {item.tags && Array.isArray(item.tags) && item.tags?.length > 0 ? (<> <dt>Tags:</dt><dd>{item.tags.join(", ")}</dd></>) : ''}
+            
+            { item.abstractNote && <><dt>Abstract:</dt><dd> {item.abstractNote} </dd></>}
+            
+            <hr />
+            <a href={item.url} target="_blank" rel="noopener noreferrer">
                 View on Zotero
               </a>
-            </p>
-            <hr />
-            <p>
-              <strong>Abstract:</strong>{" "}
-              {item.abstractNote || "No abstract available."}
-            </p>
+            </dl>
           </div>
         </div>
       </div>
@@ -74,6 +71,6 @@ vectorLayerProps={{
       tag: "Tags",
     },
     // Esempio di popup che mostra la proprietà "name" proveniente dal parse “geo”
-    popupTemplate: "<h4>${name}</h4>",
+    popupTemplate: "<strong>${name}</strong>",
   }}
 />
