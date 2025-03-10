@@ -1,0 +1,79 @@
+---
+title: "MapSearch Zotero"
+date: "2025-02-24"
+slug: "map-search-zotero"
+description: "A"
+menu_position: 8
+---
+
+import MapSearch from "../../modules/mapSearch"
+
+import {
+  ZoteroService,
+  ZoteroGeoService,
+} from "../../usr/services/zotero/zotero.js"
+
+<MapSearch
+  mapProps={{
+    center: "20.12361921335895, 39.681466609028035,9",
+    baseLayers: ["EsriSatellite"],
+  }}
+
+searchProps={{
+    // **Ricerca**: usa il parse SEMPLICE (titolo, authors, tags, etc.)
+    source: { customApi: ZoteroService },
+    resultItemTemplate: item => (
+      <div className="card my-3" key={item.id}>
+        <div className="card-body">
+          <h5 className="card-title">
+            {item.title} {item.date ? `(${item.date})` : ""}
+          </h5>
+          <div className="card-text">
+            <p><strong>Authors:</strong> {item.authors || "Unknown"}</p>
+            <p>
+              <strong>Tags:</strong>{" "}
+              {item.tags?.length > 0 ? item.tags.join(", ") : "No tags"}
+            </p>
+            <p>
+              <strong>Source:</strong>{" "}
+              <a href={item.url} target="_blank" rel="noopener noreferrer">
+                View on Zotero
+              </a>
+            </p>
+            <hr />
+            <p>
+              <strong>Abstract:</strong>{" "}
+              {item.abstractNote || "No abstract available."}
+            </p>
+          </div>
+        </div>
+      </div>
+    ),
+    fieldList: {
+      q: "Search Query",
+      tag: "Tags",
+    },
+  }}
+
+vectorLayerProps={{
+    // **Mappa**: usa il parse GEO (che include `geometry`, `name`, ecc.)
+    source: { customApi: ZoteroGeoService },
+    refId: "zotero",
+    name: "Bibliography",
+    style: {
+      id: "zotero",
+      type: "circle",
+      paint: {
+        "circle-radius": 4,
+        "circle-color": "#ff6600",
+      },
+    },
+    // Imposta su quali campi filtrare (spesso simili a searchProps)
+    searchInFields: {
+      q: "Search Query",
+      tag: "Tags",
+    },
+    // Esempio di popup che mostra la proprietà "name" proveniente dal parse “geo”
+    popupTemplate: "<h4>${name}</h4>",
+  }}
+/>
