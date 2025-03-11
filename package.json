@@ -42,12 +42,12 @@
     "gatsby-transformer-sharp": "^5.14.0",
     "geojson-bbox": "^0.0.1",
     "leaflet": "^1.9.4",
-    "maplibre-gl": "^4.7.1",
-    "prismjs": "^1.29.0",
+    "maplibre-gl": "^5.2.0",
+    "prismjs": "^1.30.0",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.9",
     "react-bootstrap-icons": "^1.11.5",
-    "react-data-table-component": "^7.6.2",
+    "react-data-table-component": "^7.7.0",
     "react-dom": "^18.3.1",
     "react-leaflet": "^4.2.1",
     "react-router-dom": "^6.29.0",
@@ -55,8 +55,8 @@
     "styled-components": "^6.1.15"
   },
   "devDependencies": {
-    "prettier": "^3.5.1",
-    "sass": "^1.85.0"
+    "prettier": "^3.5.3",
+    "sass": "^1.85.1"
   },
   "keywords": [
     "gatsby",
