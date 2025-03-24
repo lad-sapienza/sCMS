@@ -9,8 +9,7 @@ menu_position: 8
 import MapSearch from "../../modules/mapSearch"
 
 import {
-  ZoteroService,
-  ZoteroGeoService,
+  ZoteroService
 } from "../../usr/services/zotero/zotero.js"
 
 <MapSearch
@@ -47,30 +46,29 @@ searchProps={{
       </div>
     ),
     fieldList: {
-      q: "Search Query",
-      tag: "Tags",
+      tags: "Tags",
     },
   }}
 
 vectorLayerProps={{
-    // **Mappa**: usa il parse GEO (che include `geometry`, `name`, ecc.)
-    source: { customApi: ZoteroGeoService },
+    source: { customApi: ZoteroService,  geoField: "geometry" },
     refId: "zotero",
     name: "Bibliography",
     style: {
       id: "zotero",
-      type: "circle",
+     type: "circle",
       paint: {
         "circle-radius": 4,
-        "circle-color": "#ff6600",
+        "circle-color": "#ff0000",
+        "circle-stroke-width": 1.5,
+        "circle-stroke-color": "#000000"
       },
     },
     // Imposta su quali campi filtrare (spesso simili a searchProps)
     searchInFields: {
-      q: "Search Query",
-      tag: "Tags",
+      tags: "Tags",
     },
     // Esempio di popup che mostra la proprietà "name" proveniente dal parse “geo”
-    popupTemplate: "<strong>${name}</strong>",
+    popupTemplate: "<strong>${toponym}</strong>",
   }}
 />
