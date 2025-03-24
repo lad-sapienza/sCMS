@@ -43,7 +43,7 @@ const getDataFromSource = async (source, uiFilter) => {
     } else if (path2data) {
       return await Path2DataService.parseResponse(response, path2data.path)
     } else if (customApi && customApi.parseResponse) {
-      return await customApi.parseResponse(response, customApi.geoField)
+      return await customApi.parseResponse(response, source.geoField)
     }
   } catch (error) {
     // console.log(error)
