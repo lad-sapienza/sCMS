@@ -10,11 +10,11 @@ import sourcePropTypes from "../../../services/sourcePropTypes"
 const VectorLayer = ({
   source,
   name,
-  popupTemplate,
-  pointToLayer,
-  filter,
-  checked,
-  fitToContent,
+  popupTemplate = null,
+  pointToLayer = null,
+  filter = null,
+  checked = true,
+  fitToContent = false,
 }) => {
   const [geojsonData, setGeojson] = useState()
   const [error, setError] = useState(false)
@@ -32,43 +32,47 @@ const VectorLayer = ({
       })
   }, [source])
 
-  if (error) {
-    console.log(error)
-    return <div className="text-danger">Error in rendering the map</div>
-  } else if (!geojsonData) {
-    return <div className="text-danger">Error in rendering the map</div>
-  } else {
-    if (fitToContent) {
+  useEffect(() => {
+    if (fitToContent && geojsonData) {
       const lBb = bbox(geojsonData)
       map.fitBounds([
         [lBb[1], lBb[0]],
         [lBb[3], lBb[2]],
       ])
     }
+  }, [fitToContent, geojsonData, map])
 
-    return (
-      <LayersControl.Overlay name={name} checked={checked}>
-        <GeoJSON
-          data={geojsonData}
-          pointToLayer={pointToLayer ? pointToLayer : null}
-          onEachFeature={
-            popupTemplate
-              ? typeof popupTemplate === "string"
-                ? (feature, layer) =>
-                    layer.bindPopup(
-                      parseStringTemplate(popupTemplate, feature.properties),
-                    )
-                : typeof popupTemplate === "function"
-                  ? (feature, layer) =>
-                      layer.bindPopup(popupTemplate(feature.properties))
-                  : null
-              : null
-          }
-          filter={filter ? filter : null}
-        />
-      </LayersControl.Overlay>
-    )
+  if (error) {
+    console.log(error)
+    return <div className="text-danger">Error in rendering the map: {error}</div>
+  } else if (!geojsonData) {
+    return <div>Loading map data...</div>
   }
+
+  // Extract popupTemplate logic
+  const getOnEachFeature = () => {
+    if (!popupTemplate) return null
+    if (typeof popupTemplate === "string") {
+      return (feature, layer) =>
+        layer.bindPopup(parseStringTemplate(popupTemplate, feature.properties))
+    }
+    if (typeof popupTemplate === "function") {
+      return (feature, layer) =>
+        layer.bindPopup(popupTemplate(feature.properties))
+    }
+    return null
+  }
+
+  return (
+    <LayersControl.Overlay name={name} checked={checked}>
+      <GeoJSON
+        data={geojsonData}
+        pointToLayer={pointToLayer || null}
+        onEachFeature={getOnEachFeature()}
+        filter={filter || null}
+      />
+    </LayersControl.Overlay>
+  )
 }
 
 VectorLayer.propTypes = {
@@ -82,7 +86,7 @@ VectorLayer.propTypes = {
    */
   name: PropTypes.string.isRequired,
   /**
-   * The template for the popup content. It can be either a string (Variable properties can be used using ${field_name} syntax) or a function receving as parameters the properties of the clicked feature.
+   * The template for the popup content. It can be either a string (Variable properties can be used using ${field_name} syntax, limited to whitelisted fields only) or a function receiving as parameters the properties of the clicked feature. The function must return either a string or a valid React node.
    */
   popupTemplate: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   /**
@@ -94,18 +98,19 @@ VectorLayer.propTypes = {
   pointToLayer: PropTypes.func,
   /**
    * A function that will be used to decide whether to include a feature or not in the current visualisation. The default is to include all features (no filter applied)
-   * Optinal, default: null
+   * Optional, default: null
    */
   filter: PropTypes.func,
   /**
-   * Boolean property to control the layer's default visibility ion the map and control panel
+   * Boolean property to control the layer's default visibility in the map and control panel
    * Optional, default: true
    */
   checked: PropTypes.bool,
   /**
-   * Boolean property to decide wether to zoom/pan the map to fit the layer extention or not
+   * Boolean property to decide whether to zoom/pan the map to fit the layer extent or not
    * Optional, default: false
    */
   fitToContent: PropTypes.bool,
 }
+
 export { VectorLayer }

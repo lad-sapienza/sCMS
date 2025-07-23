@@ -7,52 +7,45 @@ import { RasterLayer } from "./rasterLayer"
 import { defaultBaseLayers, defaultBaseLayersPropTypes } from "../defaultBaseLayers"
 
 const MapLeaflet = ({
-  height,
-  center,
-  baseLayers,
+  height = "800px",
+  center = "0,0,2",
+  baseLayers = [],
   children,
-  scrollWheelZoom,
-  layersControlPosition,
+  scrollWheelZoom = false,
+  layersControlPosition = "topright",
 }) => {
-  if (!center) {
-    center = "0,0,2"
-  }
-  if (!layersControlPosition) {
-    layersControlPosition = "topright"
+  // Parse center as [lat, lng, zoom] for Leaflet
+  let [lat, lng, zoom] = center.split(",").map(e => parseFloat(e.trim()))
+  if (isNaN(lat) || isNaN(lng) || isNaN(zoom)) {
+    [lat, lng, zoom] = [0, 0, 2]
   }
 
-  let [lng, lat, zoom] = center?.split(",").map(e => parseFloat(e.trim()))
+  // Filter out invalid baseLayers before mapping
+  const validBaseLayers = baseLayers
+    ? baseLayers.filter(layer => defaultBaseLayers.hasOwnProperty(layer.trim()))
+    : []
 
   return (
     <MapContainer
-      style={{ height: height ? height : `800px` }}
-      scrollWheelZoom={scrollWheelZoom === true ? true : false}
-      center={[lng, lat]}
+      style={{ height }}
+      scrollWheelZoom={scrollWheelZoom}
+      center={[lat, lng]}
       zoom={zoom}
     >
-      <LayersControl
-        position={layersControlPosition ? layersControlPosition : null}
-      >
-        {baseLayers &&
-          baseLayers.map((layer, index) => {
-            let bl = layer.trim()
-            if (!defaultBaseLayers.hasOwnProperty(bl)) {
-              return <></>
-            }
-            return (
-              <RasterLayer
-                key={index}
-                name={defaultBaseLayers[bl].name}
-                url={defaultBaseLayers[bl].url}
-                attribution={
-                  defaultBaseLayers[bl].attribution
-                    ? defaultBaseLayers[bl].attribution
-                    : null
-                }
-                checked={index === 0}
-              />
-            )
-          })}
+      <LayersControl position={layersControlPosition}>
+        {validBaseLayers.map((layer, index) => {
+          const bl = layer.trim()
+          const base = defaultBaseLayers[bl]
+          return (
+            <RasterLayer
+              key={bl}
+              name={base.name}
+              url={base.url}
+              attribution={base.attribution || null}
+              checked={index === 0}
+            />
+          )
+        })}
         {children}
       </LayersControl>
     </MapContainer>
@@ -66,8 +59,8 @@ MapLeaflet.propTypes = {
    */
   height: PropTypes.string,
   /**
-   * Center of the map, as a string with long, lat and zoom separated by commas.
-   * Optional, default to 0,0,2
+   * Center of the map, as a string with lat, lng and zoom separated by commas.
+   * Optional, default: "0,0,2"
    */
   center: PropTypes.string,
   /**
@@ -84,13 +77,13 @@ MapLeaflet.propTypes = {
     PropTypes.element,
   ]),
   /**
-   * Boolean to controle if wheel zoom is active or not.
-   * Optional, default false
+   * Boolean to control if wheel zoom is active or not.
+   * Optional, default: false
    */
   scrollWheelZoom: PropTypes.bool,
   /**
    * Position of the layers control
-   * Optional, defaults
+   * Optional, default: "topright"
    */
   layersControlPosition: PropTypes.oneOf([
     "topright",

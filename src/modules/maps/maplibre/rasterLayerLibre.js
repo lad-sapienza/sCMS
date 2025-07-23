@@ -13,7 +13,7 @@ import PropTypes from "prop-types"
  *
  * @returns {JSX.Element} The rendered raster layer component.
  */
-const RasterLayerLibre = ({ name, url, checked, attribution }) => {
+const RasterLayerLibre = ({ name, url, checked = false, attribution = null }) => {
   // Convert the URL prop into an array if it's not already one
   const tileUrls = Array.isArray(url) ? url : [url]
 
@@ -37,23 +37,24 @@ const RasterLayerLibre = ({ name, url, checked, attribution }) => {
 
 RasterLayerLibre.propTypes = {
   /**
-   * Name of the layer to be shown in Control Panel
+   * Name of the layer to be shown in Control Panel (required)
    */
-  name: PropTypes.string,
+  name: PropTypes.string.isRequired,
   /**
-   * String with URL of tiles or array with multiple URLs
+   * String with URL of tiles or array with multiple URLs (required)
    */
   url: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.string),
     PropTypes.string,
-  ]),
+  ]).isRequired,
   /**
-   * Boolean: if true, the layer will be turned on
+   * Boolean: if true, the layer will be turned on. Optional, default: false
    */
   checked: PropTypes.bool,
   /**
-   * Attribution or credids for the layer
+   * Attribution or credits for the layer. Optional
    */
   attribution: PropTypes.string,
 }
+
 export { RasterLayerLibre }

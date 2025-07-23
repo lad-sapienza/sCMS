@@ -26,38 +26,47 @@ const VectorLayerLibre = ({
   source,
   style = {},
   name,
-  searchInFields,
-  fitToContent,
-  checked,
-  popupTemplate,
-  filter,
+  searchInFields = [],
+  fitToContent = false,
+  checked = true,
+  popupTemplate = '',
+  filter = null,
 }) => {
   // State to hold GeoJSON data and error messages
   const [geojsonData, setGeojson] = useState(null)
   const [error, setError] = useState(null)
   const { current: mapRef } = useMap()
 
-  // Initialize style metadata with provided props
-  style.metadata = {
-    ...style.metadata,
-    label: name,
-    searchInFields,
-    popupTemplate,
+  // Create a new style object with updated metadata to avoid mutating props
+  const styleWithMetadata = {
+    ...style,
+    metadata: {
+      ...style.metadata,
+      label: name,
+      searchInFields,
+      popupTemplate,
+    },
   }
 
-  if (filter) {
-    const mapLIbreFilter = plain2maplibre(filter.conn, filter.inputs)
-    mapRef.getMap().setFilter(style.id, mapLIbreFilter)
-  }
+  // Side effect: set filter and visibility on map when dependencies change
+  useEffect(() => {
+    if (!mapRef) return
+    const mapInstance = mapRef.getMap()
+    const layer = mapInstance.getLayer(style.id)
+    if (!layer) return // Only proceed if the layer exists
 
-
-  // Set layer visibility based on the checked prop
-  if (checked === false) {
-    style.layout = {
-      ...style.layout,
-      visibility: "none",
+    // Set filter if provided
+    if (filter) {
+      const mapLIbreFilter = plain2maplibre(filter.conn, filter.inputs)
+      mapInstance.setFilter(style.id, mapLIbreFilter)
     }
-  }
+    // Set visibility based on checked prop
+    if (checked === false) {
+      mapInstance.setLayoutProperty(style.id, 'visibility', 'none')
+    } else {
+      mapInstance.setLayoutProperty(style.id, 'visibility', 'visible')
+    }
+  }, [mapRef, filter, checked, style.id])
 
   /**
    * Updates the layer style on the map when the style or map reference changes.
@@ -146,7 +155,7 @@ const VectorLayerLibre = ({
     <div>
       {/* Mostra il Source solo se ci sono dati GeoJSON */}
       <Source type="geojson" data={geojsonData}>
-        <Layer {...style} />
+        <Layer {...styleWithMetadata} />
       </Source>
     </div>
   )
@@ -168,25 +177,25 @@ VectorLayerLibre.propTypes = {
    */
   popupTemplate: PropTypes.string,
   /**
-   * If true, the layer will be shown (tuned on).
+   * If true, the layer will be shown (turned on). Optional, default: true
    */
   checked: PropTypes.bool,
   /**
-   * If true, the map will be zoomed and panned to show full extents of the layer added
+   * If true, the map will be zoomed and panned to show full extents of the layer added. Optional, default: false
    */
   fitToContent: PropTypes.bool,
   /**
-   * Style object relative to layer
+   * Style object relative to layer. Optional, default: {}
    * For the complete documentation see: https://maplibre.org/maplibre-style-spec/layers/
    */
   style: PropTypes.object,
   /**
-   * List of fields that will be exposed to the search interface
-   * If missing the layer will NOT be searcheable
+   * List of fields that will be exposed to the search interface. Optional
+   * If missing the layer will NOT be searchable
    */
   searchInFields: fieldsPropTypes,
   /**
-   * Filter Array to apply to the layer
+   * Filter Array to apply to the layer. Optional
    */
   filter: PropTypes.any,
 }
