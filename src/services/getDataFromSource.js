@@ -30,6 +30,10 @@ const getDataFromSource = async (source, uiFilter) => {
     const customRet = customApi.formatUrl(uiFilter)
     sourceUrl = customRet.sourceUrl
     options = customRet.options
+
+  } else if (source.geojson) {
+    // If the source is a GeoJSON object, return it directly
+    return source.geojson
   } else {
     throw new Error("No valid source provided")
   }
