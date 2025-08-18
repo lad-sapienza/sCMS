@@ -1,24 +1,29 @@
 import React, { useEffect, useState } from "react"
-import { Button } from "react-bootstrap/";
-import { Form } from 'react-bootstrap';
+import { Button } from "react-bootstrap/"
+import { Form } from "react-bootstrap"
 import {
   MapLibre,
   RasterLayerLibre,
   VectorLayerLibre,
 } from "../../../modules/scms"
 
-const ONTOLOGIA_URL = "/data/ontologia.geojson";
+import ZoteroRecordsPreview from "./ZoteroRecordsPreview"
+
+// Helper to strip two outermost divs from a HTML string
+const ONTOLOGIA_URL = "/data/ontologia.geojson"
 
 // Module-level cache
 let zoteroCache = null
 
-const Zot = ({groupId}) => {
+const Zot = ({ groupId }) => {
   const [data, setData] = useState(null)
   const [error, setError] = useState(null)
   const [mapped, setMapped] = useState(null)
   const [ontologia, setOntologia] = useState(null)
   const [missingTags, setMissingTags] = useState([])
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState("")
+  // New state for currently selected tag and Zotero records by tag
+  const [selectedTag, setSelectedTag] = useState(null)
 
   useEffect(() => {
     async function fetchZoteroTagsFlattened() {
@@ -50,12 +55,12 @@ const Zot = ({groupId}) => {
       return result
     }
     async function fetchOntology() {
-      if (ontologia) return ontologia;
-      const resp = await fetch(ONTOLOGIA_URL);
-      if (!resp.ok) throw new Error("Failed to load ontologia.geojson");
-      const json = await resp.json();
-      setOntologia(json);
-      return json;
+      if (ontologia) return ontologia
+      const resp = await fetch(ONTOLOGIA_URL)
+      if (!resp.ok) throw new Error("Failed to load ontologia.geojson")
+      const json = await resp.json()
+      setOntologia(json)
+      return json
     }
 
     let cancelled = false
@@ -69,7 +74,7 @@ const Zot = ({groupId}) => {
         setData(zotData)
         const onto = await fetchOntology()
         // Collect all ontology tags (for presence test)
-        const ontologyTagSet = new Set();
+        const ontologyTagSet = new Set()
         const mappedFeatures = onto.features.map(f => {
           const name = f.properties.name
           // Gather candidate terms: name + exploded altLabel terms
@@ -78,7 +83,7 @@ const Zot = ({groupId}) => {
           if (altLabel) {
             // explode by commas, then by spaces, flatten, and filter empty
             const splitCandidates = altLabel
-              .split(',')
+              .split(",")
               .flatMap(x => x.split(/\s+/))
               .map(t => t.trim())
               .filter(Boolean)
@@ -88,7 +93,7 @@ const Zot = ({groupId}) => {
           const candidateSet = new Set(candidates)
           // Add all @candidates to ontologyTagSet
           for (const term of candidateSet) {
-            ontologyTagSet.add("@" + term);
+            ontologyTagSet.add("@" + term)
           }
           // Sum zotero counts for all @candidates
           let zoteroCount = 0
@@ -103,8 +108,8 @@ const Zot = ({groupId}) => {
             ...f,
             properties: {
               ...f.properties,
-              zoteroCount
-            }
+              zoteroCount,
+            },
           }
         })
         // Find all @ tags in zotero that are not in the ontology
@@ -127,37 +132,45 @@ const Zot = ({groupId}) => {
   // Log missingTags whenever it changes
   React.useEffect(() => {
     if (missingTags) {
-      console.log('missingTags:', missingTags);
+      console.log("missingTags:", missingTags)
     }
-  }, [missingTags]);
+  }, [missingTags])
 
   if (error) return <div>Error: {error}</div>
   if (!data || !mapped) return <div>Loading...</div>
 
   // Features with geometry
-  const featuresWithGeometry = mapped ? mapped.filter(f => f.geometry) : [];
+  const featuresWithGeometry = mapped ? mapped.filter(f => f.geometry) : []
 
   // Filtered mapped items for button list (search is case-insensitive on name)
   const filteredMapped = Array.isArray(mapped)
     ? mapped
         .filter(f => {
-          const name = (f.properties && f.properties.name ? f.properties.name : "").toLowerCase();
-          return name.includes(searchTerm.trim().toLowerCase());
+          const name = (
+            f.properties && f.properties.name ? f.properties.name : ""
+          ).toLowerCase()
+          return name.includes(searchTerm.trim().toLowerCase())
         })
         .sort((a, b) => {
-          const an = (a.properties && a.properties.name ? a.properties.name.toLowerCase() : "");
-          const bn = (b.properties && b.properties.name ? b.properties.name.toLowerCase() : "");
-          if (an < bn) return -1;
-          if (an > bn) return 1;
-          return 0;
+          const an =
+            a.properties && a.properties.name
+              ? a.properties.name.toLowerCase()
+              : ""
+          const bn =
+            b.properties && b.properties.name
+              ? b.properties.name.toLowerCase()
+              : ""
+          if (an < bn) return -1
+          if (an > bn) return 1
+          return 0
         })
-    : [];
+    : []
 
   // GeoJSON for map
   const geojson = {
     type: "FeatureCollection",
     features: featuresWithGeometry,
-  };
+  }
 
   // Style expression for coloring features
   const fillColor = [
@@ -191,11 +204,16 @@ const Zot = ({groupId}) => {
                 // Radius varies by zoteroCount: 4 (none), 8 (low), 16 (mid), 24 (high)
                 "circle-radius": [
                   "interpolate",
-                  ["linear"], ["get", "zoteroCount"],
-                  0, 4,
-                  1, 8,
-                  5, 16,
-                  20, 24
+                  ["linear"],
+                  ["get", "zoteroCount"],
+                  0,
+                  4,
+                  1,
+                  8,
+                  5,
+                  16,
+                  20,
+                  24,
                 ],
                 "circle-color": fillColor,
                 "circle-stroke-width": 1.5,
@@ -207,29 +225,45 @@ const Zot = ({groupId}) => {
         </MapLibre>
       </div>
       {/* Filter/Search input and button list for mapped items */}
-      <div style={{ margin: '1em 0' }}>
+      <div style={{ margin: "1em 0" }}>
         <Form.Control
           type="search"
           placeholder="Search by tags..."
           value={searchTerm}
           onChange={e => setSearchTerm(e.target.value)}
         />
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5em', marginTop: '0.5em' }}>
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "0.5em",
+            marginTop: "0.5em",
+          }}
+        >
           {filteredMapped.length === 0 ? (
-            <span style={{ color: '#888' }}>No matches</span>
+            <span style={{ color: "#888" }}>No matches</span>
           ) : (
-            filteredMapped.map((f, i) => (
-              <Button
-                onClick={()=> {console.log(f.properties)}}
-                variant="light"
-                key={i}
-              >
-                {f.properties && f.properties.name}
-              </Button>
-            ))
+            filteredMapped.map((f, i) => {
+              const tag = f.properties && f.properties.name
+              return (
+                <Button
+                  onClick={() => {
+                    if (tag) setSelectedTag(tag)
+                  }}
+                  variant={tag === selectedTag ? "primary" : "light"}
+                  key={tag || i}
+                >
+                  {tag}
+                </Button>
+              )
+            })
           )}
         </div>
       </div>
+
+      {selectedTag && (
+        <ZoteroRecordsPreview groupId={groupId} tag={selectedTag} />
+      )}
     </div>
   )
 }
