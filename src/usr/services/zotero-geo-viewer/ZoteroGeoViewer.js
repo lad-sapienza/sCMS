@@ -10,7 +10,7 @@ const ONTOLOGIA_URL = "/data/ontologia.geojson"
 // Module-level cache
 let zoteroCache = null
 
-const Zot = ({ groupId, showMap = true }) => {
+const ZoteroGeoViewer = ({ groupId, showMap = true }) => {
   const [data, setData] = useState(null)
   const [error, setError] = useState(null)
   const [mapped, setMapped] = useState(null)
@@ -213,4 +213,4 @@ const Zot = ({ groupId, showMap = true }) => {
     </div>
   )
 }
-export { Zot }
+export { ZoteroGeoViewer }
