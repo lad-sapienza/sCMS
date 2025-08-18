@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react"
-import { Button } from "react-bootstrap/"
-import { Form } from "react-bootstrap"
 import {
   MapLibre,
   RasterLayerLibre,
@@ -8,6 +6,7 @@ import {
 } from "../../../modules/scms"
 
 import ZoteroRecordsPreview from "./ZoteroRecordsPreview"
+import TagAutocomplete from "./TagAutocomplete"
 
 // Helper to strip two outermost divs from a HTML string
 const ONTOLOGIA_URL = "/data/ontologia.geojson"
@@ -142,28 +141,11 @@ const Zot = ({ groupId }) => {
   // Features with geometry
   const featuresWithGeometry = mapped ? mapped.filter(f => f.geometry) : []
 
-  // Filtered mapped items for button list (search is case-insensitive on name)
-  const filteredMapped = Array.isArray(mapped)
-    ? mapped
-        .filter(f => {
-          const name = (
-            f.properties && f.properties.name ? f.properties.name : ""
-          ).toLowerCase()
-          return name.includes(searchTerm.trim().toLowerCase())
-        })
-        .sort((a, b) => {
-          const an =
-            a.properties && a.properties.name
-              ? a.properties.name.toLowerCase()
-              : ""
-          const bn =
-            b.properties && b.properties.name
-              ? b.properties.name.toLowerCase()
-              : ""
-          if (an < bn) return -1
-          if (an > bn) return 1
-          return 0
-        })
+  // Tags array for autocomplete (unique names from mapped)
+  const tags = Array.isArray(mapped)
+    ? Array.from(new Set(
+        mapped.map(f => (f.properties && f.properties.name ? f.properties.name : null)).filter(Boolean)
+      )).sort((a,b)=>a.toLowerCase().localeCompare(b.toLowerCase()))
     : []
 
   // GeoJSON for map
@@ -224,41 +206,15 @@ const Zot = ({ groupId }) => {
           />
         </MapLibre>
       </div>
-      {/* Filter/Search input and button list for mapped items */}
+      {/* Tag Autocomplete for mapped tags */}
       <div style={{ margin: "1em 0" }}>
-        <Form.Control
-          type="search"
-          placeholder="Search by tags..."
+        <TagAutocomplete
+          tags={tags}
           value={searchTerm}
-          onChange={e => setSearchTerm(e.target.value)}
+          onChange={setSearchTerm}
+          onSelect={(tag) => { setSelectedTag(tag); setSearchTerm(tag); }}
+          selectedTag={selectedTag}
         />
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: "0.5em",
-            marginTop: "0.5em",
-          }}
-        >
-          {filteredMapped.length === 0 ? (
-            <span style={{ color: "#888" }}>No matches</span>
-          ) : (
-            filteredMapped.map((f, i) => {
-              const tag = f.properties && f.properties.name
-              return (
-                <Button
-                  onClick={() => {
-                    if (tag) setSelectedTag(tag)
-                  }}
-                  variant={tag === selectedTag ? "primary" : "light"}
-                  key={tag || i}
-                >
-                  {tag}
-                </Button>
-              )
-            })
-          )}
-        </div>
       </div>
 
       {selectedTag && (

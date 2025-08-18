@@ -59,7 +59,7 @@ export default function ZoteroRecordsPreview({ groupId, tag }) {
       {loading && <div>Loading records...</div>}
       {error && <div style={{ color: "red" }}>Error: {error}</div>}
       {!loading && records && records.length > 0 && (
-        <ul style={{ listStylePosition: "inside", paddingLeft: 0 }}>
+        <ul>
           {records.map(item => {
             const key = item.key || item.data?.key
             const zoteroLink = key
@@ -69,7 +69,9 @@ export default function ZoteroRecordsPreview({ groupId, tag }) {
               <li
                 key={key}
                 style={{
-                  marginBottom: ".5em"
+                  marginBottom: ".5em",
+                  textIndent: "-1em",
+                  paddingLeft: "1em"
                 }}
               >
                 {item.bib ? (
@@ -84,19 +86,21 @@ export default function ZoteroRecordsPreview({ groupId, tag }) {
                   JSON.stringify(item)
                 )}
                 {zoteroLink && (
-                  <a
-                    href={zoteroLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      fontSize: "0.95em",
-                      textDecoration: "underline",
-                      whiteSpace: "nowrap",
-                      paddingLeft: '10px'
-                    }}
-                  >
-                    View in Zotero
-                  </a>
+                  <React.Fragment>
+                    <br />
+                    <a
+                      href={zoteroLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        fontSize: "0.95em",
+                        textDecoration: "underline",
+                        whiteSpace: "nowrap"
+                      }}
+                    >
+                      View in the Zotero Library
+                    </a>
+                    </React.Fragment>
                 )}
               </li>
             )
