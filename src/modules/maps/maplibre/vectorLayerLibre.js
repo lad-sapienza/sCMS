@@ -26,7 +26,7 @@ const VectorLayerLibre = ({
   source,
   style = {},
   name,
-  searchInFields = [],
+  searchInFields = {},
   fitToContent = false,
   checked = true,
   popupTemplate = '',
