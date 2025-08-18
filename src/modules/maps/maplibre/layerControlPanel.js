@@ -221,7 +221,7 @@ const LayerControlPanel = ({ mapInstance }) => {
                       }}
                     />
                   ) : (
-                    layer.metadata?.searchInFields && (
+                    layer.metadata?.searchInFields && Object.keys(layer.metadata.searchInFields).length > 0 && (
                       <FilterSquare
                         className="ms-3"
                         onClick={() => openModal(layer)}
