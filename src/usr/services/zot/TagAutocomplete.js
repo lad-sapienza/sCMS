@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { Form, InputGroup, ListGroup } from "react-bootstrap";
+import { Form, InputGroup, ListGroup, Button } from "react-bootstrap";
 
 /**
  * TagAutocomplete component
@@ -14,14 +14,30 @@ export default function TagAutocomplete({ tags, value, onChange, onSelect, selec
   const [open, setOpen] = useState(false);
   const [focusedIdx, setFocusedIdx] = useState(-1);
 
+  const normalizedTags = useMemo(() => {
+    const arr = Array.isArray(tags) ? tags : [];
+    return arr
+      .map(t => {
+        if (typeof t === 'string') return { label: t, alts: [] };
+        const label = t && typeof t.label === 'string' ? t.label : '';
+        const alts = t && Array.isArray(t.alts) ? t.alts.filter(s => typeof s === 'string') : [];
+        return label ? { label, alts } : null;
+      })
+      .filter(Boolean);
+  }, [tags]);
+
   const suggestions = useMemo(() => {
     const v = (value || "").trim().toLowerCase();
-    const filtered = (Array.isArray(tags) ? tags : [])
-      .filter(t => typeof t === 'string')
-      .filter(t => t.toLowerCase().includes(v))
-      .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+    const filtered = normalizedTags
+      .filter(t => {
+        if (!v) return true;
+        const inLabel = t.label.toLowerCase().includes(v);
+        const inAlt = t.alts.some(a => a.toLowerCase().includes(v));
+        return inLabel || inAlt;
+      })
+      .sort((a, b) => a.label.toLowerCase().localeCompare(b.label.toLowerCase()));
     return filtered;
-  }, [tags, value]);
+  }, [normalizedTags, value]);
 
   return (
     <div style={{position: 'relative', width: '320px', maxWidth: '100%', marginBottom: '1em'}}>
@@ -47,8 +63,8 @@ export default function TagAutocomplete({ tags, value, onChange, onSelect, selec
               e.preventDefault();
             } else if (e.key === 'Enter') {
               if (focusedIdx >= 0 && focusedIdx < suggestions.length) {
-                const tag = suggestions[focusedIdx];
-                onSelect(tag);
+                const t = suggestions[focusedIdx];
+                onSelect(t.label);
                 setOpen(false);
                 setFocusedIdx(-1);
                 e.preventDefault();
@@ -60,29 +76,49 @@ export default function TagAutocomplete({ tags, value, onChange, onSelect, selec
           aria-controls="tags-autocomplete-list"
           aria-activedescendant={focusedIdx >= 0 ? `ac-tag-${focusedIdx}` : undefined}
         />
+      {Boolean(value) && (
+          <Button
+            variant="outline-secondary"
+            onMouseDown={(e) => { e.preventDefault(); onChange(''); setOpen(false); setFocusedIdx(-1); if (onSelect) onSelect(''); }}
+            aria-label="Clear"
+            title="Clear"
+          >
+            ×
+          </Button>
+        )}
       </InputGroup>
       {open && suggestions.length > 0 && (
         <div style={{position:'absolute', top:'100%', left:0, right:0, zIndex:10, maxHeight:'300px', overflowY:'auto'}}>
           <ListGroup id="tags-autocomplete-list" className="shadow">
-            {suggestions.map((tag, i) => {
+            {suggestions.map((t, i) => {
               const selected = focusedIdx === i;
+              const uniqueAlts = Array.from(new Set((t.alts || []).filter(Boolean)));
+              const previewAlts = uniqueAlts.slice(0, 8).join(', ');
+              const extraCount = uniqueAlts.length > 8 ? uniqueAlts.length - 8 : 0;
               return (
                 <ListGroup.Item
                   action
-                  key={tag || i}
+                  key={t.label || i}
                   id={`ac-tag-${i}`}
                   active={selected}
                   onMouseDown={() => {
-                    onSelect(tag);
+                    onSelect(t.label);
                     setOpen(false);
                     setFocusedIdx(-1);
                   }}
                   style={{
-                    fontWeight: tag === selectedTag ? 'bold' : 'normal',
+                    fontWeight: t.label === selectedTag ? 'bold' : 'normal',
                     cursor: 'pointer'
                   }}
                 >
-                  {tag}
+                  <div>
+                    <div>{t.label}</div>
+                    {uniqueAlts.length > 0 && (
+                      <div style={{ color: '#6c757d', fontSize: '0.85em' }}>
+                        {previewAlts}{extraCount ? `, +${extraCount} more` : ''}
+                      </div>
+                    )}
+                  </div>
                 </ListGroup.Item>
               );
             })}

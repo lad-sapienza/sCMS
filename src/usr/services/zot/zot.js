@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from "react"
-import {
-  MapLibre,
-  RasterLayerLibre,
-  VectorLayerLibre,
-} from "../../../modules/scms"
 
 import ZoteroRecordsPreview from "./ZoteroRecordsPreview"
 import TagAutocomplete from "./TagAutocomplete"
+import ZotMap from "./ZotMap"
 
 // Helper to strip two outermost divs from a HTML string
 const ONTOLOGIA_URL = "/data/ontologia.geojson"
@@ -14,7 +10,7 @@ const ONTOLOGIA_URL = "/data/ontologia.geojson"
 // Module-level cache
 let zoteroCache = null
 
-const Zot = ({ groupId }) => {
+const Zot = ({ groupId, showMap = true }) => {
   const [data, setData] = useState(null)
   const [error, setError] = useState(null)
   const [mapped, setMapped] = useState(null)
@@ -135,17 +131,56 @@ const Zot = ({ groupId }) => {
     }
   }, [missingTags])
 
+  // Expose a global handler for popup buttons to select a tag
+  useEffect(() => {
+    window.__zotSelectTag = (tag) => {
+      try {
+        if (typeof tag === 'string' && tag.length) {
+          setSearchTerm(tag)
+          setSelectedTag(tag)
+        }
+      } catch (e) {}
+    }
+    return () => {
+      try { delete window.__zotSelectTag } catch (e) {}
+    }
+  }, [])
+
   if (error) return <div>Error: {error}</div>
   if (!data || !mapped) return <div>Loading...</div>
 
   // Features with geometry
   const featuresWithGeometry = mapped ? mapped.filter(f => f.geometry) : []
 
-  // Tags array for autocomplete (unique names from mapped)
+  // Tags array for autocomplete (objects with label and alts derived from altLabel)
   const tags = Array.isArray(mapped)
-    ? Array.from(new Set(
-        mapped.map(f => (f.properties && f.properties.name ? f.properties.name : null)).filter(Boolean)
-      )).sort((a,b)=>a.toLowerCase().localeCompare(b.toLowerCase()))
+    ? (() => {
+        const byLabel = new Map()
+        for (const f of mapped) {
+          const name = f?.properties?.name
+          if (!name || typeof name !== "string") continue
+          const key = name.toLowerCase()
+          let entry = byLabel.get(key)
+          if (!entry) {
+            entry = { label: name, alts: [] }
+            byLabel.set(key, entry)
+          }
+          const altLabel = f?.properties?.altLabel
+          if (typeof altLabel === "string" && altLabel.trim()) {
+            const phrases = altLabel
+              .split(",")
+              .map(s => s.trim())
+              .filter(Boolean)
+            const tokens = phrases
+              .flatMap(x => x.split(/\s+/))
+              .map(s => s.trim())
+              .filter(Boolean)
+            const all = new Set([ ...entry.alts, ...phrases, ...tokens ])
+            entry.alts = Array.from(all)
+          }
+        }
+        return Array.from(byLabel.values()).sort((a,b)=>a.label.toLowerCase().localeCompare(b.label.toLowerCase()))
+      })()
     : []
 
   // GeoJSON for map
@@ -154,58 +189,13 @@ const Zot = ({ groupId }) => {
     features: featuresWithGeometry,
   }
 
-  // Style expression for coloring features
-  const fillColor = [
-    "case",
-    [">", ["get", "zoteroCount"], 0],
-    "#43ff6480", // green if zoteroCount > 0
-    "#ff4b6480", // red otherwise
-  ]
-
+  
   return (
     <div>
-      <h3>Zotero Tags mapped to Ontologia</h3>
-      <div style={{ height: "500px", marginBottom: "1em" }}>
-        <MapLibre center="20.01,39.87,9" height="100%">
-          <RasterLayerLibre
-            name="Esri Imagery/Satellite"
-            url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
-            checked={true}
-          />
-          {/* TODO: VectorLayer should accept GeoJSON! */}
-          <VectorLayerLibre
-            name="Sites"
-            checked={true}
-            source={{
-              geojson: geojson,
-            }}
-            style={{
-              id: "Sites",
-              type: "circle",
-              paint: {
-                // Radius varies by zoteroCount: 4 (none), 8 (low), 16 (mid), 24 (high)
-                "circle-radius": [
-                  "interpolate",
-                  ["linear"],
-                  ["get", "zoteroCount"],
-                  0,
-                  4,
-                  1,
-                  8,
-                  5,
-                  16,
-                  20,
-                  24,
-                ],
-                "circle-color": fillColor,
-                "circle-stroke-width": 1.5,
-                "circle-stroke-color": "#000000",
-              },
-            }}
-            popupTemplate="<h4 onclick=alert('${name}')>${name}</h4><p>${altLabel}</p><p><b>Items:</b> ${zoteroCount}</p>"
-          />
-        </MapLibre>
-      </div>
+      <h3>Zotero (geo)Tags mapped</h3>
+      {showMap && (
+        <ZotMap geojson={geojson} />
+      )}
       {/* Tag Autocomplete for mapped tags */}
       <div style={{ margin: "1em 0" }}>
         <TagAutocomplete

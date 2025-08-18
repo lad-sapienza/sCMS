@@ -54,12 +54,12 @@ export default function ZoteroRecordsPreview({ groupId, tag }) {
   return (
     <div style={{ marginTop: "2em" }}>
       <h4>
-        Records for tag: <span style={{ color: "navy" }}>@{tag}</span>
+        Zotero records for <span style={{ color: "navy" }}>{tag}</span>
       </h4>
       {loading && <div>Loading records...</div>}
       {error && <div style={{ color: "red" }}>Error: {error}</div>}
       {!loading && records && records.length > 0 && (
-        <ul>
+        <ol>
           {records.map(item => {
             const key = item.key || item.data?.key
             const zoteroLink = key
@@ -105,7 +105,7 @@ export default function ZoteroRecordsPreview({ groupId, tag }) {
               </li>
             )
           })}
-        </ul>
+        </ol>
       )}
       {!loading && (!records || records.length === 0) && !error && (
         <div className="text-danger">No records found for this tag.</div>
