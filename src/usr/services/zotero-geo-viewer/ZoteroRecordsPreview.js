@@ -23,28 +23,70 @@ export default function ZoteroRecordsPreview({ groupId, tag }) {
       return
     }
     let cancelled = false
-    async function fetchRecords() {
+
+    async function fetchAllRecords() {
       setLoading(true)
       setError(null)
       setRecords([])
+
       const atTag = `@${tag}`
       const baseUrl = `https://api.zotero.org/groups/${groupId}/items`
-      const apiUrl = `${baseUrl}?sort=date&include=bib&tag=${encodeURIComponent(atTag)}&format=json&limit=100`
+      const limit = 100
+      const buildUrl = (start = 0) =>
+        `${baseUrl}?sort=date&include=bib&tag=${encodeURIComponent(atTag)}&format=json&limit=${limit}&start=${start}`
+
       try {
-        const resp = await fetch(apiUrl, {
-          headers: { Accept: "application/json" },
-        })
-        if (!resp.ok)
-          throw new Error(`Zotero API error: ${resp.status} ${resp.statusText}`)
-        const json = await resp.json()
-        if (!cancelled) setRecords(json)
+        let all = []
+        let start = 0
+        let total = null
+        let hasNext = true
+
+        while (hasNext) {
+          const resp = await fetch(buildUrl(start), {
+            headers: { Accept: "application/json" },
+          })
+          if (!resp.ok)
+            throw new Error(`Zotero API error: ${resp.status} ${resp.statusText}`)
+
+          if (total == null) {
+            const totalHeader = resp.headers.get("Total-Results") || resp.headers.get("total-results")
+            if (totalHeader) {
+              const n = parseInt(totalHeader, 10)
+              if (!Number.isNaN(n)) total = n
+            }
+          }
+
+          const page = await resp.json()
+          if (cancelled) return
+
+          all = all.concat(page)
+
+          if (total != null) {
+            hasNext = all.length < total
+          } else {
+            const link = resp.headers.get("Link") || resp.headers.get("link")
+            if (link && /rel="next"/i.test(link)) {
+              hasNext = true
+            } else {
+              hasNext = page.length === limit
+            }
+          }
+
+          start += page.length
+
+          // Update progressively so the UI shows results while loading
+          setRecords([...all])
+        }
+
+        if (!cancelled) setRecords(all)
       } catch (err) {
         if (!cancelled) setError(err.message || "Error fetching records")
       } finally {
         if (!cancelled) setLoading(false)
       }
     }
-    fetchRecords()
+
+    fetchAllRecords()
     return () => {
       cancelled = true
     }

@@ -23,7 +23,7 @@ const sourcePropTypes = PropTypes.shape({
         }).isRequired,
       })
     ),
-  }).isRequired,
+  }),
   // PropTypes for directus source
   directus: directusSourceProptypes,
 

@@ -5,7 +5,7 @@ import TagAutocomplete from "./TagAutocomplete"
 import ZotMap from "./ZotMap"
 
 // Helper to strip two outermost divs from a HTML string
-const ONTOLOGIA_URL = "/data/ontologia.geojson"
+const TAGCOORDINATES_URL = "/data/zoteroTagCoordinates.geojson"
 
 // Module-level cache
 let zoteroCache = null
@@ -14,7 +14,7 @@ const ZoteroGeoViewer = ({ groupId, showMap = true }) => {
   const [data, setData] = useState(null)
   const [error, setError] = useState(null)
   const [mapped, setMapped] = useState(null)
-  const [ontologia, setOntologia] = useState(null)
+  const [tagCoordinates, setTagCoordinates] = useState(null)
   const [missingTags, setMissingTags] = useState([])
   const [searchTerm, setSearchTerm] = useState("")
   // New state for currently selected tag and Zotero records by tag
@@ -50,11 +50,11 @@ const ZoteroGeoViewer = ({ groupId, showMap = true }) => {
       return result
     }
     async function fetchOntology() {
-      if (ontologia) return ontologia
-      const resp = await fetch(ONTOLOGIA_URL)
-      if (!resp.ok) throw new Error("Failed to load ontologia.geojson")
+      if (tagCoordinates) return tagCoordinates
+      const resp = await fetch(TAGCOORDINATES_URL)
+      if (!resp.ok) throw new Error("Failed to load zoteroTagCoordinates.geojson")
       const json = await resp.json()
-      setOntologia(json)
+      setTagCoordinates(json)
       return json
     }
 
@@ -122,7 +122,7 @@ const ZoteroGeoViewer = ({ groupId, showMap = true }) => {
     return () => {
       cancelled = true
     }
-  }, [groupId, ontologia])
+  }, [groupId, tagCoordinates])
 
   // Log missingTags whenever it changes
   React.useEffect(() => {

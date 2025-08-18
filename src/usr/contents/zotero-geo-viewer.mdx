@@ -15,6 +15,9 @@ import { Documenter } from "../../modules/scms"
 # Connect and geographically browse a Zotero group library
 
 The Zotero geo-viewer allows you to connect to a Zotero group library and visualize the items on a map. It uses the `ZoteroGeoViewer` component, which fetches data from the Zotero API and displays it interactively.
+You can use this component to explore the geographical distribution of items in your Zotero library, making it easier to analyze and visualize your research data.
+
+A geoJSon file is generated from the Zotero group library, which contains the geographical coordinates of the items. It should be saved as `static/data/zoteroTagCoordinates.geojson`. The component then uses this data to render a map with markers for each item. Zotero tags are used to georeference records and filter the items displayed on the map, allowing you to focus on specific subsets of your library.
 
 In this page:
 - [Basic example](#basic-example)
