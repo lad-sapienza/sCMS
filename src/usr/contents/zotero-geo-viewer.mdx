@@ -10,6 +10,27 @@ import {
   ZoteroGeoViewer,
 } from "../services/zotero-geo-viewer/ZoteroGeoViewer.js"
 
+import { Documenter } from "../../modules/scms"
 
-<ZoteroGeoViewer groupId={336647} />
+# Connect and geographically browse a Zotero group library
+
+The Zotero geo-viewer allows you to connect to a Zotero group library and visualize the items on a map. It uses the `ZoteroGeoViewer` component, which fetches data from the Zotero API and displays it interactively.
+
+In this page:
+- [Basic example](#basic-example)
+- [API Documentation](#api-documentation)
+
+---
+
+### Basic example
+<Documenter rawCode={`<ZoteroGeoViewer groupId={336647} />`}>
+  <ZoteroGeoViewer groupId={336647} />
+</Documenter>
+ 
+### API Documentation
+#### groupId
+The ID of the Zotero group library you want to connect to. This is a required prop.
+- Number
+- Required
+- Default: _null_
 

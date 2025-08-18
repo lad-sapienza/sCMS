@@ -1,3 +1,5 @@
+import { ZoteroGeoViewer } from "../usr/services/zotero-geo-viewer/ZoteroGeoViewer.js"
+
 export { SimpleSlider } from "./simpleSlider.js"
 
 export { Search } from "./search/search.js"
