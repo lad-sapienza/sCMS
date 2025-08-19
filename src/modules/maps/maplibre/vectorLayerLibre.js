@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react"
+import React, { useState, useEffect, useCallback, useMemo } from "react"
 import { Source, Layer, useMap } from "@vis.gl/react-maplibre"
 import PropTypes from "prop-types"
 import * as bbox from "geojson-bbox"
@@ -6,6 +6,10 @@ import getDataFromSource from "../../../services/getDataFromSource"
 import sourcePropTypes from "../../../services/sourcePropTypes"
 import fieldsPropTypes from "../../../services/fieldsPropTypes"
 import plain2maplibre from "../../../services/transformers/plain2maplibre"
+
+// Simple in-memory cache and ownership registry shared across component instances
+const __vectorSourceCache = new Map() // key -> {promise, data}
+const __sourceOwners = new Map() // key -> true if a component claimed ownership
 
 /**
  * VectorLayerLibre component renders a vector layer on a map using GeoJSON data.
@@ -36,6 +40,7 @@ const VectorLayerLibre = ({
   const [geojsonData, setGeojson] = useState(null)
   const [error, setError] = useState(null)
   const { current: mapRef } = useMap()
+  const [isSourceOwner, setIsSourceOwner] = useState(false)
 
   // Create a new style object with updated metadata to avoid mutating props
   const styleWithMetadata = {
@@ -47,6 +52,22 @@ const VectorLayerLibre = ({
       popupTemplate,
     },
   }
+
+  // Compute a deterministic source id based on the provided source configuration
+  const sourceId = useMemo(() => {
+    try {
+      const key = source?.path2data?.path || JSON.stringify(source) || "unknown"
+      // Simple djb2 hash to create a compact, deterministic id
+      let h = 5381
+      for (let i = 0; i < key.length; i++) {
+        h = (h << 5) + h + key.charCodeAt(i)
+      }
+      const hash = (h >>> 0).toString(36)
+      return `src-${hash}`
+    } catch (e) {
+      return "src-fallback"
+    }
+  }, [source])
 
   // Side effect: set filter and visibility on map when dependencies change
   useEffect(() => {
@@ -124,21 +145,74 @@ const VectorLayerLibre = ({
     }
   }, [mapRef, updateLayerStyle, fitLayerToBounds])
 
-  // Effect to fetch GeoJSON data when the component mounts
+  // Effect to fetch GeoJSON data using a shared cache to prevent duplicate requests
   useEffect(() => {
+    let cancelled = false
     const fetchGeoData = async () => {
       try {
-        const geoJSON = await getDataFromSource(source)
-        setGeojson(geoJSON) // Imposta i dati geoJSON originali
+        const cacheKey = sourceId
+        const cached = __vectorSourceCache.get(cacheKey)
+        if (cached?.data) {
+          if (!cancelled) setGeojson(cached.data)
+          return
+        }
+        if (cached?.promise) {
+          const data = await cached.promise
+          if (!cancelled) setGeojson(data)
+          return
+        }
+        const promise = getDataFromSource(source)
+          .then(data => {
+            __vectorSourceCache.set(cacheKey, { promise, data })
+            return data
+          })
+          .catch(err => {
+            __vectorSourceCache.delete(cacheKey)
+            throw err
+          })
+        __vectorSourceCache.set(cacheKey, { promise })
+        const data = await promise
+        if (!cancelled) setGeojson(data)
       } catch (err) {
         console.error("Errore nel caricamento dei dati:", err)
-        setError("Errore nel caricamento dei dati")
+        if (!cancelled) setError("Errore nel caricamento dei dati")
       }
     }
     if (source) {
-      fetchGeoData() // Fetch data if source is provided
+      fetchGeoData()
     }
-  }, [source, filter])
+    return () => {
+      cancelled = true
+    }
+  }, [sourceId, source])
+
+  // Keep the shared source data in sync if it already exists on the map
+  useEffect(() => {
+    if (!mapRef || !geojsonData) return
+    const mapInstance = mapRef.getMap()
+    const src = mapInstance.getSource(sourceId)
+    if (src && typeof src.setData === "function") {
+      try {
+        src.setData(geojsonData)
+      } catch (e) {
+        // Ignore transient errors on style reloads
+      }
+    }
+  }, [mapRef, geojsonData, sourceId])
+
+  // Determine a single owner per sourceId to avoid mounting multiple <Source/> components
+  useEffect(() => {
+    if (!sourceId) return
+    if (!__sourceOwners.has(sourceId)) {
+      __sourceOwners.set(sourceId, true)
+      setIsSourceOwner(true)
+    }
+    return () => {
+      if (isSourceOwner) {
+        __sourceOwners.delete(sourceId)
+      }
+    }
+  }, [sourceId, isSourceOwner])
 
   // Render error message if there's an error
   if (error) {
@@ -153,10 +227,11 @@ const VectorLayerLibre = ({
   // Render the Source and Layer components with the GeoJSON data
   return (
     <div>
-      {/* Mostra il Source solo se ci sono dati GeoJSON */}
-      <Source type="geojson" data={geojsonData}>
-        <Layer {...styleWithMetadata} />
-      </Source>
+      {/* Render a shared Source only by the owning component to avoid race conditions */}
+      {isSourceOwner && geojsonData && (
+        <Source id={sourceId} type="geojson" data={geojsonData} />
+      )}
+      <Layer {...styleWithMetadata} source={sourceId} />
     </div>
   )
 }
