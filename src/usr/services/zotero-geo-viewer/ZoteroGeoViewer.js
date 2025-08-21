@@ -126,7 +126,7 @@ const ZoteroGeoViewer = ({ groupId, showMap = true }) => {
 
   // Log missingTags whenever it changes
   React.useEffect(() => {
-    if (missingTags) {
+    if (missingTags && missingTags.length > 0) {
       console.log("missingTags:", missingTags)
     }
   }, [missingTags])
