@@ -24,14 +24,6 @@ Think of s:CMS as the *public, fully-customiseable front-end of your research da
 1. [Adding content](#adding-content)
 1. [Deploy your site for free on Github Pages](#deploy-your-site-for-free-on-github-pages)
 1. [Update the site to the latest version](#update-the-site-to-the-latest-version)
-1. [API](#api)
-   1. [Access data from components](#access-data-from-components)
-   1. [MapLeaflet](https://scms.lad-sapienza.it/maps-leaflet/)
-   1. [MapLibre](https://scms.lad-sapienza.it/maps-maplibre/)
-   1. [DataTb](https://scms.lad-sapienza.it/datatable/)
-   1. [Search](https://scms.lad-sapienza.it/search/)
-   1. [Harris Matrix](https://scms.lad-sapienza.it/harris-matrix/)
-   1. [View Record](#view-record)
 1. [Built with s:CMS](#build-with-sCMS)
 
 
@@ -208,94 +200,6 @@ will use the [`dev` branch](https://github.com/lad-sapienza/sCMS/tree/dev).
 
 > Please note that the upgrade command requires `rsync` to run. [rsync](https://en.wikipedia.org/wiki/Rsync) is a utility for transferring and synchronizing files between a computer and a storage drive and across networked computers by comparing the modification times and sizes of files. It is commonly found on Unix-like operating systems and is under the GPL-3.0-or-later license.  
 > Run `which rsync` in your terminal to check if `rsync` is available.
-
----
-
-## API
-
-### Access data from components
-
-Most of the S:CMS componens have a unified interface to access data stored in local/remote files or on a Directus instance. Thi interface also implements some default basic data transformation services. These parameters are collected in a literal object names `source` that can be provided to the single components.
-
-The `source` object must follow the following shape:
-
-| Prop Name | Type | Required | Default value | Description |
-|----------|------|-------------------|---------------|-------------|
-| `path2data` | string | no (required if `dEndPoint` or `dTable` are not set) | _null_ | Path to static file of structured data (JSON, GeoJSON, CSV, etc.): might be a local, relative path or an URL. |
-| `dEndPoint` | string | no (required if either `path2data` nor environmental variable `GATSBY_DIRECTUS_ENDPOINT` or are not set) | _null_ | Full URL of the API endpoint of a Directus running instance. |
-| `dTable` | string | no (required if `dEndPoit` or `GATSBY_DIRECTUS_ENDPOINT` are set). | _null_ | The table name of a running Directus instance. |
-| `dToken` | string | no (required if environmentantal variable `GATSBY_DIRECTUS_TOKEN` is not set and the Directus API requires authentication) | _null_ | Access token to accedd the Directus API, if needed. |
-| `dQueryString` | string | no | _null_ | A query-string formatted filter that will be appended to the endpoint to form an API filter for the data. |
-| `id` | integer | no (required if retrieving a record) | _null_ | Id of a specific record to retrieve. |
-| `transType` | string | no | "geojson" | Tranformation to apply to data retrieved from the api of from the file system. One of the following values can be used: "text", "csv2json", "json", "geojson". |
-
-s:CMS provides a way to define a default Directus API data source as [environment variables](https://www.gatsbyjs.com/docs/how-to/local-development/environment-variables/). In development, Gatsby will load environment variables from a file named `.env.development`. For builds, it will load from `.env.production`. If you are using GitHub Pages as a deployment platform, you can use [secrets](https://docs.github.com/en/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions). s:CMS handles automatically the following environmental variables:
-
-- `GATSBY_DIRECTUS_ENDPOINT`: a replacement of the parameter `source.dEndPoint`
-- `GATSBY_DIRECTUS_TOKEN`: a replacements of the paramater `source.dToken`
-
-
-
-### Record
-
-The `Record` component is a React component that fetches and provides record data based on specified search parameters. It handles loading and error states and renders its children once the data is available. The component utilizes the React Context API to provide the fetched record data to its descendants.
-
-**Props**
-| Prop Name | Type | Required | Default value | Description |
-|---|---|----|---|---|
-| `search` | Object | Yes | _null_ | An object containing the search parameters. |
-| `search.tb` | String | YES | _null_ | The name of the Directus table to fetch data from. |
-| `search.endPoint` | String | No if env variable `dEndPoint` is set | _null_ | The Directus endpoint to fetch data from. |
-| `search.token` | String | No if env variable `dToken` is set | The Directus token for authentication (optional). |
-| `search.id` | String | Yes | _null_ | The ID of the record to fetch. |
-| `search.fields` | String | Yes | _null_ | Record fields to fetch, following: [https://docs.directus.io/reference/query.html#fields](https://docs.directus.io/reference/query.html#fields). |
-| `children`| ReactNode | Yes | _null_ | Child components to render once the data is fetched. `Field` component can be used to show data for specific field. |
-
-
-### Field
-
-The `Field` component is a React component that retrieves and displays data from the `Record`. It allows for optional transformation of the data before rendering.
-
-
-**Props**
-| Prop Name | Type | Required | Default value | Description |
-|---|---|----|---|---|
-| `name` | Array<string> | Yes | _null_ | An array of strings representing the keys or indices of the data to retrieve. <br> Example: <br> If the data is {"one": "One Value", "two": ["Two value #1", "Two value 2"]}, then name: ["one"] will return "One Value" and name: ["two", "1"] will return "Two value 2". |
-| `transformer` | Function (optional) | No | `JSON.stringify`, if data is not a string | A function that receives the retrieved data as input and performs transformation or any other type of logic. <br> Example: You can use this to loop through an array of child data. <br> If not provided, the component will use JSON.stringify on non-string data. |
-
-
-### Image
-
-The `Image` component is a React component that displays images based on a specified field name and index. It retrieves image data from the `RecordContext` and constructs the image URL dynamically. This component is useful for rendering images from a data source, such as a CMS.
-
-
-**Props**
-| Prop Name | Type | Required | Default value | Description |
-|---|---|----|---|---|
-| `fieldName` | String | Yes  | _null_ | The name of the field to retrieve image data from. |
-| `index`     | oneOf(['all', number]) | No       | `0`           | The index of the image to display; can be `"all"` to show all images. |
-| `dEndPoint` | string | No | `process.env.GATSBY_DIRECTUS_ENDPOINT` | Optional custom endpoint for fetching images. |
-| `preset`    | String | No | _null_ | Optional preset key for image transformation. as defined in [https://docs.directus.io/reference/files.html#preset-transformations](https://docs.directus.io/reference/files.html#preset-transformations)|
-| `custom`    | String | No | _null_ | Optional custom query parameters for the image URL, as defined in [https://docs.directus.io/reference/files.html#custom-transformations](https://docs.directus.io/reference/files.html#custom-transformations) |
-| `className` | String | No | _null_ | Optional CSS class for styling the image. |
-
-
-### SimpleSlider Component
-
-The `SimpleSlider` component is a React component that renders a carousel slider using the `react-bootstrap` Carousel component. It is designed to display a series of images with optional captions and custom interval times for each slide.
-
-**Props**
-| Prop Name | Type | Required | Default value | Description |
-|----------|------|-------------------|---------------|-------------|
-| `data` | array | Yes | null | An array of objects containing image URLs, optional captions, and optional intervals. |
-
-For each element of `data`, the following `props` are available:
-| Prop Name | Type | Required | Default value | Description |
-|----------|------|-------------------|---------------|-------------|
-|`img` | string | Yes | null | URL of the image to display. |
-| `caption` | string | No | null | Optional caption for the image.|
-|`interval` | number | No | 5000 | Optional interval time for the slide in milliseconds.
-
 
 ---
 
