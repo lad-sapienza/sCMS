@@ -4,11 +4,11 @@ import { Form, InputGroup, ListGroup, Button } from "react-bootstrap";
 /**
  * TagAutocomplete component
  * Props:
- * - tags: string[] — list of all tag names
+ * - tags: Array<{label: string, alts: string[]}> — list of all tags with their alternatives
  * - value: string — current input value
  * - onChange: (val: string) => void — called when input changes
- * - onSelect: (tag: string) => void — called when a tag is selected
- * - selectedTag?: string — currently selected tag (for highlighting)
+ * - onSelect: (tag: {main: string, alternatives: string[]} | null) => void — called when a tag is selected
+ * - selectedTag?: {main: string, alternatives: string[]} | string — currently selected tag (for highlighting)
  */
 export default function TagAutocomplete({ tags, value, onChange, onSelect, selectedTag }) {
   const [open, setOpen] = useState(false);
@@ -27,7 +27,7 @@ export default function TagAutocomplete({ tags, value, onChange, onSelect, selec
   }, [tags]);
 
   const suggestions = useMemo(() => {
-    const v = (value || "").trim().toLowerCase();
+    const v = (typeof value === 'string' ? value : (value?.main || "")).trim().toLowerCase();
     const filtered = normalizedTags
       .filter(t => {
         if (!v) return true;
@@ -44,7 +44,7 @@ export default function TagAutocomplete({ tags, value, onChange, onSelect, selec
       <InputGroup>
         <Form.Control
           type="text"
-          value={value}
+          value={typeof value === 'string' ? value : (value?.main || '')}
           onChange={e => {
             onChange(e.target.value);
             setOpen(true);
@@ -64,7 +64,10 @@ export default function TagAutocomplete({ tags, value, onChange, onSelect, selec
             } else if (e.key === 'Enter') {
               if (focusedIdx >= 0 && focusedIdx < suggestions.length) {
                 const t = suggestions[focusedIdx];
-                onSelect(t.label);
+                onSelect({
+                  main: t.label,
+                  alternatives: t.alts
+                });
                 setOpen(false);
                 setFocusedIdx(-1);
                 e.preventDefault();
@@ -79,7 +82,7 @@ export default function TagAutocomplete({ tags, value, onChange, onSelect, selec
       {Boolean(value) && (
           <Button
             variant="outline-secondary"
-            onMouseDown={(e) => { e.preventDefault(); onChange(''); setOpen(false); setFocusedIdx(-1); if (onSelect) onSelect(''); }}
+            onMouseDown={(e) => { e.preventDefault(); onChange(''); setOpen(false); setFocusedIdx(-1); if (onSelect) onSelect(null); }}
             aria-label="Clear"
             title="Clear"
           >
@@ -102,12 +105,15 @@ export default function TagAutocomplete({ tags, value, onChange, onSelect, selec
                   id={`ac-tag-${i}`}
                   active={selected}
                   onMouseDown={() => {
-                    onSelect(t.label);
+                    onSelect({
+                      main: t.label,
+                      alternatives: t.alts
+                    });
                     setOpen(false);
                     setFocusedIdx(-1);
                   }}
                   style={{
-                    fontWeight: t.label === selectedTag ? 'bold' : 'normal',
+                    fontWeight: t.label === (selectedTag?.main || selectedTag) ? 'bold' : 'normal',
                     cursor: 'pointer'
                   }}
                 >

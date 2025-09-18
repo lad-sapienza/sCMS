@@ -133,11 +133,15 @@ const ZoteroGeoViewer = ({ groupId, showMap = true }) => {
 
   // Expose a global handler for popup buttons to select a tag
   useEffect(() => {
-    window.__zotSelectTag = (tag) => {
+    window.__zotSelectTag = (tag, altLabels) => {
       try {
         if (typeof tag === 'string' && tag.length) {
           setSearchTerm(tag)
-          setSelectedTag(tag)
+          // Include both the main tag and alt labels in the selected tag data
+          setSelectedTag({
+            main: tag,
+            alternatives: altLabels ? altLabels.split(',').map(s => s.trim()).filter(Boolean) : []
+          })
         }
       } catch (e) {}
     }

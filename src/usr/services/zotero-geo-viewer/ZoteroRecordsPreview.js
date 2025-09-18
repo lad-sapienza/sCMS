@@ -29,11 +29,16 @@ export default function ZoteroRecordsPreview({ groupId, tag }) {
       setError(null)
       setRecords([])
 
-      const atTag = `@${tag}`
+      const allTags = [
+        tag.main,
+        ...(tag.alternatives || [])
+      ].filter(Boolean)
+      const tagsQuery = allTags.map(t => `@${t}`).join(' || ')
+      
       const baseUrl = `https://api.zotero.org/groups/${groupId}/items`
       const limit = 100
       const buildUrl = (start = 0) =>
-        `${baseUrl}?sort=date&include=bib&tag=${encodeURIComponent(atTag)}&format=json&limit=${limit}&start=${start}`
+        `${baseUrl}?sort=date&include=bib&tag=${encodeURIComponent(tagsQuery)}&format=json&limit=${limit}&start=${start}`
 
       try {
         let all = []
@@ -92,11 +97,16 @@ export default function ZoteroRecordsPreview({ groupId, tag }) {
     }
   }, [groupId, tag])
 
-  if (!tag) return null
+  if (!tag || !tag.main) return null
   return (
     <div style={{ marginTop: "2em" }}>
       <h4>
-        Zotero records for <span style={{ color: "navy" }}>{tag}</span>
+        Zotero records for <span style={{ color: "navy" }}>{tag.main}</span>
+        {tag.alternatives && tag.alternatives.length > 0 && (
+          <small style={{ color: "gray", marginLeft: "0.5em" }}>
+            (including: {tag.alternatives.join(", ")})
+          </small>
+        )}
       </h4>
       {loading && <div>Loading records...</div>}
       {error && <div style={{ color: "red" }}>Error: {error}</div>}
