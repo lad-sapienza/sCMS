@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import { Container, Row, Col } from "react-bootstrap"
 
 import ZoteroRecordsPreview from "./ZoteroRecordsPreview"
 import TagAutocomplete from "./TagAutocomplete"
@@ -10,7 +11,11 @@ const TAGCOORDINATES_URL = "/data/zoteroTagCoordinates.geojson"
 // Module-level cache
 let zoteroCache = null
 
-const ZoteroGeoViewer = ({ groupId, showMap = true }) => {
+const ZoteroGeoViewer = ({ 
+  groupId, 
+  showMap = true, 
+  layout = 'vertical' // Can be 'vertical' or grid dimensions like '6x6', '8x4'
+}) => {
   const [data, setData] = useState(null)
   const [error, setError] = useState(null)
   const [mapped, setMapped] = useState(null)
@@ -76,10 +81,9 @@ const ZoteroGeoViewer = ({ groupId, showMap = true }) => {
           let candidates = [name]
           const altLabel = f.properties.altLabel
           if (altLabel) {
-            // explode by commas, then by spaces, flatten, and filter empty
+            // Split only by commas and trim each entry
             const splitCandidates = altLabel
               .split(",")
-              .flatMap(x => x.split(/\s+/))
               .map(t => t.trim())
               .filter(Boolean)
             candidates = candidates.concat(splitCandidates)
@@ -175,11 +179,7 @@ const ZoteroGeoViewer = ({ groupId, showMap = true }) => {
               .split(",")
               .map(s => s.trim())
               .filter(Boolean)
-            const tokens = phrases
-              .flatMap(x => x.split(/\s+/))
-              .map(s => s.trim())
-              .filter(Boolean)
-            const all = new Set([ ...entry.alts, ...phrases, ...tokens ])
+            const all = new Set([ ...entry.alts, ...phrases ])
             entry.alts = Array.from(all)
           }
         }
@@ -194,27 +194,54 @@ const ZoteroGeoViewer = ({ groupId, showMap = true }) => {
   }
 
   
-  return (
-    <div>
-      <h3>Zotero (geo)Tags mapped</h3>
-      {showMap && (
-        <ZotMap geojson={geojson} />
-      )}
-      {/* Tag Autocomplete for mapped tags */}
-      <div style={{ margin: "1em 0" }}>
-        <TagAutocomplete
-          tags={tags}
-          value={searchTerm}
-          onChange={setSearchTerm}
-          onSelect={(tag) => { setSelectedTag(tag); setSearchTerm(tag); }}
-          selectedTag={selectedTag}
-        />
-      </div>
+  // Parse layout configuration
+  const isHorizontal = layout !== 'vertical';
+  let leftCol = 6;
+  let rightCol = 6;
+  
+  if (isHorizontal && layout.includes('x')) {
+    const [left, right] = layout.split('x').map(Number);
+    if (left && right && left + right === 12) {
+      leftCol = left;
+      rightCol = right;
+    }
+  }
 
+  const searchAndResults = (
+    <div className={isHorizontal ? '' : 'mt-3'}>
+      <TagAutocomplete
+        tags={tags}
+        value={searchTerm}
+        onChange={setSearchTerm}
+        onSelect={(tag) => { setSelectedTag(tag); setSearchTerm(tag); }}
+        selectedTag={selectedTag}
+      />
       {selectedTag && (
         <ZoteroRecordsPreview groupId={groupId} tag={selectedTag} />
       )}
     </div>
+  );
+
+  if (!isHorizontal) {
+    return (
+      <Container fluid>
+        {showMap && <ZotMap geojson={geojson} />}
+        {searchAndResults}
+      </Container>
+    );
+  }
+
+  return (
+    <Container fluid>
+      <Row>
+        <Col md={leftCol}>
+          {showMap && <ZotMap geojson={geojson} />}
+        </Col>
+        <Col md={rightCol}>
+          {searchAndResults}
+        </Col>
+      </Row>
+    </Container>
   )
 }
 export { ZoteroGeoViewer }

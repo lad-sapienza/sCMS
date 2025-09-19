@@ -157,7 +157,7 @@
 { "type": "Feature", "properties": { "name": "Terihat", "altLabel": null, "id": 167, "source": "BB" }, "geometry": { "type": "Point", "coordinates": [ 20.219069, 39.982912 ] } },
 { "type": "Feature", "properties": { "name": "Pistiana", "altLabel": null, "id": 168, "source": "BB" }, "geometry": { "type": "Point", "coordinates": [ 20.992943, 39.305736 ] } },
 { "type": "Feature", "properties": { "name": "Gefyrakia PS35", "altLabel": null, "id": 169, "source": "BB" }, "geometry": { "type": "Point", "coordinates": [ 20.518744, 39.402328 ] } },
-{ "type": "Feature", "properties": { "name": "Ammotopos", "altLabel": "Orraon, Αμμότοπος, Óρραoν, Ammótopos", "id": 171, "source": "BB" }, "geometry": { "type": "Point", "coordinates": [ 20.925409, 39.271166 ] } },
+{ "type": "Feature", "properties": { "name": "Ammotopos", "altLabel": "Orraon, Αμμότοπος, Óρραoν, Ammótopos, Horreum", "id": 171, "source": "BB" }, "geometry": { "type": "Point", "coordinates": [ 20.925409, 39.271166 ] } },
 { "type": "Feature", "properties": { "name": "Palaiokastro", "altLabel": null, "id": 173, "source": "BB" }, "geometry": { "type": "Point", "coordinates": [ 20.423398, 39.382253 ] } },
 { "type": "Feature", "properties": { "name": "Liatovouni", "altLabel": null, "id": 175, "source": "BB" }, "geometry": { "type": "Point", "coordinates": [ 20.670967, 40.023449 ] } },
 { "type": "Feature", "properties": { "name": "Khoika", "altLabel": null, "id": 176, "source": "BB" }, "geometry": { "type": "Point", "coordinates": [ 20.592034, 39.344989 ] } },

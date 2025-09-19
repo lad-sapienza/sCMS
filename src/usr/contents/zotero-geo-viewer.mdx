@@ -29,6 +29,11 @@ In this page:
 <Documenter rawCode={`<ZoteroGeoViewer groupId={336647} />`}>
   <ZoteroGeoViewer groupId={336647} />
 </Documenter>
+
+### Side-by-side layout example
+<Documenter rawCode={`<ZoteroGeoViewer groupId={336647} layout="8x4" />`}>
+  <ZoteroGeoViewer groupId={336647} layout="8x4" />
+</Documenter>
  
 ### API Documentation
 #### groupId
@@ -36,4 +41,16 @@ The ID of the Zotero group library you want to connect to. This is a required pr
 - Number
 - Required
 - Default: _null_
+
+#### layout
+Controls how the map and search/results sections are arranged on the page.
+- String
+- Optional
+- Default: `'vertical'`
+- Possible values:
+  - `'vertical'`: Map on top, search and results below (default)
+  - `'6x6'`: Two equal columns, map on left, search/results on right
+  - `'8x4'`: Wide map column (8/12) and narrow search/results column (4/12)
+  - `'4x8'`: Narrow map column (4/12) and wide search/results column (8/12)
+  - Any valid combination of numbers that add up to 12 (Bootstrap grid system)
 
