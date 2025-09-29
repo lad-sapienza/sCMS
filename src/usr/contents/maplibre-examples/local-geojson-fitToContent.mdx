@@ -5,89 +5,47 @@ slug: "maplibre-examples/local-geojson-fitToContent"
 description: "MapLibre: Fitting map to the contents of a vector layer (local GeoJSON)"
 ---
 
-import { MapLibre, VectorLayerLibre } from "../../../modules/scms.js"
+import {
+   MapLibre, 
+   VectorLayerLibre,
+   Documenter } from "../../../modules/scms.js"
 
 ### Fitting map to the contents of a vector layer (local GeoJSON)
 
-<div className="row mt-3 mb-5 border-top border-bottom py-3">
-  <div className="col-6">
-    <MapLibre baseLayers={["EsriSatellite"]}>
-      <VectorLayerLibre
-        name="Sites"
-        source={{
-          path2data: {
-            path: "/data/ksa.geojson"
-          }
-        }}
-        fitToContent={true}
-        checked={true}
-        searchInFields={{
-          "Item_Label": "Label",
-          "Site_Name": "Site name",
-          "Site_Description": "Site description"
-        }}
-        style={{
-          id: "ksaSites",
-          type: "circle",
-          paint: {
-            "circle-radius": 4,
-            "circle-color": "#007cbf",
-            "circle-stroke-width": 1.5,
-            "circle-stroke-color": "#000000"
-          },
-        }}
-        popupTemplate="<div>
-          <h4>${Site_Name}</h4>
-          <p>${Site_Description}</p>
-          <small>${Item_Label}</small>
-        </div>"
-      />
-    </MapLibre>
-    <div className="text-muted small mt-3">
-      Data from [Kahramanmaraş Survey](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) created by [Elizabeth Carter](http://opencontext.org/persons/3208923d-69d0-70e9-9cc1-23ad97770aec) and published on [OpenContext](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) add distributed with [CC BY 4.0 International](https://creativecommons.org/licenses/by/4.0) license.
-    </div>
-
-  </div>
-  <div className="col-6">
-    ```jsx
-    import {
-      MapLibre,
-      VectorLayerLibre
-    } from "../../../modules/scms.js"
-
-    <MapLibre baseLayers={["EsriSatellite"]}>
-      <VectorLayerLibre
-        name="Sites"
-        source={{
-          path2data: {
-            path: "/data/ksa.geojson"
-          }
-        }}
-        fitToContent={true}
-        checked={true}
-        searchInFields={{
-          "Item_Label": "Label",
-          "Site_Name": "Site name",
-          "Site_Description": "Site description"
-        }}
-        style={{
-          id: "ksaSites",
-          type: "circle",
-          paint: {
-            "circle-radius": 4,
-            "circle-color": "#007cbf",
-            "circle-stroke-width": 1.5,
-            "circle-stroke-color": "#000000"
-          },
-        }}
-        popupTemplate="<div>
-          <h4>${Site_Name}</h4>
-          <p>${Site_Description}</p>
-          <small>${Item_Label}</small>
-        </div>"
-      />
-    </MapLibre>
-    ```
-
-  </div>
+<Documenter>
+  <MapLibre baseLayers={["EsriSatellite"]}>
+    <VectorLayerLibre
+      name="Sites"
+      source={{
+        path2data: {
+          path: "/data/ksa.geojson"
+        }
+      }}
+      fitToContent={true}
+      checked={true}
+      searchInFields={{
+        "Item_Label": "Label",
+        "Site_Name": "Site name",
+        "Site_Description": "Site description"
+      }}
+      style={{
+        id: "ksaSites",
+        type: "circle",
+        paint: {
+          "circle-radius": 4,
+          "circle-color": "#007cbf",
+          "circle-stroke-width": 1.5,
+          "circle-stroke-color": "#000000"
+        },
+      }}
+      popupTemplate="<div>
+        <h4>${Site_Name}</h4>
+        <p>${Site_Description}</p>
+        <small>${Item_Label}</small>
+      </div>"
+    />
+  </MapLibre>
+</Documenter>
+<div className="text-muted small mt-3">
+  Data from [Kahramanmaraş Survey](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) created by [Elizabeth Carter](http://opencontext.org/persons/3208923d-69d0-70e9-9cc1-23ad97770aec) and published on [OpenContext](https://opencontext.org/projects/ca4f4719-f2a5-4119-99fa-b04573c8929a) add distributed with [CC BY 4.0 International](https://creativecommons.org/licenses/by/4.0) license.
 </div>

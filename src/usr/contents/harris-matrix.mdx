@@ -25,17 +25,7 @@ In this page:
 
 ### Basic example with DOT notation data
 
-<Documenter rawCode={`<HarrisMatrix 
-      containerClassNames="border"
-      dot='digraph G {
-        "1126" -> "833"; 
-        "1018" -> "1102"; 
-        "1018" -> "1085"; 
-        "1171" -> "1160"; 
-        "1171" -> "1159";
-        }
-      '
-  />`}>
+<Documenter>
   <HarrisMatrix 
       containerClassNames="border"
       dot='digraph G {
@@ -53,13 +43,7 @@ In this page:
 
 ### Basic example with data array
 
-<Documenter rawCode={`<HarrisMatrix 
-    containerClassNames="border"
-    data={[
-      ["uno", "due"],
-      ["due", "tre"]
-    ]}
-  />`}>
+<Documenter>
   <HarrisMatrix 
     containerClassNames="border"
     data={[
@@ -73,14 +57,7 @@ In this page:
 
 ### Example with onClickNode event
 
-<Documenter rawCode={`<HarrisMatrix 
-    containerClassNames="border"
-    data={[
-      ["uno", "due"],
-      ["due", "tre"]
-    ]}
-    onClickNode={ text => alert(\`Hai cliccato il nodo con testo: \${text}\`) }
-  />`}>
+<Documenter>
   <HarrisMatrix 
     containerClassNames="border"
     data={[

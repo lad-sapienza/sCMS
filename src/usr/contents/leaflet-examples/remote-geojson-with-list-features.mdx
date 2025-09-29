@@ -8,61 +8,36 @@ description: "Leaflet: Adding a vector layer from a remote GeoJSON file"
 import {
   MapLeaflet,
   VectorLayer,
-  ListVisibleFeatures
+  ListVisibleFeatures,
+  Documenter
 } from "../../../modules/scms.js"
 
 
 ### Adding a vector layer from a remote GeoJSON file with experimental `ListVisibleFeatures`
 
 
-<div className="row mt-3 mb-5 border-top border-bottom py-3">
-  <div className="col-6">
-    <MapLeaflet
-      height="400px"
-      baseLayers={["OSM", "EsriSatellite"]}
-      fitToContent={true} >
+<Documenter>
+  <MapLeaflet
+    height="400px"
+    baseLayers={["OSM", "EsriSatellite"]}
+    fitToContent={true} >
+    
+    <ListVisibleFeatures elTemplate={ el => <li className="ms-3">{el.properties.name}</li> }/>
+
+    <VectorLayer
+      name="Iron Age Sites"
+      fitToContent={true}
+      checked={true}
+      source={{
+        path2data: {
+          path: "https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_110m_populated_places_simple.geojson"
+        }
+      }}
       
-      <ListVisibleFeatures elTemplate={ el => <li className="ms-3">{el.properties.name}</li> }/>
-
-      <VectorLayer
-        name="Iron Age Sites"
-        fitToContent={true}
-        checked={true}
-        source={{
-          path2data: {
-            path: "https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_110m_populated_places_simple.geojson"
-          }
-        }}
-        
-        popupTemplate="<p><strong>${name}</strong>"
-      />
-    </MapLeaflet>
-
-  </div>
-  <div className="col-6">
-    ```jsx
-    import {
-      MapLeaflet,
-      VectorLayer
-    } from "../../../modules/scms.js"
-
-    <MapLeaflet
-      height="400px"
-      baseLayers={["OSM", "EsriSatellite"]}
-      fitToContent={true} >
-      
-      <VectorLayer
-        name="Iron Age Sites"
-        fitToContent={true}
-        checked={true}
-        source={{
-          path2data: {
-            path: "https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_110m_populated_places_simple.geojson"
-          }
-        }}
-        popupTemplate="<p><strong>${name}</strong>"
-      />
-    </MapLeaflet>
-    ```
-  </div>
+      popupTemplate="<p><strong>${name}</strong>"
+    />
+  </MapLeaflet>
+</Documenter>
+<div className="text-muted small mt-3">
+  Data from [Natural Earth](https://www.naturalearthdata.com/downloads/110m-cultural-vectors/110m-populated-places/) public domain.
 </div>

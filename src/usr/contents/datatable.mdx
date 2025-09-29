@@ -23,48 +23,7 @@ In this page:
 ---
 
 ## Example of a Directus instance as data source
-<Documenter rawCode={`<DataTb
-    source={{
-      directus: {
-        table: "scms_ksa",
-        queryString: "limit=-1&offset=0",
-      }
-    }}
-    striped={true}
-    columns={[
-      {
-        name: "Label",
-        sortable: true,
-        cell: item => (
-              <a href={\`../record/?tb=scms_ksa&id=\${item.id}\`}>
-                {item["Item_Label"]} 
-              </a>
-            ),
-      },
-      {
-        name: "Site name",
-        selector: row => row["Site_Name"],
-        sortable: true,
-      },
-      {
-        name: "Thumbnail",
-        cell: item => (
-              <img src={item["Thumbnail"]} />
-            ),
-        sortable: true,
-      },
-      {
-        name: "Date",
-        selector: row => \`\${row["Early"]} — \${row["Late"]}\`,
-        sortable: true,
-      },
-      {
-        name: "Collection summary",
-        selector: row => row["Collection_Summary"],
-        sortable: true,
-      },
-    ]}
-  />`}>
+<Documenter>
   <DataTb
     source={{
       directus: {
@@ -118,40 +77,7 @@ In this page:
 
 ### Example with a CSV file as data source
 
-<Documenter rawCode={`<DataTb
-    source={{
-    path2data: {
-      path: "/data/ksa.csv"
-    }
-  }}
-  columns={[
-    {
-      name: "Item_Label",
-      sortable: true,
-      selector: row => row["Item_Label"],
-    },
-    {
-      name: "Site_Name",
-      selector: row => row["Site_Name"],
-      sortable: true,
-    },
-    {
-      name: "Thumbnail",
-      cell: item => <img src={item["Thumbnail"]} />,
-      sortable: true,
-    },
-    {
-      name: "Date",
-      selector: row => \`\${row["Early"]} — \${row["Late"]}\`,
-      sortable: true,
-    },
-    {
-      name: "Collection_Summary",
-      selector: row => row["Collection_Summary"],
-      sortable: true,
-    },
-  ]}
-/>`}>
+<Documenter>
   <DataTb
     source={{
     path2data: {

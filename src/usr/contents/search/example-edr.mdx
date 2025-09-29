@@ -1,7 +1,7 @@
 ---
 title: "Search EDR API"
 date: "2025-01-26"
-slug: "search/edr"
+slug: "search/example-edr"
 description: ""
 ---
 
@@ -14,35 +14,7 @@ import EdrService from "../../services/edr/edr.js"
 This example uses a custom search service, created in the `/usr/services/edr` directory and implementing the search service interface
 
 
-<Documenter rawCode={`<Search
-  limitTo="advanced"
-  source={{ customApi: EdrService}}
-  operators={{"_contains": "Contains", "_gte": "Greater or Equal", "_lte": "Less or Equal"}}
-  fieldList={{
-    "text": "Text",
-    "record_number": "Record number",
-    "discovery_location": "Discovery location",
-    "inscription_type": { label: "Inscription type", values: ["sacer", "cetera", "fasti, leges, acta", "honorarius", "ignoratur", "inscr. parietariae", "oper. publ. priv.que","sepulcralis","term. non sep.", "tit. in artis operib. inscr."] },
-    "material": { label: "Material (Rei materia)", values: ["aes", "arenatum", "argentum", "aurum","cera","ceterum","creta","eburneus","ferrum","ignoratur","lapis","lignum","marmor","musivum","plumbum","tectorium","vitrum"] },
-    "language": { label: "Language (Lingua)", values: ["latina", "graeca", "latina-graeca", "incerta","ignoratur","alia"] },
-    "religion": { label: "Religion (Religione)", values: ["Christiana", "Hebraica", "Pagana", "Incerta"] },
-    "type_of_persons_mentionated": { label: "Type of persons mentionated (Virorum distributio)", values: ["imp.", "reges, viri notab. exter. gent.", "ord. sen.", "ord. eq.","ord. mun.","mil.","eccl.","offic. magg., Augg., mun.","offic. pag., vic., colleg.","offic. priv.","cet.","ignoratur","imp.?", "reges, viri notab. exter. gent.?", "ord. sen.?", "ord. eq.?","ord. mun.?","mil.?","eccl.?","offic. magg., Augg., mun.?","offic. pag., vic., colleg.?","offic. priv.?","cet.?" ] },
-    "year_from": { label: "Year from", operator: "_gte" },
-    "year_to": { label: "Year to", operator: "_lte" }
-  }}
-  resultItemTemplate = { item =>  
-    <div className="card my-3" key={item.identification.record_number}>
-      <div className="card-body">
-        <h5 className="card-title">
-          {item.identification.record_number} — {item.localization.discovery_location}
-        </h5>
-        <a href={item.identification.url} target="_blank">{item.identification.url}</a>
-        <pre className="mt-2 ps-5">{item.text.text.replace(/\<br\>/gi, "\\n")}</pre>
-      </div>
-    </div>
-  }
-/>`}>
-
+<Documenter>
   <Search
     limitTo="advanced"
     source={{ customApi: EdrService}}
@@ -70,5 +42,5 @@ This example uses a custom search service, created in the `/usr/services/edr` di
         </div>
       </div>
     }
-/>
+  />
 </Documenter>

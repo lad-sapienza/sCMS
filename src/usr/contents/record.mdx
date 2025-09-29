@@ -7,17 +7,7 @@ description: ""
 
 import { Record, Field, Documenter } from "../../modules/scms.js"
 
-<Documenter rawCode={`<Record>
-    - **Label**: <Field name={["Item_Label"]} />
-    - **URI**: <Field name={["URI"]} />
-    - **Project**: <Field name={["Project"]} />
-    - **Project_URI**: <Field name={["Project_URI"]} />
-    - **Project_URI**: <Field name={["Project_URI"]} />
-    - Coordinates:
-      - **Lng**: <Field name={["geometry", "coordinates", "0"]} />
-      - **Lat**: <Field name={["geometry", "coordinates", "1"]} />
-    - **Geometry type** (using a transformer function): <Field name={["geometry"]} transformer={ d => d.type }/>
-  </Record>`}>
+<Documenter>
   <Record>
     - **Label**: <Field name={["Item_Label"]} />
     - **URI**: <Field name={["URI"]} />
