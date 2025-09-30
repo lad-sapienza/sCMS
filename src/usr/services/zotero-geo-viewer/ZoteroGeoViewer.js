@@ -156,7 +156,7 @@ const ZoteroGeoViewer = ({
     return () => {
       try { delete window[name] } catch (e) {}
     }
-  }, [])
+  }, [handlerName])
 
   if (error) return <div>Error: {error}</div>
   if (!data || !mapped) return <div>Loading...</div>
