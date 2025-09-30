@@ -5,8 +5,10 @@ import {
   VectorLayerLibre,
 } from "../../../modules/scms";
 
-export default function ZotMap({ geojson }) {
+export default function ZotMap({ geojson, instanceId, handlerName }) {
   if (!geojson) return null;
+
+  const ns = instanceId != null ? String(instanceId) : 'default'
 
   const fillColor = [
     "case",
@@ -24,12 +26,12 @@ export default function ZotMap({ geojson }) {
           checked={true}
         />
         <VectorLayerLibre
-          name="Sites"
+          name={`Sites-${ns}`}
           checked={true}
           source={{ geojson }}
           fitToContent={true}
           style={{
-            id: "Sites",
+            id: `Sites-${ns}`,
             type: "circle",
             paint: {
               "circle-radius": [
@@ -47,7 +49,7 @@ export default function ZotMap({ geojson }) {
               "circle-stroke-color": "#000000",
             },
           }}
-          popupTemplate="<h4>${name}</h4><p>${altLabel}</p><button class='btn btn-info btn-sm' type='button' data-tag='${name}' data-alt-labels='${altLabel}' onclick='window.__zotSelectTag && window.__zotSelectTag(this.dataset.tag, this.dataset.altLabels)'>Show ${zoteroCount} records</button>"
+          popupTemplate={"<h4>${name}</h4><p>${altLabel}</p><button class='btn btn-info btn-sm' type='button' data-tag='${name}' data-alt-labels='${altLabel}' onclick=\"window['" + handlerName + "'] && window['" + handlerName + "'](this.dataset.tag, this.dataset.altLabels)\">Show ${zoteroCount} records</button>"}
         />
       </MapLibre>
     </div>

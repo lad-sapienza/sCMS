@@ -19,6 +19,9 @@ const ZoteroGeoViewer = ({
   const [data, setData] = useState(null)
   const [error, setError] = useState(null)
   const [mapped, setMapped] = useState(null)
+  // Per-instance id for namespacing globals when multiple viewers are on same page
+  const [instanceId] = useState(() => Math.floor(Math.random() * 1e9))
+  const handlerName = `__zotSelectTag_${instanceId}`
   const [tagCoordinates, setTagCoordinates] = useState(null)
   const [missingTags, setMissingTags] = useState([])
   const [searchTerm, setSearchTerm] = useState("")
@@ -135,9 +138,10 @@ const ZoteroGeoViewer = ({
     }
   }, [missingTags])
 
-  // Expose a global handler for popup buttons to select a tag
+  // Expose a per-instance global handler for popup buttons to select a tag
   useEffect(() => {
-    window.__zotSelectTag = (tag, altLabels) => {
+    const name = handlerName
+    window[name] = (tag, altLabels) => {
       try {
         if (typeof tag === 'string' && tag.length) {
           setSearchTerm(tag)
@@ -150,7 +154,7 @@ const ZoteroGeoViewer = ({
       } catch (e) {}
     }
     return () => {
-      try { delete window.__zotSelectTag } catch (e) {}
+      try { delete window[name] } catch (e) {}
     }
   }, [])
 
@@ -225,7 +229,7 @@ const ZoteroGeoViewer = ({
   if (!isHorizontal) {
     return (
       <Container fluid>
-        {showMap && <ZotMap geojson={geojson} />}
+  {showMap && <ZotMap geojson={geojson} instanceId={instanceId} handlerName={handlerName} />}
         {searchAndResults}
       </Container>
     );
@@ -235,7 +239,7 @@ const ZoteroGeoViewer = ({
     <Container fluid>
       <Row>
         <Col md={leftCol}>
-          {showMap && <ZotMap geojson={geojson} />}
+          {showMap && <ZotMap geojson={geojson} instanceId={instanceId} handlerName={handlerName} />}
         </Col>
         <Col md={rightCol}>
           {searchAndResults}

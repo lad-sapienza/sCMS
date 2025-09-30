@@ -56,7 +56,10 @@ const VectorLayerLibre = ({
   // Compute a deterministic source id based on the provided source configuration
   const sourceId = useMemo(() => {
     try {
-      const key = source?.path2data?.path || JSON.stringify(source) || "unknown"
+      // Include the layer name in the key so multiple instances using the same
+      // inline geojson don't collide on source id ownership.
+      const sourceKeyPart = source?.path2data?.path || JSON.stringify(source) || "unknown"
+      const key = `${name}::${sourceKeyPart}`
       // Simple djb2 hash to create a compact, deterministic id
       let h = 5381
       for (let i = 0; i < key.length; i++) {
