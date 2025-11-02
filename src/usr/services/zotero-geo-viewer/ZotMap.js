@@ -15,6 +15,8 @@ export default function ZotMap({ geojson }) {
     "#ff4b6480",
   ];
 
+  const popupTemplate = "<h4>${name}</h4><p>${altLabel}</p><button class='btn btn-info btn-sm' type='button' data-tag='${name}' data-alt-labels='${altLabel}' onclick='window.__zotSelectTag && window.__zotSelectTag(this.dataset.tag, this.dataset.altLabels)'>Show ${zoteroCount} records</button>";
+
   return (
     <div style={{ height: "500px", marginBottom: "1em" }}>
       <MapLibre height="100%">
@@ -47,7 +49,7 @@ export default function ZotMap({ geojson }) {
               "circle-stroke-color": "#000000",
             },
           }}
-          popupTemplate="<h4>${name}</h4><p>${altLabel}</p><button class='btn btn-info btn-sm' type='button' data-tag='${name}' data-alt-labels='${altLabel}' onclick='window.__zotSelectTag && window.__zotSelectTag(this.dataset.tag, this.dataset.altLabels)'>Show ${zoteroCount} records</button>"
+          popupTemplate={popupTemplate}
         />
       </MapLibre>
     </div>
