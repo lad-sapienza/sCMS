@@ -70,7 +70,7 @@ const VectorLayerLibre = ({
     } catch (e) {
       return "src-fallback"
     }
-  }, [source])
+  }, [name, source])
 
   // Side effect: set filter and visibility on map when dependencies change
   useEffect(() => {
