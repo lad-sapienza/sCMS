@@ -1,5 +1,3 @@
-import { ZoteroGeoViewer } from "../usr/services/zotero-geo-viewer/ZoteroGeoViewer.js"
-
 export { SimpleSlider } from "./simpleSlider.js"
 
 export { Search } from "./search/search.js"
@@ -21,3 +19,4 @@ export { RasterLayerLibre } from "./maps/maplibre/rasterLayerLibre.js"
 export { HarrisMatrix } from "./graph/harrisMatrix.js"
 
 export { Documenter } from "./documenter.js"
+export { ZoteroGeoViewer } from "../usr/services/zotero-geo-viewer/ZoteroGeoViewer.js"
