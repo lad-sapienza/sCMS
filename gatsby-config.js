@@ -26,7 +26,16 @@ module.exports = {
       options: {
         gatsbyRemarkPlugins: [
           `gatsby-remark-autolink-headers`,
-          `gatsby-remark-prismjs`,
+          {
+            resolve: `gatsby-remark-prismjs`,
+            options: {
+              classPrefix: "language-",
+              inlineCodeMarker: null,
+              aliases: {},
+              showLineNumbers: true,
+              noInlineHighlight: false,
+            },
+          },
         ],
       },
     },
