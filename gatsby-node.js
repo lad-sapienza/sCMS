@@ -47,28 +47,12 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       // Normalize separators to URL-style forward slashes
       relativePath = relativePath.split(path.sep).join('/')
 
-      // Remove trailing index.mdx or .mdx extension
-      if (relativePath.endsWith('/index.mdx')) {
-        relativePath = relativePath.replace(/\/index\.mdx$/, '')
-        relativePath = relativePath.replace(/\/index\.mdx$/i, '')
-        relativePath = relativePath.replace(/\/index\.mdx/i, '')
-        relativePath = relativePath.replace(/\/index\.mdx/, '')
-        relativePath = relativePath.replace(/\/index\.mdx/, '')
-        // simpler: remove /index.mdx
-        relativePath = relativePath.replace(/\/index\.mdx$|\/index\.mdx$/i, '')
-        // but we already normalized separators, do a straightforward replace
-        relativePath = relativePath.replace(/\/index\.mdx$/i, '')
-        relativePath = relativePath.replace(/\/index\.mdx/i, '')
-        relativePath = relativePath.replace(/\/index\.mdx/, '')
-        relativePath = relativePath.replace(/\/index\.mdx/, '')
-        // final reliable replace for '/index.mdx'
-        relativePath = relativePath.replace(/\/index\.mdx$|\/index\.mdx/gi, '')
-      }
-      // (Simpler and robust approach:) remove any trailing '/index.mdx' or trailing '.mdx'
-      relativePath = relativePath.replace(/\/index\.mdx$/i, '')
-      relativePath = relativePath.replace(/\/index\.mdx/i, '')
-      relativePath = relativePath.replace(/index\.mdx$/i, '')
-      relativePath = relativePath.replace(/\.mdx$/i, '')
+      // Remove trailing index.mdx, index.md, .mdx, or .md extension
+      relativePath = relativePath
+        .replace(/\/index\.mdx$/i, '')
+        .replace(/\/index\.md$/i, '')
+        .replace(/\.mdx$/i, '')
+        .replace(/\.md$/i, '')
 
       // Ensure a leading slash and use '/' as root for empty
       pagePath = '/' + (relativePath === '' ? '' : relativePath)
