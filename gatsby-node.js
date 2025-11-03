@@ -1,6 +1,20 @@
 const path = require("path")
 const postTemplate = path.resolve(`./src/templates/contents.jsx`)
 
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions
+  const typeDefs = `
+    type MdxFrontmatter {
+      img: File @fileByRelativePath
+      template: String
+    }
+    type SiteSiteMetadata {
+      defaultDescription: String
+    }
+  `
+  createTypes(typeDefs)
+}
+
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
 

@@ -62,11 +62,6 @@ export const query = graphql`
         template
         date(formatString: "DD MMMM YYYY", locale: "it-IT")
         dateISO: date
-        autore
-        licenza
-        livello
-        tags
-        didascalia
         img {
           base
           childImageSharp {
