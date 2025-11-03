@@ -23,7 +23,7 @@ export function Head({ data, location }) {
     description: frontmatter.description,
     image: frontmatter.img?.childImageSharp?.gatsbyImageData?.images?.fallback?.src,
     pathname: location.pathname,
-    author: frontmatter.autore,
+    author: frontmatter.author,
     isArticle: frontmatter.template === "article",
     datePublished: frontmatter.dateISO,
     dateModified: frontmatter.dateISO,
@@ -59,6 +59,8 @@ export const query = graphql`
         title
         description
         slug
+        author
+        tags
         template
         date(formatString: "DD MMMM YYYY", locale: "it-IT")
         dateISO: date

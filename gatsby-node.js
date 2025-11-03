@@ -7,6 +7,8 @@ exports.createSchemaCustomization = ({ actions }) => {
     type MdxFrontmatter {
       img: File @fileByRelativePath
       template: String
+      author: String
+      tags: [String]
     }
     type SiteSiteMetadata {
       defaultDescription: String
