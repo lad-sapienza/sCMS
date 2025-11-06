@@ -204,6 +204,7 @@ will use the [`dev` branch](https://github.com/lad-sapienza/sCMS/tree/dev).
 ---
 
 ## Built with s:CMS
+- [LAD: Laboratorio di Archeologia Digitale alla Sapienza](https://lad.saras.uniroma1.it/): Sito web ufficiale.
 - [Borderscape](https://webgis.borderscapeproject.org/): WebGIS State Formation and Settlement Patterns in the Ancient Egyptian Southern Border, 4th-3rd millennia BCE
 - [ElaMortuary](https://lad-sapienza.github.io/elamortuary/): Villages to Empire: 4,000 Years of Death and Society in Elam (4500-525 BCE)
 - [Pre-Islamic Afghanistan](https://lad-sapienza.github.io/pre-islamic-afghanistan/): Archaeology and cultural heritage of pre-Islamic Afghanistan: Sites and materials. With a focus on the Buddhist clay sculptures
