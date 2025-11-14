@@ -164,19 +164,17 @@ For the RASTER bases, a simplified access to the most common providers of satell
 
 You can also add a table to organically show your data in an intuitive format! The table component provides options for a front-end general filter. With various graphical configuration options, the presentation of data can be customized to fit the specific needs of the project. Additionally, you can choose which fields to display and customize how they are presented, adding external and/or internal links or preview images that mirror outside sources.
 
-(Learn how: [Dtable](#dtable))
+#### 3.3. Gallery
 
-#### 3.3. Search page
+Create responsive photo galleries with integrated lightbox functionality. The Gallery component automatically displays images from a specified folder in an optimized grid layout with zoom and navigation capabilities powered by PhotoSwipe. Images are automatically processed and optimized by Gatsby's image pipeline for fast loading and great performance across all devices.
+
+#### 3.4. Search page
 
 Enhance the navigation of your data by adding a query page. This easily customizable tool supports various query logics and result presentations, allowing you to select which fields are searchable and how the results are displayed. You can also include links to external resources, internal pages, or even previews of content.
 
-(Learn how: [Search](#search))
-
-#### 3.4. Record page
+#### 3.5. Record page
 
 A page that displays an item's details in a simple list format and can be customized to fit your needs. The record page can be accessed only through direct links from other pages on the site, providing a comprehensive view of complex information and allowing for detailed exploration that may not be fully covered in summary pages.
-
-(Learn how: [View Record](#view-record))
 
 ## Deploy your site for free on Github Pages
 

@@ -20,3 +20,5 @@ export { HarrisMatrix } from "./graph/harrisMatrix.js"
 
 export { Documenter } from "./documenter.js"
 export { ZoteroGeoViewer } from "../usr/services/zotero-geo-viewer/ZoteroGeoViewer.js"
+
+export {MyGallery} from "./myGallery.js"

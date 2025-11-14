@@ -2,7 +2,7 @@
   "name": "@lad-sapienza/scms",
   "private": false,
   "description": "A complete starter, built with love by LAD @Sapienza and based on Gatsby.js, React, Bootstrap and other open source libraries to easily publish research data as static sites",
-  "version": "5.4.1",
+  "version": "5.5.0",
   "author": {
     "name": "Julian Bogdani",
     "email": "julian.bogdani@uniroma1.it",
@@ -43,6 +43,7 @@
     "geojson-bbox": "^0.0.1",
     "leaflet": "^1.9.4",
     "maplibre-gl": "^5.10.0",
+    "photoswipe": "^5.4.4",
     "prism-themes": "^1.9.0",
     "prismjs": "^1.30.0",
     "react": "^18.3.1",
@@ -51,6 +52,7 @@
     "react-data-table-component": "^7.7.0",
     "react-dom": "^18.3.1",
     "react-leaflet": "^4.2.1",
+    "react-photoswipe-gallery": "^4.0.0",
     "react-router-dom": "^6.30.1",
     "react-syntax-highlighter": "^15.6.6",
     "styled-components": "^6.1.19"
