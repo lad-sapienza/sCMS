@@ -2,7 +2,7 @@
   "name": "@lad-sapienza/scms",
   "private": false,
   "description": "A complete starter, built with love by LAD @Sapienza and based on Gatsby.js, React, Bootstrap and other open source libraries to easily publish research data as static sites",
-  "version": "5.5.0",
+  "version": "5.5.1",
   "author": {
     "name": "Julian Bogdani",
     "email": "julian.bogdani@uniroma1.it",

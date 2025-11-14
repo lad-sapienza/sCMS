@@ -27,7 +27,7 @@ const captionStyle = `
   }
 `;
 
-const MyGallery = ({ path }) => {
+const MyGallery = ({ path, reverseSorting = false }) => {
   const location = useLocation();
   
   const data = useStaticQuery(graphql`
@@ -64,10 +64,10 @@ const MyGallery = ({ path }) => {
   `);
 
   // Use provided path or get the current path from location
-  const currentPath = path || location.pathname.replace(/^\/|\/$/g, '') + '/gallery/';
+  const currentPath = path || location.pathname.replace(/^/|/$/g, '') + '/gallery/';
   
   // Filter images that are in the gallery folder for this path
-  const images = data.allFile.edges
+  let images = data.allFile.edges
     .filter(({ node }) => {
       const relativePath = node.relativePath;
       // Check if the image is in the gallery folder for this path
@@ -85,6 +85,11 @@ const MyGallery = ({ path }) => {
         name: node.name
       };
     });
+
+  // Reverse sorting if requested
+  if (reverseSorting) {
+    images = images.reverse();
+  }
 
   if (images.length < 1) {
     return null;
@@ -172,6 +177,11 @@ MyGallery.propTypes = {
    * Example: "my-content/subfolder"
    */
   path: PropTypes.string,
+  /**
+   * Reverse the default sorting order (DESC by name) of images.
+   * When true, images will be sorted in ascending order.
+   */
+  reverseSorting: PropTypes.bool,
 };
 
 export { MyGallery };
