@@ -1,0 +1,132 @@
+---
+title: "Image gallery"
+date: "2025-11-14"
+slug: "image-gallery"
+description: "Display responsive photo galleries with lightbox functionality"
+menu_position: 6
+---
+
+import { DataTb, Documenter, MyGallery } from "../../../modules/scms"
+
+# Build responsive image galleries with lightbox functionality
+
+
+The `MyGallery` component displays images from a specified folder in a responsive grid layout with lightbox functionality powered by PhotoSwipe. Images are automatically optimized using Gatsby's image processing capabilities for fast loading and great performance.
+
+The component automatically looks for images in a `gallery/` subfolder based on the current page path. For example, if your page is at `/my-project/`, the gallery will display images from `/my-project/gallery/`. You can also specify a custom path using the `path` prop.
+
+In this page:
+- [Default usage (path based on current location)](#default-usage-path-based-on-current-location)
+- [Custom path example](#custom-path-example)
+- [Image organization](#image-organization)
+- [API documentation](#api-documentation)
+
+---
+
+## Default usage (path based on current location)
+
+When used without parameters, `MyGallery` automatically displays images from the `gallery/` subfolder of the current page path.
+
+<Documenter>
+  <MyGallery />
+</Documenter>
+
+Images by [Pixabay](https://pixabay.com/users/freephotocc-2275370/)
+
+---
+
+## Custom path example
+
+You can override the default path behavior by providing a specific path to the gallery folder:
+
+<Documenter>
+  <MyGallery path="image-gallery/gallery/" />
+</Documenter>
+
+Images by [Pixabay](https://pixabay.com/users/freephotocc-2275370/)
+
+
+---
+
+## Image organization
+
+To use the gallery component:
+
+1. Create a folder structure in your content directory (typically `src/usr/contents/`)
+2. Add a `gallery/` subfolder within your content folder
+3. Place your images (`.jpg`, `.jpeg`, `.png`, `.gif`) in the `gallery/` folder
+
+Example structure:
+```
+src/usr/contents/
+├── my-project/
+│   ├── index.mdx
+│   └── gallery/
+│       ├── image1.jpg
+│       ├── image2.png
+│       └── image3.jpg
+```
+
+The gallery will automatically:
+- Generate responsive thumbnails (270x270px)
+- Create optimized full-size versions
+- Display images in a grid layout
+- Enable lightbox functionality with zoom and navigation
+- Show image names as captions in the lightbox
+
+---
+
+## API documentation
+
+##### path
+Optional path to the gallery folder. When provided, the component will look for images in the specified path instead of using the current page location.
+
+If not provided, the component automatically uses the current page path (e.g., for a page at `/my-project/`, it looks for images in `/my-project/gallery/`).
+
+- Type: `String`
+- Required: No
+- Default: Current page path + `/gallery/`
+- Example: `"my-content/subfolder"` will look for images in `my-content/subfolder/gallery/`
+
+---
+
+##### reverseSorting
+Reverse the default sorting order of images. By default, images are sorted in descending order by filename (DESC). When set to `true`, images will be displayed in ascending order (ASC).
+
+- Type: `Boolean`
+- Required: No
+- Default: `false`
+- Example: `<MyGallery reverseSorting={true} />`
+
+---
+
+##### title
+Optional title displayed above the gallery.
+
+- Type: `String`
+- Required: No
+- Default: _null_
+
+---
+
+## Features
+
+- **Automatic image optimization**: Uses Gatsby Sharp for fast-loading, responsive images
+- **Lightbox functionality**: Powered by PhotoSwipe with smooth transitions
+- **Responsive grid**: Automatically adjusts to screen size
+- **Lazy loading**: Images are loaded only when needed
+- **Accessible**: Keyboard navigation and ARIA labels included
+- **Custom captions**: Image filenames are displayed in the lightbox
+
+---
+
+## Supported image formats
+
+The gallery component supports the following image formats:
+- JPEG (`.jpg`, `.jpeg`)
+- PNG (`.png`)
+- GIF (`.gif`)
+- WEBP (`.webp`)
+- AVIF (`.avif`)
+
+All images are automatically processed and optimized by Gatsby's image pipeline.

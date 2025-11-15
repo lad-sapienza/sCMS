@@ -164,19 +164,17 @@ For the RASTER bases, a simplified access to the most common providers of satell
 
 You can also add a table to organically show your data in an intuitive format! The table component provides options for a front-end general filter. With various graphical configuration options, the presentation of data can be customized to fit the specific needs of the project. Additionally, you can choose which fields to display and customize how they are presented, adding external and/or internal links or preview images that mirror outside sources.
 
-(Learn how: [Dtable](#dtable))
+#### 3.3. Gallery
 
-#### 3.3. Search page
+Create responsive photo galleries with integrated lightbox functionality. The Gallery component automatically displays images from a specified folder in an optimized grid layout with zoom and navigation capabilities powered by PhotoSwipe. Images are automatically processed and optimized by Gatsby's image pipeline for fast loading and great performance across all devices.
+
+#### 3.4. Search page
 
 Enhance the navigation of your data by adding a query page. This easily customizable tool supports various query logics and result presentations, allowing you to select which fields are searchable and how the results are displayed. You can also include links to external resources, internal pages, or even previews of content.
 
-(Learn how: [Search](#search))
-
-#### 3.4. Record page
+#### 3.5. Record page
 
 A page that displays an item's details in a simple list format and can be customized to fit your needs. The record page can be accessed only through direct links from other pages on the site, providing a comprehensive view of complex information and allowing for detailed exploration that may not be fully covered in summary pages.
-
-(Learn how: [View Record](#view-record))
 
 ## Deploy your site for free on Github Pages
 
@@ -208,3 +206,6 @@ will use the [`dev` branch](https://github.com/lad-sapienza/sCMS/tree/dev).
 - [Borderscape](https://webgis.borderscapeproject.org/): WebGIS State Formation and Settlement Patterns in the Ancient Egyptian Southern Border, 4th-3rd millennia BCE
 - [ElaMortuary](https://lad-sapienza.github.io/elamortuary/): Villages to Empire: 4,000 Years of Death and Society in Elam (4500-525 BCE)
 - [Pre-Islamic Afghanistan](https://lad-sapienza.github.io/pre-islamic-afghanistan/): Archaeology and cultural heritage of pre-Islamic Afghanistan: Sites and materials. With a focus on the Buddhist clay sculptures
+- [Sabina Sacra](https://sabinasacra.lad-sapienza.it/): Digital atlas exploring sacred spaces in Sabina and the Aniene Valley from late antiquity to the contemporary age, enhancing the territory through itineraries, monuments and sacred places.
+- [Italian Lily](https://italianlily.lad-sapienza.it/): Historical/bibliographical project aimed at reconstructing the phenomenon of Florentine presence in 16th century France through the collection of a geographical atlas and cataloguing of historical and legal texts.
+- [Winx (Women In ConteXt)](https://lad-sapienza.github.io/winx/): Through the cataloguing and study of statues and inscriptions, the project aims to reconstruct the presence of women in buildings for education and intellectual activities (gymnasia, odeia, theaters) in some of the eastern provinces of the Roman Empire.

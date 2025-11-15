@@ -17,6 +17,10 @@ module.exports = {
     title: `s:CMS`,
     description: `S:CMS | Static site Content Managemt System is developend and maintained by LAD: Laboratorio di Archeologia Digitale alla Sapienza`,
     author: `Julian Bogdani <julian.bogdani@uniroma1.it>`,
+    siteName: `LAD: Laboratorio di Archeologia Digitale alla Sapienza`,
+    titleTemplate: `%s | s:CMS`,
+    twitter: `@JulianBogdani`,
+    defaultImage: `images/scms-lad.png`,
     siteUrl: `https://github.com/lad-sapienza/scms`,
   },
   plugins: [
@@ -26,7 +30,16 @@ module.exports = {
       options: {
         gatsbyRemarkPlugins: [
           `gatsby-remark-autolink-headers`,
-          `gatsby-remark-prismjs`,
+          {
+            resolve: `gatsby-remark-prismjs`,
+            options: {
+              classPrefix: "language-",
+              inlineCodeMarker: null,
+              aliases: {},
+              showLineNumbers: true,
+              noInlineHighlight: false,
+            },
+          },
         ],
       },
     },
