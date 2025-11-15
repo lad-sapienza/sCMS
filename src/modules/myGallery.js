@@ -34,7 +34,7 @@ const MyGallery = ({ path, reverseSorting = false }) => {
     {
       allFile(
         filter: {
-          extension: { regex: "/(jpg|jpeg|png|gif)/" }
+          extension: { regex: "/(jpg|jpeg|png|gif|webp|avif)/" }
           relativePath: { regex: "/gallery/" }
         }
         sort: { name: DESC }
@@ -64,7 +64,9 @@ const MyGallery = ({ path, reverseSorting = false }) => {
   `);
 
   // Use provided path or get the current path from location
-  const currentPath = path || location.pathname.replace(/^/|/$/g, '') + '/gallery/';
+  let currentPath = path || location.pathname.replace(/^\/|\/$/g, '') + '/gallery/';
+  // Remove double slashes
+  currentPath = currentPath.replace(/\/\//g, '/');
   
   // Filter images that are in the gallery folder for this path
   let images = data.allFile.edges
@@ -74,6 +76,12 @@ const MyGallery = ({ path, reverseSorting = false }) => {
       return relativePath.includes(currentPath);
     })
     .map(({ node }) => {
+      // Check if childImageSharp exists, otherwise skip this image
+      if (!node.childImageSharp) {
+        console.warn(`Image ${node.relativePath} could not be processed by Sharp`);
+        return null;
+      }
+      
       const original = node.childImageSharp.original;
       const thumbImage = node.childImageSharp.thumb;
       
@@ -84,7 +92,8 @@ const MyGallery = ({ path, reverseSorting = false }) => {
         height: original.height,
         name: node.name
       };
-    });
+    })
+    .filter(Boolean); // Remove null entries
 
   // Reverse sorting if requested
   if (reverseSorting) {
