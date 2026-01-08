@@ -33,7 +33,6 @@ const MapLibre = ({
   sprite,
 }) => {
 
-  
   const [lng, lat, zoom] = center.split(",").map(Number)
   if (mapStyle) {
     mapStyle = mapStyle.startsWith("http") ? mapStyle : withPrefix(mapStyle)
@@ -46,7 +45,7 @@ const MapLibre = ({
     const mapInstance = event.target
     const layers = mapInstance.getStyle()?.layers || []
 
-    // Log per vedere tutti i layer presenti nella mappa
+    // Filtra i layer che dichiarano un template per il popup
     const interactiveLayers = layers
       .filter(layer => layer.metadata?.popupTemplate)
       .map(layer => layer.id)
@@ -66,7 +65,7 @@ const MapLibre = ({
     event => {
       const { lngLat, point, target: mapInstance } = event
 
-      // Use queryRenderedFeatures to get features at the clicked point
+      // Usa queryRenderedFeatures per ottenere le feature cliccate
       const clickedFeatures = mapInstance.queryRenderedFeatures(point, {
         layers: interactiveLyrs,
       })
@@ -117,7 +116,9 @@ const MapLibre = ({
           ))}
 
         {children}
-        {clickInfo && clickInfo.feature.layer.metadata.popupTemplate && (
+
+        {/* FIX 1: metadata può essere undefined; usa optional chaining per evitare errori runtime */}
+        {clickInfo && clickInfo.feature.layer.metadata?.popupTemplate && (
           <Popup
             anchor="top"
             longitude={clickInfo.lngLat.lng}
@@ -217,10 +218,7 @@ MapLibre.propTypes = {
    * Default: null
    */
   baseLayers: defaultBaseLayersPropTypes,
-  /**
-   * URL to the sprite resource
-   */
-  sprite: PropTypes.string
+  sprite: PropTypes.string,
 }
 
 export { MapLibre }

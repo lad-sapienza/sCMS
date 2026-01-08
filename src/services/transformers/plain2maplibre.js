@@ -9,11 +9,15 @@ const connector_map = {
 /**
  * Trasforma un plain object in una espressione compatibile con MapLibre
  * https://maplibre.org/maplibre-style-spec/expressions/
+ *
+ * FIX 1 – Cosa fa in più:
+ * - Usa (plain || []) per gestire il caso in cui `plain` sia null/undefined
+ *   invece di dare per scontato che sia sempre un array.
+ *
  * @param {String} conn   uno dei connettori logici: _and o _or
  * @param {Array} plain   Array di oggetti con chiavi 'field', 'operator' e 'value'
  * @returns {Array}       Array compatibile con MapLibre Style Expression
  */
-
 const plain2maplibre = (conn, plain) => {
   const maplibre = []
 
@@ -21,7 +25,8 @@ const plain2maplibre = (conn, plain) => {
   const logicalConnector = connector_map[conn] || "any"
   maplibre.push(logicalConnector)
 
-  plain.forEach(el => {
+  // FIX 1: usa (plain || []) per gestire anche il caso plain === null/undefined
+  ;(plain || []).forEach(el => {
     const operator = el.operator || "_eq" // Default operator
     switch (operator) {
       case "_eq":
