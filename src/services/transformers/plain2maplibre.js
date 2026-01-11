@@ -1,33 +1,30 @@
-// Mappa degli operatori da Directus a MapLibre
-
-// Mappa dei connettori logici
+// Mapping of logical connectors from plain format to MapLibre expressions
 const connector_map = {
   _and: "all",
   _or: "any",
 }
 
 /**
- * Trasforma un plain object in una espressione compatibile con MapLibre
+ * Transforms a plain filter object into a MapLibre-compatible expression.
  * https://maplibre.org/maplibre-style-spec/expressions/
  *
- * FIX 1 – Cosa fa in più:
- * - Usa (plain || []) per gestire il caso in cui `plain` sia null/undefined
- *   invece di dare per scontato che sia sempre un array.
+ * Handles null/undefined plain arrays safely by using (plain || []).
+ * Supports various comparison, string matching, and null/empty check operators.
  *
- * @param {String} conn   uno dei connettori logici: _and o _or
- * @param {Array} plain   Array di oggetti con chiavi 'field', 'operator' e 'value'
- * @returns {Array}       Array compatibile con MapLibre Style Expression
+ * @param {String} conn   Logical connector: _and or _or (maps to 'all' or 'any')
+ * @param {Array} plain   Array of filter objects with 'field', 'operator', and 'value' keys
+ * @returns {Array}       MapLibre Style Expression array
  */
 const plain2maplibre = (conn, plain) => {
   const maplibre = []
 
-  // Usa il connettore logico passato dalla funzione (default: "any")
+  // Use the logical connector from the map (defaults to "any" if not found)
   const logicalConnector = connector_map[conn] || "any"
   maplibre.push(logicalConnector)
 
-  // FIX 1: usa (plain || []) per gestire anche il caso plain === null/undefined
-  ;(plain || []).forEach(el => {
-    const operator = el.operator || "_eq" // Default operator
+  // Handle null/undefined plain arrays safely
+  (plain || []).forEach(el => {
+    const operator = el.operator || "_eq" // Default to equality operator if not specified
     switch (operator) {
       case "_eq":
         maplibre.push(["==", ["get", el.field], ["literal", el.value]])
@@ -139,7 +136,7 @@ const plain2maplibre = (conn, plain) => {
         maplibre.push(["!=", ["get", el.field], null])
         break
       default:
-        // Fallback per operatori sconosciuti: usa _eq come predefinito
+        // Fallback for unknown operators: use equality as default
         maplibre.push(["==", ["get", el.field], ["literal", el.value]])
         break
     }

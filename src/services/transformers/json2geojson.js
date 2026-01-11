@@ -1,51 +1,51 @@
 /**
- * Converte un array JSON in una GeoJSON FeatureCollection, usando il campo `geoDataField`.
+ * Converts a JSON array to a GeoJSON FeatureCollection using the specified geometry field.
  *
- * FIX 1 – Cosa fa in più rispetto alla versione originale:
+ * Enhancements over the basic implementation:
  *
- * 1) Gestione input non validi / null
- *    - Se `rows` non è un array, restituisce una FeatureCollection vuota.
- *    - Le righe senza una geometria utilizzabile vengono scartate (non producono feature).
+ * 1) Invalid/null input handling
+ *    - Returns an empty FeatureCollection if `rows` is not an array.
+ *    - Rows without usable geometry are filtered out (do not produce features).
  *
- * 2) Logica di recupero geometrie più robusta
- *    - Supporta formati "semplici":
- *      * oggetti con `coordinates: [lng, lat]`
- *      * valori direttamente `[lng, lat]`
- *    - In questi casi costruisce un Point standard.
+ * 2) Robust geometry parsing logic
+ *    - Supports "simple" formats:
+ *      * Objects with `coordinates: [lng, lat]`
+ *      * Direct values as `[lng, lat]`
+ *    - These are normalized to standard GeoJSON Point geometries.
  *
- * 3) Supporto a geometrie GeoJSON complete (anche linee/poligoni)
- *    - Se `geoDataField` contiene una Geometry GeoJSON completa (`type` + `coordinates`),
- *      la usa così com'è (Point, LineString, Polygon, Multi*, ecc.).
+ * 3) Full GeoJSON geometry support (including lines/polygons)
+ *    - If `geoDataField` contains a complete GeoJSON Geometry (`type` + `coordinates`),
+ *      it is used as-is (Point, LineString, Polygon, Multi*, etc.).
  *
- * In tutti i casi:
- * - Il campo `geoDataField` viene rimosso da `properties`, così la geometria
- *   vive solo in `geometry` (convenzione GeoJSON standard).
+ * In all cases:
+ * - The `geoDataField` is removed from `properties`, so geometry data
+ *   lives only in `geometry` (standard GeoJSON convention).
  *
- * @param {Array<Object>} rows - Array di record sorgente.
- * @param {string} geoDataField - Nome del campo che contiene i dati geografici.
+ * @param {Array<Object>} rows - Array of source records.
+ * @param {string} geoDataField - Name of the field containing geographic data.
  * @returns {{ type: "FeatureCollection", features: Array<Object> }} GeoJSON FeatureCollection.
  */
 const json2geojson = (rows, geoDataField) => {
-  // FIX 1 (parte 1): se l'input non è un array, evita errori e restituisce una FeatureCollection vuota
+  // Validate input: return empty FeatureCollection if rows is not an array
   if (!Array.isArray(rows)) {
     return { type: "FeatureCollection", features: [] }
   }
 
   const features = rows
-    // FIX 1 (parte 1): scarta subito le righe senza il campo geometria
+    // Filter out rows without a geometry field
     .filter(r => r && r[geoDataField] != null)
     .map(r => {
       const g = r[geoDataField]
       let geometry = null
 
-      // FIX 1 (parte 3): caso 1 — Geometry GeoJSON completa (Point, LineString, Polygon, Multi*, ecc.)
+      // Case 1: Complete GeoJSON Geometry (Point, LineString, Polygon, Multi*, etc.)
       if (g && typeof g.type === "string" && Array.isArray(g.coordinates)) {
-        // Usata così com'è: non forziamo a Point, quindi passano anche linee/poligoni
+        // Use as-is: not forcing to Point, so lines/polygons are preserved
         geometry = g
       } else {
-        // FIX 1 (parte 2): normalizzazione dei formati "semplici" in un Point
+        // Normalize "simple" formats into a Point geometry
 
-        // Caso 2A: oggetto con { coordinates: [lng, lat] }
+        // Case 2A: Object with { coordinates: [lng, lat] }
         if (
           g &&
           Array.isArray(g.coordinates) &&
@@ -58,7 +58,7 @@ const json2geojson = (rows, geoDataField) => {
             coordinates: [g.coordinates[0], g.coordinates[1]],
           }
         }
-        // Caso 2B: valore direttamente [lng, lat]
+        // Case 2B: Direct value as [lng, lat]
         else if (
           Array.isArray(g) &&
           g.length >= 2 &&
@@ -72,10 +72,10 @@ const json2geojson = (rows, geoDataField) => {
         }
       }
 
-      // FIX 1 (parte 1): se non siamo riusciti a costruire una geometria valida, salta la riga
+      // Skip row if we couldn't construct a valid geometry
       if (!geometry) return null
 
-      // Rimuove il campo geometria dalle properties, lasciando solo gli attributi "logici"
+      // Remove geometry field from properties, keeping only logical attributes
       const { [geoDataField]: _omit, ...props } = r
 
       return {
@@ -84,7 +84,7 @@ const json2geojson = (rows, geoDataField) => {
         geometry,
       }
     })
-    // Elimina le righe trasformate in null (geometria non valida)
+    // Filter out rows that were transformed to null (invalid geometry)
     .filter(Boolean)
 
   return { type: "FeatureCollection", features }

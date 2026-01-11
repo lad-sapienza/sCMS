@@ -45,7 +45,7 @@ const MapLibre = ({
     const mapInstance = event.target
     const layers = mapInstance.getStyle()?.layers || []
 
-    // Filtra i layer che dichiarano un template per il popup
+    // Filter layers that have a popup template defined in their metadata
     const interactiveLayers = layers
       .filter(layer => layer.metadata?.popupTemplate)
       .map(layer => layer.id)
@@ -65,7 +65,7 @@ const MapLibre = ({
     event => {
       const { lngLat, point, target: mapInstance } = event
 
-      // Usa queryRenderedFeatures per ottenere le feature cliccate
+      // Query rendered features at the clicked point to get clicked features from interactive layers
       const clickedFeatures = mapInstance.queryRenderedFeatures(point, {
         layers: interactiveLyrs,
       })
@@ -81,7 +81,7 @@ const MapLibre = ({
     [interactiveLyrs],
   )
 
-  // Filtra i base layers in base alla proprietà `baseLayers`
+  // Filter and map base layers based on the baseLayers prop, using defaultBaseLayers as reference
   const filteredBaseLayers = baseLayers
     ? baseLayers
         .map(lyr => (defaultBaseLayers[lyr] ? defaultBaseLayers[lyr] : null))
@@ -117,7 +117,7 @@ const MapLibre = ({
 
         {children}
 
-        {/* FIX 1: metadata può essere undefined; usa optional chaining per evitare errori runtime */}
+        {/* Render popup if clickInfo exists and the layer has a popupTemplate defined in metadata */}
         {clickInfo && clickInfo.feature.layer.metadata?.popupTemplate && (
           <Popup
             anchor="top"
