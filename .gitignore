@@ -43,3 +43,7 @@ Desktop.ini
 # Framework/Deployment
 .vercel/
 .netlify/
+
+
+.cache/
+public/
