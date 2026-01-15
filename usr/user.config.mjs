@@ -54,11 +54,11 @@ export const siteMetadata = {
  */
 export const directusConfig = {
   // Directus instance URL
-  url: 'https://your-directus-instance.com',
+  url: import.meta.env.PUBLIC_DIRECTUS_URL || 'https://your-directus-instance.com',
   
   // Static token for authentication
   // Generate a token in Directus admin panel under Settings > Access Tokens
-  token: 'your-directus-token',
+  token: import.meta.env.PUBLIC_DIRECTUS_TOKEN || '',
   
   // Optional: Custom configuration
   // maxRetries: 3,
