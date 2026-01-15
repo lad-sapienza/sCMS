@@ -17,19 +17,22 @@ export type DataRow = Record<string, any>;
 export interface ColumnConfig {
   /** Column key matching data property */
   key: string;
-  
+
   /** Display header text */
   header: string;
-  
+
   /** Enable sorting for this column */
   sortable?: boolean;
-  
+
   /** Format type for automatic formatting */
   format?: 'date' | 'number' | 'currency' | 'percent';
-  
+
   /** Custom render function */
   render?: (value: any, row: DataRow) => React.ReactNode;
-  
+
+  /** Value mapping labels (e.g. { "true": "Yes", "false": "No" }) */
+  labels?: Record<string, string>;
+
   /** Column width (CSS value) */
   width?: string;
 }
@@ -40,10 +43,10 @@ export interface ColumnConfig {
 export interface PaginationConfig {
   /** Number of rows per page */
   pageSize?: number;
-  
+
   /** Show page size selector */
   showPageSize?: boolean;
-  
+
   /** Available page size options */
   pageSizeOptions?: number[];
 }
@@ -63,6 +66,10 @@ export interface CsvSourceConfig {
   delimiter?: string;
   /** Skip first N rows */
   skipRows?: number;
+  /** Longitude column name (for map conversion) */
+  lng?: string;
+  /** Latitude column name (for map conversion) */
+  lat?: string;
 }
 
 /**
@@ -83,6 +90,11 @@ export interface DirectusSourceConfig {
   type: 'directus';
   /** Collection name */
   collection: string;
+  /** Directus configuration */
+  config: {
+    url: string;
+    token: string;
+  };
   /** Filter query */
   filter?: Record<string, any>;
   /** Fields to select */
@@ -111,13 +123,25 @@ export interface ApiSourceConfig {
 }
 
 /**
+ * GeoJSON Source configuration
+ */
+export interface GeoJsonSourceConfig {
+  type: 'geojson';
+  /** GeoJSON data object */
+  data?: any;
+  /** URL to fetch GeoJSON from */
+  url?: string;
+}
+
+/**
  * Union of all source configurations
  */
-export type SourceConfig = 
-  | CsvSourceConfig 
-  | JsonSourceConfig 
-  | DirectusSourceConfig 
-  | ApiSourceConfig;
+export type SourceConfig =
+  | CsvSourceConfig
+  | JsonSourceConfig
+  | DirectusSourceConfig
+  | ApiSourceConfig
+  | GeoJsonSourceConfig;
 
 /**
  * Props for source components
@@ -137,34 +161,46 @@ export interface SourceComponentProps {
 export interface DataTbProps {
   /** Column definitions (optional - will auto-detect if not provided) */
   columns?: ColumnConfig[];
-  
+
   /** Enable global search/filter */
   searchable?: boolean;
-  
+
   /** Pagination configuration */
   pagination?: boolean | PaginationConfig;
-  
+
   /** Enable column sorting */
   sortable?: boolean;
-  
+
   /** Initial sort state */
   initialSort?: {
     columnKey: string;
     direction: 'asc' | 'desc';
   };
-  
+
   /** Custom CSS classes */
   className?: string;
-  
+
   /** Data source configuration */
   source?: SourceConfig;
-  
+
   /** Loading state message */
   loadingMessage?: string;
-  
+
   /** Empty state message */
   emptyMessage?: string;
-  
+
   /** Error message */
   errorMessage?: string;
+
+  /** Simplified CSV Source URL (MDX friendly) */
+  csv?: string;
+
+  /** Simplified JSON Source Data or URL (MDX friendly) */
+  json?: any[] | string;
+
+  /** Simplified API Source URL (MDX friendly) */
+  api?: string;
+
+  /** Simplified Directus Collection Name (MDX friendly) */
+  directus?: string;
 }

@@ -15,36 +15,16 @@ A powerful, flexible data table component for Astro with support for multiple da
 
 ## Basic Usage
 
-**Important Setup Notes:**
-- Import from `usr/components/DataTb` (components must be in Astro's srcDir)
-- Always use `client:load` for proper React hydration
-- **Use `.astro` files for pages with DataTb** - MDX has hydration issues with the custom srcDir setup
-- For content-heavy pages, write content in MDX and import it into an `.astro` wrapper
-- Astro config includes React deduplication to prevent hooks errors
-
-**Workaround for MDX users:** Create an `.astro` wrapper that imports your MDX content:
-
-```astro
----
-import { Content } from '../content/my-content.mdx';
-import { DataTb } from '../components/DataTb';
----
-<div>
-  <Content />
-  <DataTb source={{ type: 'csv', url: '/data/file.csv' }} client:load />
-</div>
-```
-
 ### CSV Source
 
 ```jsx
-import { DataTb } from '../components/DataTb';
+import { DataTb } from '@core/components/DataTb';
 
 <DataTb 
   source={{ type: 'csv', url: '/data/products.csv' }}
   searchable 
   pagination 
-  client:load 
+  client:idle 
 />
 ```
 
@@ -60,14 +40,14 @@ import { DataTb } from '../components/DataTb';
     ]
   }}
   searchable
-  client:load
+  client:idle
 />
 ```
 
 ### Directus Source
 
 ```jsx
-import { directusConfig } from '../user.config.mjs';
+import { directusConfig } from '@user/user.config.mjs';
 
 <DataTb 
   source={{
@@ -79,7 +59,7 @@ import { directusConfig } from '../user.config.mjs';
   }}
   searchable 
   pagination 
-  client:load 
+  client:idle 
 />
 ```
 
@@ -94,7 +74,7 @@ import { directusConfig } from '../user.config.mjs';
   }}
   searchable 
   pagination 
-  client:load 
+  client:idle 
 />
 ```
 
@@ -119,7 +99,7 @@ Override column display, formatting, and rendering:
   searchable
   pagination={{ pageSize: 20 }}
   initialSort={{ columnKey: 'name', direction: 'asc' }}
-  client:load
+  client:idle
 />
 ```
 
@@ -249,7 +229,7 @@ import { directusConfig } from '@user/user.config.mjs';
     collection: 'your_collection',
     config: directusConfig
   }}
-  client:load
+  client:idle
 />
 ```
 
@@ -258,7 +238,7 @@ import { directusConfig } from '@user/user.config.mjs';
 For optimal performance, use appropriate hydration strategies:
 
 - `client:load` - For interactive tables (Directus, API, searchable)
-- `client:load` - For static data (CSV, JSON) - loads after initial page render
+- `client:idle` - For static data (CSV, JSON) - loads after initial page render
 - `client:visible` - Load when table scrolls into view
 
 ```jsx
@@ -277,7 +257,7 @@ For optimal performance, use appropriate hydration strategies:
 {/* Static data - load when idle */}
 <DataTb 
   source={{ type: 'csv', url: '/data.csv' }}
-  client:load 
+  client:idle 
 />
 ```
 

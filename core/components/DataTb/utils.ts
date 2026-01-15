@@ -128,6 +128,14 @@ export function columnConfigToColumnDef(config: ColumnConfig): ColumnDef<DataRow
         return config.render(value, row);
       }
       
+      // Use labels map if provided
+      if (config.labels) {
+        const key = String(value);
+        if (config.labels[key]) {
+          return config.labels[key];
+        }
+      }
+      
       // Apply format if specified
       return formatValue(value, config.format);
     },
@@ -141,29 +149,22 @@ export function mergeColumns(
   autoColumns: ColumnConfig[],
   userColumns?: ColumnConfig[]
 ): ColumnConfig[] {
+  // If no user columns, use all auto-detected columns
   if (!userColumns || userColumns.length === 0) {
     return autoColumns;
   }
   
-  // Create a map of user columns by key
-  const userColumnMap = new Map(
-    userColumns.map(col => [col.key, col])
-  );
-  
-  // Merge: use user config if exists, otherwise use auto-detected
-  const merged = autoColumns.map(autoCol => {
-    const userCol = userColumnMap.get(autoCol.key);
-    return userCol ? { ...autoCol, ...userCol } : autoCol;
-  });
-  
-  // Add any user columns that weren't in auto-detected
-  userColumns.forEach(userCol => {
-    if (!autoColumns.find(autoCol => autoCol.key === userCol.key)) {
-      merged.push(userCol);
+  // Exclusive Mode:
+  // Return ONLY user columns, but enrich them with auto-detected defaults (like headers) if available
+  return userColumns.map(userCol => {
+    const autoCol = autoColumns.find(ac => ac.key === userCol.key);
+    // If we found a match, merge defaults from autoCol, but let userCol override
+    if (autoCol) {
+      return { ...autoCol, ...userCol };
     }
+    // If no match (computed column or non-existent key), return userCol as is
+    return userCol;
   });
-  
-  return merged;
 }
 
 /**

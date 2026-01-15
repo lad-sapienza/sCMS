@@ -1,11 +1,11 @@
 /**
  * DataTb Component Exports
  * 
- * Main entry point for the DataTb component system
+ * Exports the MDX-safe wrapper by default for better compatibility
+ * with Astro MDX files
  */
 
-// Main component (use the .astro wrapper in Astro files)
-export { DataTb } from './DataTb';
+export { DataTb } from './DataTbMdx';
 
 // Source components
 export {

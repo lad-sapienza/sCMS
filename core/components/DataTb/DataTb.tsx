@@ -16,8 +16,7 @@ import {
   type SortingState,
   type ColumnFiltersState,
 } from '@tanstack/react-table';
-import Papa from 'papaparse';
-import { createDirectus, rest, staticToken, readItems } from '@directus/sdk';
+import { fetchData } from '../../utils/data-fetcher';
 import type { DataRow, DataTbProps, ColumnConfig, SourceConfig } from './types';
 import {
   autoDetectColumns,
@@ -46,114 +45,38 @@ export function DataTb({
   );
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [globalFilter, setGlobalFilter] = useState('');
-  
+
   // Use a ref to track source changes more reliably
   const sourceRef = useRef<string>('');
   const currentSourceKey = JSON.stringify(source);
-  
+
   // Pagination config
   const paginationConfig = typeof pagination === 'object' ? pagination : {};
   const pageSize = paginationConfig.pageSize || 10;
   const pageSizeOptions = paginationConfig.pageSizeOptions || [10, 20, 50, 100];
-  
+
   // Fetch data based on source configuration
   useEffect(() => {
     // Check if source has actually changed
     if (currentSourceKey === sourceRef.current) {
       return;
     }
-    
+
     sourceRef.current = currentSourceKey;
-    
+
     if (!source) {
       setError(new Error('No data source provided'));
       setLoading(false);
       return;
     }
 
-    const fetchData = async () => {
+    const loadData = async () => {
       try {
         setLoading(true);
         setError(null);
 
-        let fetchedData: DataRow[] = [];
-
-        switch (source.type) {
-          case 'csv':
-            await new Promise<void>((resolve, reject) => {
-              Papa.parse(source.url, {
-                download: true,
-                header: true,
-                delimiter: source.delimiter || ',',
-                skipEmptyLines: true,
-                dynamicTyping: true,
-                complete: (results) => {
-                  fetchedData = source.skipRows && source.skipRows > 0
-                    ? results.data.slice(source.skipRows)
-                    : results.data;
-                  resolve();
-                },
-                error: (error) => {
-                  reject(error);
-                },
-              });
-            });
-            break;
-
-          case 'json':
-            if (source.data) {
-              fetchedData = source.data;
-            } else if (source.url) {
-              const response = await fetch(source.url);
-              if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-              const jsonData = await response.json();
-              fetchedData = Array.isArray(jsonData) ? jsonData : [jsonData];
-            }
-            break;
-
-          case 'directus':
-            if (!source.config) throw new Error('Directus configuration required');
-            const client = createDirectus(source.config.url)
-              .with(staticToken(source.config.token))
-              .with(rest());
-            
-            const queryOptions: any = {};
-            if (source.filter) queryOptions.filter = source.filter;
-            if (source.fields) queryOptions.fields = source.fields;
-            if (source.sort) queryOptions.sort = source.sort;
-            if (source.limit) queryOptions.limit = source.limit;
-            
-            const items = await client.request(readItems(source.collection, queryOptions));
-            fetchedData = items as any[];
-            break;
-
-          case 'api':
-            const apiOptions: RequestInit = {
-              method: source.method || 'GET',
-              headers: {
-                'Content-Type': 'application/json',
-                ...source.headers,
-              },
-            };
-            if (source.body && source.method === 'POST') {
-              apiOptions.body = JSON.stringify(source.body);
-            }
-            const apiResponse = await fetch(source.url, apiOptions);
-            if (!apiResponse.ok) throw new Error(`HTTP error! status: ${apiResponse.status}`);
-            const apiData = await apiResponse.json();
-            
-            if (source.transformer) {
-              fetchedData = source.transformer(apiData);
-            } else if (Array.isArray(apiData)) {
-              fetchedData = apiData;
-            } else if (apiData.data && Array.isArray(apiData.data)) {
-              fetchedData = apiData.data;
-            } else {
-              fetchedData = [apiData];
-            }
-            break;
-        }
-
+        const fetchedData = await fetchData(source);
+        
         setData(fetchedData);
         setLoading(false);
       } catch (err) {
@@ -162,26 +85,26 @@ export function DataTb({
       }
     };
 
-    fetchData();
+    loadData();
   }, [currentSourceKey]); // Use stringified source as dependency
-  
+
   // Auto-detect or merge columns
   const finalColumns = useMemo(() => {
     if (data.length === 0) {
       return [];
     }
-    
+
     const autoColumns = autoDetectColumns(data);
     const merged = mergeColumns(autoColumns, userColumns);
     return merged;
   }, [data, userColumns]);
-  
+
   // Convert to TanStack column definitions
   const columnDefs = useMemo(
     () => finalColumns.map(columnConfigToColumnDef),
     [finalColumns]
   );
-  
+
   // Initialize table
   const table = useReactTable({
     data,
@@ -205,7 +128,7 @@ export function DataTb({
       },
     },
   });
-  
+
   // Render loading state
   if (loading) {
     return (
@@ -216,7 +139,7 @@ export function DataTb({
       </div>
     );
   }
-  
+
   // Render error state
   if (error) {
     return (
@@ -227,7 +150,7 @@ export function DataTb({
       </div>
     );
   }
-  
+
   // Render empty state
   if (data.length === 0) {
     return (
@@ -238,11 +161,10 @@ export function DataTb({
       </div>
     );
   }
-  
-  console.log('DataTb: Rendering table with', data.length, 'rows');
+
   return (
     <div className={`datatb-container ${className}`}>
-      
+
       {/* Search input */}
       {searchable && (
         <div className="datatb-search mb-4">
@@ -255,7 +177,7 @@ export function DataTb({
           />
         </div>
       )}
-      
+
       {/* Table */}
       <div className="datatb-table-wrapper overflow-x-auto border border-gray-200 rounded-lg shadow-sm">
         <table className="datatb-table min-w-full divide-y divide-gray-200">
@@ -312,7 +234,7 @@ export function DataTb({
           </tbody>
         </table>
       </div>
-      
+
       {/* Pagination */}
       {pagination && (
         <div className="datatb-pagination mt-4 flex items-center justify-between">
@@ -346,12 +268,12 @@ export function DataTb({
               {'>>'}
             </button>
           </div>
-          
+
           <div className="flex items-center gap-4">
             <span className="text-sm text-gray-700">
               Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
             </span>
-            
+
             {paginationConfig.showPageSize !== false && (
               <select
                 value={table.getState().pagination.pageSize}
@@ -367,7 +289,7 @@ export function DataTb({
                 ))}
               </select>
             )}
-            
+
             <span className="text-sm text-gray-700">
               {data.length} total rows
             </span>

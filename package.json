@@ -24,8 +24,12 @@
     "@astrojs/sitemap": "^3.2.2",
     "@directus/sdk": "^18.0.3",
     "@tanstack/react-table": "^8.21.3",
+    "@types/geojson": "^7946.0.16",
+    "@vis.gl/react-maplibre": "^8.1.0",
     "astro": "^5.0.3",
+    "maplibre-gl": "^5.16.0",
     "papaparse": "^5.5.3",
+    "prop-types": "^15.8.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "zod": "^3.23.8"

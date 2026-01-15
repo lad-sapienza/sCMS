@@ -1,0 +1,118 @@
+---
+title: 'Map Component Demo'
+description: 'Examples of the Map component with MapLibre'
+layout: ../layouts/MdxLayout.astro
+---
+
+import { Map } from '../../core/components/Map';
+
+# Map Component
+
+The `Map` component renders an interactive map using MapLibre GL JS. Vector layers can be added via the `vectorLayers` prop or shorthand props like `geojson`, `csv`, `json`, etc.
+
+## Example 1: Simple GeoJSON Map
+
+This example loads data directly from `ksa.geojson` using the `geojson` shorthand prop with custom styling.
+
+<Map 
+  geojson={{
+    name: "Kahramanmaraş Survey Sites",
+    path: "/data/ksa.geojson",
+    popup: "<b>${Site_Name}</b><br/>${Description}",
+    style: {
+      type: 'circle',
+      paint: {
+        'circle-radius': 4,
+        'circle-color': '#ff6b6b',
+        'circle-stroke-width': 1,
+        'circle-stroke-color': '#ffffff'
+      }
+    }
+  }}
+  height="500px" 
+  center="37,37,8"
+  client:only="react"
+  baseLayers={['EsriSatellite', 'GoogleTerrain']}
+/>
+
+## Example 2: CSV with Custom Column Names
+
+This example loads CSV data with explicitly defined coordinate columns.
+
+<Map 
+  csv={{
+    path: "/data/ksa.csv",
+    lng: "Longitude",
+    lat: "Latitude",
+    popup: "<b>${Site_Name}</b><br/>${Description}",
+    style: {
+      type: 'circle',
+      paint: {
+        'circle-radius': 8,
+        'circle-color': '#4ecdc4',
+        'circle-stroke-width': 2,
+        'circle-stroke-color': '#ffffff'
+      }
+    }
+  }}
+  height="500px" 
+  center="37,37,8"
+  client:only="react"
+  baseLayers={['EsriSatellite', 'GoogleTerrain']}
+/>
+
+## Example 3: Multiple Vector Layers
+
+This example demonstrates using the `vectorLayers` prop to add multiple layers with custom styling and popups.
+
+<Map 
+  height="600px" 
+  center="37,37,8"
+  navigationControl="top-right"
+  scaleControl="bottom-left"
+  client:only="react"
+  baseLayers={['EsriSatellite', 'GoogleTerrain']}
+  vectorLayers={[
+    {
+      name: 'GeoJSON Sites',
+      source: { type: 'geojson', url: '/data/ksa.geojson' },
+      popupTemplate: '<b>${Site_Name}</b><br/>${Description}',
+      fitToContent: true,
+      style: {
+        type: 'circle',
+        paint: {
+          'circle-radius': 8,
+          'circle-color': '#ff6b6b',
+          'circle-stroke-width': .5,
+          'circle-stroke-color': '#ffffff'
+        }
+      }
+    },
+    {
+      name: 'CSV Sites',
+      source: { type: 'csv', url: '/data/ksa.csv' },
+      popupTemplate: '<b>${Site_Name}</b>',
+      style: {
+        type: 'circle',
+        paint: {
+          'circle-radius': 4,
+          'circle-color': '#4ecdc4',
+          'circle-stroke-width': .5,
+          'circle-stroke-color': '#ffffff'
+        }
+      }
+    }
+  ]}
+/>
+
+## Example 4: Custom Basemap
+
+This example shows a custom basemap configuration with GeoJSON data.
+
+<Map 
+  geojson="/data/ksa.geojson" 
+  height="400px" 
+  center="37,37,8"
+  client:only="react"
+  baseLayers={['EsriSatellite', 'GoogleTerrain']}
+/>
