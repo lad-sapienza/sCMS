@@ -1,0 +1,36 @@
+/**
+ * Record Component
+ * 
+ * Display a single record's details from a data source
+ */
+
+---
+import type { DataSource } from '../types';
+import { fetchFromDirectus } from '../utils/directus';
+
+interface Props {
+  source: DataSource;
+}
+
+const { source } = Astro.props;
+
+let record: any = null;
+
+if ('directus' in source && source.directus.id) {
+  record = await fetchFromDirectus(source.directus);
+}
+---
+
+<div class="record-component">
+  {record ? (
+    <slot />
+  ) : (
+    <p>Record not found</p>
+  )}
+</div>
+
+<style>
+  .record-component {
+    margin: 2rem 0;
+  }
+</style>

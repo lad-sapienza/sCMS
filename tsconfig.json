@@ -1,0 +1,21 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "strictNullChecks": true,
+    "allowJs": true,
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": {
+      "@core/*": ["core/*"],
+      "@user/*": ["usr/*"],
+      "@components/*": ["usr/components/*"],
+      "@layouts/*": ["usr/layouts/*"],
+      "@content/*": ["usr/content/*"]
+    }
+  },
+  "include": ["usr/**/*", "core/**/*"],
+  "exclude": ["node_modules", "dist"]
+}

@@ -1,0 +1,253 @@
+---
+title: 'DataTb Component Demo'
+description: 'Examples of the DataTb component with different data sources'
+layout: ../layouts/MdxLayout.astro
+---
+
+
+import DataTb from '../components/DataTb/DataTbMdx';
+import AdvancedTable from '../components/DataTb/examples/AdvancedTable';
+
+
+
+
+# DataTb Component Demo
+
+
+
+The `DataTb` component provides a powerful, flexible way to display tabular data from various sources with built-in sorting, filtering, and pagination.
+
+---
+
+## Example 1: CSV Source
+
+Load data from a CSV file with automatic column detection:
+
+```jsx
+<DataTb 
+  csv="/data/ksa.csv"
+  searchable 
+  pagination 
+  client:load 
+/>
+```
+
+<DataTb 
+  csv="/data/ksa.csv"
+  searchable 
+  pagination 
+  client:load 
+/>
+
+---
+
+## Example 2: CSV with Custom Columns
+
+Same data with customized column display and formatting:
+
+```jsx
+<DataTb 
+  csv="/data/ksa.csv"
+  columns={[
+    { key: 'Item_Label', header: 'Site ID', sortable: true },
+    { key: 'Name', header: 'Name', sortable: true },
+    { key: 'Site_Name', header: 'Site Name' },
+    { key: 'Survey_Year', header: 'Survey Year', format: 'number' },
+    { key: 'Subregion', header: 'Subregion' }
+  ]}
+  searchable
+  pagination={{ pageSize: 5, showPageSize: true }}
+  initialSort={{ columnKey: 'Item_Label', direction: 'asc' }}
+  client:load
+/>
+```
+<DataTb 
+  csv="/data/ksa.csv"
+  columns={[
+    { key: 'Item_Label', header: 'Site ID', sortable: true },
+    { key: 'Name', header: 'Name', sortable: true },
+    { key: 'Site_Name', header: 'Site Name' },
+    { key: 'Survey_Year', header: 'Survey Year', format: 'number' },
+    { key: 'Subregion', header: 'Subregion' }
+  ]}
+  searchable
+  pagination={{ pageSize: 5, showPageSize: true }}
+  initialSort={{ columnKey: 'Item_Label', direction: 'asc' }}
+  client:load
+/>
+
+---
+
+## Example 3: Inline JSON Data
+
+Display data directly from JSON:
+
+```jsx
+export const jsonData = [
+  { language: 'JavaScript', year: 1995, creator: 'Brendan Eich' },
+  { language: 'Python', year: 1991, creator: 'Guido van Rossum' },
+  { language: 'Java', year: 1995, creator: 'James Gosling' },
+  { language: 'TypeScript', year: 2012, creator: 'Anders Hejlsberg' },
+  { language: 'Rust', year: 2010, creator: 'Graydon Hoare' }
+];
+
+<DataTb 
+  json={jsonData}
+  searchable
+  pagination={false}
+  client:load
+/>
+```
+
+export const jsonData = [
+  { language: 'JavaScript', year: 1995, creator: 'Brendan Eich' },
+  { language: 'Python', year: 1991, creator: 'Guido van Rossum' },
+  { language: 'Java', year: 1995, creator: 'James Gosling' },
+  { language: 'TypeScript', year: 2012, creator: 'Anders Hejlsberg' },
+  { language: 'Rust', year: 2010, creator: 'Graydon Hoare' }
+];
+
+<DataTb 
+  json={jsonData}
+  searchable
+  pagination={false}
+  client:load
+/>
+
+---
+
+## Example 4: API with Transformer
+
+Fetch data from a public API and transform it:
+
+<DataTb 
+  api="https://jsonplaceholder.typicode.com/todos"
+  columns={[
+    { key: 'title', header: 'Title', sortable: true },
+    { key: 'userId', header: 'User ID' },
+    { key: 'completed', header: 'Status', labels: { 'true': '✅ Done', 'false': '⏳ Pending' } }
+  ]}
+  searchable
+  pagination={{ pageSize: 10 }}
+  client:load
+/>
+
+---
+
+## Example 5: Directus Integration
+
+_Note: This example is shown for reference only. It requires valid Directus configuration in `user.config.mjs`_
+
+**Example code:**
+
+```jsx
+import { DataTb } from '../components/DataTb';
+import { directusConfig } from '../user.config.mjs';
+
+<DataTb 
+  source={{
+    type: 'directus',
+    collection: 'articles',
+    config: directusConfig,
+    filter: { status: { _eq: 'published' } },
+    sort: ['-date_published'],
+    limit: 50
+  }}
+  searchable 
+  pagination 
+  client:load 
+/>
+```
+
+**To use this example:**
+1. Set up your Directus instance URL in `usr/user.config.mjs`
+2. Generate an access token in Directus admin panel
+3. Add the token to `usr/user.config.mjs`
+4. Replace `"articles"` with your collection name
+
+---
+
+
+---
+
+## Example 6: Complex Transformations (The Wrapper Pattern)
+
+**Question:** "Can I use functions for complex transformations?"
+**Answer:** Not directly inside MDX props (due to serialization limits), but **YES** by using a Wrapper Component.
+
+Create a React component (`AdvancedTable.tsx`) that defines your columns with functions, and import it here.
+
+```tsx
+// AdvancedTable.tsx
+export default function AdvancedTable() {
+  const columns = [
+    { 
+      key: 'priority', 
+      render: (val) => <span className={...}>{val}</span> 
+    },
+    {
+      key: 'action',
+      render: (_, row) => <button onClick={() => alert(row.title)}>Click Me</button>
+    }
+  ];
+  return <DataTb columns={columns} ... />
+}
+```
+
+**Result:**
+
+<AdvancedTable client:load />
+
+---
+
+## Features
+
+- **Multiple Data Sources**: CSV, JSON, Directus, generic APIs
+- **Auto-detection**: Automatically detects columns from data
+- **Custom Columns**: Override column headers, formatting, and rendering
+- **Sorting**: Click column headers to sort (when enabled)
+- **Filtering**: Global search across all columns (when enabled)
+- **Pagination**: Built-in pagination with customizable page sizes
+- **Formatting**: Built-in formatters for dates, numbers, currency, percentages
+- **Custom Rendering**: Render custom React components in cells
+- **TypeScript**: Full TypeScript support with type safety
+- **Tailwind Styled**: Beautiful default styling with Tailwind CSS
+
+---
+
+## API Reference
+
+### DataTb Props
+
+- `columns?: ColumnConfig[]` - Column definitions (auto-detected if not provided)
+- `searchable?: boolean` - Enable global search
+- `pagination?: boolean | PaginationConfig` - Enable/configure pagination
+- `sortable?: boolean` - Enable column sorting
+- `initialSort?: { columnKey: string, direction: 'asc' | 'desc' }` - Initial sort state
+- `className?: string` - Custom CSS classes
+- `loadingMessage?: string` - Loading state message
+- `emptyMessage?: string` - Empty state message
+- `errorMessage?: string` - Error state message
+
+### Column Config
+
+```typescript
+{
+  key: string;           // Data property key
+  header: string;        // Display header
+  sortable?: boolean;    // Enable sorting
+  format?: 'date' | 'number' | 'currency' | 'percent';
+  render?: (value, row) => ReactNode;  // Custom renderer
+  width?: string;        // Column width
+}
+```
+
+### Source Components
+
+- **CsvSource**: `url`, `delimiter`, `skipRows`
+- **JsonSource**: `data` or `url`
+- **DirectusSource**: `collection`, `config`, `filter`, `fields`, `sort`, `limit`
+- **ApiSource**: `url`, `method`, `headers`, `body`, `transformer`
+
+
+

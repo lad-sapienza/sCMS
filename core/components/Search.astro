@@ -1,0 +1,226 @@
+/**
+ * Search Component
+ * 
+ * Provides search functionality with custom result templates.
+ * Supports multiple data sources: Directus, CSV, JSON, etc.
+ */
+
+---
+import type { DataSource } from '../types';
+import { fetchFromDirectus } from '../utils/directus';
+import { fetchRemoteData } from '../utils/content';
+
+interface Props {
+  source: DataSource;
+  fields: string[];
+  placeholder?: string;
+  resultsPerPage?: number;
+}
+
+const { 
+  source, 
+  fields,
+  placeholder = 'Search...',
+  resultsPerPage = 10 
+} = Astro.props;
+
+// Fetch data based on source type
+let data: any[] = [];
+
+if ('directus' in source) {
+  data = await fetchFromDirectus(source.directus);
+} else if ('path2data' in source) {
+  const path = source.path2data.path;
+  data = await fetchRemoteData(path);
+}
+
+const searchId = `search-${Math.random().toString(36).substr(2, 9)}`;
+---
+
+<div class="search-component" data-search-id={searchId}>
+  <div class="search-input-wrapper">
+    <input
+      type="text"
+      class="search-input"
+      placeholder={placeholder}
+      data-fields={JSON.stringify(fields)}
+      data-items={JSON.stringify(data)}
+    />
+  </div>
+  
+  <div class="search-results">
+    <div class="results-count"></div>
+    <div class="results-list"></div>
+    <div class="results-pagination"></div>
+  </div>
+</div>
+
+<script define:vars={{ resultsPerPage }}>
+  document.addEventListener('DOMContentLoaded', () => {
+    const searchComponents = document.querySelectorAll('.search-component');
+    
+    searchComponents.forEach(component => {
+      const input = component.querySelector('.search-input');
+      const resultsCount = component.querySelector('.results-count');
+      const resultsList = component.querySelector('.results-list');
+      const pagination = component.querySelector('.results-pagination');
+      
+      if (!input) return;
+      
+      const fields = JSON.parse(input.dataset.fields || '[]');
+      const items = JSON.parse(input.dataset.items || '[]');
+      
+      let currentPage = 1;
+      let filteredItems = [];
+      
+      function searchItems(query) {
+        if (!query.trim()) {
+          filteredItems = items;
+        } else {
+          const lowerQuery = query.toLowerCase();
+          filteredItems = items.filter(item =>
+            fields.some(field =>
+              String(item[field] || '').toLowerCase().includes(lowerQuery)
+            )
+          );
+        }
+        currentPage = 1;
+        renderResults();
+      }
+      
+      function renderResults() {
+        const start = (currentPage - 1) * resultsPerPage;
+        const end = start + resultsPerPage;
+        const pageItems = filteredItems.slice(start, end);
+        const totalPages = Math.ceil(filteredItems.length / resultsPerPage);
+        
+        resultsCount.textContent = `Found ${filteredItems.length} results`;
+        
+        resultsList.innerHTML = pageItems.map(item => {
+          const title = item[fields[0]] || 'Untitled';
+          const description = item[fields[1]] || '';
+          
+          return `
+            <div class="result-item">
+              <h3>${title}</h3>
+              <p>${description}</p>
+            </div>
+          `;
+        }).join('');
+        
+        if (totalPages > 1) {
+          pagination.innerHTML = `
+            <button ${currentPage === 1 ? 'disabled' : ''} data-action="prev">Previous</button>
+            <span>Page ${currentPage} of ${totalPages}</span>
+            <button ${currentPage === totalPages ? 'disabled' : ''} data-action="next">Next</button>
+          `;
+        } else {
+          pagination.innerHTML = '';
+        }
+      }
+      
+      input.addEventListener('input', (e) => {
+        searchItems(e.target.value);
+      });
+      
+      pagination.addEventListener('click', (e) => {
+        const action = e.target.dataset.action;
+        if (action === 'prev' && currentPage > 1) {
+          currentPage--;
+          renderResults();
+        } else if (action === 'next') {
+          const totalPages = Math.ceil(filteredItems.length / resultsPerPage);
+          if (currentPage < totalPages) {
+            currentPage++;
+            renderResults();
+          }
+        }
+      });
+      
+      renderResults();
+    });
+  });
+</script>
+
+<style>
+  .search-component {
+    margin: 2rem 0;
+  }
+
+  .search-input-wrapper {
+    margin-bottom: 2rem;
+  }
+
+  .search-input {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.1rem;
+    border: 2px solid #e5e5e5;
+    border-radius: 8px;
+    transition: border-color 0.2s;
+  }
+
+  .search-input:focus {
+    outline: none;
+    border-color: #fe04fc;
+  }
+
+  .results-count {
+    margin-bottom: 1rem;
+    color: #666;
+    font-size: 0.9rem;
+  }
+
+  .results-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .result-item {
+    padding: 1.5rem;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    transition: box-shadow 0.2s;
+  }
+
+  .result-item:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .result-item h3 {
+    margin: 0 0 0.5rem 0;
+    color: #fe04fc;
+  }
+
+  .result-item p {
+    margin: 0;
+    color: #666;
+  }
+
+  .results-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .results-pagination button {
+    padding: 0.5rem 1rem;
+    background: #fe04fc;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
+  .results-pagination button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+  }
+
+  .results-pagination span {
+    color: #666;
+  }
+</style>

@@ -1,0 +1,94 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import SEO from '../../core/components/SEO.astro';
+import { siteMetadata } from '../user.config.mjs';
+
+interface Props {
+  frontmatter: {
+    title: string;
+    description?: string;
+    date?: string | Date;
+    author?: string;
+    tags?: string[];
+  };
+}
+
+const { frontmatter } = Astro.props;
+
+// Convert date to Date object if it's a string
+const dateObj = frontmatter.date ? (typeof frontmatter.date === 'string' ? new Date(frontmatter.date) : frontmatter.date) : null;
+---
+
+<BaseLayout title={frontmatter.title} description={frontmatter.description}>
+  <Fragment slot="head">
+    <SEO 
+      title={frontmatter.title} 
+      description={frontmatter.description}
+      isArticle={true}
+      datePublished={frontmatter.date}
+      author={frontmatter.author}
+      tags={frontmatter.tags}
+      siteMetadata={siteMetadata}
+    />
+  </Fragment>
+  <article class="prose prose-lg max-w-none">
+    <header class="mb-8">
+      <h1 class="text-4xl font-bold text-gray-900 mb-2">{frontmatter.title}</h1>
+      {dateObj && (
+        <time class="text-gray-600" datetime={dateObj.toISOString()}>
+          {dateObj.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+        </time>
+      )}
+    </header>
+    
+    <div class="markdown-content">
+      <slot />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .markdown-content :global(h2) {
+    @apply text-3xl font-bold mt-8 mb-4 text-gray-900;
+  }
+  
+  .markdown-content :global(h3) {
+    @apply text-2xl font-semibold mt-6 mb-3 text-gray-800;
+  }
+  
+  .markdown-content :global(p) {
+    @apply mb-4 text-gray-700 leading-relaxed;
+  }
+  
+  .markdown-content :global(ul), .markdown-content :global(ol) {
+    @apply mb-4 ml-6;
+  }
+  
+  .markdown-content :global(li) {
+    @apply mb-2 text-gray-700;
+  }
+  
+  .markdown-content :global(ul li) {
+    @apply list-disc;
+  }
+  
+  .markdown-content :global(strong) {
+    @apply font-semibold text-gray-900;
+  }
+  
+  .markdown-content :global(a) {
+    @apply text-blue-600 hover:text-blue-800 hover:underline;
+  }
+  
+  .markdown-content :global(code) {
+    @apply bg-gray-100 px-1 py-0.5 rounded text-sm font-mono;
+  }
+  
+  .markdown-content :global(pre) {
+    @apply bg-gray-900 text-white p-4 rounded-lg overflow-x-auto mb-4;
+  }
+  
+  .markdown-content :global(pre code) {
+    @apply bg-transparent p-0;
+  }
+</style>

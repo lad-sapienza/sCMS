@@ -1,0 +1,62 @@
+/**
+ * Gallery Component
+ * 
+ * Display responsive image gallery with lightbox
+ */
+
+---
+import { getImage } from 'astro:assets';
+
+interface Props {
+  path?: string;
+  reverseSorting?: boolean;
+  title?: string;
+}
+
+const { path, reverseSorting = false, title } = Astro.props;
+
+// TODO: Implement gallery image loading
+// - Load images from specified path
+// - Generate thumbnails
+// - Add lightbox functionality
+---
+
+<div class="gallery-component">
+  {title && <h2>{title}</h2>}
+  
+  <div class="gallery-grid">
+    <p class="gallery-placeholder">
+      📷 Gallery Component - Image loading to be implemented
+    </p>
+  </div>
+</div>
+
+<style>
+  .gallery-component {
+    margin: 2rem 0;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .gallery-placeholder {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 3rem;
+    background: #f5f5f5;
+    border-radius: 8px;
+    color: #666;
+  }
+</style>
+
+<!--
+  TODO: Implement gallery functionality
+  - Load images from path or current page location
+  - Generate responsive thumbnails
+  - Add PhotoSwipe or similar lightbox
+  - Support sorting options
+-->

@@ -1,0 +1,26 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { 
+  title = 's:CMS - Static Content Management System',
+  description = 'A powerful static site CMS built with Astro'
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <h1>Testing BaseLayout</h1>
+    <slot />
+  </body>
+</html>

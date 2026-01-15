@@ -1,0 +1,61 @@
+/**
+ * MapLeaflet Component
+ * 
+ * Interactive map component using Leaflet.js
+ * Note: This is a placeholder. Full Leaflet integration requires client-side JS.
+ */
+
+---
+interface Props {
+  center?: string; // "lat,lng,zoom"
+  height?: string;
+  baseLayers?: string[];
+  scrollWheelZoom?: boolean;
+}
+
+const {
+  center = "0,0,2",
+  height = "600px",
+  baseLayers = ["OpenStreetMap"],
+  scrollWheelZoom = false
+} = Astro.props;
+
+const [lat, lng, zoom] = center.split(',').map(Number);
+const mapId = `map-${Math.random().toString(36).substr(2, 9)}`;
+---
+
+<div class="map-container">
+  <div id={mapId} class="leaflet-map" style={`height: ${height}`}>
+    <slot />
+  </div>
+</div>
+
+<style>
+  .map-container {
+    margin: 2rem 0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .leaflet-map {
+    width: 100%;
+    background: #f5f5f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+  }
+
+  .leaflet-map::before {
+    content: '🗺️ Map Component - Leaflet integration required';
+  }
+</style>
+
+<!--
+  TODO: Implement full Leaflet integration
+  - Add Leaflet CSS and JS
+  - Initialize map with client:load directive
+  - Add base layers support
+  - Handle vector/raster layers from slots
+-->

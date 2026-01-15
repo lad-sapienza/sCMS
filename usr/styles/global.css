@@ -1,0 +1,14 @@
+/**
+ * User Global Styles
+ * 
+ * Add your custom global styles here.
+ * These will be applied in addition to the core styles.
+ */
+
+/* You can override core CSS variables here */
+:root {
+  /* Uncomment to override primary color */
+  /* --color-primary: #your-color; */
+}
+
+/* Add your custom styles below */
