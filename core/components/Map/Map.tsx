@@ -48,20 +48,19 @@ export function Map({
   const loadedLayers = useRef<Set<string>>(new Set());
   const layerControlRef = useRef<LayerControlIControl | null>(null);
 
-  // Resolve baseLayers - support both BaseLayerConfig[] and BasemapKey[]
+  // Resolve baseLayers - support both BaseLayerConfig[] and BasemapKey[], or mixed arrays
   const resolvedBaseLayers = useMemo(() => {
     if (!baseLayers || baseLayers.length === 0) return DEFAULT_BASE_LAYERS;
     
-    // Check if first element is a string (basemap key) or object (BaseLayerConfig)
-    if (typeof baseLayers[0] === 'string') {
-      // It's an array of basemap keys
-      return (baseLayers as BasemapKey[])
-        .map(key => getBasemap(key))
-        .filter((config): config is BaseLayerConfig => config !== undefined);
-    }
-    
-    // It's already an array of BaseLayerConfig
-    return baseLayers as BaseLayerConfig[];
+    // Handle mixed arrays: resolve each element individually
+    return baseLayers.map(layer => {
+      if (typeof layer === 'string') {
+        // It's a basemap key - resolve it
+        return getBasemap(layer);
+      }
+      // It's already a BaseLayerConfig object
+      return layer as BaseLayerConfig;
+    }).filter((config): config is BaseLayerConfig => config !== undefined);
   }, [baseLayers]);
 
   // Determine implicit source configuration from shorthand props
