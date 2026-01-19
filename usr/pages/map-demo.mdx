@@ -38,7 +38,7 @@ The `Map` component renders an interactive map using MapLibre GL JS. Vector laye
 
 ---
 
-<Example title="Adding controls to the map">
+<Example title="Example 2:Adding controls to the map">
   <Fragment slot="intro">
     This example demonstrates how to add navigation and scale controls to the map using the `navigationControl` and `scaleControl` props.
   </Fragment>
@@ -62,7 +62,7 @@ The `Map` component renders an interactive map using MapLibre GL JS. Vector laye
     baseLayers={['EsriSatellite', 'GoogleTerrain']}
     navigationControl="top-left"
     scaleControl="bottom-left"
-    fullscreenControl='bottom-right'
+    fullscreenControl='top-right'
     layerControl='top-right'
   />
 </Example>
@@ -70,7 +70,7 @@ The `Map` component renders an interactive map using MapLibre GL JS. Vector laye
 
 ---
 
-<Example title='Example 2: load geo-data from a GeoJSON file'>
+<Example title='Example 3: load geo-data from a GeoJSON file'>
   <Fragment slot="intro">
     This example loads data directly from `ksa.geojson` using the `geojson` shorthand prop with custom styling.
   </Fragment>
@@ -125,7 +125,7 @@ The `Map` component renders an interactive map using MapLibre GL JS. Vector laye
 ---
 
 
-<Example title='Example 3: load geo-data from a CSV file with Custom Column Names and custom style'>
+<Example title='Example 4: load geo-data from a CSV file with Custom Column Names and custom style'>
   <Fragment slot="intro">
     This example loads CSV data with explicitly defined coordinate columns.
   </Fragment>
@@ -178,7 +178,7 @@ The `Map` component renders an interactive map using MapLibre GL JS. Vector laye
 />
 </Example>
 
-<Example title="Example 4: Multiple Vector Layers">
+<Example title="Example 5: Multiple Vector Layers">
   <Fragment slot="intro">
     This example demonstrates adding multiple vector layers (GeoJSON and CSV) to the map with custom styles and popups.
   </Fragment>

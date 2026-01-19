@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import MapLibreMap, {
   NavigationControl,
   FullscreenControl,
@@ -12,7 +12,7 @@ import MapLibreMap, {
 import 'maplibre-gl/dist/maplibre-gl.css';
 import type { MapProps } from './types';
 import { RasterLayerLibre } from './RasterLayerLibre';
-import { LayerControl } from './LayerControl';
+import { LayerControlIControl } from './LayerControl';
 import type { BaseLayerConfig } from './types';
 import { defaultBasemaps, getBasemap, type BasemapKey } from './defaultBasemaps';
 import { fetchData } from '../../utils/data-fetcher';
@@ -43,8 +43,10 @@ export function Map({
   const [layersData, setLayersData] = useState<Record<string, FeatureCollection>>({});
   const [hoveredFeature, setHoveredFeature] = useState<any>(null);
   const [vectorLayerVisibility, setVectorLayerVisibility] = useState<Record<string, boolean>>({});
-  const mapRef = React.useRef<MapRef>(null);
-  const loadedLayers = React.useRef<Set<string>>(new Set());
+  const [mapLoaded, setMapLoaded] = useState(false);
+  const mapRef = useRef<MapRef>(null);
+  const loadedLayers = useRef<Set<string>>(new Set());
+  const layerControlRef = useRef<LayerControlIControl | null>(null);
 
   // Resolve baseLayers - support both BaseLayerConfig[] and BasemapKey[]
   const resolvedBaseLayers = useMemo(() => {
@@ -213,6 +215,53 @@ export function Map({
     }
   }, [allVectorLayers]);
 
+  // Add LayerControl as a proper IControl
+  useEffect(() => {
+    const map = mapRef.current?.getMap();
+    if (!map || !mapLoaded || !layerControl || mapStyle) return;
+
+    const position = typeof layerControl === 'string' ? layerControl : 'top-right';
+    
+    // Create and add control
+    const control = new LayerControlIControl({
+      baseLayers: resolvedBaseLayers,
+      activeBaseLayer,
+      onBaseLayerChange: setActiveBaseLayer,
+      vectorLayers: allVectorLayers.map(layer => ({
+        ...layer,
+        id: `layer-${layer.name.replace(/\s+/g, '-')}`
+      })),
+      vectorLayerVisibility,
+      onVectorLayerToggle: handleVectorLayerToggle
+    });
+
+    layerControlRef.current = control;
+    map.addControl(control, position);
+
+    return () => {
+      if (layerControlRef.current && map) {
+        map.removeControl(layerControlRef.current);
+      }
+    };
+  }, [mapLoaded, layerControl, mapStyle]);
+
+  // Update layer control props when they change
+  useEffect(() => {
+    if (layerControlRef.current) {
+      layerControlRef.current.updateProps({
+        baseLayers: resolvedBaseLayers,
+        activeBaseLayer,
+        onBaseLayerChange: setActiveBaseLayer,
+        vectorLayers: allVectorLayers.map(layer => ({
+          ...layer,
+          id: `layer-${layer.name.replace(/\s+/g, '-')}`
+        })),
+        vectorLayerVisibility,
+        onVectorLayerToggle: handleVectorLayerToggle
+      });
+    }
+  }, [resolvedBaseLayers, activeBaseLayer, allVectorLayers, vectorLayerVisibility]);
+
   return (
     <div style={{ height, position: 'relative', width: '100%' }}>
       <MapLibreMap
@@ -224,6 +273,7 @@ export function Map({
         }}
         mapStyle={mapStyle as any}
         style={{ width: '100%', height: '100%' }}
+        onLoad={() => setMapLoaded(true)}
         onClick={(e: any) => {
           // Check if any vector layer with popup was clicked
           if (e.features && e.features.length > 0) {
@@ -301,20 +351,7 @@ export function Map({
         {navigationControl && <NavigationControl position={navigationControl} />}
         {scaleControl && <ScaleControl position={scaleControl} />}
 
-        {!mapStyle && layerControl && (
-          <LayerControl 
-            baseLayers={resolvedBaseLayers}
-            activeBaseLayer={activeBaseLayer}
-            onBaseLayerChange={setActiveBaseLayer}
-            vectorLayers={allVectorLayers.map(layer => ({
-              ...layer,
-              id: `layer-${layer.name.replace(/\s+/g, '-')}`
-            }))}
-            vectorLayerVisibility={vectorLayerVisibility}
-            onVectorLayerToggle={handleVectorLayerToggle}
-            position={typeof layerControl === 'string' ? layerControl : 'top-right'}
-          />
-        )}
+        {/* LayerControl is now added via IControl in useEffect */}
 
         {/* Popup */}
         {hoveredFeature && (

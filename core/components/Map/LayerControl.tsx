@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { createRoot, type Root } from 'react-dom/client';
+import type { IControl } from 'maplibre-gl';
 import type { BaseLayerConfig, VectorLayerConfig, ControlPosition } from './types';
 
 export interface LayerControlProps {
@@ -11,20 +13,19 @@ export interface LayerControlProps {
   position?: ControlPosition;
 }
 
-export function LayerControl({ 
+// Internal React component for the control UI
+function LayerControlUI({ 
   baseLayers = [], 
   activeBaseLayer = 0, 
   onBaseLayerChange,
   vectorLayers = [],
   vectorLayerVisibility = {},
   onVectorLayerToggle,
-  position = 'top-right'
-}: LayerControlProps) {
+}: Omit<LayerControlProps, 'position'>) {
   const [isExpanded, setIsExpanded] = useState(false);
-  const radioGroupId = React.useId(); // Generate unique ID for this instance
+  const radioGroupId = React.useId();
   const timeoutRef = React.useRef<NodeJS.Timeout | null>(null);
 
-  // Show control if there are base layers OR vector layers
   const hasContent = baseLayers.length > 0 || vectorLayers.length > 0;
   if (!hasContent) return null;
 
@@ -39,11 +40,10 @@ export function LayerControl({
   const handleMouseLeave = () => {
     timeoutRef.current = setTimeout(() => {
       setIsExpanded(false);
-    }, 300); // 300ms delay to prevent accidental closing
+    }, 300);
   };
 
-  // Cleanup timeout on unmount
-  React.useEffect(() => {
+  useEffect(() => {
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
@@ -51,41 +51,8 @@ export function LayerControl({
     };
   }, []);
 
-  // Calculate position styles based on position prop
-  const positionStyles: React.CSSProperties = {
-    position: 'absolute',
-    zIndex: 1000,
-    backgroundColor: 'white',
-    borderRadius: 4,
-    boxShadow: '0 0 0 2px rgba(0,0,0,0.1)'
-  };
-
-  switch (position) {
-    case 'top-right':
-      positionStyles.top = 10;
-      positionStyles.right = 10;
-      break;
-    case 'top-left':
-      positionStyles.top = 10;
-      positionStyles.left = 10;
-      break;
-    case 'bottom-right':
-      positionStyles.bottom = 10;
-      positionStyles.right = 10;
-      break;
-    case 'bottom-left':
-      positionStyles.bottom = 10;
-      positionStyles.left = 10;
-      break;
-  }
-
   return (
-    <div 
-      className="maplibregl-ctrl maplibregl-ctrl-group"
-      style={positionStyles}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
+    <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       <div 
         style={{ padding: '12px', fontWeight: 600, userSelect: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
       >
@@ -160,3 +127,63 @@ export function LayerControl({
     </div>
   );
 }
+
+// MapLibre IControl wrapper
+export class LayerControlClass implements IControl {
+  private container: HTMLDivElement | undefined;
+  private root: Root | undefined;
+  private props: Omit<LayerControlProps, 'position'>;
+
+  constructor(props: Omit<LayerControlProps, 'position'>) {
+    this.props = props;
+  }
+
+  onAdd(): HTMLElement {
+    this.container = document.createElement('div');
+    this.container.className = 'maplibregl-ctrl maplibregl-ctrl-group';
+    
+    this.root = createRoot(this.container);
+    this.root.render(<LayerControlUI {...this.props} />);
+    return this.container;
+  }
+
+  onRemove(): void {
+    if (this.root) {
+      this.root.unmount();
+    }
+    this.container = undefined;
+  }
+
+  updateProps(props: Omit<LayerControlProps, 'position'>): void {
+    this.props = props;
+    if (this.root) {
+      this.root.render(<LayerControlUI {...this.props} />);
+    }
+  }
+}
+
+// React component wrapper for use in @vis.gl/react-maplibre
+export function LayerControl(props: LayerControlProps) {
+  const controlRef = useRef<LayerControlClass | null>(null);
+
+  useEffect(() => {
+    // Update props if control already exists
+    if (controlRef.current) {
+      const { position, ...restProps } = props;
+      controlRef.current.updateProps(restProps);
+    }
+  }, [props]);
+
+  // Store control instance
+  if (!controlRef.current) {
+    const { position, ...restProps } = props;
+    controlRef.current = new LayerControlClass(restProps);
+  }
+
+  // Return a placeholder that react-maplibre can recognize
+  // The actual control is added via map.addControl in Map.tsx
+  return null;
+}
+
+// Export the control class for direct use
+export { LayerControlClass as LayerControlIControl };
