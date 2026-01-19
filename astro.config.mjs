@@ -6,6 +6,7 @@ import tailwind from '@astrojs/tailwind';
 import { fileURLToPath } from 'url';
 import expressiveCode from 'astro-expressive-code';
 import { pluginLineNumbers } from '@expressive-code/plugin-line-numbers';
+import rehypeSlug from 'rehype-slug';
 
 // Import user configuration
 import { userConfig } from './usr/user.config.mjs';
@@ -16,6 +17,10 @@ const coreConfig = {
   output: 'static',
   srcDir: fileURLToPath(new URL('./usr', import.meta.url)),
   publicDir: fileURLToPath(new URL('./usr/public', import.meta.url)),
+  
+  markdown: {
+    rehypePlugins: [rehypeSlug],
+  },
   
   integrations: [
     expressiveCode({

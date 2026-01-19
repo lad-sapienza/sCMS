@@ -1,0 +1,76 @@
+---
+/**
+ * Table of Contents component that extracts headings from the page
+ * Automatically generates TOC from all headings with IDs in the page
+ */
+
+interface Props {
+  /** Maximum heading level to include (1-6) */
+  maxDepth?: number;
+  /** Minimum heading level to include (1-6) */
+  minDepth?: number;
+  /** Title for the TOC section */
+  title?: string;
+}
+
+const { maxDepth = 3, minDepth = 2, title = "Table of Contents" } = Astro.props;
+
+// Generate unique ID for this TOC instance
+const tocId = `toc-${Math.random().toString(36).substring(7)}`;
+---
+
+<nav id={tocId} class="toc bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 mb-6 not-prose">
+  <h2 class="text-lg font-bold mb-3" style="color: #111827;">{title}</h2>
+  <ul class="toc-list space-y-1.5 text-sm"></ul>
+</nav>
+
+<style>
+  @media (prefers-color-scheme: dark) {
+    .toc h2 {
+      color: #f3f4f6 !important;
+    }
+  }
+</style>
+
+<script define:vars={{ tocId, minDepth, maxDepth }}>
+  // Wait for DOM to be ready
+  document.addEventListener('DOMContentLoaded', () => {
+    const tocElement = document.getElementById(tocId);
+    if (!tocElement) return;
+    
+    const tocList = tocElement.querySelector('.toc-list');
+    if (!tocList) return;
+    
+    // Find all headings with IDs in the document
+    const headingSelector = Array.from({ length: maxDepth - minDepth + 1 }, (_, i) => 
+      `h${minDepth + i}[id]`
+    ).join(', ');
+    
+    const headings = document.querySelectorAll(headingSelector);
+    
+    if (headings.length === 0) {
+      tocElement.style.display = 'none';
+      return;
+    }
+    
+    // Build the TOC
+    headings.forEach((heading) => {
+      const level = parseInt(heading.tagName.substring(1));
+      const id = heading.id;
+      const text = heading.textContent || '';
+      
+      const li = document.createElement('li');
+      li.style.marginLeft = `${(level - minDepth) * 1}rem`;
+      li.className = 'list-none';
+      
+      const a = document.createElement('a');
+      a.href = `#${id}`;
+      a.textContent = text;
+      a.className = 'text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:underline transition-colors';
+      
+      li.appendChild(a);
+      tocList.appendChild(li);
+    });
+  });
+</script>
+
