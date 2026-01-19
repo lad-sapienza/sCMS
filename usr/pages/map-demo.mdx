@@ -6,11 +6,16 @@ layout: ../layouts/MdxLayout.astro
 
 import { Map } from '../../core/components/Map';
 
+import SimpleMap from './maps/01-simple.mdx';
+
+
 # Map Component
 
 The `Map` component renders an interactive map using MapLibre GL JS. Vector layers can be added via the `vectorLayers` prop or shorthand props like `geojson`, `csv`, `json`, etc.
 
-## Example 1: Simple GeoJSON Map
+<SimpleMap />
+
+## Example: a verySimple GeoJSON Map
 
 This example loads data directly from `ksa.geojson` using the `geojson` shorthand prop with custom styling.
 
