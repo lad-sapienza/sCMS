@@ -31,9 +31,9 @@ export function Map({
   vectorLayers = [],
   geolocateControl,
   fullscreenControl,
-  navigationControl,
+  navigationControl = 'top-left',
   scaleControl,
-  layerControl = true,
+  layerControl = 'top-right',
   geojson,
   csv,
   json,
@@ -312,6 +312,7 @@ export function Map({
             }))}
             vectorLayerVisibility={vectorLayerVisibility}
             onVectorLayerToggle={handleVectorLayerToggle}
+            position={typeof layerControl === 'string' ? layerControl : 'top-right'}
           />
         )}
 
