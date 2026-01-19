@@ -4,27 +4,26 @@ import ShowExample from '../../components/ShowExample.astro';
 ## A minimal map
 
 <ShowExample>
-<div slot="code">
+  <Fragment slot="intro">
+    This example shows the most basic Map configuration. It displays an interactive map centered on coordinates 37,37 (Turkey) with a zoom level of 8. Two basemap layers are available: an Esri satellite imagery layer and Google terrain layer. Users can switch between these layers and use navigation controls to pan and zoom the map.
+  </Fragment>
+  <Fragment slot="code">
+  ```jsx
+  <Map 
+    height="500px" 
+    center="37,37,8"
+    client:only="react"
+    baseLayers={['EsriSatellite', 'GoogleTerrain']}
+  />
+  ```
+  </Fragment>
 
-```jsx
-<Map 
-  height="500px" 
-  center="37,37,8"
-  client:only="react"
-  baseLayers={['EsriSatellite', 'GoogleTerrain']}
-/>
-```
+  <Map 
+    height="500px" 
+    center="37,37,8"
+    client:only="react"
+    baseLayers={['EsriSatellite', 'GoogleTerrain']}
+  />
 
-</div>
-<div slot="example">
-
-<Map 
-  height="500px" 
-  center="37,37,8"
-  client:only="react"
-  baseLayers={['EsriSatellite', 'GoogleTerrain']}
-/>
-
-</div>
 </ShowExample>
 
