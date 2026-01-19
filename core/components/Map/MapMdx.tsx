@@ -7,25 +7,25 @@ import { Map as MapCore } from './Map';
 import type { MapProps } from './types';
 
 export function Map(props: MapProps) {
-  // Memoize array/object props
+  // Memoize center prop
   const stableCenter = useMemo(() => props.center, [props.center]);
   
-  const stableSource = useMemo(() => {
-    if (props.source) return props.source;
-    if (props.csv) return { type: 'csv', url: props.csv } as const;
-    if (props.api) return { type: 'api', url: props.api } as const;
-    if (props.json) {
-       if (Array.isArray(props.json)) return { type: 'json', data: props.json } as const;
-       return { type: 'json', url: props.json as string } as const;
-    }
-    return undefined;
-  }, [props.source, props.csv, props.api, JSON.stringify(props.json)]);
+  // Memoize array/object props to prevent unnecessary re-renders in MDX
+  const stableBaseLayers = useMemo(() => props.baseLayers, [JSON.stringify(props.baseLayers)]);
+  const stableVectorLayers = useMemo(() => props.vectorLayers, [JSON.stringify(props.vectorLayers)]);
+  const stableGeojson = useMemo(() => props.geojson, [JSON.stringify(props.geojson)]);
+  const stableCsv = useMemo(() => props.csv, [JSON.stringify(props.csv)]);
+  const stableJson = useMemo(() => props.json, [JSON.stringify(props.json)]);
 
   return (
     <MapCore 
       {...props} 
       center={stableCenter}
-      source={stableSource}
+      baseLayers={stableBaseLayers}
+      vectorLayers={stableVectorLayers}
+      geojson={stableGeojson}
+      csv={stableCsv}
+      json={stableJson}
     />
   );
 }
