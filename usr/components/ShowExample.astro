@@ -1,0 +1,22 @@
+---
+interface Props {
+  codeWidth?: 'narrow' | 'default' | 'equal';
+}
+
+const { codeWidth = 'default' } = Astro.props;
+
+const gridCols = {
+  narrow: 'md:grid-cols-[1fr_2fr]',
+  default: 'md:grid-cols-[2fr_3fr]',
+  equal: 'md:grid-cols-2'
+}[codeWidth];
+---
+
+<div class={`grid grid-cols-1 ${gridCols} gap-4`}>
+  <div>
+    <slot name="code" />
+  </div>
+  <div>
+    <slot name="example" />
+  </div>
+</div>
