@@ -25,10 +25,10 @@ const gridCols = {
 </div>
 
 <div class={`grid grid-cols-1 ${gridCols} gap-4`}>
-  <div>
+  <div class="min-w-0 overflow-hidden">
     <slot name="code" />
   </div>
-  <div>
+  <div class="min-w-0">
     <slot />
   </div>
 </div>
