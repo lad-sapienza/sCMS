@@ -1,0 +1,34 @@
+---
+interface Props {
+  codeWidth?: 'narrow' | 'default' | 'equal';
+  disabled?: boolean;
+  title?: string;
+}
+
+const { codeWidth = 'default', disabled = false, title } = Astro.props;
+
+if (disabled) {
+  return null;
+}
+
+const gridCols = {
+  narrow: 'md:grid-cols-[1fr_2fr]',
+  default: 'md:grid-cols-[2fr_3fr]',
+  equal: 'md:grid-cols-2'
+}[codeWidth];
+---
+
+{title && <h2 class="text-2xl font-bold mb-3">{title}</h2>}
+
+<div class="mb-4 p-4 bg-gray-100 dark:bg-gray-800 border-l-4 border-blue-500 rounded-r text-sm italic text-gray-700 dark:text-gray-300 [&_code]:bg-white [&_code]:dark:bg-gray-900 [&_code]:text-gray-900 [&_code]:dark:text-gray-100 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded [&_code]:not-italic [&_code]:font-mono [&_code]:text-xs">
+  <slot name="intro" />
+</div>
+
+<div class={`grid grid-cols-1 ${gridCols} gap-4`}>
+  <div>
+    <slot name="code" />
+  </div>
+  <div>
+    <slot />
+  </div>
+</div>

@@ -1,9 +1,9 @@
 import { Map } from '../../../core/components/Map';
-import ShowExample from '../../components/ShowExample.astro';
+import Example from '../../components/Example.astro';
 
 ## A minimal map
 
-<ShowExample>
+<Example>
   <Fragment slot="intro">
     This example shows the most basic Map configuration. It displays an interactive map centered on coordinates 37,37 (Turkey) with a zoom level of 8. Two basemap layers are available: an Esri satellite imagery layer and Google terrain layer. Users can switch between these layers and use navigation controls to pan and zoom the map.
   </Fragment>
@@ -25,5 +25,5 @@ import ShowExample from '../../components/ShowExample.astro';
     baseLayers={['EsriSatellite', 'GoogleTerrain']}
   />
 
-</ShowExample>
+</Example>
 
