@@ -4,6 +4,8 @@ import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
 import { fileURLToPath } from 'url';
+import expressiveCode from 'astro-expressive-code';
+import { pluginLineNumbers } from '@expressive-code/plugin-line-numbers';
 
 // Import user configuration
 import { userConfig } from './usr/user.config.mjs';
@@ -16,18 +18,18 @@ const coreConfig = {
   publicDir: fileURLToPath(new URL('./usr/public', import.meta.url)),
   
   integrations: [
+    expressiveCode({
+      themes: ['github-dark'],
+      plugins: [pluginLineNumbers()],
+      defaultProps: {
+        showLineNumbers: true,
+      },
+    }),
     mdx(),
     react(),
     sitemap(),
     tailwind(),
   ],
-
-  markdown: {
-    shikiConfig: {
-      theme: 'github-dark',
-      wrap: true,
-    },
-  },
 
   vite: {
     resolve: {
