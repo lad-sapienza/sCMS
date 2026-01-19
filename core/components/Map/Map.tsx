@@ -47,9 +47,87 @@ export function Map({
   const mapRef = useRef<MapRef>(null);
   const loadedLayers = useRef<Set<string>>(new Set());
   const layerControlRef = useRef<LayerControlIControl | null>(null);
+  const [parsedStyleLayers, setParsedStyleLayers] = useState<{
+    baseLayers: BaseLayerConfig[];
+    vectorLayers: VectorLayerConfig[];
+  }>({ baseLayers: [], vectorLayers: [] });
+
+  // Parse mapStyle JSON to extract layers
+  useEffect(() => {
+    if (!mapStyle) {
+      setParsedStyleLayers({ baseLayers: [], vectorLayers: [] });
+      return;
+    }
+
+    const parseStyle = async () => {
+      try {
+        let styleObj: any;
+        
+        if (typeof mapStyle === 'string') {
+          // Fetch from URL
+          const response = await fetch(mapStyle);
+          styleObj = await response.json();
+        } else {
+          styleObj = mapStyle;
+        }
+
+        const baseLayers: BaseLayerConfig[] = [];
+        const vectorLayers: VectorLayerConfig[] = [];
+
+        // Extract raster sources as base layers
+        if (styleObj.sources) {
+          Object.entries(styleObj.sources).forEach(([sourceId, source]: [string, any]) => {
+            if (source.type === 'raster') {
+              // Find the layer that uses this source to get metadata
+              const layer = styleObj.layers?.find((l: any) => l.source === sourceId);
+              const name = layer?.metadata?.label || sourceId;
+              
+              baseLayers.push({
+                name,
+                url: source.tiles?.[0] || '',
+                attribution: source.attribution
+              });
+            }
+          });
+        }
+
+        // Extract vector layers
+        if (styleObj.layers) {
+          styleObj.layers.forEach((layer: any) => {
+            if (layer.type !== 'raster' && layer.source) {
+              const source = styleObj.sources[layer.source];
+              if (source && source.type === 'vector') {
+                vectorLayers.push({
+                  name: layer.metadata?.label || layer.id,
+                  source: {
+                    type: 'vector',
+                    url: source.url || source.tiles?.[0]
+                  },
+                  style: layer,
+                  visible: layer.layout?.visibility !== 'none'
+                });
+              }
+            }
+          });
+        }
+
+        setParsedStyleLayers({ baseLayers, vectorLayers });
+      } catch (error) {
+        console.error('Failed to parse mapStyle:', error);
+        setParsedStyleLayers({ baseLayers: [], vectorLayers: [] });
+      }
+    };
+
+    parseStyle();
+  }, [mapStyle]);
 
   // Resolve baseLayers - support both BaseLayerConfig[] and BasemapKey[], or mixed arrays
   const resolvedBaseLayers = useMemo(() => {
+    // If using mapStyle, use parsed base layers from style JSON
+    if (mapStyle && parsedStyleLayers.baseLayers.length > 0) {
+      return parsedStyleLayers.baseLayers;
+    }
+    
     if (!baseLayers || baseLayers.length === 0) return DEFAULT_BASE_LAYERS;
     
     // Handle mixed arrays: resolve each element individually
@@ -61,7 +139,7 @@ export function Map({
       // It's already a BaseLayerConfig object
       return layer as BaseLayerConfig;
     }).filter((config): config is BaseLayerConfig => config !== undefined);
-  }, [baseLayers]);
+  }, [baseLayers, mapStyle, parsedStyleLayers.baseLayers]);
 
   // Determine implicit source configuration from shorthand props
   const implicitSource = useMemo(() => {
@@ -87,7 +165,13 @@ export function Map({
 
   // Combine explicit vectorLayers with implicit source
   const allVectorLayers = useMemo(() => {
-    const layers = [...vectorLayers];
+    let layers = [...vectorLayers];
+    
+    // If using mapStyle, add parsed vector layers from style JSON
+    if (mapStyle && parsedStyleLayers.vectorLayers.length > 0) {
+      layers = [...parsedStyleLayers.vectorLayers, ...layers];
+    }
+    
     if (implicitSource) {
       let layerName = 'Default Layer';
       const layerConfig: any = {
@@ -112,7 +196,7 @@ export function Map({
       layers.push(layerConfig);
     }
     return layers;
-  }, [vectorLayers, implicitSource, geojson, csv]);
+  }, [vectorLayers, implicitSource, geojson, csv, mapStyle, parsedStyleLayers.vectorLayers]);
 
   // Initialize and update visibility when layers change
   useEffect(() => {
@@ -217,7 +301,11 @@ export function Map({
   // Add LayerControl as a proper IControl
   useEffect(() => {
     const map = mapRef.current?.getMap();
-    if (!map || !mapLoaded || !layerControl || mapStyle) return;
+    if (!map || !mapLoaded || !layerControl) return;
+    
+    // Show layer control if we have base layers or vector layers
+    const hasLayers = resolvedBaseLayers.length > 0 || allVectorLayers.length > 0;
+    if (!hasLayers) return;
 
     const position = typeof layerControl === 'string' ? layerControl : 'top-right';
     
@@ -242,7 +330,7 @@ export function Map({
         map.removeControl(layerControlRef.current);
       }
     };
-  }, [mapLoaded, layerControl, mapStyle]);
+  }, [mapLoaded, layerControl, resolvedBaseLayers, allVectorLayers.length]);
 
   // Update layer control props when they change
   useEffect(() => {
@@ -260,6 +348,28 @@ export function Map({
       });
     }
   }, [resolvedBaseLayers, activeBaseLayer, allVectorLayers, vectorLayerVisibility]);
+
+  // Control visibility of layers from style JSON
+  useEffect(() => {
+    const map = mapRef.current?.getMap();
+    if (!map || !mapLoaded || !mapStyle) return;
+
+    // Update visibility for vector layers from parsed style
+    parsedStyleLayers.vectorLayers.forEach(layer => {
+      const layerId = `layer-${layer.name.replace(/\s+/g, '-')}`;
+      const isVisible = vectorLayerVisibility[layerId] !== false;
+      
+      // The original layer ID from the style JSON
+      const styleLayerId = layer.style?.id;
+      if (styleLayerId && map.getLayer(styleLayerId)) {
+        map.setLayoutProperty(
+          styleLayerId,
+          'visibility',
+          isVisible ? 'visible' : 'none'
+        );
+      }
+    });
+  }, [vectorLayerVisibility, mapLoaded, mapStyle, parsedStyleLayers.vectorLayers]);
 
   return (
     <div style={{ height, position: 'relative', width: '100%' }}>

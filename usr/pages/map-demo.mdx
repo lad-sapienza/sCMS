@@ -220,6 +220,7 @@ The `Map` component renders an interactive map using MapLibre GL JS. Vector laye
 />
 </Example>
 
+
 ---
 
 <Example title="Example: Multiple Vector Layers">
@@ -306,5 +307,31 @@ The `Map` component renders an interactive map using MapLibre GL JS. Vector laye
         }
       }
     ]}
+  />
+</Example>
+
+
+---
+
+<Example title="Example: Load map from MapLibre style JSON">
+  <Fragment slot="intro">
+    This example demonstrates loading a complete map configuration from a MapLibre style JSON file. The style file includes sources, layers, and styling definitions.
+  </Fragment>
+  <Fragment slot="code">
+  ```jsx
+  <Map 
+    height="500px" 
+    center="37,37,8"
+    client:only="react"
+    mapStyle="/data/ksa.json"
+  />
+  ```
+  </Fragment>
+
+  <Map 
+    height="500px" 
+    center="37,37,8"
+    client:only="react"
+    mapStyle="/data/ksa.json"
   />
 </Example>
