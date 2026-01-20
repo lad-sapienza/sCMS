@@ -4,6 +4,7 @@
 
 import type { SourceConfig } from '../../utils/data-fetcher';
 import type { BasemapKey } from './defaultBasemaps';
+import type { FilterObject } from './utils';
 
 export type ControlPosition = 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left';
 
@@ -84,6 +85,7 @@ export interface MapProps {
     style?: any;
     popup?: string;
     fitToContent?: boolean;
+    filter?: FilterObject | ((feature: any) => boolean);
   };
   
   /** CSV shorthand - for simple single-layer maps */
@@ -95,6 +97,7 @@ export interface MapProps {
     style?: any;
     popup?: string;
     fitToContent?: boolean;
+    filter?: FilterObject | ((row: any) => boolean);
   };
   
   /** JSON shorthand - for simple single-layer maps */

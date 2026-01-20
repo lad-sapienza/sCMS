@@ -16,7 +16,7 @@ import { LayerControlIControl } from './LayerControl';
 import type { BaseLayerConfig } from './types';
 import { defaultBasemaps, getBasemap, type BasemapKey } from './defaultBasemaps';
 import { fetchData } from '../../utils/data-fetcher';
-import { dataToGeoJson, parseStringTemplate } from './utils';
+import { dataToGeoJson, parseStringTemplate, filterObjectToPredicate } from './utils';
 import type { FeatureCollection } from 'geojson';
 import type { CircleLayerSpecification } from 'maplibre-gl';
 
@@ -279,7 +279,8 @@ export function Map({
         name: layerName,
         source: implicitSource,
         fitToContent: true, // default to true
-        visible: true
+        visible: true,
+        filter: undefined // will be set below if provided
       };
       
       // Add style, popup, name, and fitToContent from shorthand config if provided
@@ -288,12 +289,24 @@ export function Map({
         if (geojson.style) layerConfig.style = geojson.style;
         if (geojson.popup) layerConfig.popupTemplate = geojson.popup;
         if (geojson.fitToContent !== undefined) layerConfig.fitToContent = geojson.fitToContent;
+        if (geojson.filter) {
+          // Convert filter object to predicate function if needed
+          layerConfig.filter = typeof geojson.filter === 'function' 
+            ? geojson.filter 
+            : filterObjectToPredicate(geojson.filter);
+        }
       }
       if (csv && typeof csv === 'object' && 'path' in csv) {
         if (csv.name) layerConfig.name = csv.name;
         if (csv.style) layerConfig.style = csv.style;
         if (csv.popup) layerConfig.popupTemplate = csv.popup;
         if (csv.fitToContent !== undefined) layerConfig.fitToContent = csv.fitToContent;
+        if (csv.filter) {
+          // Convert filter object to predicate function if needed
+          layerConfig.filter = typeof csv.filter === 'function' 
+            ? csv.filter 
+            : filterObjectToPredicate(csv.filter);
+        }
       }
       if (directus) {
         if (directus.name) layerConfig.name = directus.name;
@@ -362,46 +375,21 @@ export function Map({
           // Extract geoField from Directus source if provided
           const geoField = layer.source.type === 'directus' ? layer.source.geoField : undefined;
           
-          const geoJson = dataToGeoJson(data, customLng, customLat, geoField);
+          let geoJson = dataToGeoJson(data, customLng, customLat, geoField);
+          
+          // Apply client-side filter if provided
+          if (layer.filter && typeof layer.filter === 'function') {
+            geoJson = {
+              ...geoJson,
+              features: geoJson.features.filter(layer.filter)
+            };
+          }
+          
           newLayersData[layer.name] = geoJson;
           
           // Mark this layer as loaded
           const layerKey = JSON.stringify(layer.source);
           loadedLayers.current.add(layerKey);
-          
-          // Fit bounds to first layer with fitToContent
-          if (layer.fitToContent && mapRef.current && geoJson.features.length > 0) {
-            const map = mapRef.current.getMap();
-            if (map) {
-              const coordinates = geoJson.features.flatMap(f => {
-                const geom = f.geometry;
-                if (geom.type === 'Point') {
-                  return [geom.coordinates];
-                } else if (geom.type === 'LineString') {
-                  return geom.coordinates;
-                } else if (geom.type === 'Polygon') {
-                  return geom.coordinates[0];
-                } else if (geom.type === 'MultiPoint') {
-                  return geom.coordinates;
-                } else if (geom.type === 'MultiLineString') {
-                  return geom.coordinates.flat();
-                } else if (geom.type === 'MultiPolygon') {
-                  return geom.coordinates.map(p => p[0]).flat();
-                }
-                return [];
-              });
-              
-              if (coordinates.length > 0) {
-                const lons = coordinates.map(c => c[0]);
-                const lats = coordinates.map(c => c[1]);
-                const bounds: [[number, number], [number, number]] = [
-                  [Math.min(...lons), Math.min(...lats)],
-                  [Math.max(...lons), Math.max(...lats)]
-                ];
-                map.fitBounds(bounds, { padding: 50, duration: 1000 });
-              }
-            }
-          }
         } catch (err) {
           console.error(`Failed to load layer "${layer.name}":`, err);
           // Continue loading other layers even if one fails
@@ -418,6 +406,52 @@ export function Map({
       loadAllLayers();
     }
   }, [allVectorLayers]);
+
+  // Handle fitToContent separately when map is loaded and data is ready
+  useEffect(() => {
+    const map = mapRef.current?.getMap();
+    if (!map || !mapLoaded || Object.keys(layersData).length === 0) return;
+
+    // Find first layer with fitToContent
+    const layerToFit = allVectorLayers.find(layer => 
+      layer.fitToContent && layersData[layer.name] && layersData[layer.name].features.length > 0
+    );
+
+    if (!layerToFit) return;
+
+    const geoJson = layersData[layerToFit.name];
+    
+    // Small delay to ensure map is fully ready
+    setTimeout(() => {
+      const coordinates = geoJson.features.flatMap(f => {
+        const geom = f.geometry;
+        if (geom.type === 'Point') {
+          return [geom.coordinates];
+        } else if (geom.type === 'LineString') {
+          return geom.coordinates;
+        } else if (geom.type === 'Polygon') {
+          return geom.coordinates[0];
+        } else if (geom.type === 'MultiPoint') {
+          return geom.coordinates;
+        } else if (geom.type === 'MultiLineString') {
+          return geom.coordinates.flat();
+        } else if (geom.type === 'MultiPolygon') {
+          return geom.coordinates.map(p => p[0]).flat();
+        }
+        return [];
+      });
+      
+      if (coordinates.length > 0) {
+        const lons = coordinates.map(c => c[0]);
+        const lats = coordinates.map(c => c[1]);
+        const bounds: [[number, number], [number, number]] = [
+          [Math.min(...lons), Math.min(...lats)],
+          [Math.max(...lons), Math.max(...lats)]
+        ];
+        map.fitBounds(bounds, { padding: 50, duration: 1000 });
+      }
+    }, 100);
+  }, [mapLoaded, layersData, allVectorLayers]);
 
   // Add LayerControl as a proper IControl
   useEffect(() => {
@@ -619,9 +653,13 @@ export function Map({
             }
           };
           
-          // Merge custom style with default, ensuring id is preserved
+          // Merge custom style with default, ensuring id and source are preserved
+          // Remove source-layer if present (only for vector tiles, not for GeoJSON sources)
+          const customStyle = layer.style ? { ...layer.style } : {};
+          delete customStyle['source-layer'];
+          
           const layerStyle = layer.style 
-            ? { ...defaultStyle, ...layer.style, id: layerId, source: sourceId }
+            ? { ...defaultStyle, ...customStyle, id: layerId, source: sourceId }
             : defaultStyle;
           
           return (

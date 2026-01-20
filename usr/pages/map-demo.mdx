@@ -227,6 +227,78 @@ The `Map` component renders an interactive map using MapLibre GL JS. Vector laye
 
 ---
 
+<Example title='Example: Client-side filtering with GeoJSON'>
+  <Fragment slot="intro">
+    Filter data client-side using a Directus-like filter object syntax. The filter is applied after loading the data, so all data is transferred but only matching features are displayed.
+    
+    Supported operators:
+    - `_eq` (equals),
+    - `_neq` (not equals), 
+    - `_in` (in array), 
+    - `_nin` (not in array), 
+    - `_contains` (string contains), 
+    - `_ncontains` (string doesn't contain), 
+    - `_gt` (greater than), 
+    - `_gte` (greater than or equal), 
+    - `_lt` (less than), 
+    - `_lte` (less than or equal), 
+    - `_null` (is null), 
+    - `_nnull` (is not null).
+    
+    Multiple field conditions use AND logic.
+  </Fragment>
+  <Fragment slot="code">
+  ```jsx
+  <Map 
+    client:only="react"
+    height="500px" 
+    geojson={{
+      path: "/data/ksa.geojson",
+      name: "Middle Bronze Age Sites",
+      filter: { Middle_Bronze: { _eq: "true" } },
+      popup: "<b>${Site_Name}</b><br/>${Description}<br />Middle Bronze Age: ${Middle_Bronze}",
+      fitToContent: true,
+      style: {
+        type: 'circle',
+        paint: {
+          'circle-radius': 6,
+          'circle-color': '#e74c3c',
+          'circle-stroke-width': 1,
+          'circle-stroke-color': '#ffffff'
+        }
+      }
+    }}
+    baseLayers={['EsriSatellite', 'GoogleTerrain']}
+  />
+  ```
+  </Fragment>
+
+  <Map 
+    client:only="react"
+    height="500px" 
+    geojson={{
+      path: "/data/ksa.geojson",
+      name: "Middle Bronze Age Sites",
+      filter: { Middle_Bronze: { _eq: "true" } },
+      popup: "<b>${Site_Name}</b><br/>${Description}<br />Middle Bronze Age: ${Middle_Bronze}",
+      fitToContent: true,
+      style: {
+        type: 'circle',
+        paint: {
+          'circle-radius': 6,
+          'circle-color': '#e74c3c',
+          'circle-stroke-width': 1,
+          'circle-stroke-color': '#ffffff'
+        }
+      }
+    }}
+    baseLayers={['EsriSatellite', 'GoogleTerrain']}
+  />
+</Example>
+
+
+---
+
 <Example title="Example: Multiple Vector Layers">
   <Fragment slot="intro">
     This example demonstrates adding multiple vector layers (GeoJSON and CSV) to the map with custom styles and popups.
