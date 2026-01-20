@@ -177,20 +177,22 @@ export function Map({
       const layerConfig: any = {
         name: layerName,
         source: implicitSource,
-        fitToContent: true,
+        fitToContent: true, // default to true
         visible: true
       };
       
-      // Add style, popup, and name from shorthand config if provided
+      // Add style, popup, name, and fitToContent from shorthand config if provided
       if (geojson && typeof geojson === 'object' && 'path' in geojson) {
         if (geojson.name) layerConfig.name = geojson.name;
         if (geojson.style) layerConfig.style = geojson.style;
         if (geojson.popup) layerConfig.popupTemplate = geojson.popup;
+        if (geojson.fitToContent !== undefined) layerConfig.fitToContent = geojson.fitToContent;
       }
       if (csv && typeof csv === 'object' && 'path' in csv) {
         if (csv.name) layerConfig.name = csv.name;
         if (csv.style) layerConfig.style = csv.style;
         if (csv.popup) layerConfig.popupTemplate = csv.popup;
+        if (csv.fitToContent !== undefined) layerConfig.fitToContent = csv.fitToContent;
       }
       
       layers.push(layerConfig);

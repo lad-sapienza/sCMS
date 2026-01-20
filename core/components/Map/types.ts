@@ -67,6 +67,7 @@ export interface MapProps {
     name?: string;
     style?: any;
     popup?: string;
+    fitToContent?: boolean;
   };
   
   /** CSV shorthand - for simple single-layer maps */
@@ -77,6 +78,7 @@ export interface MapProps {
     name?: string;
     style?: any;
     popup?: string;
+    fitToContent?: boolean;
   };
   
   /** JSON shorthand - for simple single-layer maps */
