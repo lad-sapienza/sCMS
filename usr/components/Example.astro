@@ -1,6 +1,7 @@
 ---
+
 interface Props {
-  codeWidth?: 'narrow' | 'default' | 'equal';
+  codeWidth?: 'narrow' | 'default' | 'equal' | 'full';
   disabled?: boolean;
   title?: string;
 }
@@ -11,10 +12,12 @@ if (disabled) {
   return null;
 }
 
+
 const gridCols = {
   narrow: 'md:grid-cols-[1fr_2fr]',
   default: 'md:grid-cols-[2fr_3fr]',
-  equal: 'md:grid-cols-2'
+  equal: 'md:grid-cols-2',
+  full: ''
 }[codeWidth];
 
 // Generate ID from title (matching rehype-slug behavior)
@@ -32,7 +35,7 @@ const titleId = title
   <slot name="intro" />
 </div>
 
-<div class={`grid grid-cols-1 ${gridCols} gap-4`}>
+<div class={`grid ${codeWidth === 'full' ? '' : 'grid-cols-1'} ${gridCols} gap-4`}>
   <div class="min-w-0">
     <slot name="code" />
   </div>
