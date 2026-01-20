@@ -32,6 +32,9 @@ export interface VectorLayerConfig {
   
   /** Fit map bounds to layer content */
   fitToContent?: boolean;
+
+  /** Optional client-side filter for features */
+  filter?: FilterObject | ((feature: any) => boolean);
 }
 
 export interface MapProps {
