@@ -19,9 +19,9 @@ const { maxDepth = 3, minDepth = 2, title = "Table of Contents" } = Astro.props;
 const tocId = `toc-${Math.random().toString(36).substring(7)}`;
 ---
 
-<nav id={tocId} class="toc bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 mb-6 not-prose">
-  <h2 class="text-lg font-bold mb-3" style="color: #111827;">{title}</h2>
-  <ul class="toc-list space-y-1.5 text-sm"></ul>
+<nav id={tocId} class="toc bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 mb-6">
+  <h2>{title}</h2>
+  <ul class="toc-list text-sm"></ul>
 </nav>
 
 <style>
@@ -60,8 +60,6 @@ const tocId = `toc-${Math.random().toString(36).substring(7)}`;
       const text = heading.textContent || '';
       
       const li = document.createElement('li');
-      li.style.marginLeft = `${(level - minDepth) * 1}rem`;
-      li.className = 'list-none';
       
       const a = document.createElement('a');
       a.href = `#${id}`;
