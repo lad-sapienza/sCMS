@@ -43,6 +43,22 @@ export interface MapProps {
   /** MapLibre style object or URL (for full style specification) */
   mapStyle?: string | object;
   
+  /** Overrides/expansions for mapStyle layers */
+  styleOverrides?: {
+    [layerId: string]: {
+      /** Override layer paint properties */
+      paint?: any;
+      /** Override layer layout properties */
+      layout?: any;
+      /** Add popup template (expanded feature) */
+      popupTemplate?: string;
+      /** Fit map to layer bounds (expanded feature) */
+      fitToContent?: boolean;
+      /** Initial visibility (expanded feature) */
+      visible?: boolean;
+    };
+  };
+  
   /** Base layers configuration (can be array of configs or array of basemap keys) */
   baseLayers?: BaseLayerConfig[] | BasemapKey[];
   

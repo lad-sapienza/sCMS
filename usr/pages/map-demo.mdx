@@ -337,3 +337,46 @@ The `Map` component renders an interactive map using MapLibre GL JS. Vector laye
     mapStyle="/data/ksa.json"
   />
 </Example>
+
+---
+
+<Example title="Example: Override and expand style JSON layers">
+  <Fragment slot="intro">
+    You can override styling properties and add expanded features (`popupTemplate`, `fitToContent`) to layers defined in a style JSON file using the `styleOverrides` prop.
+  </Fragment>
+  <Fragment slot="code">
+  ```jsx
+  <Map 
+    client:only="react"
+    height="500px" 
+    mapStyle="/data/ksa.json"
+    styleOverrides={{
+      'ksa': {
+        paint: {
+          'circle-color': '#00ff00',
+          'circle-radius': 8
+        },
+        popupTemplate: '<b>${Site_Name}</b>',
+        fitToContent: true
+      }
+    }}
+  />
+  ```
+  </Fragment>
+
+  <Map 
+    client:only="react"
+    height="500px" 
+    mapStyle="/data/ksa.json"
+    styleOverrides={{
+      'ksa': {
+        paint: {
+          'circle-color': '#00ff00',
+          'circle-radius': 8
+        },
+        popupTemplate: '<b>${Site_Name}</b>',
+        fitToContent: true
+      }
+    }}
+  />
+</Example>

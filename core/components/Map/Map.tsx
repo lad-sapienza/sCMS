@@ -27,6 +27,7 @@ export function Map({
   height = '600px',
   center = '0,0,2',
   mapStyle,
+  styleOverrides,
   baseLayers = DEFAULT_BASE_LAYERS,
   vectorLayers = [],
   geolocateControl,
@@ -51,11 +52,18 @@ export function Map({
     baseLayers: BaseLayerConfig[];
     vectorLayers: VectorLayerConfig[];
   }>({ baseLayers: [], vectorLayers: [] });
+  const [mergedMapStyle, setMergedMapStyle] = useState<any>(null);
+  const [layerExpansions, setLayerExpansions] = useState<Record<string, {
+    popupTemplate?: string;
+    fitToContent?: boolean;
+  }>>({});
 
-  // Parse mapStyle JSON to extract layers
+  // Parse mapStyle JSON to extract layers and apply overrides
   useEffect(() => {
     if (!mapStyle) {
       setParsedStyleLayers({ baseLayers: [], vectorLayers: [] });
+      setMergedMapStyle(null);
+      setLayerExpansions({});
       return;
     }
 
@@ -68,11 +76,47 @@ export function Map({
           const response = await fetch(mapStyle);
           styleObj = await response.json();
         } else {
-          styleObj = mapStyle;
+          styleObj = { ...mapStyle };
         }
 
         const baseLayers: BaseLayerConfig[] = [];
         const vectorLayers: VectorLayerConfig[] = [];
+        const expansions: Record<string, any> = {};
+
+        // Apply styleOverrides to layers
+        if (styleOverrides && styleObj.layers) {
+          styleObj.layers = styleObj.layers.map((layer: any) => {
+            const override = styleOverrides[layer.id];
+            if (!override) return layer;
+
+            // Merge paint and layout properties
+            const mergedLayer = { ...layer };
+            if (override.paint) {
+              mergedLayer.paint = { ...layer.paint, ...override.paint };
+            }
+            if (override.layout) {
+              mergedLayer.layout = { ...layer.layout, ...override.layout };
+            }
+            if (override.visible !== undefined) {
+              mergedLayer.layout = {
+                ...mergedLayer.layout,
+                visibility: override.visible ? 'visible' : 'none'
+              };
+            }
+
+            // Store expanded properties separately
+            if (override.popupTemplate || override.fitToContent !== undefined) {
+              expansions[layer.id] = {
+                popupTemplate: override.popupTemplate,
+                fitToContent: override.fitToContent
+              };
+            }
+
+            return mergedLayer;
+          });
+        }
+
+        setLayerExpansions(expansions);
 
         // Extract raster sources as base layers
         if (styleObj.sources) {
@@ -97,6 +141,7 @@ export function Map({
             if (layer.type !== 'raster' && layer.source) {
               const source = styleObj.sources[layer.source];
               if (source && source.type === 'vector') {
+                const expansion = expansions[layer.id] || {};
                 vectorLayers.push({
                   name: layer.metadata?.label || layer.id,
                   source: {
@@ -104,7 +149,9 @@ export function Map({
                     url: source.url || source.tiles?.[0]
                   },
                   style: layer,
-                  visible: layer.layout?.visibility !== 'none'
+                  visible: layer.layout?.visibility !== 'none',
+                  popupTemplate: expansion.popupTemplate,
+                  fitToContent: expansion.fitToContent
                 });
               }
             }
@@ -112,14 +159,17 @@ export function Map({
         }
 
         setParsedStyleLayers({ baseLayers, vectorLayers });
+        setMergedMapStyle(styleObj);
       } catch (error) {
         console.error('Failed to parse mapStyle:', error);
         setParsedStyleLayers({ baseLayers: [], vectorLayers: [] });
+        setMergedMapStyle(null);
+        setLayerExpansions({});
       }
     };
 
     parseStyle();
-  }, [mapStyle]);
+  }, [mapStyle, styleOverrides]);
 
   // Resolve baseLayers - support both BaseLayerConfig[] and BasemapKey[], or mixed arrays
   const resolvedBaseLayers = useMemo(() => {
@@ -261,26 +311,35 @@ export function Map({
           
           // Fit bounds to first layer with fitToContent
           if (layer.fitToContent && mapRef.current && geoJson.features.length > 0) {
-            const coordinates = geoJson.features.flatMap(f => {
-              const geom = f.geometry;
-              if (geom.type === 'Point') {
-                return [geom.coordinates];
-              } else if (geom.type === 'LineString') {
-                return geom.coordinates;
-              } else if (geom.type === 'Polygon') {
-                return geom.coordinates[0];
+            const map = mapRef.current.getMap();
+            if (map) {
+              const coordinates = geoJson.features.flatMap(f => {
+                const geom = f.geometry;
+                if (geom.type === 'Point') {
+                  return [geom.coordinates];
+                } else if (geom.type === 'LineString') {
+                  return geom.coordinates;
+                } else if (geom.type === 'Polygon') {
+                  return geom.coordinates[0];
+                } else if (geom.type === 'MultiPoint') {
+                  return geom.coordinates;
+                } else if (geom.type === 'MultiLineString') {
+                  return geom.coordinates.flat();
+                } else if (geom.type === 'MultiPolygon') {
+                  return geom.coordinates.map(p => p[0]).flat();
+                }
+                return [];
+              });
+              
+              if (coordinates.length > 0) {
+                const lons = coordinates.map(c => c[0]);
+                const lats = coordinates.map(c => c[1]);
+                const bounds: [[number, number], [number, number]] = [
+                  [Math.min(...lons), Math.min(...lats)],
+                  [Math.max(...lons), Math.max(...lats)]
+                ];
+                map.fitBounds(bounds, { padding: 50, duration: 1000 });
               }
-              return [];
-            });
-            
-            if (coordinates.length > 0) {
-              const lons = coordinates.map(c => c[0]);
-              const lats = coordinates.map(c => c[1]);
-              const bounds: [[number, number], [number, number]] = [
-                [Math.min(...lons), Math.min(...lats)],
-                [Math.max(...lons), Math.max(...lats)]
-              ];
-              mapRef.current.fitBounds(bounds, { padding: 50 });
             }
           }
         } catch (err) {
@@ -373,6 +432,60 @@ export function Map({
     });
   }, [vectorLayerVisibility, mapLoaded, mapStyle, parsedStyleLayers.vectorLayers]);
 
+  // Handle fitToContent for layers with expansions
+  useEffect(() => {
+    const map = mapRef.current?.getMap();
+    if (!map || !mapLoaded || !mapStyle || Object.keys(layerExpansions).length === 0) return;
+
+    // Find first layer with fitToContent: true
+    const layerToFit = Object.entries(layerExpansions).find(([_, expansion]) => expansion.fitToContent);
+    if (!layerToFit) return;
+
+    const [layerId] = layerToFit;
+    
+    // Wait for the layer to be fully loaded
+    const timeout = setTimeout(() => {
+      try {
+        // Query rendered features for the layer
+        const features = map.queryRenderedFeatures(undefined, { layers: [layerId] });
+        
+        if (features && features.length > 0) {
+          const coordinates = features.flatMap(f => {
+            const geom = f.geometry;
+            if (geom.type === 'Point') {
+              return [geom.coordinates];
+            } else if (geom.type === 'LineString') {
+              return geom.coordinates;
+            } else if (geom.type === 'Polygon') {
+              return geom.coordinates[0];
+            } else if (geom.type === 'MultiPoint') {
+              return geom.coordinates;
+            } else if (geom.type === 'MultiLineString') {
+              return geom.coordinates.flat();
+            } else if (geom.type === 'MultiPolygon') {
+              return geom.coordinates.map(p => p[0]).flat();
+            }
+            return [];
+          });
+          
+          if (coordinates.length > 0) {
+            const lons = coordinates.map(c => c[0]);
+            const lats = coordinates.map(c => c[1]);
+            const bounds: [[number, number], [number, number]] = [
+              [Math.min(...lons), Math.min(...lats)],
+              [Math.max(...lons), Math.max(...lats)]
+            ];
+            map.fitBounds(bounds, { padding: 50, duration: 1000 });
+          }
+        }
+      } catch (error) {
+        console.error('Failed to fit bounds for layer:', layerId, error);
+      }
+    }, 1000);
+
+    return () => clearTimeout(timeout);
+  }, [mapLoaded, mapStyle, layerExpansions]);
+
   return (
     <div style={{ height, position: 'relative', width: '100%' }}>
       <MapLibreMap
@@ -382,29 +495,37 @@ export function Map({
           latitude: lat,
           zoom: zoom
         }}
-        mapStyle={mapStyle as any}
+        mapStyle={mergedMapStyle || mapStyle as any}
         style={{ width: '100%', height: '100%' }}
         onLoad={() => setMapLoaded(true)}
         onClick={(e: any) => {
           // Check if any vector layer with popup was clicked
           if (e.features && e.features.length > 0) {
-            // Find the layer config for this feature
             const clickedLayerId = e.features[0].layer?.id;
+            
+            // Check for popup in allVectorLayers (includes parsed style layers)
             const layerConfig = allVectorLayers.find(l => {
               const layerId = `layer-${l.name.replace(/\s+/g, '-')}`;
               return layerId === clickedLayerId;
             });
             
-            if (layerConfig?.popupTemplate) {
+            // Also check if the clicked layer has popup expansion from styleOverrides
+            const expansion = layerExpansions[clickedLayerId];
+            const popupTemplate = layerConfig?.popupTemplate || expansion?.popupTemplate;
+            
+            if (popupTemplate) {
               setHoveredFeature({
                 feature: e.features[0],
                 lngLat: e.lngLat,
-                template: layerConfig.popupTemplate
+                template: popupTemplate
               });
             }
           }
         }}
-        interactiveLayerIds={allVectorLayers.map(l => `layer-${l.name.replace(/\s+/g, '-')}`)}
+        interactiveLayerIds={[
+          ...allVectorLayers.map(l => `layer-${l.name.replace(/\s+/g, '-')}`),
+          ...Object.keys(layerExpansions) // Add layer IDs that have expansions
+        ]}
       >
         {/* Base Layers (only if no full mapStyle is provided) - render ALL but control visibility */}
         {!mapStyle && resolvedBaseLayers.map((layer, index) => (
