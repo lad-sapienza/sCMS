@@ -8,38 +8,43 @@ layout: ../layouts/MdxLayout.astro
 
 import DataTb from '../../core/components/DataTb/DataTbMdx';
 import AdvancedTable from '../../core/components/DataTb/examples/AdvancedTable';
+import Example from '../components/Example.astro';
+import TableOfContents from '../../core/components/TableOfContents.astro';
 
 
 
 
 # DataTb Component Demo
 
-
+<TableOfContents title="DataTb examples on this page" />
 
 The `DataTb` component provides a powerful, flexible way to display tabular data from various sources with built-in sorting, filtering, and pagination.
 
 ---
 
-## Example 1: CSV Source
+<Example title="Minimal example" codeWidth='full'> 
+  <Fragment slot="intro">
+    Load data from a CSV file with automatic column detection:
+  </Fragment>
 
-Load data from a CSV file with automatic column detection:
+  <Fragment slot="code">
+    ```jsx
+    <DataTb 
+      csv="/data/ksa.csv"
+      searchable 
+      pagination 
+      client:load 
+    />
+    ```
+  </Fragment>
 
-```jsx
-<DataTb 
-  csv="/data/ksa.csv"
-  searchable 
-  pagination 
-  client:load 
-/>
-```
-
-<DataTb 
-  csv="/data/ksa.csv"
-  searchable 
-  pagination 
-  client:load 
-/>
-
+  <DataTb 
+    csv="/data/ksa.csv"
+    searchable 
+    pagination 
+    client:load 
+  />
+</Example>
 ---
 
 ## Example 2: CSV with Custom Columns
