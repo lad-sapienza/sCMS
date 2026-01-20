@@ -99,4 +99,17 @@ export interface MapProps {
   
   /** JSON shorthand - for simple single-layer maps */
   json?: any[] | string;
+  
+  /** Directus shorthand - for simple single-layer maps */
+  directus?: {
+    table: string;
+    geoField?: string;
+    queryString?: string;
+    url?: string;
+    token?: string;
+    name?: string;
+    style?: any;
+    popup?: string;
+    fitToContent?: boolean;
+  };
 }

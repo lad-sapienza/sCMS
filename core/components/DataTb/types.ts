@@ -103,6 +103,8 @@ export interface DirectusSourceConfig {
   sort?: string[];
   /** Limit results */
   limit?: number;
+  /** GeoJSON field name (for map conversion) */
+  geoField?: string;
 }
 
 /**
@@ -134,6 +136,15 @@ export interface GeoJsonSourceConfig {
 }
 
 /**
+ * Vector Tile Source configuration (from MapLibre style JSON)
+ */
+export interface VectorSourceConfig {
+  type: 'vector';
+  /** Vector tile URL or template */
+  url?: string;
+}
+
+/**
  * Union of all source configurations
  */
 export type SourceConfig =
@@ -141,7 +152,8 @@ export type SourceConfig =
   | JsonSourceConfig
   | DirectusSourceConfig
   | ApiSourceConfig
-  | GeoJsonSourceConfig;
+  | GeoJsonSourceConfig
+  | VectorSourceConfig;
 
 /**
  * Props for source components

@@ -28,7 +28,8 @@ export function getGeoFields(row: DataRow): { latField: string; lngField: string
 export function dataToGeoJson(
   data: DataRow[],
   customLngField?: string,
-  customLatField?: string
+  customLatField?: string,
+  geoField?: string
 ): FeatureCollection {
   const features: Feature[] = [];
   
@@ -45,6 +46,34 @@ export function dataToGeoJson(
         geometry: row._geometry,
         properties: { ...row, _geometry: undefined, _id: undefined }
       });
+    });
+    return { type: 'FeatureCollection', features };
+  }
+  
+  // Check if geoField is provided (from Directus or other sources)
+  if (geoField && data[0][geoField]) {
+    data.forEach((row, index) => {
+      let geometry = row[geoField];
+      
+      // Parse geometry if it's a string (JSON)
+      if (typeof geometry === 'string') {
+        try {
+          geometry = JSON.parse(geometry);
+        } catch (e) {
+          console.warn(`Failed to parse geometry field "${geoField}" for row ${index}:`, e);
+          return;
+        }
+      }
+      
+      // Validate geometry object
+      if (geometry && typeof geometry === 'object' && geometry.type && geometry.coordinates) {
+        features.push({
+          type: 'Feature',
+          id: row.id || index,
+          geometry: geometry as Geometry,
+          properties: { ...row, [geoField]: undefined }
+        });
+      }
     });
     return { type: 'FeatureCollection', features };
   }

@@ -10,7 +10,7 @@ import MapLibreMap, {
   type MapRef
 } from '@vis.gl/react-maplibre';
 import 'maplibre-gl/dist/maplibre-gl.css';
-import type { MapProps } from './types';
+import type { MapProps, VectorLayerConfig } from './types';
 import { RasterLayerLibre } from './RasterLayerLibre';
 import { LayerControlIControl } from './LayerControl';
 import type { BaseLayerConfig } from './types';
@@ -38,6 +38,7 @@ export function Map({
   geojson,
   csv,
   json,
+  directus,
 }: MapProps) {
   const [lng, lat, zoom] = center.split(',').map(Number);
   const [activeBaseLayer, setActiveBaseLayer] = useState<number>(0);
@@ -210,8 +211,58 @@ export function Map({
       }
     }
     if (json) return { type: 'json', data: Array.isArray(json) ? json : undefined, url: typeof json === 'string' ? json : undefined } as const;
+    if (directus) {
+      const directusUrl = directus.url || import.meta.env.PUBLIC_DIRECTUS_URL;
+      const directusToken = directus.token || import.meta.env.PUBLIC_DIRECTUS_TOKEN;
+      
+      if (!directusUrl) {
+        console.error('Directus URL is not configured. Please provide it via the directus.url prop or set PUBLIC_DIRECTUS_URL environment variable.');
+        return null;
+      }
+      
+      const sourceConfig: any = {
+        type: 'directus',
+        collection: directus.table,
+        config: {
+          url: directusUrl,
+          token: directusToken || ''
+        },
+        geoField: directus.geoField
+      };
+      
+      // Parse queryString to extract filter object and limit
+      if (directus.queryString) {
+        const params = new URLSearchParams(directus.queryString);
+        const filter: any = {};
+        let limit: number | undefined;
+        
+        // Parse Directus filter syntax: filter[field][operator]=value
+        params.forEach((value, key) => {
+          const filterMatch = key.match(/^filter\[([^\]]+)\]\[([^\]]+)\]$/);
+          if (filterMatch) {
+            const [, field, operator] = filterMatch;
+            if (!filter[field]) filter[field] = {};
+            filter[field][operator] = value === 'true' ? true : value === 'false' ? false : value;
+          } else if (key === 'limit') {
+            limit = parseInt(value, 10);
+          }
+        });
+        
+        if (Object.keys(filter).length > 0) {
+          sourceConfig.filter = filter;
+        }
+        
+        // Set limit from queryString, or default to -1 (no limit)
+        sourceConfig.limit = limit !== undefined ? limit : -1;
+      } else {
+        // No queryString provided, default to no limit
+        sourceConfig.limit = -1;
+      }
+      
+      return sourceConfig;
+    }
     return null;
-  }, [geojson, csv, json]);
+  }, [geojson, csv, json, directus]);
 
   // Combine explicit vectorLayers with implicit source
   const allVectorLayers = useMemo(() => {
@@ -243,6 +294,12 @@ export function Map({
         if (csv.style) layerConfig.style = csv.style;
         if (csv.popup) layerConfig.popupTemplate = csv.popup;
         if (csv.fitToContent !== undefined) layerConfig.fitToContent = csv.fitToContent;
+      }
+      if (directus) {
+        if (directus.name) layerConfig.name = directus.name;
+        if (directus.style) layerConfig.style = directus.style;
+        if (directus.popup) layerConfig.popupTemplate = directus.popup;
+        if (directus.fitToContent !== undefined) layerConfig.fitToContent = directus.fitToContent;
       }
       
       layers.push(layerConfig);
@@ -302,7 +359,10 @@ export function Map({
           const customLng = layer.source.type === 'csv' ? layer.source.lng : undefined;
           const customLat = layer.source.type === 'csv' ? layer.source.lat : undefined;
           
-          const geoJson = dataToGeoJson(data, customLng, customLat);
+          // Extract geoField from Directus source if provided
+          const geoField = layer.source.type === 'directus' ? layer.source.geoField : undefined;
+          
+          const geoJson = dataToGeoJson(data, customLng, customLat, geoField);
           newLayersData[layer.name] = geoJson;
           
           // Mark this layer as loaded
