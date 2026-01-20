@@ -26,18 +26,18 @@ The `Map` component renders an interactive map using MapLibre GL JS. Vector laye
   <Fragment slot="code">
   ```jsx
   <Map 
+    client:only="react"
     height="500px" 
     center="37,37,8"
-    client:only="react"
     baseLayers={['EsriSatellite', 'GoogleTerrain']}
   />
   ```
   </Fragment>
 
   <Map 
+    client:only="react"
     height="500px" 
     center="37,37,8"
-    client:only="react"
     baseLayers={['EsriSatellite', 'GoogleTerrain']}
   />
 </Example>
@@ -51,9 +51,9 @@ The `Map` component renders an interactive map using MapLibre GL JS. Vector laye
   <Fragment slot="code">
   ```jsx
   <Map 
+    client:only="react"
     height="500px" 
     center="37,37,8"
-    client:only="react"
     baseLayers={[
       {
         name: "Esri Topo",
@@ -66,9 +66,9 @@ The `Map` component renders an interactive map using MapLibre GL JS. Vector laye
   </Fragment>
 
   <Map 
+    client:only="react"
     height="500px" 
     center="37,37,8"
-    client:only="react"
     baseLayers={[
       {
         name: "Esri Topo",
@@ -88,25 +88,27 @@ The `Map` component renders an interactive map using MapLibre GL JS. Vector laye
   <Fragment slot="code">
   ```jsx
   <Map 
+    client:only="react"
     height="500px" 
     center="37,37,8"
-    client:only="react"
-    baseLayers={['EsriSatellite', 'GoogleTerrain']}
     navigationControl="top-right"
     scaleControl="bottom-left"
+    fullscreenControl='top-right'
+    layerControl='top-right'
+    baseLayers={['EsriSatellite', 'GoogleTerrain']}
   />
   ```
   </Fragment>
 
   <Map 
+    client:only="react"
     height="500px" 
     center="37,37,8"
-    client:only="react"
-    baseLayers={['EsriSatellite', 'GoogleTerrain']}
     navigationControl="top-left"
     scaleControl="bottom-left"
     fullscreenControl='top-right'
     layerControl='top-right'
+    baseLayers={['EsriSatellite', 'GoogleTerrain']}
   />
 </Example>
 
@@ -115,7 +117,7 @@ The `Map` component renders an interactive map using MapLibre GL JS. Vector laye
 
 <Example title='Example: load geo-data from a GeoJSON file'>
   <Fragment slot="intro">
-    This example loads data directly from `ksa.geojson` using the `geojson` shorthand prop with custom styling.
+    This example loads data directly from `ksa.geojson` using the `geojson` shorthand prop with custom styling. Parammeter `fitToContent: true` automatically adjusts the map view to fit the loaded data.
   </Fragment>
   <Fragment slot="code">
   ```jsx
@@ -124,6 +126,7 @@ The `Map` component renders an interactive map using MapLibre GL JS. Vector laye
     name: "Kahramanmaraş Survey Sites",
     path: "/data/ksa.geojson",
     popup: "<b>${Site_Name}</b><br/>${Description}",
+    fitToContent: true,
     style: {
       type: 'circle',
       paint: {
@@ -135,7 +138,6 @@ The `Map` component renders an interactive map using MapLibre GL JS. Vector laye
     }
   }}
   height="500px" 
-  center="37,37,8"
   client:only="react"
   baseLayers={['EsriSatellite', 'GoogleTerrain']}
 />
@@ -147,6 +149,7 @@ The `Map` component renders an interactive map using MapLibre GL JS. Vector laye
     name: "Kahramanmaraş Survey Sites",
     path: "/data/ksa.geojson",
     popup: "<b>${Site_Name}</b><br/>${Description}",
+    fitToContent: true,
     style: {
       type: 'circle',
       paint: {
@@ -158,7 +161,6 @@ The `Map` component renders an interactive map using MapLibre GL JS. Vector laye
     }
   }}
   height="500px" 
-  center="37,37,8"
   client:only="react"
   baseLayers={['EsriSatellite', 'GoogleTerrain']}
 />  
@@ -174,6 +176,10 @@ The `Map` component renders an interactive map using MapLibre GL JS. Vector laye
   <Fragment slot="code">
   ```jsx
   <Map 
+      client:only="react"
+      height="500px" 
+      center="37,37,8"
+
     csv={{
       path: "/data/ksa.csv",
       lng: "Longitude",
@@ -189,15 +195,16 @@ The `Map` component renders an interactive map using MapLibre GL JS. Vector laye
         }
       }
     }}
-    height="500px" 
-    center="37,37,8"
-    client:only="react"
     baseLayers={['EsriSatellite', 'GoogleTerrain']}
   />
   ```
 </Fragment>
 
 <Map 
+  client:only="react"
+  height="500px" 
+  center="37,37,8"
+
   csv={{
     path: "/data/ksa.csv",
     lng: "Longitude",
@@ -213,9 +220,6 @@ The `Map` component renders an interactive map using MapLibre GL JS. Vector laye
       }
     }
   }}
-  height="500px" 
-  center="37,37,8"
-  client:only="react"
   baseLayers={['EsriSatellite', 'GoogleTerrain']}
 />
 </Example>
@@ -230,10 +234,9 @@ The `Map` component renders an interactive map using MapLibre GL JS. Vector laye
   <Fragment slot="code">
   ```jsx
   <Map 
+    client:only="react"
     height="600px" 
     scaleControl="bottom-left"
-    client:only="react"
-    baseLayers={['EsriSatellite', 'GoogleTerrain']}
     vectorLayers={[
       {
         name: 'GeoJSON Sites',
@@ -265,15 +268,15 @@ The `Map` component renders an interactive map using MapLibre GL JS. Vector laye
         }
       }
     ]}
+    baseLayers={['EsriSatellite', 'GoogleTerrain']}
   />
   ```
   </Fragment>
 
   <Map 
+    client:only="react"
     height="600px" 
     scaleControl="bottom-left"
-    client:only="react"
-    baseLayers={['EsriSatellite', 'GoogleTerrain']}
     vectorLayers={[
       {
         name: 'GeoJSON Sites',
@@ -305,6 +308,7 @@ The `Map` component renders an interactive map using MapLibre GL JS. Vector laye
         }
       }
     ]}
+    baseLayers={['EsriSatellite', 'GoogleTerrain']}
   />
 </Example>
 
@@ -318,18 +322,18 @@ The `Map` component renders an interactive map using MapLibre GL JS. Vector laye
   <Fragment slot="code">
   ```jsx
   <Map 
+    client:only="react"
     height="500px" 
     center="37,37,8"
-    client:only="react"
     mapStyle="/data/ksa.json"
   />
   ```
   </Fragment>
 
   <Map 
+    client:only="react"
     height="500px" 
     center="37,37,8"
-    client:only="react"
     mapStyle="/data/ksa.json"
   />
 </Example>
