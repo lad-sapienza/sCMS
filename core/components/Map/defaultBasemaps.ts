@@ -60,6 +60,10 @@ export const defaultBasemaps: Record<string, BaseLayerConfig> = {
     name: "OSM Cycle Map",
     url: "https://tile.thunderforest.com/cycle/{z}/{x}/{y}.png",
   },
+  Imperium: {
+    name: "Imperium (DARE)",
+    url: "https://dh.gu.se/tiles/imperium/{z}/{x}/{y}.png",
+  }
 };
 
 /**
