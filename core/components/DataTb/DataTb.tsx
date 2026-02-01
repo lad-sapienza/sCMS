@@ -184,10 +184,12 @@ export function DataTb({
           <thead className="bg-gray-50">
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
+                {headerGroup.headers.map((header, index) => (
                   <th
                     key={header.id}
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider"
+                    className={`p-4 text-left text-xs font-medium text-gray-700 uppercase tracking-wider ${
+                      index === 0 ? 'pl-6 pr-6' : 'px-6'
+                    }`}
                     style={{ width: header.getSize() !== 150 ? header.getSize() : undefined }}
                   >
                     {header.isPlaceholder ? null : (
@@ -221,10 +223,12 @@ export function DataTb({
           <tbody className="bg-white divide-y divide-gray-200">
             {table.getRowModel().rows.map((row) => (
               <tr key={row.id} className="hover:bg-gray-50">
-                {row.getVisibleCells().map((cell) => (
+                {row.getVisibleCells().map((cell, index) => (
                   <td
                     key={cell.id}
-                    className="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
+                    className={`p-4 text-sm text-gray-900 ${
+                      index === 0 ? 'pl-6 pr-6' : 'px-6'
+                    }`}
                   >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
@@ -237,40 +241,40 @@ export function DataTb({
 
       {/* Pagination */}
       {pagination && (
-        <div className="datatb-pagination mt-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
+        <div className="datatb-pagination mt-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="inline-flex rounded-md shadow-sm" role="group">
             <button
               onClick={() => table.setPageIndex(0)}
               disabled={!table.getCanPreviousPage()}
-              className="px-3 py-1 border border-gray-300 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+              className="px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-l-lg hover:bg-gray-100 hover:text-blue-700 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-gray-900"
             >
               {'<<'}
             </button>
             <button
               onClick={() => table.previousPage()}
               disabled={!table.getCanPreviousPage()}
-              className="px-3 py-1 border border-gray-300 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+              className="px-4 py-2 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-gray-900"
             >
               {'<'}
             </button>
             <button
               onClick={() => table.nextPage()}
               disabled={!table.getCanNextPage()}
-              className="px-3 py-1 border border-gray-300 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+              className="px-4 py-2 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-gray-900"
             >
               {'>'}
             </button>
             <button
               onClick={() => table.setPageIndex(table.getPageCount() - 1)}
               disabled={!table.getCanNextPage()}
-              className="px-3 py-1 border border-gray-300 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+              className="px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-r-lg hover:bg-gray-100 hover:text-blue-700 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-gray-900"
             >
               {'>>'}
             </button>
           </div>
 
-          <div className="flex items-center gap-4">
-            <span className="text-sm text-gray-700">
+          <div className="flex items-center gap-4 flex-wrap justify-center">
+            <span className="text-sm text-gray-700 whitespace-nowrap">
               Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
             </span>
 
@@ -280,7 +284,7 @@ export function DataTb({
                 onChange={(e) => {
                   table.setPageSize(Number(e.target.value));
                 }}
-                className="px-3 py-1 border border-gray-300 rounded text-sm"
+                className="px-3 py-2 text-sm border border-gray-300 rounded-md bg-white hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 {pageSizeOptions.map((size) => (
                   <option key={size} value={size}>
@@ -290,7 +294,7 @@ export function DataTb({
               </select>
             )}
 
-            <span className="text-sm text-gray-700">
+            <span className="text-sm text-gray-700 whitespace-nowrap">
               {data.length} total rows
             </span>
           </div>
