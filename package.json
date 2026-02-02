@@ -7,7 +7,9 @@
     "dev": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "setup-upstream": "bash scripts/setup-upstream.sh",
+    "update-core": "bash scripts/update-core.sh"
   },
   "keywords": [
     "astro",

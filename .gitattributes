@@ -1,0 +1,7 @@
+# Protect user content during merges
+# When merging from upstream, always keep OUR version of these files
+usr/** merge=ours
+usr/**/* merge=ours
+
+# User configuration should be preserved
+usr/user.config.mjs merge=ours
