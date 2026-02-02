@@ -5,6 +5,7 @@
  */
 
 import type { ColumnDef } from '@tanstack/react-table';
+import type { DirectusShorthand, DirectusSourceConfig } from '../../utils/directus-config';
 
 /**
  * Base data row type - can be extended with specific fields
@@ -83,29 +84,8 @@ export interface JsonSourceConfig {
   url?: string;
 }
 
-/**
- * Directus Source configuration
- */
-export interface DirectusSourceConfig {
-  type: 'directus';
-  /** Collection name */
-  collection: string;
-  /** Directus configuration */
-  config: {
-    url: string;
-    token: string;
-  };
-  /** Filter query */
-  filter?: Record<string, any>;
-  /** Fields to select */
-  fields?: string[];
-  /** Sort order */
-  sort?: string[];
-  /** Limit results */
-  limit?: number;
-  /** GeoJSON field name (for map conversion) */
-  geoField?: string;
-}
+// Re-export DirectusSourceConfig from shared utils
+export type { DirectusSourceConfig } from '../../utils/directus-config';
 
 /**
  * Generic API Source configuration
@@ -213,6 +193,6 @@ export interface DataTbProps {
   /** Simplified API Source URL (MDX friendly) */
   api?: string;
 
-  /** Simplified Directus Collection Name (MDX friendly) */
-  directus?: string;
+  /** Simplified Directus configuration (MDX friendly) - uses same interface as Map component */
+  directus?: DirectusShorthand;
 }

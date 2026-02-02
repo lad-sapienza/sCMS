@@ -5,6 +5,7 @@
 import type { SourceConfig } from '../../utils/data-fetcher';
 import type { BasemapKey } from './defaultBasemaps';
 import type { FilterObject } from './utils';
+import type { DirectusShorthand } from '../../utils/directus-config';
 
 export type ControlPosition = 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left';
 
@@ -107,12 +108,8 @@ export interface MapProps {
   json?: any[] | string;
   
   /** Directus shorthand - for simple single-layer maps */
-  directus?: {
-    table: string;
+  directus?: DirectusShorthand & {
     geoField?: string;
-    queryString?: string;
-    url?: string;
-    token?: string;
     name?: string;
     style?: any;
     popup?: string;

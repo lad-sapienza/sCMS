@@ -49,18 +49,31 @@ export const siteMetadata = {
 /**
  * Directus Configuration
  * 
- * Configure Directus connection for fetching data from your Directus instance.
- * Used by DataTb component for Directus sources.
+ * DEPRECATED: No longer needed! 
+ * 
+ * Map and DataTb components now automatically read from environment variables:
+ * - PUBLIC_DIRECTUS_URL
+ * - PUBLIC_DIRECTUS_TOKEN
+ * 
+ * Simply create a .env file in your project root:
+ * 
+ * PUBLIC_DIRECTUS_URL=https://your-directus-instance.com
+ * PUBLIC_DIRECTUS_TOKEN=your-token-here
+ * 
+ * Then use the simplified interface:
+ * 
+ * <DataTb 
+ *   directus={{
+ *     table: "your_collection",
+ *     queryString: "filter[status][_eq]=published"
+ *   }}
+ * />
+ * 
+ * <Map 
+ *   directus={{
+ *     table: "your_collection",
+ *     geoField: "geometry",
+ *     queryString: "filter[visible][_eq]=true"
+ *   }}
+ * />
  */
-export const directusConfig = {
-  // Directus instance URL
-  url: import.meta.env.PUBLIC_DIRECTUS_URL || 'https://your-directus-instance.com',
-  
-  // Static token for authentication
-  // Generate a token in Directus admin panel under Settings > Access Tokens
-  token: import.meta.env.PUBLIC_DIRECTUS_TOKEN || '',
-  
-  // Optional: Custom configuration
-  // maxRetries: 3,
-  // timeout: 30000,
-};

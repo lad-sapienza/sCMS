@@ -13,6 +13,7 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 import type { MapProps, VectorLayerConfig } from './types';
 import { RasterLayerLibre } from './RasterLayerLibre';
 import { LayerControlIControl } from './LayerControl';
+import { directusShorthandToConfig } from '../../utils/directus-config';
 import type { BaseLayerConfig } from './types';
 import { defaultBasemaps, getBasemap, type BasemapKey } from './defaultBasemaps';
 import { fetchData } from '../../utils/data-fetcher';
@@ -212,54 +213,19 @@ export function Map({
     }
     if (json) return { type: 'json', data: Array.isArray(json) ? json : undefined, url: typeof json === 'string' ? json : undefined } as const;
     if (directus) {
-      const directusUrl = directus.url || import.meta.env.PUBLIC_DIRECTUS_URL;
-      const directusToken = directus.token || import.meta.env.PUBLIC_DIRECTUS_TOKEN;
+      const config = directusShorthandToConfig({
+        table: directus.table,
+        queryString: directus.queryString,
+        url: directus.url,
+        token: directus.token
+      });
       
-      if (!directusUrl) {
-        console.error('Directus URL is not configured. Please provide it via the directus.url prop or set PUBLIC_DIRECTUS_URL environment variable.');
-        return null;
+      // Add geoField if it's a map component using directus
+      if (config && directus.geoField) {
+        config.geoField = directus.geoField;
       }
       
-      const sourceConfig: any = {
-        type: 'directus',
-        collection: directus.table,
-        config: {
-          url: directusUrl,
-          token: directusToken || ''
-        },
-        geoField: directus.geoField
-      };
-      
-      // Parse queryString to extract filter object and limit
-      if (directus.queryString) {
-        const params = new URLSearchParams(directus.queryString);
-        const filter: any = {};
-        let limit: number | undefined;
-        
-        // Parse Directus filter syntax: filter[field][operator]=value
-        params.forEach((value, key) => {
-          const filterMatch = key.match(/^filter\[([^\]]+)\]\[([^\]]+)\]$/);
-          if (filterMatch) {
-            const [, field, operator] = filterMatch;
-            if (!filter[field]) filter[field] = {};
-            filter[field][operator] = value === 'true' ? true : value === 'false' ? false : value;
-          } else if (key === 'limit') {
-            limit = parseInt(value, 10);
-          }
-        });
-        
-        if (Object.keys(filter).length > 0) {
-          sourceConfig.filter = filter;
-        }
-        
-        // Set limit from queryString, or default to -1 (no limit)
-        sourceConfig.limit = limit !== undefined ? limit : -1;
-      } else {
-        // No queryString provided, default to no limit
-        sourceConfig.limit = -1;
-      }
-      
-      return sourceConfig;
+      return config;
     }
     return null;
   }, [geojson, csv, json, directus]);

@@ -15,6 +15,7 @@ export { default as BaseLayout } from './layouts/BaseLayout.astro';
 // Utils
 export * from './utils/directus';
 export * from './utils/content';
+export * from './utils/directus-config';
 
 // Types
 export type * from './types';
