@@ -241,40 +241,40 @@ export function DataTb({
 
       {/* Pagination */}
       {pagination && (
-        <div className="datatb-pagination mt-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="datatb-pagination mt-3 flex flex-row items-center justify-between gap-2 text-sm">
           <div className="inline-flex rounded-md shadow-sm" role="group">
             <button
               onClick={() => table.setPageIndex(0)}
               disabled={!table.getCanPreviousPage()}
-              className="scms-btn scms-btn-secondary rounded-r-none border-r-0"
+              className="scms-btn scms-btn-secondary scms-btn-sm rounded-r-none border-r-0"
             >
               {'<<'}
             </button>
             <button
               onClick={() => table.previousPage()}
               disabled={!table.getCanPreviousPage()}
-              className="scms-btn scms-btn-secondary rounded-none border-r-0"
+              className="scms-btn scms-btn-secondary scms-btn-sm rounded-none border-r-0"
             >
               {'<'}
             </button>
             <button
               onClick={() => table.nextPage()}
               disabled={!table.getCanNextPage()}
-              className="scms-btn scms-btn-secondary rounded-none border-r-0"
+              className="scms-btn scms-btn-secondary scms-btn-sm rounded-none border-r-0"
             >
               {'>'}
             </button>
             <button
               onClick={() => table.setPageIndex(table.getPageCount() - 1)}
               disabled={!table.getCanNextPage()}
-              className="scms-btn scms-btn-secondary rounded-l-none"
+              className="scms-btn scms-btn-secondary scms-btn-sm rounded-l-none"
             >
               {'>>'}
             </button>
           </div>
 
-          <div className="flex items-center gap-4 flex-wrap justify-center">
-            <span className="text-sm text-text-light whitespace-nowrap">
+          <div className="flex items-center gap-2 flex-nowrap">
+            <span className="text-xs text-text-light whitespace-nowrap">
               Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
             </span>
 
@@ -284,18 +284,19 @@ export function DataTb({
                 onChange={(e) => {
                   table.setPageSize(Number(e.target.value));
                 }}
-                className="scms-select"
+                className="scms-select text-xs px-4 py-1 min-w-0"
+                style={{ width: 'auto', padding: '.25rem 1.5rem .25rem .5rem' }}
               >
                 {pageSizeOptions.map((size) => (
                   <option key={size} value={size}>
-                    Show {size}
+                    {size}
                   </option>
                 ))}
               </select>
             )}
 
-            <span className="text-sm text-text-light whitespace-nowrap">
-              {data.length} total rows
+            <span className="text-xs text-text-light whitespace-nowrap">
+              ({data.length} total)
             </span>
           </div>
         </div>

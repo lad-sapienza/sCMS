@@ -1,6 +1,6 @@
 import React from 'react';
-import { DataTb } from '../DataTb';
-import type { ColumnConfig } from '../types';
+import { DataTb } from '@core/components/DataTb';
+import type { ColumnConfig } from '@core/components/DataTb/types';
 
 export default function AdvancedTable() {
   const data = [
@@ -34,7 +34,7 @@ export default function AdvancedTable() {
       render: (_, row) => (
         <button 
           onClick={() => alert(`Clicked task: ${row.task}`)}
-          className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 text-xs transition-colors"
+          className="scms-btn scms-btn-primary scms-btn-sm transition-colors"
         >
           View Details
         </button>
