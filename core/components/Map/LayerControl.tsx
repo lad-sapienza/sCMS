@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { createPortal } from 'react-dom';
 import { Layers, Search, X } from 'lucide-react';
@@ -52,6 +52,11 @@ function LayerControlUI({
   };
 
   const handleSearchClick = (layerId: string, layerName: string, searchInFields: SearchInFields) => {
+    // Prevent layout shift by preserving scrollbar space
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    document.body.style.overflow = 'hidden';
+    document.body.style.paddingRight = `${scrollbarWidth}px`;
+    
     setSearchModal({
       isOpen: true,
       layerId,
@@ -63,6 +68,12 @@ function LayerControlUI({
 
   const handleSearchClose = () => {
     setSearchModal(null);
+    
+    // Defer body style restoration until after React re-render
+    setTimeout(() => {
+      document.body.style.overflow = '';
+      document.body.style.paddingRight = '';
+    }, 0);
   };
 
   const handleSearch = (query: SearchQuery) => {
@@ -77,8 +88,28 @@ function LayerControlUI({
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
       }
+      // Cleanup: restore body styles if component unmounts with modal open
+      if (searchModal?.isOpen) {
+        document.body.style.overflow = '';
+        document.body.style.paddingRight = '';
+      }
     };
-  }, []);
+  }, [searchModal?.isOpen]);
+
+  // Prevent re-render position shifts by using useLayoutEffect for immediate cleanup
+  useLayoutEffect(() => {
+    if (!searchModal?.isOpen) {
+      // Ensure body styles are restored immediately after modal closes
+      const timeoutId = setTimeout(() => {
+        if (document.body.style.overflow === 'hidden') {
+          document.body.style.overflow = '';
+          document.body.style.paddingRight = '';
+        }
+      }, 50); // Small delay to let React finish re-rendering
+
+      return () => clearTimeout(timeoutId);
+    }
+  }, [searchModal?.isOpen, layerSearchQueries]);
 
   return (
     <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} style={{ position: 'relative' }}>
@@ -93,7 +124,9 @@ function LayerControlUI({
           minHeight: '32px',
           minWidth: '32px',
           background: 'white',
-          borderRadius: '4px'
+          borderRadius: '4px',
+          position: 'relative',
+          zIndex: 1
         }}
       >
         {!isExpanded && <Layers className="scms-icon scms-icon-lg" />}
@@ -203,12 +236,14 @@ function LayerControlUI({
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            zIndex: 10000
+            zIndex: 10000,
+            overflowY: 'auto'
           }}
           onClick={handleSearchClose}
         >
           <div
-            className="bg-white rounded-lg shadow-xl w-[500px] max-w-[90vw] mx-4 max-h-[80vh] overflow-auto"
+            className="bg-white rounded-lg shadow-xl w-[500px] max-w-[90vw] mx-4 my-8"
+            style={{ maxHeight: 'calc(100vh - 4rem)' }}
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex justify-between items-center p-4 border-b border-gray-200">
@@ -225,7 +260,7 @@ function LayerControlUI({
               </button>
             </div>
             
-            <div className="p-4">
+            <div className="p-4 overflow-y-auto">
               <SearchUI
                 fieldList={searchModal.fieldList}
                 onSearch={handleSearch}
@@ -245,6 +280,7 @@ export class LayerControlClass implements IControl {
   private container: HTMLDivElement | undefined;
   private root: Root | undefined;
   private props: Omit<LayerControlProps, 'position'>;
+  private isAddedToMap: boolean = false;
 
   constructor(props: Omit<LayerControlProps, 'position'>) {
     this.props = props;
@@ -256,20 +292,44 @@ export class LayerControlClass implements IControl {
     
     this.root = createRoot(this.container);
     this.root.render(<LayerControlUI {...this.props} />);
+    this.isAddedToMap = true;
+    
     return this.container;
   }
 
   onRemove(): void {
     if (this.root) {
       this.root.unmount();
+      this.root = undefined;
+    }
+    if (this.container) {
+      this.container.remove();
     }
     this.container = undefined;
+    this.isAddedToMap = false;
   }
 
-  updateProps(props: Omit<LayerControlProps, 'position'>): void {
-    this.props = props;
-    if (this.root) {
-      this.root.render(<LayerControlUI {...this.props} />);
+  updateProps(newProps: Omit<LayerControlProps, 'position'>): void {
+    // Only update if the control is actually added to the map and props have changed
+    if (!this.isAddedToMap || !this.root) {
+      this.props = newProps;
+      return;
+    }
+
+    // Compare props to avoid unnecessary re-renders
+    const hasChanged = 
+      JSON.stringify(this.props.layerSearchQueries) !== JSON.stringify(newProps.layerSearchQueries) ||
+      JSON.stringify(this.props.vectorLayerVisibility) !== JSON.stringify(newProps.vectorLayerVisibility) ||
+      this.props.activeBaseLayer !== newProps.activeBaseLayer;
+
+    if (hasChanged) {
+      this.props = newProps;
+      // Use requestAnimationFrame to ensure the update happens after current execution
+      requestAnimationFrame(() => {
+        if (this.root && this.isAddedToMap) {
+          this.root.render(<LayerControlUI {...this.props} />);
+        }
+      });
     }
   }
 }
@@ -277,16 +337,23 @@ export class LayerControlClass implements IControl {
 // React component wrapper for use in @vis.gl/react-maplibre
 export function LayerControl(props: LayerControlProps) {
   const controlRef = useRef<LayerControlClass | null>(null);
+  const previousPropsRef = useRef<LayerControlProps>();
 
+  // Only update if props have actually changed
   useEffect(() => {
-    // Update props if control already exists
-    if (controlRef.current) {
+    if (controlRef.current && previousPropsRef.current) {
       const { position, ...restProps } = props;
-      controlRef.current.updateProps(restProps);
+      const { position: prevPosition, ...prevRestProps } = previousPropsRef.current;
+      
+      // Only call updateProps if relevant props changed
+      if (JSON.stringify(restProps) !== JSON.stringify(prevRestProps)) {
+        controlRef.current.updateProps(restProps);
+      }
     }
-  }, [props]);
+    previousPropsRef.current = props;
+  }, [props.layerSearchQueries, props.vectorLayerVisibility, props.activeBaseLayer]);
 
-  // Store control instance
+  // Create control instance only once
   if (!controlRef.current) {
     const { position, ...restProps } = props;
     controlRef.current = new LayerControlClass(restProps);
