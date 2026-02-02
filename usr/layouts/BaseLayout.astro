@@ -57,6 +57,15 @@ const currentPath = Astro.url.pathname
               ]}>Map Demo</a
             >
             <a
+              href="/gallery-demo"
+              class:list={[
+                "hover:text-gray-900",
+                currentPath === "/map-demo"
+                  ? "text-gray-900 font-semibold"
+                  : "text-gray-600",
+              ]}>Gallery Demo</a
+            >
+            <a
               href="/credits"
               class:list={[
                 "hover:text-gray-900",

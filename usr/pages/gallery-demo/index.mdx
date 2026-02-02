@@ -1,0 +1,235 @@
+---
+title: 'Gallery Component Demo'
+description: 'Display responsive photo galleries with lightbox functionality powered by PhotoSwipe'
+layout: ../../layouts/MdxLayout.astro
+---
+
+import { GalleryMdx, processGalleryImages } from '@core/components/Gallery';
+import Example from '../../components/Example.astro';
+import TableOfContents from '@core/components/TableOfContents.astro';
+
+export const galleryImages = import.meta.glob('./gallery/*.{jpg,jpeg,png,gif,webp,avif}', { eager: true });
+export const captionsData = import.meta.glob('./gallery/captions.json', { eager: true });
+export const captionsModule = Object.values(captionsData)[0];
+export const captions = captionsModule?.default || captionsModule;
+
+# Gallery Component
+
+The **Gallery** component displays images in a responsive grid layout with PhotoSwipe lightbox functionality. It automatically loads images from a `gallery/` subfolder and supports custom captions, sorting options, and responsive column configuration.
+
+<TableOfContents title="Gallery examples on this page" />
+
+---
+
+## Key Features
+
+- 📸 **PhotoSwipe Integration** - Full-screen lightbox with zoom, pan, and swipe gestures
+- 🔄 **Auto-loading** - Automatically discovers images in `gallery/` folders
+- 📝 **Custom Captions** - Support for `captions.json` file or auto-generated from filenames
+- 🎨 **Responsive Grid** - Configurable columns that adapt to screen size
+- ⚡ **Optimized Images** - Astro's image optimization for fast loading
+- ⌨️ **Keyboard Navigation** - Arrow keys, ESC, and full accessibility support
+
+---
+
+<Example title="Default usage with auto-loading">
+  <Fragment slot="intro">
+    In MDX files, use `import.meta.glob` to load images automatically. The `GalleryMdx` component processes the raw output and applies custom captions if available.
+    
+    This demo loads images from `./gallery/*.jpg` (and other formats) and captions from `./gallery/captions.json`.
+  </Fragment>
+
+  <Fragment slot="code">
+    ```jsx
+    // In MDX frontmatter:
+    import { GalleryMdx, processGalleryImages } from '@core/components/Gallery';
+
+    export const galleryImages = import.meta.glob(
+      './gallery/*.{jpg,jpeg,png,gif,webp,avif}', 
+      { eager: true }
+    );
+    export const captionsData = import.meta.glob(
+      './gallery/captions.json', 
+      { eager: true }
+    );
+    export const captionsModule = Object.values(captionsData)[0];
+    export const captions = captionsModule?.default || captionsModule;
+
+    // In MDX content:
+    <GalleryMdx 
+      images={processGalleryImages(galleryImages, { captions })} 
+      client:idle 
+    />
+    ```
+  </Fragment>
+
+  <GalleryMdx images={processGalleryImages(galleryImages, { captions })} client:idle />
+</Example>
+
+<details style={{ marginTop: '1rem' }}>
+  <summary><strong>📄 View captions.json structure</strong></summary>
+  <p>Place this file in your `gallery/` folder to provide custom captions:</p>
+  
+```json
+{
+  "children-593313_1920.jpg": "Two excited children raising their hands in joy",
+  "coffee-2306471_1920.jpg": "A perfect cappuccino with beautiful latte art",
+  "entrepreneur-593371_1920.jpg": "Young entrepreneurs celebrating their success",
+  "home-office-336378_1920.jpg": "Productive workspace with coffee and laptop",
+  "notebook-336634_1920.jpg": "Clean desk setup with notebook and writing tools"
+}
+```
+
+  <p><em>Tip: Keys can be filenames with or without extensions. Missing captions fall back to auto-generated ones.</em></p>
+</details>
+
+<p style={{ marginTop: '2rem' }}><small>Images by <a href="https://pixabay.com/users/freephotocc-2275370/" target="_blank" rel="noopener">Pixabay</a></small></p>
+
+---
+
+<Example title="With reverse sorting">
+  <Fragment slot="intro">
+    Images are sorted alphabetically by filename in descending order by default. Use the `reverseSorting` option to reverse this:
+  </Fragment>
+
+  <Fragment slot="code">
+    ```jsx
+    <GalleryMdx 
+      images={processGalleryImages(galleryImages, { 
+        captions, 
+        reverseSorting: true 
+      })} 
+      client:idle 
+    />
+    ```
+  </Fragment>
+
+  <GalleryMdx images={processGalleryImages(galleryImages, { captions, reverseSorting: true })} client:idle />
+</Example>
+
+---
+
+<Example title="Custom column configuration">
+  <Fragment slot="intro">
+    Control the responsive grid by specifying minimum and maximum columns. The grid adapts between these values based on screen width:
+  </Fragment>
+
+  <Fragment slot="code">
+    ```jsx
+    <GalleryMdx 
+      images={processGalleryImages(galleryImages, { captions })}
+      columns={{ min: 200, max: 3 }}
+      client:idle 
+    />
+    ```
+  </Fragment>
+
+  <GalleryMdx 
+    images={processGalleryImages(galleryImages, { captions })}
+    columns={{ min: 200, max: 3 }}
+    client:idle 
+  />
+</Example>
+
+---
+
+<Example title="Without custom captions (filename-based)">
+  <Fragment slot="intro">
+    If you don't provide a `captions.json` file or pass the captions option, the component automatically generates readable captions from filenames:
+  </Fragment>
+
+  <Fragment slot="code">
+    ```jsx
+    // Don't pass captions option
+    <GalleryMdx 
+      images={processGalleryImages(galleryImages)} 
+      client:idle 
+    />
+    ```
+  </Fragment>
+
+  <GalleryMdx images={processGalleryImages(galleryImages)} client:idle />
+</Example>
+
+---
+
+## Usage in Astro Files
+
+For `.astro` files, use the `Gallery` component which automatically loads images and captions:
+
+```astro
+---
+import Gallery from '@core/components/Gallery/Gallery.astro';
+---
+
+<Gallery />
+```
+
+The component automatically:
+1. Detects the current page path
+2. Loads images from `./gallery/` with supported extensions (jpg, jpeg, png, gif, webp, avif)
+3. Loads captions from `./gallery/captions.json` if present
+4. Optimizes images at build time
+
+---
+
+## Component API
+
+### GalleryMdx Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `images` | `GalleryImage[]` or `Record<string, any>` | - | Image array or raw import.meta.glob output |
+| `columns` | `{ min?: number, max?: number }` | `{ min: 200, max: 1 }` | Grid config: `min` = minimum item width (px), `max` = maximum columns |
+| `className` | `string` | `undefined` | Additional CSS classes |
+| `client:idle` | - | - | Hydration directive (required for interactivity) |
+
+### processGalleryImages Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `captions` | `Record<string, string>` | `undefined` | Custom captions keyed by filename |
+| `reverseSorting` | `boolean` | `false` | Reverse the default sort order |
+
+### GalleryImage Type
+
+```typescript
+interface GalleryImage {
+  src: string;        // Full-size image URL
+  thumb: string;      // Thumbnail URL (can be same as src)
+  width: number;      // Image width in pixels
+  height: number;     // Image height in pixels
+  alt: string;        // Alt text for accessibility
+  caption?: string;   // Optional caption for lightbox
+}
+```
+
+---
+
+## Folder Structure
+
+```
+pages/
+  gallery-demo/
+    index.mdx            # Your page
+    gallery/
+      photo1.jpg
+      photo2.jpg
+      photo3.jpg
+      captions.json      # Optional custom captions
+```
+
+The component automatically discovers all supported image formats (`.jpg, .jpeg, .png, .gif, .webp, .avif`) in the gallery folder.
+
+---
+
+## How it Works
+
+1. **Import utilities** - Import `GalleryMdx` and `processGalleryImages` from `@core/components/Gallery`
+2. **Load images** - Use `import.meta.glob` with a static path pattern in the frontmatter
+3. **Load captions** (optional) - Use `import.meta.glob` for `captions.json` 
+4. **Process images** - Call `processGalleryImages()` with images and options
+5. **Render component** - Pass processed images to `GalleryMdx` with `client:idle`
+
+**Important:** The `import.meta.glob` path must be a **static string literal** relative to the current MDX file. Variables or function calls are not supported.
+- Supported formats: `.jpg, .jpeg, .png, .gif, .webp, .avif`
