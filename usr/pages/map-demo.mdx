@@ -11,7 +11,7 @@ import Example from '../components/Example.astro';
 
 # Map Component
 
-The `Map` component renders an interactive map using MapLibre GL JS. Vector layers can be added via the `vectorLayers` prop or shorthand props like `geojson`, `csv`, `json`, etc.
+The `Map` component renders an interactive map using MapLibre GL JS. Vector layers can be added via the `vectorLayers` prop or shorthand props like `geojson`, `csv`, `json`, etc. Layers can include searchable fields for advanced filtering.
 
 <TableOfContents title="Map examples on this page" />
 
@@ -515,5 +515,74 @@ The `Map` component renders an interactive map using MapLibre GL JS. Vector laye
       }
     }}
     baseLayers={['EsriSatellite', 'GoogleTerrain']}
+  />
+</Example>
+
+---
+
+## Vector Layer Search Functionality
+
+<Example title="Example: Vector Layers with Search">
+  <Fragment slot="intro">
+    This example demonstrates vector layers with searchable fields. Click the search icon next to a layer name in the layer control to open the search interface. The search supports both simple free-text search across all fields and advanced search with field-operator-value triplets.
+  </Fragment>
+  <Fragment slot="code">
+  ```jsx
+  <Map 
+    client:only="react"
+    height="600px" 
+    vectorLayers={[
+      {
+        name: 'Archaeological Sites',
+        source: { type: 'geojson', url: '/data/ksa.geojson' },
+        popupTemplate: '<b>${Site_Name}</b><br/>${Item_Label}<br/>${Site_Description}',
+        searchInFields: {
+          Site_Name: "Site Name",
+          Item_Label: "Item Label", 
+          Site_Description: "Description"
+        },
+        fitToContent: true,
+        style: {
+          type: 'circle',
+          paint: {
+            'circle-radius': 6,
+            'circle-color': '#ff6b6b',
+            'circle-stroke-width': 1,
+            'circle-stroke-color': '#ffffff'
+          }
+        }
+      }
+    ]}
+    baseLayers={['EsriSatellite', 'OSM']}
+  />
+  ```
+  </Fragment>
+
+  <Map 
+    client:only="react"
+    height="600px" 
+    vectorLayers={[
+      {
+        name: 'Archaeological Sites',
+        source: { type: 'geojson', url: '/data/ksa.geojson' },
+        popupTemplate: '<b>${Site_Name}</b><br/>${Item_Label}<br/>${Site_Description}',
+        searchInFields: {
+          Site_Name: "Site Name",
+          Item_Label: "Item Label", 
+          Site_Description: "Description"
+        },
+        fitToContent: true,
+        style: {
+          type: 'circle',
+          paint: {
+            'circle-radius': 6,
+            'circle-color': '#ff6b6b',
+            'circle-stroke-width': 1,
+            'circle-stroke-color': '#ffffff'
+          }
+        }
+      }
+    ]}
+    baseLayers={['EsriSatellite', 'OSM']}
   />
 </Example>

@@ -246,35 +246,35 @@ export function DataTb({
             <button
               onClick={() => table.setPageIndex(0)}
               disabled={!table.getCanPreviousPage()}
-              className="px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-l-lg hover:bg-gray-100 hover:text-blue-700 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-gray-900"
+              className="scms-btn scms-btn-secondary rounded-r-none border-r-0"
             >
               {'<<'}
             </button>
             <button
               onClick={() => table.previousPage()}
               disabled={!table.getCanPreviousPage()}
-              className="px-4 py-2 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-gray-900"
+              className="scms-btn scms-btn-secondary rounded-none border-r-0"
             >
               {'<'}
             </button>
             <button
               onClick={() => table.nextPage()}
               disabled={!table.getCanNextPage()}
-              className="px-4 py-2 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-gray-900"
+              className="scms-btn scms-btn-secondary rounded-none border-r-0"
             >
               {'>'}
             </button>
             <button
               onClick={() => table.setPageIndex(table.getPageCount() - 1)}
               disabled={!table.getCanNextPage()}
-              className="px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-r-lg hover:bg-gray-100 hover:text-blue-700 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-gray-900"
+              className="scms-btn scms-btn-secondary rounded-l-none"
             >
               {'>>'}
             </button>
           </div>
 
           <div className="flex items-center gap-4 flex-wrap justify-center">
-            <span className="text-sm text-gray-700 whitespace-nowrap">
+            <span className="text-sm text-text-light whitespace-nowrap">
               Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
             </span>
 
@@ -284,7 +284,7 @@ export function DataTb({
                 onChange={(e) => {
                   table.setPageSize(Number(e.target.value));
                 }}
-                className="px-3 py-2 text-sm border border-gray-300 rounded-md bg-white hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="scms-select"
               >
                 {pageSizeOptions.map((size) => (
                   <option key={size} value={size}>
@@ -294,7 +294,7 @@ export function DataTb({
               </select>
             )}
 
-            <span className="text-sm text-gray-700 whitespace-nowrap">
+            <span className="text-sm text-text-light whitespace-nowrap">
               {data.length} total rows
             </span>
           </div>

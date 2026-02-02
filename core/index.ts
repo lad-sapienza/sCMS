@@ -9,6 +9,10 @@ export { default as GalleryAstro } from './components/Gallery/Gallery.astro';
 export { Gallery, GalleryMdx, processGalleryImages } from './components/Gallery';
 export { default as TableOfContents } from './components/TableOfContents.astro';
 
+// Map components
+export { Map as MapComponent } from './components/Map';
+export { SearchUI, SearchUISimple, SearchUIAdvanced } from './components/Map/Search';
+
 // Layouts
 export { default as BaseLayout } from './layouts/BaseLayout.astro';
 
@@ -19,3 +23,4 @@ export * from './utils/directus-config';
 
 // Types
 export type * from './types';
+export type * from './components/Map/types';

@@ -215,3 +215,135 @@ export function filterObjectToPredicate(
     return true;
   };
 }
+
+/**
+ * Converts a search query to a MapLibre filter expression
+ * This provides better performance than client-side filtering for large datasets
+ */
+export function searchQueryToMapLibreFilter(query: import('./types').SearchQuery): any[] | null {
+  if (!query.filters || query.filters.length === 0) {
+    return null; // No filter
+  }
+
+  const filters = query.filters.map(filter => {
+    const { field, operator, value } = filter;
+    
+    switch (operator) {
+      case '_eq':
+        return ['==', ['get', field], value];
+      case '_neq':
+        return ['!=', ['get', field], value];
+      case '_gt':
+        return ['>', ['get', field], value];
+      case '_gte':
+        return ['>=', ['get', field], value];
+      case '_lt':
+        return ['<', ['get', field], value];
+      case '_lte':
+        return ['<=', ['get', field], value];
+      case '_contains':
+        return ['in', value, ['get', field]];
+      case '_icontains':
+        // Case-insensitive contains using downcase for both field value and search value
+        return ['in', ['downcase', value], ['downcase', ['get', field]]];
+      case '_ncontains':
+        return ['!', ['in', value, ['get', field]]];
+      case '_starts_with':
+        return ['==', ['slice', ['get', field], 0, value.length], value];
+      case '_istarts_with':
+        // Case-insensitive starts with using downcase
+        return ['==', ['slice', ['downcase', ['get', field]], 0, value.length], ['downcase', value]];
+      case '_nstarts_with':
+        return ['!=', ['slice', ['get', field], 0, value.length], value];
+      case '_ends_with':
+        return ['==', ['slice', ['get', field], ['-', ['length', ['get', field]], value.length]], value];
+      case '_iends_with':
+        // Case-insensitive ends with using downcase
+        return ['==', ['slice', ['downcase', ['get', field]], ['-', ['length', ['get', field]], value.length]], ['downcase', value]];
+      case '_nends_with':
+        return ['!=', ['slice', ['get', field], ['-', ['length', ['get', field]], value.length]], value];
+      case '_null':
+        return ['==', ['get', field], null];
+      case '_nnull':
+        return ['!=', ['get', field], null];
+      default:
+        console.warn(`Unsupported search operator for MapLibre filter: ${operator}`);
+        return ['==', ['get', field], value];
+    }
+  });
+
+  // Combine filters with the specified connector
+  if (filters.length === 1) {
+    return filters[0];
+  }
+
+  if (query.connector === '_and') {
+    return ['all', ...filters];
+  } else {
+    return ['any', ...filters];
+  }
+}
+
+/**
+ * Converts a search query to a client-side predicate function
+ * Fallback when MapLibre filtering is not suitable or for complex operations
+ */
+export function searchQueryToPredicate(query: import('./types').SearchQuery): (item: Feature | DataRow) => boolean {
+  if (!query.filters || query.filters.length === 0) {
+    return () => true; // No filter, match all
+  }
+
+  return (item: Feature | DataRow) => {
+    const properties = 'properties' in item ? item.properties : item;
+    
+    const results = query.filters.map(filter => {
+      const { field, operator, value } = filter;
+      const fieldValue = properties?.[field];
+      
+      switch (operator) {
+        case '_eq':
+          return fieldValue == value;
+        case '_neq':
+          return fieldValue != value;
+        case '_gt':
+          return Number(fieldValue) > Number(value);
+        case '_gte':
+          return Number(fieldValue) >= Number(value);
+        case '_lt':
+          return Number(fieldValue) < Number(value);
+        case '_lte':
+          return Number(fieldValue) <= Number(value);
+        case '_contains':
+          return typeof fieldValue === 'string' && fieldValue.includes(String(value));
+        case '_icontains':
+          return typeof fieldValue === 'string' && fieldValue.toLowerCase().includes(String(value).toLowerCase());
+        case '_ncontains':
+          return typeof fieldValue === 'string' && !fieldValue.includes(String(value));
+        case '_starts_with':
+          return typeof fieldValue === 'string' && fieldValue.startsWith(String(value));
+        case '_istarts_with':
+          return typeof fieldValue === 'string' && fieldValue.toLowerCase().startsWith(String(value).toLowerCase());
+        case '_nstarts_with':
+          return typeof fieldValue === 'string' && !fieldValue.startsWith(String(value));
+        case '_ends_with':
+          return typeof fieldValue === 'string' && fieldValue.endsWith(String(value));
+        case '_iends_with':
+          return typeof fieldValue === 'string' && fieldValue.toLowerCase().endsWith(String(value).toLowerCase());
+        case '_nends_with':
+          return typeof fieldValue === 'string' && !fieldValue.endsWith(String(value));
+        case '_null':
+          return fieldValue == null;
+        case '_nnull':
+          return fieldValue != null;
+        default:
+          console.warn(`Unsupported search operator: ${operator}`);
+          return true;
+      }
+    });
+    
+    // Apply connector logic
+    return query.connector === '_and' 
+      ? results.every(Boolean)
+      : results.some(Boolean);
+  };
+}

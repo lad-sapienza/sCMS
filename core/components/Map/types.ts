@@ -7,6 +7,64 @@ import type { BasemapKey } from './defaultBasemaps';
 import type { FilterObject } from './utils';
 import type { DirectusShorthand } from '../../utils/directus-config';
 
+/**
+ * Search field configuration
+ * Can be a simple label string or an object with label and predefined values
+ */
+export type SearchFieldConfig = 
+  | string 
+  | { 
+      label: string; 
+      values?: string[]; 
+      operator?: string; 
+    };
+
+/**
+ * Search fields configuration for vector layers
+ * Maps field names to their search configuration
+ */
+export type SearchInFields = Record<string, SearchFieldConfig>;
+
+/**
+ * Search operators supported by the search interface
+ */
+export interface SearchOperators {
+  _eq: string;
+  _neq: string;
+  _lt: string;
+  _lte: string;
+  _gt: string;
+  _gte: string;
+  _null: string;
+  _nnull: string;
+  _contains: string;
+  _icontains: string;
+  _ncontains: string;
+  _starts_with: string;
+  _istarts_with: string;
+  _nstarts_with: string;
+  _ends_with: string;
+  _iends_with: string;
+  _nends_with: string;
+}
+
+/**
+ * Search filter triplet: field, operator, value
+ */
+export interface SearchFilter {
+  field: string;
+  operator: string;
+  value: any;
+}
+
+/**
+ * Search query structure
+ */
+export interface SearchQuery {
+  connector: '_and' | '_or';
+  filters: SearchFilter[];
+}
+
 export type ControlPosition = 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left';
 
 export interface BaseLayerConfig {
@@ -36,6 +94,9 @@ export interface VectorLayerConfig {
 
   /** Optional client-side filter for features */
   filter?: FilterObject | ((feature: any) => boolean);
+  
+  /** Search configuration - defines which fields are searchable */
+  searchInFields?: SearchInFields;
 }
 
 export interface MapProps {

@@ -1,0 +1,73 @@
+/**
+ * User Global Styles
+ * 
+ * Override or extend core CSS variables and add custom styles here.
+ * This file is loaded after core/styles/global.css, so your values
+ * will take precedence.
+ */
+
+/* 
+ * Example: Override core CSS variables for custom theming
+ * Uncomment and modify the values below to customize your site
+ */
+
+/*
+  Example: Override core CSS variables for custom theming
+  Uncomment and modify the values below to customize your site
+
+:root {
+  Override brand colors
+  --color-primary: #0066cc;
+  --color-primary-hover: #0052a3;
+  --color-primary-light: #4da3e0;
+  --color-primary-dark: #003d73;
+  
+  Override typography
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+  
+  Override base colors for dark theme
+  --color-text: #f9fafb;
+  --color-bg: #111827;
+  --color-border: #374151;
+}
+*/
+
+/*
+ * Custom component styles
+ * Add your own component classes here
+ */
+
+.user-hero {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+  padding: 4rem 2rem;
+  color: white;
+  text-align: center;
+}
+
+.user-card {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-base);
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* 
+ * Integration with Tailwind utilities
+ * You can use standard CSS or Tailwind classes
+ */
+
+.user-btn-outline {
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary);
+  padding: 8px 16px;
+  border-radius: var(--radius-base);
+  background: transparent;
+  transition: all var(--transition-base);
+}
+
+.user-btn-outline:hover {
+  background: var(--color-primary);
+  color: white;
+}

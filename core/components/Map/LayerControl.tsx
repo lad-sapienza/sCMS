@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
+import { createPortal } from 'react-dom';
+import { Layers, Search, X } from 'lucide-react';
 import type { IControl } from 'maplibre-gl';
-import type { BaseLayerConfig, VectorLayerConfig, ControlPosition } from './types';
+import type { BaseLayerConfig, VectorLayerConfig, ControlPosition, SearchInFields, SearchQuery } from './types';
+import { SearchUI } from './Search';
 
 export interface LayerControlProps {
   baseLayers?: BaseLayerConfig[];
@@ -10,6 +13,8 @@ export interface LayerControlProps {
   vectorLayers?: Array<VectorLayerConfig & { id: string }>;
   vectorLayerVisibility?: Record<string, boolean>;
   onVectorLayerToggle?: (layerId: string) => void;
+  onLayerSearch?: (layerId: string, query: SearchQuery) => void;
+  layerSearchQueries?: Record<string, SearchQuery>;
   position?: ControlPosition;
 }
 
@@ -21,8 +26,11 @@ function LayerControlUI({
   vectorLayers = [],
   vectorLayerVisibility = {},
   onVectorLayerToggle,
+  onLayerSearch,
+  layerSearchQueries = {},
 }: Omit<LayerControlProps, 'position'>) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [searchModal, setSearchModal] = useState<{isOpen: boolean, layerId: string, layerName: string, fieldList: SearchInFields, currentQuery?: SearchQuery} | null>(null);
   const radioGroupId = React.useId();
   const timeoutRef = React.useRef<NodeJS.Timeout | null>(null);
 
@@ -43,6 +51,27 @@ function LayerControlUI({
     }, 300);
   };
 
+  const handleSearchClick = (layerId: string, layerName: string, searchInFields: SearchInFields) => {
+    setSearchModal({
+      isOpen: true,
+      layerId,
+      layerName,
+      fieldList: searchInFields,
+      currentQuery: layerSearchQueries[layerId]
+    });
+  };
+
+  const handleSearchClose = () => {
+    setSearchModal(null);
+  };
+
+  const handleSearch = (query: SearchQuery) => {
+    if (searchModal && onLayerSearch) {
+      onLayerSearch(searchModal.layerId, query);
+    }
+    handleSearchClose();
+  };
+
   useEffect(() => {
     return () => {
       if (timeoutRef.current) {
@@ -52,15 +81,39 @@ function LayerControlUI({
   }, []);
 
   return (
-    <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+    <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} style={{ position: 'relative' }}>
       <div 
-        style={{ padding: '12px', fontWeight: 600, userSelect: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+        style={{ 
+          padding: '8px', 
+          fontWeight: 600, 
+          userSelect: 'none', 
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'center',
+          minHeight: '32px',
+          minWidth: '32px',
+          background: 'white',
+          borderRadius: '4px'
+        }}
       >
-        {!isExpanded && <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="20px" height="20px" fill="currentColor" className="bi bi-stack"><path d="m14.12 10.163 1.715.858c.22.11.22.424 0 .534L8.267 15.34a.6.6 0 0 1-.534 0L.165 11.555a.299.299 0 0 1 0-.534l1.716-.858 5.317 2.659c.505.252 1.1.252 1.604 0l5.317-2.66zM7.733.063a.6.6 0 0 1 .534 0l7.568 3.784a.3.3 0 0 1 0 .535L8.267 8.165a.6.6 0 0 1-.534 0L.165 4.382a.299.299 0 0 1 0-.535z"></path><path d="m14.12 6.576 1.715.858c.22.11.22.424 0 .534l-7.568 3.784a.6.6 0 0 1-.534 0L.165 7.968a.299.299 0 0 1 0-.534l1.716-.858 5.317 2.659c.505.252 1.1.252 1.604 0z"></path></svg>}
+        {!isExpanded && <Layers className="scms-icon scms-icon-lg" />}
       </div>
       
       {isExpanded && (
-        <div style={{ padding: '0 10px 10px 10px', minWidth: 150 }}>
+        <div style={{ 
+          position: 'absolute',
+          top: 0,
+          right: 0,
+          backgroundColor: 'white',
+          borderRadius: '4px',
+          border: '1px solid rgba(0,0,0,0.1)',
+          boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
+          padding: '8px 12px 12px 12px', 
+          minWidth: 180,
+          maxWidth: 250,
+          zIndex: 1000,
+          whiteSpace: 'nowrap'
+        }}>
           
           {/* Vector Layers Section */}
           {vectorLayers.length > 0 && (
@@ -76,10 +129,22 @@ function LayerControlUI({
                   />
                   <label 
                     htmlFor={`vector-layer-${layer.id}`}
-                    style={{ cursor: 'pointer', fontSize: '12px', userSelect: 'none' }}
+                    style={{ cursor: 'pointer', fontSize: '12px', userSelect: 'none', flex: 1 }}
                   >
                     {layer.name}
                   </label>
+                  {layer.searchInFields && Object.keys(layer.searchInFields).length > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => handleSearchClick(layer.id, layer.name, layer.searchInFields!)}
+                      className={`scms-btn-icon scms-btn-sm ${
+                        layerSearchQueries[layer.id]?.filters?.length ? 'active' : ''
+                      }`}
+                      title={`Search ${layer.name}${layerSearchQueries[layer.id]?.filters?.length ? ' (Active)' : ''}`}
+                    >
+                      <Search className="scms-icon scms-icon-sm" />
+                    </button>
+                  )}
                 </div>
               ))}
               {baseLayers.length > 0 && <hr style={{ margin: '8px 0', borderColor: '#eee' }} />}
@@ -123,6 +188,53 @@ function LayerControlUI({
             </div>
           )}
         </div>
+      )}
+      
+      {/* Search Modal */}
+      {searchModal?.isOpen && createPortal(
+        <div 
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 10000
+          }}
+          onClick={handleSearchClose}
+        >
+          <div
+            className="bg-white rounded-lg shadow-xl w-[500px] max-w-[90vw] mx-4 max-h-[80vh] overflow-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex justify-between items-center p-4 border-b border-gray-200">
+              <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2 flex-1 pr-2">
+                <Search className="scms-icon scms-icon-md" />
+                Search {searchModal.layerName}
+              </h3>
+              <button
+                onClick={handleSearchClose}
+                className="p-2 hover:bg-gray-100 rounded-md transition-colors text-gray-400 hover:text-gray-600 flex-shrink-0"
+                aria-label="Close modal"
+              >
+                <X className="scms-icon scms-icon-md" />
+              </button>
+            </div>
+            
+            <div className="p-4">
+              <SearchUI
+                fieldList={searchModal.fieldList}
+                onSearch={handleSearch}
+                currentQuery={searchModal.currentQuery}
+              />
+            </div>
+          </div>
+        </div>,
+        document.body
       )}
     </div>
   );

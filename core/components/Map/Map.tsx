@@ -17,9 +17,10 @@ import { directusShorthandToConfig } from '../../utils/directus-config';
 import type { BaseLayerConfig } from './types';
 import { defaultBasemaps, getBasemap, type BasemapKey } from './defaultBasemaps';
 import { fetchData } from '../../utils/data-fetcher';
-import { dataToGeoJson, parseStringTemplate, filterObjectToPredicate } from './utils';
+import { dataToGeoJson, parseStringTemplate, filterObjectToPredicate, searchQueryToMapLibreFilter, searchQueryToPredicate } from './utils';
 import type { FeatureCollection } from 'geojson';
 import type { CircleLayerSpecification } from 'maplibre-gl';
+import type { SearchQuery } from './types';
 
 // Default base layer (OSM)
 const DEFAULT_BASE_LAYERS: BaseLayerConfig[] = [defaultBasemaps.OSM];
@@ -59,6 +60,7 @@ export function Map({
     popupTemplate?: string;
     fitToContent?: boolean;
   }>>({});
+  const [layerSearchQueries, setLayerSearchQueries] = useState<Record<string, SearchQuery>>({});
 
   // Parse mapStyle JSON to extract layers and apply overrides
   useEffect(() => {
@@ -313,6 +315,14 @@ export function Map({
     }));
   };
 
+  // Handle search for vector layers
+  const handleLayerSearch = (layerId: string, query: SearchQuery) => {
+    setLayerSearchQueries(prev => ({
+      ...prev,
+      [layerId]: query
+    }));
+  };
+
   // Load data for all vector layers
   useEffect(() => {
     const loadAllLayers = async () => {
@@ -440,7 +450,9 @@ export function Map({
         id: `layer-${layer.name.replace(/\s+/g, '-')}`
       })),
       vectorLayerVisibility,
-      onVectorLayerToggle: handleVectorLayerToggle
+      onVectorLayerToggle: handleVectorLayerToggle,
+      onLayerSearch: handleLayerSearch,
+      layerSearchQueries
     });
 
     layerControlRef.current = control;
@@ -451,7 +463,7 @@ export function Map({
         map.removeControl(layerControlRef.current);
       }
     };
-  }, [mapLoaded, layerControl, resolvedBaseLayers, allVectorLayers.length]);
+  }, [mapLoaded, layerControl, resolvedBaseLayers, allVectorLayers.length, handleLayerSearch]);
 
   // Update layer control props when they change
   useEffect(() => {
@@ -465,10 +477,12 @@ export function Map({
           id: `layer-${layer.name.replace(/\s+/g, '-')}`
         })),
         vectorLayerVisibility,
-        onVectorLayerToggle: handleVectorLayerToggle
+        onVectorLayerToggle: handleVectorLayerToggle,
+        onLayerSearch: handleLayerSearch,
+        layerSearchQueries
       });
     }
-  }, [resolvedBaseLayers, activeBaseLayer, allVectorLayers, vectorLayerVisibility]);
+  }, [resolvedBaseLayers, activeBaseLayer, allVectorLayers, vectorLayerVisibility, handleLayerSearch, layerSearchQueries]);
 
   // Control visibility of layers from style JSON
   useEffect(() => {
@@ -607,6 +621,35 @@ export function Map({
           
           if (!geoJson) return null;
           
+          // Apply search filter if present
+          const searchQuery = layerSearchQueries[layerId];
+          let filteredGeoJson = geoJson;
+          
+          if (searchQuery && searchQuery.filters && searchQuery.filters.length > 0) {
+            // Try MapLibre filter first, fall back to client-side filtering
+            try {
+              const mapLibreFilter = searchQueryToMapLibreFilter(searchQuery);
+              if (mapLibreFilter) {
+                // Use MapLibre filtering for performance
+                filteredGeoJson = geoJson;
+              } else {
+                // Fall back to client-side filtering
+                const predicate = searchQueryToPredicate(searchQuery);
+                filteredGeoJson = {
+                  ...geoJson,
+                  features: geoJson.features.filter(predicate)
+                };
+              }
+            } catch (error) {
+              console.warn('Error applying search filter, falling back to client-side filtering:', error);
+              const predicate = searchQueryToPredicate(searchQuery);
+              filteredGeoJson = {
+                ...geoJson,
+                features: geoJson.features.filter(predicate)
+              };
+            }
+          }
+          
           const defaultStyle: CircleLayerSpecification = {
             id: layerId,
             type: 'circle',
@@ -628,8 +671,18 @@ export function Map({
             ? { ...defaultStyle, ...customStyle, id: layerId, source: sourceId }
             : defaultStyle;
           
+          // Apply MapLibre filter if using server-side filtering
+          const searchQuery2 = layerSearchQueries[layerId];
+          const mapLibreFilter = searchQuery2 && searchQuery2.filters.length > 0 
+            ? searchQueryToMapLibreFilter(searchQuery2) 
+            : undefined;
+          
+          if (mapLibreFilter) {
+            layerStyle.filter = mapLibreFilter;
+          }
+          
           return (
-            <Source key={sourceId} id={sourceId} type="geojson" data={geoJson}>
+            <Source key={sourceId} id={sourceId} type="geojson" data={filteredGeoJson}>
               <Layer 
                 {...layerStyle}
                 layout={{
