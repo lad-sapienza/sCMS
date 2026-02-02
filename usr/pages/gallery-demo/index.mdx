@@ -10,8 +10,7 @@ import TableOfContents from '@core/components/TableOfContents.astro';
 
 export const galleryImages = import.meta.glob('./gallery/*.{jpg,jpeg,png,gif,webp,avif}', { eager: true });
 export const captionsData = import.meta.glob('./gallery/captions.json', { eager: true });
-export const captionsModule = Object.values(captionsData)[0];
-export const captions = captionsModule?.default || captionsModule;
+export const captions = Object.values(captionsData)[0]?.default;
 
 # Gallery Component
 
@@ -52,8 +51,7 @@ The **Gallery** component displays images in a responsive grid layout with Photo
       './gallery/captions.json', 
       { eager: true }
     );
-    export const captionsModule = Object.values(captionsData)[0];
-    export const captions = captionsModule?.default || captionsModule;
+    export const captions = Object.values(captionsData)[0]?.default;
 
     // In MDX content:
     <GalleryMdx 

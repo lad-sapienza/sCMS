@@ -19,6 +19,7 @@ const currentPath = Astro.url.pathname
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <SEO title={title} description={description} siteMetadata={siteMetadata} />
+    <link rel="icon" type="image/png" href="/images/favicon.png" />
     <slot name="head" />
   </head>
   <body class="bg-gray-50">
@@ -60,11 +61,19 @@ const currentPath = Astro.url.pathname
               href="/gallery-demo"
               class:list={[
                 "hover:text-gray-900",
-                currentPath === "/map-demo"
+                currentPath === "/gallery-demo"
                   ? "text-gray-900 font-semibold"
                   : "text-gray-600",
               ]}>Gallery Demo</a
             >
+            <a
+              href="/blog"
+              class:list={[
+                "hover:text-gray-900",
+                currentPath === "/blog"
+                  ? "text-gray-900 font-semibold"
+                  : "text-gray-600",
+              ]}>Blog</a>
             <a
               href="/credits"
               class:list={[

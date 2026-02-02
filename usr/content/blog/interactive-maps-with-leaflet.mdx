@@ -1,0 +1,245 @@
+---
+title: 'Creating Interactive Maps with Leaflet'
+description: 'Build powerful interactive maps with vector layers, custom markers, and GeoJSON data using the Map component'
+date: 2025-01-25
+author: 's:CMS Team'
+tags: ['tutorial', 'maps', 'leaflet', 'geojson', 'components']
+---
+
+# Creating Interactive Maps with Leaflet
+
+The s:CMS **Map component** provides a powerful yet simple way to create interactive maps with **Leaflet** and **MapLibre GL** integration. Perfect for geographic data visualization, location-based content, and spatial analysis.
+
+## Features at a Glance
+
+🗺️ **Multiple basemap providers** (OpenStreetMap, Stamen, CartoDB, and more)  
+📍 **Vector and raster layers** support  
+📊 **GeoJSON data** rendering  
+🎨 **Custom styling** for features  
+📱 **Fully responsive** and mobile-friendly  
+⚡ **Optimized performance** with selective hydration
+
+## Basic Map Setup
+
+Create a simple interactive map:
+
+```mdx
+import { MapMdx } from '@core/components/Map';
+
+<MapMdx
+  center={[41.9028, 12.4964]}
+  zoom={13}
+  client:idle
+/>
+```
+
+This creates a map centered on Rome, Italy! 🇮🇹
+
+## Using Different Basemaps
+
+Choose from multiple basemap styles:
+
+```jsx
+<MapMdx
+  center={[40.7128, -74.0060]}
+  zoom={12}
+  basemap="CartoDB.Positron"
+  client:idle
+/>
+```
+
+Available basemaps:
+- `OpenStreetMap.Mapnik` (default)
+- `CartoDB.Positron` (light, minimal)
+- `CartoDB.DarkMatter` (dark theme)
+- `Stamen.Terrain` (topographic)
+- `Stamen.Watercolor` (artistic)
+
+## Adding Vector Layers
+
+Display GeoJSON data as interactive layers:
+
+```jsx
+<MapMdx
+  center={[41.9, 12.5]}
+  zoom={10}
+  vectorLayers={[
+    {
+      url: '/data/rome-districts.geojson',
+      style: {
+        color: '#3388ff',
+        weight: 2,
+        fillOpacity: 0.2
+      }
+    }
+  ]}
+  client:idle
+/>
+```
+
+## Custom Markers and Popups
+
+Add markers with custom popups:
+
+```jsx
+const markers = [
+  {
+    position: [41.9028, 12.4964],
+    popup: '<strong>Colosseum</strong><br>Ancient Roman amphitheater'
+  },
+  {
+    position: [41.8986, 12.4768],
+    popup: '<strong>Roman Forum</strong><br>Historical plaza'
+  }
+];
+
+<MapMdx
+  center={[41.9, 12.49]}
+  zoom={14}
+  markers={markers}
+  client:idle
+/>
+```
+
+## Styling GeoJSON Features
+
+Apply custom styles based on feature properties:
+
+```jsx
+const styleFunction = (feature) => {
+  return {
+    color: feature.properties.color || '#3388ff',
+    weight: feature.properties.importance || 2,
+    fillOpacity: 0.3
+  };
+};
+
+<MapMdx
+  vectorLayers={[{
+    url: '/data/boundaries.geojson',
+    style: styleFunction
+  }]}
+  client:idle
+/>
+```
+
+## Interactive Features
+
+The Map component supports:
+
+- **Click events** - Capture clicks on features
+- **Hover effects** - Highlight on mouse over
+- **Popup binding** - Automatic popup creation
+- **Layer control** - Toggle layers on/off
+- **Zoom control** - Pan and zoom controls
+- **Scale bar** - Distance measurement
+
+## Loading Multiple Data Sources
+
+Combine multiple vector layers:
+
+```jsx
+<MapMdx
+  center={[centerLat, centerLng]}
+  zoom={10}
+  vectorLayers={[
+    {
+      url: '/data/roads.geojson',
+      style: { color: '#666', weight: 1 }
+    },
+    {
+      url: '/data/buildings.geojson',
+      style: { color: '#c33', fillOpacity: 0.5 }
+    },
+    {
+      url: '/data/parks.geojson',
+      style: { color: '#2c3', fillOpacity: 0.3 }
+    }
+  ]}
+  client:idle
+/>
+```
+
+## Data Format: GeoJSON
+
+The Map component works with standard GeoJSON:
+
+```json
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.4964, 41.9028]
+      },
+      "properties": {
+        "name": "Colosseum",
+        "category": "monument",
+        "year": -80
+      }
+    }
+  ]
+}
+```
+
+## Performance Tips
+
+1. **Use client:idle** for maps below the fold
+2. **Use client:visible** for maps that appear on scroll
+3. **Simplify complex geometries** to reduce file size
+4. **Use GeoJSON** instead of large CSV conversions
+5. **Consider clustering** for many markers
+6. **Lazy load** large datasets
+
+## Real-World Applications
+
+The Map component is perfect for:
+
+- 📍 **Location directories** - Store locators, restaurant maps
+- 🏛️ **Archaeological sites** - Excavation data visualization
+- 🌍 **Research data** - Geographic analysis and presentation
+- 🗺️ **Travel guides** - Interactive route planning
+- 📊 **Data journalism** - Spatial storytelling
+
+## Example: Archaeological Site Mapping
+
+```jsx
+<MapMdx
+  center={[archaeological_site_coords]}
+  zoom={16}
+  basemap="Stamen.Terrain"
+  vectorLayers={[
+    {
+      url: '/data/excavation-zones.geojson',
+      style: { color: '#d4a574', weight: 2, fillOpacity: 0.3 }
+    },
+    {
+      url: '/data/artifacts-found.geojson',
+      pointToLayer: (feature, latlng) => {
+        return L.circleMarker(latlng, {
+          radius: 6,
+          fillColor: '#ff7800',
+          color: '#000',
+          weight: 1,
+          opacity: 1,
+          fillOpacity: 0.8
+        });
+      }
+    }
+  ]}
+  client:idle
+/>
+```
+
+## See It in Action
+
+Visit our [Map Demo](/map-demo) to explore interactive examples including:
+
+- Multiple basemap styles
+- Vector layer rendering
+- Custom feature styling
+- GeoJSON data visualization
+
+Ready to map your world? Start exploring! 🌍

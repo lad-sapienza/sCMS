@@ -1,0 +1,118 @@
+---
+title: 'Getting Started with s:CMS'
+description: 'Learn how to build modern static websites with s:CMS, a powerful Astro-based content management framework'
+date: 2025-01-15
+author: 's:CMS Team'
+tags: ['tutorial', 'getting-started', 'astro']
+---
+
+# Getting Started with s:CMS
+
+Welcome to **s:CMS**, a modern static content management system built on Astro! This framework provides a perfect balance between powerful features and simplicity, making it easy to create fast, SEO-friendly websites.
+
+## What is s:CMS?
+
+s:CMS is built with a **strict separation between core system and user code**:
+
+- **`core/`**: Framework components, layouts, and utilities (updateable via git pull)
+- **`usr/`**: Your content, custom components, and configurations (edit freely)
+
+This architecture allows you to update core functionality without losing your customizations!
+
+## Key Features
+
+### 🎨 Rich Component Library
+
+s:CMS comes with powerful pre-built components:
+
+- **Gallery**: PhotoSwipe-powered image galleries with lightbox
+- **Maps**: Interactive maps with Leaflet and vector layers
+- **DataTb**: Dynamic tables with filtering and pagination
+- **Search**: Full-text search across your content
+
+### 📝 Content Collections
+
+Use Astro's content collections for type-safe content management:
+
+```typescript
+// usr/content/config.ts
+const blogCollection = defineCollection({
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    date: z.coerce.date(),
+    tags: z.array(z.string()).optional(),
+  }),
+});
+```
+
+### 🔄 Multiple Data Sources
+
+Load content from various sources:
+
+- Local MDX/Markdown files
+- CSV and JSON files
+- Directus CMS integration
+- External APIs
+
+### ⚡ Optimized Performance
+
+Built on Astro's island architecture:
+
+- Static-first with selective hydration
+- Optimized images and assets
+- Lightning-fast page loads
+- Excellent Core Web Vitals scores
+
+## Quick Start
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/lad-sapienza/sCMS.git
+   cd sCMS
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Start the dev server**
+   ```bash
+   npm run dev
+   ```
+
+4. **Create your first page**
+   
+   Add a new file to `usr/pages/my-page.mdx`:
+   
+   ```mdx
+   ---
+   title: 'My First Page'
+   layout: ../../layouts/MdxLayout.astro
+   ---
+   
+   # Hello s:CMS!
+   
+   This is my first page.
+   ```
+
+## Using Core Components
+
+Import and use core components in your MDX files:
+
+```mdx
+import { GalleryMdx } from '@core/components/Gallery';
+
+export const images = import.meta.glob('./gallery/*.jpg', { eager: true });
+
+<GalleryMdx images={images} columns={{ min: 200, max: 3 }} client:idle />
+```
+
+## Next Steps
+
+- Explore the [Gallery Demo](/gallery-demo) to see image galleries in action
+- Check out the [Map Demo](/map-demo) for interactive mapping
+- Read the [Component Documentation](https://github.com/lad-sapienza/sCMS#components)
+
+Ready to build something amazing? Let's get started! 🚀

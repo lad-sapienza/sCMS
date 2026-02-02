@@ -1,0 +1,172 @@
+---
+title: 'Building Beautiful Photo Galleries'
+description: 'Create stunning, responsive photo galleries with PhotoSwipe integration and automatic image optimization'
+date: 2025-01-20
+author: 's:CMS Team'
+tags: ['tutorial', 'gallery', 'images', 'components']
+---
+
+import { GalleryMdx, processGalleryImages } from '@core/components/Gallery';
+
+export const demoImages = import.meta.glob('./building-photo-galleries-demo/*.{jpg,jpeg,png,gif,webp,avif}', { eager: true });
+
+# Building Beautiful Photo Galleries
+
+
+One of s:CMS's most powerful features is its **Gallery component**, which combines Astro's image optimization with PhotoSwipe's beautiful lightbox experience.
+
+## Why Use the Gallery Component?
+
+✅ **Automatic image loading** from folders  
+✅ **Responsive grid** that adapts to screen sizes  
+✅ **Full-screen lightbox** with zoom and pan  
+✅ **Custom captions** via JSON files  
+✅ **Optimized performance** with lazy loading  
+✅ **Keyboard navigation** and accessibility
+
+## Basic Usage
+
+The simplest way to create a gallery is to place images in a folder and auto-load them:
+
+```mdx
+---
+import { GalleryMdx } from '@core/components/Gallery';
+
+export const images = import.meta.glob('./gallery/*.{jpg,png,webp}', { eager: true });
+---
+
+<GalleryMdx images={images} client:idle />
+```
+
+That's it! The component will:
+1. Find all images in the `gallery/` folder
+2. Generate optimized versions
+3. Create a responsive grid
+4. Add lightbox functionality
+
+### Live Example
+
+Here's a working gallery with 3 sample images. Click any image to open the lightbox:
+
+<GalleryMdx 
+  images={processGalleryImages(demoImages)} 
+  columns={{ min: 200, max: 3 }}
+  client:idle 
+/>
+
+---
+
+## Custom Grid Configuration
+
+Control the grid layout with the `columns` prop:
+
+```jsx
+<GalleryMdx 
+  images={images}
+  columns={{ min: 200, max: 3 }}
+  client:idle 
+/>
+```
+
+- `min`: Minimum item width in pixels (default: 200)
+- `max`: Maximum number of columns (default: 1)
+
+The grid automatically adapts between these values based on screen width!
+
+## Adding Custom Captions
+
+Create a `captions.json` file next to your images:
+
+```json
+{
+  "children-593313_1280.jpg": "Two excited children raising their hands in joy",
+  "coffee-7567749_1280.jpg": "A perfect cappuccino with beautiful latte art",
+  "laptop-1478822_1280.jpg": "Modern workspace setup with laptop and accessories"
+}
+```
+
+Then load it in your MDX:
+
+```mdx
+import { processGalleryImages } from '@core/components/Gallery';
+
+export const images = import.meta.glob('./gallery/*.jpg', { eager: true });
+export const captionsData = import.meta.glob('./gallery/captions.json', { eager: true });
+export const captions = Object.values(captionsData)[0]?.default;
+
+<GalleryMdx 
+  images={processGalleryImages(images, { captions })}
+  client:idle 
+/>
+```
+
+### Fuzzy Caption Matching
+
+The Gallery component uses **intelligent fuzzy matching** for captions. Your caption keys can use any image resolution:
+
+```json
+{
+  "photo_1920.jpg": "This works!",
+  "photo_1280.jpg": "This also works!",
+  "photo_640.jpg": "All resolutions match!"
+}
+```
+
+All three keys will match an image file like `photo_1280.jpg` because the component strips resolution suffixes and matches on the base filename.
+
+## Reverse Sorting
+
+By default, images are sorted in descending order by filename. To reverse this:
+
+```jsx
+<GalleryMdx 
+  images={processGalleryImages(images, { reverseSorting: true })}
+  client:idle 
+/>
+```
+
+## Using in Astro Files
+
+For `.astro` files, use the Astro wrapper component:
+
+```astro
+---
+import { Gallery } from '@core/components/Gallery';
+
+const imageModules = import.meta.glob('./gallery/*.jpg', { eager: true });
+const images = processGalleryImages(imageModules);
+---
+
+<Gallery images={images} client:idle />
+```
+
+## PhotoSwipe Features
+
+The integrated PhotoSwipe lightbox provides:
+
+- **Zoom and pan** - Pinch or double-click to zoom
+- **Swipe navigation** - Swipe between images
+- **Keyboard shortcuts** - Arrow keys, ESC, etc.
+- **Captions overlay** - Beautiful caption display
+- **Responsive** - Works perfectly on mobile
+- **Accessible** - Full keyboard and screen reader support
+
+## Real-World Example
+
+Check out our [Gallery Demo](/gallery-demo) to see all these features in action, including:
+
+- Auto-loaded images from a folder
+- Custom captions from JSON
+- Responsive 3-column grid
+- Full PhotoSwipe integration
+
+## Best Practices
+
+1. **Optimize images** before adding them (recommended max: 2000px width)
+2. **Use consistent naming** for easier caption management
+3. **Write descriptive captions** for accessibility
+4. **Choose appropriate grid sizes** (200-300px min width works well)
+5. **Use eager loading** for above-the-fold galleries
+6. **Consider lazy loading** for galleries further down the page
+
+Ready to create your own stunning galleries? Start building now! 📸
