@@ -15,12 +15,12 @@ interface GalleryMdxProps extends Omit<GalleryProps, 'images'> {
   reverseSorting?: boolean;
 }
 
-export function GalleryMdx({ images, reverseSorting, ...props }: GalleryMdxProps) {
+export function GalleryMdx({ images, reverseSorting, columns = { min: 200, max: 1 }, ...props }: GalleryMdxProps) {
   // Detect if images is raw import.meta.glob output (object with module paths as keys)
   // or already processed GalleryImage array
   const processedImages = Array.isArray(images)
     ? images
-    : processGalleryImages(images, reverseSorting);
+    : processGalleryImages(images, { reverseSorting });
 
-  return <GalleryClient images={processedImages} {...props} />;
+  return <GalleryClient images={processedImages} columns={columns} {...props} />;
 }

@@ -21,7 +21,7 @@ interface Props {
 }
 
 const props = Astro.props;
-const { path, reverseSorting = false, columns, className, images: propImages } = props;
+const { path, reverseSorting = false, columns = { min: 200, max: 1 }, className, images: propImages } = props;
 
 // Load images at top level
 const allImageModules = import.meta.glob(

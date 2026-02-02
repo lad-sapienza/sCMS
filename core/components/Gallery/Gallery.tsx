@@ -6,8 +6,17 @@
 
 import React from 'react';
 import { Gallery as PhotoSwipeGallery, Item } from 'react-photoswipe-gallery';
-import type { GalleryProps, GalleryImage } from './types';
+import type { GalleryImage } from './types';
 import 'photoswipe/dist/photoswipe.css';
+
+interface Props {
+  images?: GalleryImage[];
+  columns?: {
+    min?: number;
+    max?: number;
+  };
+  className?: string;
+}
 
 const captionStyle = `
   .pswp__custom-caption {
@@ -33,7 +42,7 @@ export function Gallery({
   images = [],
   columns = { min: 200, max: 1 },
   className = '',
-}: GalleryProps) {
+}: Props) {
   if (images.length === 0) {
     return null;
   }
