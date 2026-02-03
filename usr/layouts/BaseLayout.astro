@@ -72,10 +72,18 @@ const currentPath = Astro.url.pathname
               href="/blog"
               class:list={[
                 "hover:text-gray-900",
-                currentPath === "/blog"
+                currentPath.startsWith("/blog")
                   ? "text-gray-900 font-semibold"
                   : "text-gray-600",
               ]}>Blog</a>
+            <a
+              href="/docs"
+              class:list={[
+                "hover:text-gray-900",
+                currentPath.startsWith("/docs")
+                  ? "text-gray-900 font-semibold"
+                  : "text-gray-600",
+              ]}>Docs</a>
             <a
               href="/credits"
               class:list={[

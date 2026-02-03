@@ -25,6 +25,20 @@ const blogCollection = defineCollection({
   }),
 });
 
+// Schema for documentation
+const docsCollection = defineCollection({
+  loader: glob({ 
+    pattern: '**/*.{md,mdx}', 
+    base: './usr/content/docs' 
+  }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    order: z.number().optional(),
+    draft: z.boolean().optional(),
+  }),
+});
+
 // Schema for static data files (CSV, JSON, YAML)
 const dataCollection = defineCollection({
   loader: glob({ 
@@ -40,5 +54,6 @@ const dataCollection = defineCollection({
 // Export all collections
 export const collections = {
   blog: blogCollection,
+  docs: docsCollection,
   data: dataCollection,
 };

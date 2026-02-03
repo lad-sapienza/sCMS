@@ -1,4 +1,8 @@
-# Deployment & Updates
+---
+title: Deployment & Updates
+description: Deployment and hosting guides for s:CMS
+order: 2
+---
 
 ## Quick Start - Deploy Your Site
 
@@ -9,72 +13,72 @@ s:CMS can be deployed to any static hosting platform. Choose your preferred opti
 **Option 1: GitHub Actions (Recommended)**
 
 1. **Configure your site URL** in `usr/user.config.mjs`:
-   ```js
-   export const siteMetadata = {
-     siteUrl: 'https://username.github.io/repo-name',
-   }
-   ```
+    ```js
+    export const siteMetadata = {
+      siteUrl: 'https://username.github.io/repo-name',
+    }
+    ```
 
 2. **Create GitHub Actions workflow**:
    Create `.github/workflows/deploy.yml`:
 
-```yaml
-name: Deploy to GitHub Pages
+    ```yaml
+    name: Deploy to GitHub Pages
 
-on:
-  # Runs on pushes targeting the default branch
-  push:
-    branches: ["main"]
-  
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-# Allow only one concurrent deployment
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+    on:
+      # Runs on pushes targeting the default branch
+      push:
+        branches: ["main"]
       
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: npm
-      
-      - name: Install dependencies
-        run: npm ci
-      
-      - name: Build with Astro
-        run: npm run build
-      
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./dist
+      # Allows you to run this workflow manually from the Actions tab
+      workflow_dispatch:
 
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-```
+    # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+
+    # Allow only one concurrent deployment
+    concurrency:
+      group: "pages"
+      cancel-in-progress: false
+
+    jobs:
+      build:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Checkout
+            uses: actions/checkout@v4
+          
+          - name: Setup Node
+            uses: actions/setup-node@v4
+            with:
+              node-version: "20"
+              cache: npm
+          
+          - name: Install dependencies
+            run: npm ci
+          
+          - name: Build with Astro
+            run: npm run build
+          
+          - name: Upload artifact
+            uses: actions/upload-pages-artifact@v3
+            with:
+              path: ./dist
+
+      deploy:
+        environment:
+          name: github-pages
+          url: ${{ steps.deployment.outputs.page_url }}
+        runs-on: ubuntu-latest
+        needs: build
+        steps:
+          - name: Deploy to GitHub Pages
+            id: deployment
+            uses: actions/deploy-pages@v4
+    ```
 
 3. **Enable GitHub Pages** in repo settings:
    - Settings → Pages → Source: GitHub Actions
@@ -177,15 +181,17 @@ import.meta.env.DIRECTUS_TOKEN
 import.meta.env.PUBLIC_SITE_URL // Available in client code
 ```
 
-### GitHub Actions Deployment
+### Deployment Platform Setup
+
+**GitHub Actions:**
 
 Add secrets to your repository:
 
-1. Go to: Settings → Secrets and variables → Actions
+1. Go to: Settings → Secrets and variables → Actions  
 2. Click "New repository secret"
 3. Add your secrets (e.g., `DIRECTUS_TOKEN`)
 
-Update your workflow to use secrets:
+Update your GitHub Actions workflow to use secrets:
 
 ```yaml
 jobs:

@@ -1,4 +1,8 @@
-# Updating s:CMS
+---
+title: Updating
+description: How to update the s:CMS core system
+order: 4
+---
 
 This guide explains how to update your s:CMS installation to the latest version while preserving your customizations.
 

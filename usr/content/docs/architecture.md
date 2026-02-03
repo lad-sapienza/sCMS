@@ -1,3 +1,9 @@
+---
+title: Architecture
+description: s:CMS system architecture and design patterns
+order: 1
+---
+
 # s:CMS Update & Deployment System
 
 ## Overview

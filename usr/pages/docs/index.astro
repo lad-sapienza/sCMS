@@ -1,0 +1,40 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// Get all docs, sorted by order
+const docs = await getCollection('docs');
+const sortedDocs = docs.sort((a, b) => (a.data.order || 999) - (b.data.order || 999));
+---
+
+<BaseLayout title="Documentation" description="Technical documentation for s:CMS">
+  <main class="mx-auto max-w-7xl px-4 py-8">
+    <div class="prose max-w-none">
+      <h1>Documentation</h1>
+      <p class="text-lg text-gray-600">
+        Welcome to the s:CMS documentation. Here you'll find technical guides and information about the system architecture.
+      </p>
+
+      <div class="grid gap-6 mt-8">
+        {sortedDocs.map((doc) => (
+          <a 
+            href={`/docs/${doc.id.replace('.md', '')}`}
+            class="block p-6 bg-white border border-gray-200 rounded-lg hover:border-blue-500 hover:shadow-md transition-all no-underline"
+          >
+            <h3 class="text-xl font-semibold text-gray-900 mb-2 mt-0">
+              {doc.data.title}
+            </h3>
+            <p class="text-gray-600 mb-0">
+              {doc.data.description}
+            </p>
+          </a>
+        ))}
+      </div>
+
+      <hr class="mt-12" />
+      <p class="text-sm text-gray-500">
+        <em>This documentation covers the technical aspects of s:CMS. For usage examples and component demos, check out the <a href="/" class="text-blue-600 hover:underline">main demo pages</a>.</em>
+      </p>
+    </div>
+  </main>
+</BaseLayout>

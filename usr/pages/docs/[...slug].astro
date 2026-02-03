@@ -1,0 +1,100 @@
+---
+import { getCollection, render } from 'astro:content';
+import { type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const docs = await getCollection('docs');
+  
+  return docs.map((doc) => ({
+    params: { slug: doc.id.replace('.md', '') },
+    props: { doc },
+  }));
+}
+
+interface Props {
+  doc: CollectionEntry<'docs'>;
+}
+
+const { doc } = Astro.props;
+const { Content } = await render(doc);
+---
+
+<BaseLayout title={doc.data.title} description={doc.data.description}>
+  <main class="mx-auto max-w-7xl px-4 py-8">
+    <article class="prose max-w-none">
+      <!-- Docs header -->
+      <div class="mb-8 border-b border-gray-200 pb-8">
+        <div class="mb-4">
+          <a 
+            href="/docs" 
+            class="text-sm font-medium text-blue-600 hover:text-blue-800 no-underline"
+          >
+            ← Back to Documentation
+          </a>
+        </div>
+
+        <h1 class="mb-4">{doc.data.title}</h1>
+        
+        <p class="lead text-gray-600">
+          {doc.data.description}
+        </p>
+      </div>
+
+      <!-- Content -->
+      <div class="markdown-content">
+        <Content />
+      </div>
+    </article>
+  </main>
+</BaseLayout>
+
+<style>
+  .markdown-content :global(h1:first-child) {
+    @apply hidden; /* Hide the first h1 since we show the title in the header */
+  }
+  
+  .markdown-content :global(h2) {
+    @apply text-3xl font-bold mt-8 mb-4 text-gray-900;
+  }
+  
+  .markdown-content :global(h3) {
+    @apply text-2xl font-semibold mt-6 mb-3 text-gray-800;
+  }
+  
+  .markdown-content :global(p) {
+    @apply mb-4 text-gray-700 leading-relaxed;
+  }
+  
+  .markdown-content :global(ul), .markdown-content :global(ol) {
+    @apply mb-4 ml-6;
+  }
+  
+  .markdown-content :global(li) {
+    @apply mb-2 text-gray-700;
+  }
+  
+  .markdown-content :global(ul li) {
+    @apply list-disc;
+  }
+  
+  .markdown-content :global(strong) {
+    @apply font-semibold text-gray-900;
+  }
+  
+  .markdown-content :global(a) {
+    @apply text-blue-600 hover:text-blue-800 hover:underline;
+  }
+  
+  .markdown-content :global(code) {
+    @apply bg-gray-100 px-1 py-0.5 rounded text-sm font-mono;
+  }
+  
+  .markdown-content :global(pre) {
+    @apply bg-gray-900 text-white p-4 rounded-lg overflow-x-auto mb-4;
+  }
+  
+  .markdown-content :global(pre code) {
+    @apply bg-transparent p-0;
+  }
+</style>

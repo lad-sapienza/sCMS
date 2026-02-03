@@ -1,3 +1,9 @@
+---
+title: Theming
+description: Customization and theming information for s:CMS
+order: 3
+---
+
 # s:CMS Theming Guide
 
 s:CMS provides a flexible theming system that combines **CSS variables** with **Tailwind CSS** for maximum customization power.
