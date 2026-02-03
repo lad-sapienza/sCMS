@@ -1,13 +1,10 @@
 // Core package exports
-export { default as DataTable } from './components/DataTable.astro';
-export { default as MapLeaflet } from './components/MapLeaflet.astro';
-export { default as VectorLayer } from './components/VectorLayer.astro';
-export { default as Search } from './components/Search.astro';
-export { default as Record } from './components/Record.astro';
-export { default as Field } from './components/Field.astro';
 export { default as GalleryAstro } from './components/Gallery/Gallery.astro';
 export { Gallery, GalleryMdx, processGalleryImages } from './components/Gallery';
-export { default as TableOfContents } from './components/TableOfContents.astro';
+export { default as TableOfContents } from './components/TableOfContents/TableOfContents.astro';
+
+// DataTb (recommended table component)
+export { DataTb, CsvSource, JsonSource, DirectusSource, ApiSource } from './components/DataTb';
 
 // Map components
 export { Map as MapComponent } from './components/Map';

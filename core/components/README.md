@@ -12,7 +12,7 @@ Comprehensive SEO component that generates meta tags and structured data for sea
 
 ```astro
 ---
-import SEO from '@core/components/SEO.astro';
+import SEO from '@core/components/SEO/SEO.astro';
 ---
 
 <head>

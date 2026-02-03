@@ -19,7 +19,7 @@ A static site Content Management System developed and maintained by [LAD: Labora
 ```
 scms-astro/
 ├── core/                     # Core system (updateable)
-│   ├── components/           # Core components (DataTable, Search, etc.)
+│   ├── components/           # Core components (DataTb, Search, etc.)
 │   ├── layouts/             # Base layouts
 │   ├── utils/               # Utility functions
 │   ├── integrations/        # Custom Astro integrations
@@ -150,13 +150,14 @@ Import and use core components in your content:
 title: "Example Page"
 ---
 
-import { DataTable, Search, MapLeaflet } from '@core';
+import { DataTb, Map } from '@core';
 
 # My Data
 
-<DataTable 
+<DataTb 
   source={{ directus: { table: 'your_table' } }}
   columns={['id', 'name', 'description']}
+  client:idle
 />
 ```
 
@@ -208,16 +209,15 @@ const products = defineCollection({
 
 ```astro
 ---
-import { DataTable } from '@core';
+import { DataTb, DirectusSource } from '@core';
 ---
 
-<DataTable
-  source={{
-    directus: {
-      table: 'articles',
-      queryString: 'filter[status][_eq]=published'
-    }
-  }}
+<DataTb searchable pagination client:idle>
+  <DirectusSource 
+    table="articles" 
+    queryString="filter[status][_eq]=published" 
+  />
+</DataTb>
 />
 ```
 
@@ -275,23 +275,14 @@ git submodule update --remote core
 
 ## 🧰 Available Components
 
-### DataTable
-Display data in sortable, filterable tables
+### DataTb
+Display data in sortable, filterable tables with modern React-based interface
 
-### Search
-Full-text search with custom result templates
-
-### MapLeaflet
-Interactive maps with Leaflet.js
-
-### VectorLayer
-Add vector layers to maps
+### Map
+Interactive maps with MapLibre GL JS and vector layers
 
 ### Gallery
 Responsive image galleries with lightbox
-
-### Record & Field
-Display individual record details
 
 See [Components Documentation](src/content/docs/components.md) for detailed usage.
 

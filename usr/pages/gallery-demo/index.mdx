@@ -6,7 +6,7 @@ layout: ../../layouts/MdxLayout.astro
 
 import { GalleryMdx, processGalleryImages } from '@core/components/Gallery';
 import Example from '../../components/Example.astro';
-import TableOfContents from '@core/components/TableOfContents.astro';
+import TableOfContents from '@core/components/TableOfContents/TableOfContents.astro';
 
 export const galleryImages = import.meta.glob('./gallery/*.{jpg,jpeg,png,gif,webp,avif}', { eager: true });
 export const captionsData = import.meta.glob('./gallery/captions.json', { eager: true });
