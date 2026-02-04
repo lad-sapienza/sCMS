@@ -502,7 +502,7 @@ The `Map` component renders an interactive map using MapLibre GL JS. Vector laye
       geoField: "geometry",
       queryString: "filter[Hellenistic_Roman][_eq]=true",
       name: "Hellenistic-Roman Sites",
-      popup: "<b>${Site_Name}</b><br/>${Description}",
+      popup: "<b>${Site_Name}</b><br/>${Description}<br/><a href='./record/scms_ksa/${id}'>View record</a>",
       fitToContent: true,
       style: {
         type: 'circle',
@@ -535,7 +535,7 @@ The `Map` component renders an interactive map using MapLibre GL JS. Vector laye
       {
         name: 'Archaeological Sites',
         source: { type: 'geojson', url: '/data/ksa.geojson' },
-        popupTemplate: '<b>${Site_Name}</b><br/>${Item_Label}<br/>${Site_Description}',
+        popup: "<b>${Site_Name}</b><br/>${Description}<br/><a href='./record/scms_ksa/${id}'>View record</a>",
         searchInFields: {
           Site_Name: "Site Name",
           Item_Label: "Item Label", 
