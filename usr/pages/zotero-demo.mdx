@@ -1,0 +1,133 @@
+---
+title: "Zotero Geo Viewer Demo"
+description: "Live demo of the ZoteroGeoViewer component"
+layout: '@layouts/MdxLayout.astro'
+---
+
+import { ZoteroGeoViewerMdx } from '@core/components/ZoteroGeoViewer';
+
+# ZoteroGeoViewer Component Demo
+
+This page demonstrates the ZoteroGeoViewer component that connects to a Zotero group library and visualizes items with geographical coordinates.
+
+{/* Note: Replace 12345 with an actual Zotero group ID */}
+{/* Example with a real group ID - replace with your own */}
+
+<div className="my-8 border border-gray-200 rounded-lg p-4">
+  <h2 className="text-lg font-semibold mb-4">Interactive Demo</h2>
+  <p className="text-sm text-gray-600 mb-4">
+    This would connect to a real Zotero group library. Replace the groupId with your own group ID to test.
+  </p>
+  
+  {/* Uncomment and replace with a real group ID to test:
+  <ZoteroGeoViewerMdx 
+    groupId={12345}
+    layout="8x4"
+    mapHeight="500px"
+    mapCenter="20.5,40.0,8"
+  />
+  */}
+  
+  <div className="bg-gray-100 rounded p-8 text-center text-gray-600">
+    <p>Demo placeholder - Add your Zotero group ID to activate</p>
+  </div>
+</div>
+
+## Component Features
+
+The ZoteroGeoViewer component provides:
+
+### 📍 Geographical Visualization
+- Interactive map with location markers sized by item count
+- Popup windows showing item details and links
+- Automatic map bounds fitting to data
+
+### 🏷️ Tag-based Filtering  
+- Real-time search through Zotero tags
+- Autocomplete suggestions for easy discovery
+- Client-side filtering for fast interaction
+
+### 📊 Live Statistics
+- Total items in the library
+- Georeferenced items count  
+- Number of unique locations
+- Updates automatically as you filter
+
+### 📚 Recent Items Preview
+- Shows latest additions to the library
+- Direct links to Zotero items
+- Author and publication info
+
+## Layout Options
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
+  <div className="border rounded p-3">
+    <h4 className="font-semibold">vertical</h4>
+    <p className="text-sm text-gray-600">Map on top, controls below</p>
+  </div>
+  <div className="border rounded p-3">
+    <h4 className="font-semibold">6x6</h4>
+    <p className="text-sm text-gray-600">Equal split (50/50)</p>
+  </div>
+  <div className="border rounded p-3">
+    <h4 className="font-semibold">8x4</h4>
+    <p className="text-sm text-gray-600">Map emphasis (67/33)</p>
+  </div>
+  <div className="border rounded p-3">
+    <h4 className="font-semibold">4x8</h4>
+    <p className="text-sm text-gray-600">Controls emphasis (33/67)</p>
+  </div>
+</div>
+
+## Usage Examples
+
+### Basic Usage
+```jsx
+import { ZoteroGeoViewerMdx } from '@core/components/ZoteroGeoViewer';
+
+<ZoteroGeoViewerMdx groupId={12345} />
+```
+
+### Custom Configuration
+```jsx
+<ZoteroGeoViewerMdx 
+  groupId={12345}
+  layout="6x6"
+  mapHeight="400px"
+  mapCenter="12.5,42.0,6"
+  maxItems={500}
+  tagAutocomplete={false}
+/>
+```
+
+### In Astro Files
+```astro
+---
+import { ZoteroGeoViewer } from '@core/components/ZoteroGeoViewer';
+---
+
+<ZoteroGeoViewer 
+  groupId={12345}
+  layout="8x4"
+  client:idle
+/>
+```
+
+## Technical Details
+
+### Data Sources
+- **Zotero API**: `https://api.zotero.org/groups/{groupId}/items`
+- **Coordinate Data**: `/data/zoteroTagCoordinates.geojson`
+- **Matching**: Items matched to locations via tag names
+
+### Performance
+- Lazy loading with `client:idle`
+- Client-side filtering for responsive search
+- Optimized GeoJSON rendering
+- Efficient tag autocomplete
+
+### Dependencies
+- React with hooks for state management
+- MapLibre GL for map rendering  
+- Tailwind CSS for styling
+- Zotero public API for data

@@ -10,6 +10,10 @@ export { DataTb, CsvSource, JsonSource, DirectusSource, ApiSource } from './comp
 export { Map as MapComponent } from './components/Map';
 export { SearchUI, SearchUISimple, SearchUIAdvanced } from './components/Map/Search';
 
+// ZoteroGeoViewer component
+export { ZoteroGeoViewer, ZoteroGeoViewerMdx } from './components/ZoteroGeoViewer';
+export type { ZoteroGeoViewerProps, ZoteroItem, CoordinateData, LayoutType } from './components/ZoteroGeoViewer';
+
 // Layouts
 export { default as BaseLayout } from './layouts/BaseLayout.astro';
 
