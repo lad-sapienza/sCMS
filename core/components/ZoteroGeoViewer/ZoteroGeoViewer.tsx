@@ -259,32 +259,40 @@ export function ZoteroGeoViewer(props: ZoteroGeoViewerProps) {
     switch (layout) {
       case 'vertical':
         return 'flex flex-col space-y-4';
+      case 'horizontal':
+        return 'flex flex-col md:flex-row gap-4';
       case '6x6':
-        return 'grid grid-cols-1 lg:grid-cols-2 gap-4';
+        return 'grid grid-cols-1 md:grid-cols-12 gap-4';
       case '8x4':
-        return 'grid grid-cols-1 lg:grid-cols-3 gap-4';
+        return 'grid grid-cols-1 md:grid-cols-12 gap-4';
       case '4x8':
-        return 'grid grid-cols-1 lg:grid-cols-3 gap-4';
+        return 'grid grid-cols-1 md:grid-cols-12 gap-4';
+      case '12x4':
+        return 'flex flex-col space-y-4';
       default:
-        return 'grid grid-cols-1 lg:grid-cols-3 gap-4';
+        return 'grid grid-cols-1 md:grid-cols-12 gap-4';
     }
   };
 
   const getMapColSpan = () => {
     switch (layout) {
-      case '6x6': return 'lg:col-span-1';
-      case '8x4': return 'lg:col-span-2';
-      case '4x8': return 'lg:col-span-1';
-      default: return 'lg:col-span-2';
+      case 'horizontal': return 'md:w-2/3';
+      case '6x6': return 'md:col-span-6';
+      case '8x4': return 'md:col-span-8';
+      case '4x8': return 'md:col-span-4';
+      case '12x4': return 'w-full';
+      default: return 'md:col-span-8';
     }
   };
 
   const getControlsColSpan = () => {
     switch (layout) {
-      case '6x6': return 'lg:col-span-1';
-      case '8x4': return 'lg:col-span-1';
-      case '4x8': return 'lg:col-span-2';
-      default: return 'lg:col-span-1';
+      case 'horizontal': return 'md:w-1/3';
+      case '6x6': return 'md:col-span-6';
+      case '8x4': return 'md:col-span-4';
+      case '4x8': return 'md:col-span-8';
+      case '12x4': return 'w-full';
+      default: return 'md:col-span-4';
     }
   };
 
@@ -377,7 +385,7 @@ export function ZoteroGeoViewer(props: ZoteroGeoViewerProps) {
 
         {/* Controls and Stats */}
         <div className={getControlsColSpan()}>
-          <div className="space-y-4">
+          <div className="space-bottom-4">
             {/* Statistics */}
             <div className="bg-gray-50 rounded-lg p-4">
               <h3 className="font-semibold mb-3">Library Statistics</h3>
@@ -401,9 +409,12 @@ export function ZoteroGeoViewer(props: ZoteroGeoViewerProps) {
                   type="text"
                   placeholder="Search for locations..."
                   value={searchTerm}
+                  onFocusCapture={(e)=>{
+                    setShowDropdown(true);
+                  }}
                   onChange={(e) => {
                     setSearchTerm(e.target.value);
-                    setShowDropdown(true);
+                    
                   }}
                   onFocus={() => setShowDropdown(true)}
                   onBlur={() => setTimeout(() => setShowDropdown(false), 200)}

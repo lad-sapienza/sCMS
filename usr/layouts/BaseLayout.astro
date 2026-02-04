@@ -69,6 +69,15 @@ const currentPath = Astro.url.pathname
               ]}>Gallery Demo</a
             >
             <a
+              href="/zotero-demo"
+              class:list={[
+                "hover:text-gray-900",
+                currentPath === "/zotero-demo"
+                  ? "text-gray-900 font-semibold"
+                  : "text-gray-600",
+              ]}>Zotero Demo</a
+            >
+            <a
               href="/blog"
               class:list={[
                 "hover:text-gray-900",

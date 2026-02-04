@@ -31,12 +31,13 @@ import { ZoteroGeoViewer } from '@core/components/ZoteroGeoViewer';
 ### In MDX files
 
 ```jsx
-import { ZoteroGeoViewerMdx } from '@core/components/ZoteroGeoViewer';
+import { ZoteroGeoViewer } from '@core/components/ZoteroGeoViewer';
 
-<ZoteroGeoViewerMdx 
+<ZoteroGeoViewer 
   groupId={12345}
   layout="6x6"
   tagAutocomplete={true}
+  client:load
 />
 ```
 
@@ -149,27 +150,29 @@ The component uses Tailwind CSS classes and follows the s:CMS design system:
 
 ### Basic Usage
 ```jsx
-<ZoteroGeoViewerMdx groupId={12345} />
+<ZoteroGeoViewer groupId={12345} client:load />
 ```
 
 ### Custom Configuration
 ```jsx
-<ZoteroGeoViewerMdx 
+<ZoteroGeoViewer 
   groupId={12345}
   layout="6x6"
   mapHeight="400px"
   mapCenter="12.5,42.0,6"
   maxItems={500}
   tagAutocomplete={false}
+  client:load
 />
 ```
 
 ### Vertical Layout for Narrow Spaces
 ```jsx
-<ZoteroGeoViewerMdx 
+<ZoteroGeoViewer 
   groupId={12345}
   layout="vertical"
   mapHeight="300px"
+  client:load
 />
 ```
 

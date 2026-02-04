@@ -3,7 +3,10 @@ import typography from '@tailwindcss/typography';
 import forms from '@tailwindcss/forms';
 
 export default {
-  content: ['./usr/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
+  content: [
+    './usr/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}',
+    './core/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'
+  ],
   theme: {
     extend: {
       colors: {

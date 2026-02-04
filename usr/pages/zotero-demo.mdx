@@ -4,34 +4,59 @@ description: "Live demo of the ZoteroGeoViewer component"
 layout: '@layouts/MdxLayout.astro'
 ---
 
-import { ZoteroGeoViewerMdx } from '@core/components/ZoteroGeoViewer';
+import { ZoteroGeoViewer } from '@core/components/ZoteroGeoViewer';
+import Example from '../components/Example.astro';
 
 # ZoteroGeoViewer Component Demo
+
+<Example title="Minimal ZoteroGeoViewer Usage" codeWidth='full'>
+  <Fragment slot="intro">
+    Minimal example of the ZoteroGeoViewer component connecting to a Zotero group library and displaying items with geographical data.
+  </Fragment>
+
+  <Fragment slot="code">
+```mdx
+<ZoteroGeoViewer
+  groupId={336647} 
+  client:load />
+```
+  </Fragment>
+
+  <ZoteroGeoViewer
+    groupId={336647} 
+    client:load />
+</Example>
+
+
+<Example title="ZoteroGeoViewer with some custom layout options" codeWidth='full'>
+  <Fragment slot="intro">
+    Minimal example of the ZoteroGeoViewer component connecting to a Zotero group library and displaying items with geographical data. Some layout options are customized.
+  </Fragment>
+
+  <Fragment slot="code">
+```mdx
+<ZoteroGeoViewer
+  groupId={336647} 
+  layout="vertical"
+  mapHeight="500px"
+  mapCenter="20.5,40.0,8"
+  client:load
+```
+  </Fragment>
+
+  <ZoteroGeoViewer
+    groupId={336647} 
+    layout="vertical"
+    mapHeight="800px"
+    mapCenter="20.5,40.0,8"
+    client:load />
+</Example>
 
 This page demonstrates the ZoteroGeoViewer component that connects to a Zotero group library and visualizes items with geographical coordinates.
 
 {/* Note: Replace 12345 with an actual Zotero group ID */}
 {/* Example with a real group ID - replace with your own */}
 
-<div className="my-8 border border-gray-200 rounded-lg p-4">
-  <h2 className="text-lg font-semibold mb-4">Interactive Demo</h2>
-  <p className="text-sm text-gray-600 mb-4">
-    This would connect to a real Zotero group library. Replace the groupId with your own group ID to test.
-  </p>
-  
-  {/* Uncomment and replace with a real group ID to test:
-  <ZoteroGeoViewerMdx 
-    groupId={12345}
-    layout="8x4"
-    mapHeight="500px"
-    mapCenter="20.5,40.0,8"
-  />
-  */}
-  
-  <div className="bg-gray-100 rounded p-8 text-center text-gray-600">
-    <p>Demo placeholder - Add your Zotero group ID to activate</p>
-  </div>
-</div>
 
 ## Component Features
 
@@ -71,7 +96,7 @@ The ZoteroGeoViewer component provides:
   </div>
   <div className="border rounded p-3">
     <h4 className="font-semibold">8x4</h4>
-    <p className="text-sm text-gray-600">Map emphasis (67/33)</p>
+    <p className="text-sm text-gray-600">Map emphasis (67/33) - default</p>
   </div>
   <div className="border rounded p-3">
     <h4 className="font-semibold">4x8</h4>
@@ -83,20 +108,21 @@ The ZoteroGeoViewer component provides:
 
 ### Basic Usage
 ```jsx
-import { ZoteroGeoViewerMdx } from '@core/components/ZoteroGeoViewer';
+import { ZoteroGeoViewer } from '@core/components/ZoteroGeoViewer';
 
-<ZoteroGeoViewerMdx groupId={12345} />
+<ZoteroGeoViewer groupId={12345} client:load />
 ```
 
 ### Custom Configuration
 ```jsx
-<ZoteroGeoViewerMdx 
+<ZoteroGeoViewer 
   groupId={12345}
   layout="6x6"
   mapHeight="400px"
   mapCenter="12.5,42.0,6"
   maxItems={500}
   tagAutocomplete={false}
+  client:load
 />
 ```
 
