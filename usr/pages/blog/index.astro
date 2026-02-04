@@ -2,6 +2,8 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
+export const prerender = true;
+
 // Get all blog posts and sort by date (newest first)
 const posts = (await getCollection('blog'))
   .filter(post => !post.data.draft)
