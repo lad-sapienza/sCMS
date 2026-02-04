@@ -35,7 +35,7 @@ export function ZoteroRecordsPreview({ groupId, tag }: ZoteroRecordsPreviewProps
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!tag) {
+    if (!tag || !tag.main) {
       setRecords([]);
       setError(null);
       setLoading(false);
@@ -45,6 +45,8 @@ export function ZoteroRecordsPreview({ groupId, tag }: ZoteroRecordsPreviewProps
     let cancelled = false;
 
     async function fetchAllRecords() {
+      if (!tag || !tag.main) return; // Additional null check for TypeScript
+      
       setLoading(true);
       setError(null);
       setRecords([]);
