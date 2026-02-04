@@ -7,6 +7,7 @@
 
 export { ZoteroGeoViewer } from './ZoteroGeoViewer';
 export { ZoteroGeoViewerMdx } from './ZoteroGeoViewerMdx';
+export { ZoteroRecordsPreview } from './ZoteroRecordsPreview';
 export type { 
   ZoteroGeoViewerProps, 
   ZoteroItem, 

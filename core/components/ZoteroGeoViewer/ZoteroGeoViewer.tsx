@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import type { ZoteroGeoViewerProps } from './types';
 import { Map } from '../Map';
+import { ZoteroRecordsPreview } from './ZoteroRecordsPreview';
 
 // Module-level cache to avoid re-fetching data
 let zoteroCache: Record<string, number> | null = null;
@@ -9,9 +10,6 @@ let coordinateCache: any[] | null = null;
 const COORDINATES_URL = '/data/zoteroTagCoordinates.geojson';
 
 export function ZoteroGeoViewer(props: ZoteroGeoViewerProps) {
-  // Add debug logging
-  console.log('ZoteroGeoViewer props:', props);
-  
   // Add error handling for props
   if (!props) {
     return (
@@ -48,6 +46,11 @@ export function ZoteroGeoViewer(props: ZoteroGeoViewerProps) {
   const [tags, setTags] = useState<Array<{label: string; alts: string[]}>>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedTag, setSelectedTag] = useState<{main: string; alternatives: string[]} | null>(null);
+  const [showDropdown, setShowDropdown] = useState(false);
+  
+  // Per-instance id for namespacing globals when multiple viewers are on same page
+  const [instanceId] = useState(() => Math.floor(Math.random() * 1e9));
+  const handlerName = `__zotSelectTag_${instanceId}`;
 
   // Fetch Zotero tags
   async function fetchZoteroTagsFlattened() {
@@ -215,6 +218,32 @@ export function ZoteroGeoViewer(props: ZoteroGeoViewerProps) {
     };
   }, [groupId]);
 
+  // Expose a per-instance global handler for popup buttons to select a tag
+  useEffect(() => {
+    const name = handlerName;
+    (window as any)[name] = (tag: string, altLabels: string) => {
+      try {
+        if (typeof tag === 'string' && tag.length) {
+          setSearchTerm(tag);
+          // Include both the main tag and alt labels in the selected tag data
+          setSelectedTag({
+            main: tag,
+            alternatives: altLabels ? altLabels.split(',').map((s: string) => s.trim()).filter(Boolean) : []
+          });
+        }
+      } catch (e) {
+        console.error('Error in popup handler:', e);
+      }
+    };
+    return () => {
+      try { 
+        delete (window as any)[name]; 
+      } catch (e) {
+        console.error('Error cleaning up handler:', e);
+      }
+    };
+  }, [handlerName]);
+
   // Filter suggestions based on search term
   const filteredSuggestions = searchTerm.trim() 
     ? tags.filter(t => {
@@ -331,7 +360,7 @@ export function ZoteroGeoViewer(props: ZoteroGeoViewerProps) {
                     'circle-stroke-color': '#ffffff'
                   }
                 },
-                popupTemplate: '<h4>${name}</h4><p>${altLabel}</p><div class="text-sm">Items: ${zoteroCount}</div>',
+                popupTemplate: `<h4>\${name}</h4><p>\${altLabel}</p><div class="text-sm mb-2">Items: \${zoteroCount}</div><button style="background-color: #1d4ed8; color: white; padding: 8px 16px; border: none; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; margin-top: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);" onmouseover="this.style.backgroundColor='#1e40af'" onmouseout="this.style.backgroundColor='#1d4ed8'" type="button" data-tag="\${name}" data-alt-labels="\${altLabel}" onclick="window['${handlerName}'] && window['${handlerName}'](this.dataset.tag, this.dataset.altLabels)">📚 Show \${zoteroCount} records</button>`,
                 visible: true,
                 fitToContent: true
               }]}
@@ -372,12 +401,17 @@ export function ZoteroGeoViewer(props: ZoteroGeoViewerProps) {
                   type="text"
                   placeholder="Search for locations..."
                   value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onChange={(e) => {
+                    setSearchTerm(e.target.value);
+                    setShowDropdown(true);
+                  }}
+                  onFocus={() => setShowDropdown(true)}
+                  onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 
                 {/* Simple autocomplete */}
-                {searchTerm && filteredSuggestions.length > 0 && (
+                {searchTerm && showDropdown && filteredSuggestions.length > 0 && (
                   <div className="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-md shadow-lg max-h-48 overflow-y-auto">
                     {filteredSuggestions.map((tag, index) => (
                       <button
@@ -388,6 +422,7 @@ export function ZoteroGeoViewer(props: ZoteroGeoViewerProps) {
                             main: tag.label,
                             alternatives: tag.alts
                           });
+                          setShowDropdown(false);
                         }}
                         className="w-full px-3 py-2 text-left hover:bg-gray-100 focus:bg-gray-100 focus:outline-none"
                       >
@@ -409,6 +444,7 @@ export function ZoteroGeoViewer(props: ZoteroGeoViewerProps) {
                   onClick={() => {
                     setSearchTerm('');
                     setSelectedTag(null);
+                    setShowDropdown(false);
                   }}
                   className="mt-2 text-sm text-blue-600 hover:text-blue-800"
                 >
@@ -430,6 +466,11 @@ export function ZoteroGeoViewer(props: ZoteroGeoViewerProps) {
                   Use the map markers to explore items at this location.
                 </p>
               </div>
+            )}
+
+            {/* Zotero Records Preview */}
+            {selectedTag && (
+              <ZoteroRecordsPreview groupId={groupId} tag={selectedTag} />
             )}
           </div>
         </div>
