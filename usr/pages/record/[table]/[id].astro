@@ -1,0 +1,114 @@
+---
+import { getRecordFromParams } from '@core/utils/record-fetcher';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+export const prerender = false;
+
+const record = await getRecordFromParams(Astro);
+---
+
+<BaseLayout title={record?.Site_Name}>
+  
+  {record ? (
+    <div class="max-w-4xl mx-auto p-8">
+      <div class="grid grid-cols-2 gap-8">
+        
+        <!-- Site Name - Full width -->
+        <div class="col-span-2">
+          <h1 class="text-4xl font-bold mb-4">
+            {record.Site_Name || `Record ${id}`}
+          </h1>
+          <p class="text-sm text-gray-500 mb-6">
+            Table: {Astro.params.table} | ID: {Astro.params.id}
+          </p>
+        </div>
+        
+        <!-- Description Column -->
+        <div>
+          <h2 class="text-xl font-semibold mb-2">Description</h2>
+          <p class="text-gray-700 leading-relaxed">
+            {record.Description || 'No description available'}
+          </p>
+          
+          <div class="mt-6">
+            <h3 class="text-lg font-medium mb-2">Additional Info</h3>
+            <p class="text-sm text-gray-600">
+              Survey Year: {record.Survey_Year || 'N/A'}
+            </p>
+            <p class="text-sm text-gray-600">
+              Creator: {record.Creator || 'N/A'}
+            </p>
+          </div>
+        </div>
+        
+        <!-- Location Column -->
+        <div>
+          <h2 class="text-xl font-semibold mb-2">Location</h2>
+          <div class="space-y-2">
+            {(record.Latitude && record.Longitude) && (
+              <div class="font-mono text-sm">
+                <span class="font-semibold">Coordinates:</span> 
+                {record.Latitude}, {record.Longitude}
+              </div>
+            )}
+            <div class="text-sm text-gray-600">
+              <span class="font-semibold">Context:</span> {record.Context_3 || 'N/A'}
+            </div>
+            <div class="text-sm text-gray-600">
+              <span class="font-semibold">Setting:</span> {record.Setting || 'N/A'}
+            </div>
+          </div>
+          
+          <!-- Thumbnail if available -->
+          {record.Thumbnail && (
+            <div class="mt-4">
+              <img 
+                src={record.Thumbnail} 
+                alt="Site thumbnail"
+                class="w-full rounded-lg shadow-md"
+              />
+            </div>
+          )}
+        </div>
+        
+        <!-- Additional sections -->
+        <div class="col-span-2 mt-8">
+          <h2 class="text-xl font-semibold mb-4">Site Details</h2>
+          <div class="grid grid-cols-3 gap-4 text-sm">
+            <div>
+              <span class="font-semibold">Item Category:</span> {record.Item_Category || 'N/A'}
+            </div>
+            <div>
+              <span class="font-semibold">Site Number:</span> {record.Site_Number || 'N/A'}
+            </div>
+            <div>
+              <span class="font-semibold">Survey Date:</span> {record.Survey_Date || 'N/A'}
+            </div>
+          </div>
+          
+          {record.Site_Description && (
+            <div class="mt-4">
+              <h3 class="font-semibold mb-2">Site Description</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                {record.Site_Description}
+              </p>
+            </div>
+          )}
+        </div>
+        
+      </div>
+    </div>
+  ) : (
+    <div class="max-w-4xl mx-auto p-8">
+      <div class="bg-red-50 border border-red-200 rounded-lg p-6">
+        <div class="text-red-800 font-semibold mb-2">
+          Record Not Found
+        </div>
+        <div class="text-red-600 text-sm mb-4">
+          No record found for table "{table}" with ID "{id}"
+        </div>
+      </div>
+    </div>
+  )}
+
+</BaseLayout>

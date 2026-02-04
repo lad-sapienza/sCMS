@@ -1,5 +1,5 @@
 import Papa from 'papaparse';
-import { createDirectus, rest, staticToken, readItems } from '@directus/sdk';
+import { createDirectus, rest, staticToken, readItems, readItem } from '@directus/sdk';
 import type { SourceConfig } from '../components/DataTb/types';
 
 export type { SourceConfig } from '../components/DataTb/types';
@@ -50,14 +50,25 @@ export async function fetchData(source: SourceConfig): Promise<DataRow[]> {
         .with(staticToken(source.config.token))
         .with(rest());
 
-      const queryOptions: any = {};
-      if (source.filter) queryOptions.filter = source.filter;
-      if (source.fields) queryOptions.fields = source.fields;
-      if (source.sort) queryOptions.sort = source.sort;
-      if (source.limit) queryOptions.limit = source.limit;
+      // Handle single item request vs collection query
+      if (source.itemId !== undefined) {
+        // Fetch single item by ID (more efficient)
+        const queryOptions: any = {};
+        if (source.fields) queryOptions.fields = source.fields;
+        
+        const item = await client.request(readItem(source.collection, source.itemId, queryOptions));
+        fetchedData = item ? [item] : [];
+      } else {
+        // Query collection with filters
+        const queryOptions: any = {};
+        if (source.filter) queryOptions.filter = source.filter;
+        if (source.fields) queryOptions.fields = source.fields;
+        if (source.sort) queryOptions.sort = source.sort;
+        if (source.limit) queryOptions.limit = source.limit;
 
-      const items = await client.request(readItems(source.collection, queryOptions));
-      fetchedData = items as any[];
+        const items = await client.request(readItems(source.collection, queryOptions));
+        fetchedData = items as any[];
+      }
       break;
 
     case 'geojson':

@@ -32,6 +32,8 @@ export interface DirectusSourceConfig {
     url: string;
     token: string;
   };
+  /** Optional: Fetch single item by ID instead of querying collection */
+  itemId?: string | number;
   filter?: Record<string, any>;
   fields?: string[];
   sort?: string[];

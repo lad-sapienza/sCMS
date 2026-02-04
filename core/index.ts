@@ -15,7 +15,9 @@ export { default as BaseLayout } from './layouts/BaseLayout.astro';
 
 // Utils
 export * from './utils/directus';
-export * from './utils/content';
+export * from './utils/record-fetcher';
+export { getRecordFromParams } from './utils/record-fetcher';
+// Note: content utils not exported to prevent astro:content in client components
 export * from './utils/directus-config';
 
 // Types
