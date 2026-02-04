@@ -252,7 +252,7 @@ export function ZoteroGeoViewer(props: ZoteroGeoViewerProps) {
         const inAlt = t.alts.some((a: string) => a.toLowerCase().includes(v));
         return inLabel || inAlt;
       }).slice(0, 10)
-    : [];
+    : showDropdown ? tags.slice(0, 10) : []; // Show first 10 tags when focused but no search term
 
   // Layout configuration
   const getLayoutClasses = () => {
@@ -336,51 +336,45 @@ export function ZoteroGeoViewer(props: ZoteroGeoViewerProps) {
       <div className={getLayoutClasses()}>
         {/* Map */}
         <div className={getMapColSpan()}>
-          {mapCenter && geojson && geojson.features.length > 0 ? (
-            <Map
-              height={mapHeight}
-              center={mapCenter}
-              baseLayers={['EsriSatellite', 'GoogleTerrain', 'Imperium']}
-              vectorLayers={[{
-                name: 'Zotero Items',
-                source: { type: 'geojson', data: geojson },
-                style: {
-                  type: 'circle',
-                  paint: {
-                    'circle-radius': [
-                      'interpolate',
-                      ['linear'],
-                      ['get', 'zoteroCount'],
-                      0, 4,
-                      1, 6,
-                      5, 10,
-                      20, 16,
-                      50, 24
-                    ],
-                    'circle-color': [
-                      'case',
-                      ['>', ['get', 'zoteroCount'], 0],
-                      '#3b82f6',
-                      '#ef4444'
-                    ],
-                    'circle-opacity': 0.8,
-                    'circle-stroke-width': 2,
-                    'circle-stroke-color': '#ffffff'
-                  }
-                },
-                popupTemplate: `<h4>\${name}</h4><p>\${altLabel}</p><div class="text-sm mb-2">Items: \${zoteroCount}</div><button style="background-color: #1d4ed8; color: white; padding: 8px 16px; border: none; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; margin-top: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);" onmouseover="this.style.backgroundColor='#1e40af'" onmouseout="this.style.backgroundColor='#1d4ed8'" type="button" data-tag="\${name}" data-alt-labels="\${altLabel}" onclick="window['${handlerName}'] && window['${handlerName}'](this.dataset.tag, this.dataset.altLabels)">📚 Show \${zoteroCount} records</button>`,
-                visible: true,
-                fitToContent: true
-              }]}
-              navigationControl="top-left"
-              scaleControl="bottom-left"
-              layerControl="top-right"
-            />
-          ) : (
-            <div className="bg-gray-100 rounded-lg p-8 text-center">
-              <p>Loading map...</p>
-            </div>
-          )}
+          <Map
+            height={mapHeight}
+            center={mapCenter}
+            baseLayers={['EsriSatellite', 'GoogleTerrain', 'Imperium']}
+            vectorLayers={mapCenter && geojson && geojson.features.length > 0 ? [{
+              name: 'Zotero Items',
+              source: { type: 'geojson', data: geojson },
+              style: {
+                type: 'circle',
+                paint: {
+                  'circle-radius': [
+                    'interpolate',
+                    ['linear'],
+                    ['get', 'zoteroCount'],
+                    0, 4,
+                    1, 6,
+                    5, 10,
+                    20, 16,
+                    50, 24
+                  ],
+                  'circle-color': [
+                    'case',
+                    ['>', ['get', 'zoteroCount'], 0],
+                    '#3b82f6',
+                    '#ef4444'
+                  ],
+                  'circle-opacity': 0.8,
+                  'circle-stroke-width': 2,
+                  'circle-stroke-color': '#ffffff'
+                }
+              },
+              popupTemplate: `<h4>\${name}</h4><p>\${altLabel}</p><div class="text-sm mb-2">Items: \${zoteroCount}</div><button style="background-color: #1d4ed8; color: white; padding: 8px 16px; border: none; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; margin-top: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);" onmouseover="this.style.backgroundColor='#1e40af'" onmouseout="this.style.backgroundColor='#1d4ed8'" type="button" data-tag="\${name}" data-alt-labels="\${altLabel}" onclick="window['${handlerName}'] && window['${handlerName}'](this.dataset.tag, this.dataset.altLabels)">📚 Show \${zoteroCount} records</button>`,
+              visible: true,
+              fitToContent: true
+            }] : []}
+            navigationControl="top-left"
+            scaleControl="bottom-left"
+            layerControl="top-right"
+          />
         </div>
 
         {/* Controls and Stats */}
@@ -409,12 +403,9 @@ export function ZoteroGeoViewer(props: ZoteroGeoViewerProps) {
                   type="text"
                   placeholder="Search for locations..."
                   value={searchTerm}
-                  onFocusCapture={(e)=>{
-                    setShowDropdown(true);
-                  }}
                   onChange={(e) => {
                     setSearchTerm(e.target.value);
-                    
+                    setShowDropdown(true);
                   }}
                   onFocus={() => setShowDropdown(true)}
                   onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
@@ -422,7 +413,7 @@ export function ZoteroGeoViewer(props: ZoteroGeoViewerProps) {
                 />
                 
                 {/* Simple autocomplete */}
-                {searchTerm && showDropdown && filteredSuggestions.length > 0 && (
+                {showDropdown && filteredSuggestions.length > 0 && (
                   <div className="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-md shadow-lg max-h-48 overflow-y-auto">
                     {filteredSuggestions.map((tag, index) => (
                       <button
