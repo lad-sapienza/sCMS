@@ -4,9 +4,10 @@
   "description": "s:CMS - Static site Content Management System, migrated to Astro",
   "type": "module",
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro check && astro build",
+    "dev": "npm run copy-images && astro dev",
+    "build": "npm run copy-images && astro check && astro build",
     "preview": "astro preview",
+    "copy-images": "node scripts/copy-content-images.js",
     "astro": "astro",
     "setup-upstream": "bash scripts/setup-upstream.sh",
     "update-core": "bash scripts/update-core.sh"
