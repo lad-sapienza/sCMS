@@ -1,0 +1,113 @@
+/**
+ * Bootstrap Configuration
+ * 
+ * Custom Bootstrap variables and imports for s:CMS.
+ * This allows us to customize Bootstrap to match the existing theme.
+ */
+
+// Import Bootstrap's functions first (required for custom variables)
+@import "bootstrap/scss/functions";
+
+// Define custom variables that override Bootstrap defaults
+// These match the existing s:CMS theme CSS variables
+$primary: #fe04fc !default;
+$secondary: #6b7280 !default;
+$success: #00a86b !default;
+$info: #0066cc !default;
+$warning: #ffcc00 !default;
+$danger: #dc3545 !default;
+$light: #f9fafb !default;
+$dark: #333 !default;
+
+// Typography
+$font-family-sans-serif: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif !default;
+$font-family-monospace: 'Courier New', Courier, monospace !default;
+
+// Base color variables
+$body-bg: #ffffff !default;
+$body-color: #333 !default;
+$text-muted: #6b7280 !default;
+
+// Border radius (matches existing scms theme)
+$border-radius: 6px !default;
+$border-radius-sm: 4px !default;
+$border-radius-lg: 8px !default;
+
+// Spacing (matches existing s:CMS spacing system)
+$spacer: 1rem !default;
+$spacers: (
+  0: 0,
+  1: $spacer * .25,
+  2: $spacer * .5,
+  3: $spacer,
+  4: $spacer * 1.5,
+  5: $spacer * 3,
+  18: $spacer * 4.5, // s:CMS custom spacing
+  88: $spacer * 22,  // s:CMS custom spacing
+) !default;
+
+// Container max widths (matches current max-w-7xl)
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  xxl: 1320px
+) !default;
+
+// Import Bootstrap's variables (after our custom ones)
+@import "bootstrap/scss/variables";
+
+// Import Bootstrap's maps (required for theme-colors-rgb and other maps)
+@import "bootstrap/scss/maps";
+
+// Import Bootstrap's mixins
+@import "bootstrap/scss/mixins";
+
+// Import Bootstrap components
+// We'll import selectively to keep bundle size reasonable
+@import "bootstrap/scss/root";
+@import "bootstrap/scss/reboot";
+@import "bootstrap/scss/type";
+@import "bootstrap/scss/images";
+@import "bootstrap/scss/containers";
+@import "bootstrap/scss/grid";
+@import "bootstrap/scss/utilities";
+
+// Layout components
+@import "bootstrap/scss/navbar";
+@import "bootstrap/scss/nav";
+@import "bootstrap/scss/card";
+
+// Form components (might be useful for future)
+@import "bootstrap/scss/forms";
+@import "bootstrap/scss/buttons";
+
+// Utility components
+@import "bootstrap/scss/badge";
+@import "bootstrap/scss/alert";
+@import "bootstrap/scss/close";
+
+// Generate utilities
+@import "bootstrap/scss/utilities/api";
+
+// Custom s:CMS utilities that work with the existing CSS variables
+.text-primary-custom {
+  color: var(--color-primary) !important;
+}
+
+.text-primary-hover-custom:hover {
+  color: var(--color-primary-hover) !important;
+}
+
+.bg-primary-custom {
+  background-color: var(--color-primary) !important;
+}
+
+.border-scms {
+  border-radius: var(--radius-base, 6px) !important;
+}
+
+.shadow-scms {
+  box-shadow: var(--shadow-focus, 0 0 0 3px rgba(37, 99, 235, 0.1)) !important;
+}

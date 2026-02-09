@@ -1,8 +1,9 @@
 ---
 import "../../core/styles/global.css"
-import "../styles/user-theme.css"
+import "../styles/global.css"
 import SEO from "../../core/components/SEO/SEO.astro"
 import { siteMetadata } from "../user.config.mjs"
+import { NavbarToggle } from "../components/NavbarToggle"
 
 interface Props {
   title?: string
@@ -13,6 +14,27 @@ const { title = siteMetadata.title, description = siteMetadata.description } =
   Astro.props
 
 const currentPath = Astro.url.pathname
+
+// Navigation menu items
+const menuItems = [
+  { href: "/", label: "Home", exact: true },
+  { href: "/datatable-demo", label: "DataTb Demo", exact: true },
+  { href: "/map-demo", label: "Map Demo", exact: true },
+  { href: "/gallery-demo", label: "Gallery Demo", exact: true },
+  { href: "/zotero-demo", label: "Zotero Demo", exact: true },
+  { href: "/blog", label: "Blog", exact: false },
+  { href: "/docs", label: "Docs", exact: false },
+  { href: "/credits", label: "Credits", exact: true },
+]
+
+// Helper function to determine if menu item is active
+const isActive = (item: any) => {
+  if (item.exact) {
+    return currentPath === item.href
+  } else {
+    return currentPath.startsWith(item.href)
+  }
+}
 ---
 
 <!doctype html>
@@ -24,101 +46,51 @@ const currentPath = Astro.url.pathname
     <link rel="icon" type="image/png" href="/images/favicon.png" />
     <slot name="head" />
   </head>
-  <body class="bg-gray-50">
-    <header class="bg-white shadow">
-      <div class="max-w-7xl mx-auto px-4 py-6">
-        <div class="flex justify-between items-center">
-          <h1 class="text-3xl font-bold text-gray-900">
-            <a href="/" class="hover:text-gray-700">{siteMetadata.title}</a>
-          </h1>
-          <nav class="space-x-6">
-            <a
-              href="/"
-              class:list={[
-                "hover:text-gray-900",
-                currentPath === "/"
-                  ? "text-gray-900 font-semibold"
-                  : "text-gray-600",
-              ]}>Home</a
-            >
-            <a
-              href="/datatable-demo"
-              class:list={[
-                "hover:text-gray-900",
-                currentPath === "/datatable-demo"
-                  ? "text-gray-900 font-semibold"
-                  : "text-gray-600",
-              ]}>DataTb Demo</a
-            >
-            <a
-              href="/map-demo"
-              class:list={[
-                "hover:text-gray-900",
-                currentPath === "/map-demo"
-                  ? "text-gray-900 font-semibold"
-                  : "text-gray-600",
-              ]}>Map Demo</a
-            >
-            <a
-              href="/gallery-demo"
-              class:list={[
-                "hover:text-gray-900",
-                currentPath === "/gallery-demo"
-                  ? "text-gray-900 font-semibold"
-                  : "text-gray-600",
-              ]}>Gallery Demo</a
-            >
-            <a
-              href="/zotero-demo"
-              class:list={[
-                "hover:text-gray-900",
-                currentPath === "/zotero-demo"
-                  ? "text-gray-900 font-semibold"
-                  : "text-gray-600",
-              ]}>Zotero Demo</a
-            >
-            <a
-              href="/blog"
-              class:list={[
-                "hover:text-gray-900",
-                currentPath.startsWith("/blog")
-                  ? "text-gray-900 font-semibold"
-                  : "text-gray-600",
-              ]}>Blog</a>
-            <a
-              href="/docs"
-              class:list={[
-                "hover:text-gray-900",
-                currentPath.startsWith("/docs")
-                  ? "text-gray-900 font-semibold"
-                  : "text-gray-600",
-              ]}>Docs</a>
-            <a
-              href="/credits"
-              class:list={[
-                "hover:text-gray-900",
-                currentPath === "/credits"
-                  ? "text-gray-900 font-semibold"
-                  : "text-gray-600",
-              ]}>Credits</a
-            >
-          </nav>
+  <body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow">
+      <div class="container">
+        <a class="navbar-brand text-dark fw-bold" href="/">
+          {siteMetadata.title}
+        </a>
+
+        <NavbarToggle targetId="navbarNav" client:load />
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto mb-2 mb-md-0">
+            {
+              menuItems.map(item => (
+                <li class="nav-item">
+                  <a
+                    class:list={[
+                      "nav-link",
+                      isActive(item) ? "active fw-semibold" : "",
+                    ]}
+                    href={item.href}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
         </div>
       </div>
-    </header>
+    </nav>
 
-    <main class="max-w-7xl mx-auto px-4 py-8">
+    <main class="container py-5">
       <slot />
     </main>
 
-    <footer class="bg-white border-t mt-12">
-      <div class="max-w-7xl mx-auto px-4 py-6 text-center text-gray-600">
-        <p>
+    <footer class="bg-white border-top mt-5">
+      <div class="container py-4 text-center text-muted">
+        <p class="mb-0">
           Built with ♥️ by <a
             href="https://lad.saras.uniroma1.it"
-            class="text-blue-600 hover:underline"
+            class="text-primary text-decoration-none"
             target="_blank"
-            rel="noreferrer">{siteMetadata.siteName}</a>
+            rel="noreferrer">{siteMetadata.siteName}</a
+          >
         </p>
       </div>
     </footer>

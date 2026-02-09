@@ -31,9 +31,9 @@ const dateObj = frontmatter.date ? (typeof frontmatter.date === 'string' ? new D
       siteMetadata={siteMetadata}
     />
   </Fragment>
-  <article class="prose prose-lg max-w-none">
-    <header class="mb-8">
-      <h1 class="text-4xl font-bold text-gray-900 mb-2">{frontmatter.title}</h1>
+  <article class="scms-prose">
+    <header class="mb-5">
+      <h1 class="display-5 fw-bold text-dark mb-2">{frontmatter.title}</h1>
     </header>
     
     <div class="markdown-content">
@@ -43,47 +43,82 @@ const dateObj = frontmatter.date ? (typeof frontmatter.date === 'string' ? new D
 </BaseLayout>
 
 <style>
+  .scms-prose {
+    max-width: none;
+    font-size: 1.125rem;
+    line-height: 1.7;
+  }
+  
   .markdown-content :global(h2) {
-    @apply text-3xl font-bold mt-8 mb-4 text-gray-900;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+    color: var(--bs-dark);
   }
   
   .markdown-content :global(h3) {
-    @apply text-2xl font-semibold mt-6 mb-3 text-gray-800;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: var(--bs-gray-800);
   }
   
   .markdown-content :global(p) {
-    @apply mb-4 text-gray-700 leading-relaxed;
+    margin-bottom: 1.5rem;
+    color: var(--bs-gray-700);
+    line-height: 1.7;
   }
   
   .markdown-content :global(ul), .markdown-content :global(ol) {
-    @apply mb-4 ml-6;
+    margin-bottom: 1.5rem;
+    margin-left: 2rem;
   }
   
   .markdown-content :global(li) {
-    @apply mb-2 text-gray-700;
+    margin-bottom: 0.5rem;
+    color: var(--bs-gray-700);
   }
   
   .markdown-content :global(ul li) {
-    @apply list-disc;
+    list-style-type: disc;
   }
   
   .markdown-content :global(strong) {
-    @apply font-semibold text-gray-900;
+    font-weight: 600;
+    color: var(--bs-dark);
   }
   
   .markdown-content :global(a) {
-    @apply text-blue-600 hover:text-blue-800 hover:underline;
+    color: var(--bs-primary);
+    text-decoration: none;
+  }
+  
+  .markdown-content :global(a:hover) {
+    color: var(--bs-primary);
+    text-decoration: underline;
   }
   
   .markdown-content :global(code) {
-    @apply bg-gray-100 px-1 py-0.5 rounded text-sm font-mono;
+    background-color: var(--bs-gray-100);
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+    font-family: var(--font-mono);
   }
   
   .markdown-content :global(pre) {
-    @apply bg-gray-900 text-white p-4 rounded-lg overflow-x-auto mb-4;
+    background-color: var(--bs-gray-900);
+    color: white;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    margin-bottom: 1.5rem;
   }
   
   .markdown-content :global(pre code) {
-    @apply bg-transparent p-0;
+    background-color: transparent;
+    padding: 0;
   }
 </style>

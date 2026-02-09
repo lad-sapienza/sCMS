@@ -37,7 +37,7 @@ const coreConfig = {
     mdx(),
     react(),
     sitemap(),
-    tailwind(),
+    // tailwind() - Removed to avoid conflicts with Bootstrap
   ],
 
   vite: {
