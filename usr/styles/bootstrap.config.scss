@@ -72,6 +72,7 @@ $container-max-widths: (
 @import "bootstrap/scss/images";
 @import "bootstrap/scss/containers";
 @import "bootstrap/scss/grid";
+@import "bootstrap/scss/helpers";  // Includes ratio utilities
 @import "bootstrap/scss/utilities";
 
 // Layout components
