@@ -1,110 +1,101 @@
 ---
-title: "Academic Theme Preview"
-description: "Preview of the new modern academic theme components and styling"
+title: "Technical Minimalism Theme Preview"
+description: "Preview del nuovo Technical Minimalism theme con tipografia pulita e stile professionale"
 layout: '@layouts/MdxLayout.astro'
 ---
 
-# Academic Theme Preview
+# Technical Minimalism Theme Preview
 
-Welcome to the enhanced **s:CMS Academic Theme**! This page showcases the modern, clean design with academic-friendly typography and professional color palette.
+Benvenuti nel nuovo **Technical Minimalism Theme** per s:CMS! Questo design rappresenta un'architettura della conoscenza pulita e ariosa, perfetta per contenuti accademici e tecnici.
+
+## Palette Colori
+
+La nuova palette colori è stata accuratamente selezionata per creare un ambiente visivo professionale e sereno:
+
+<div className="row g-3 my-4">
+  <div className="col-md-3">
+    <div className="card border-0 h-100">
+      <div style={{height: '80px', backgroundColor: '#0056B3'}} className="rounded-top"></div>
+      <div className="card-body">
+        <h6 className="card-title mb-1">Blu Istituzionale</h6>
+        <code>#0056B3</code>
+        <p className="small mt-2">Primario per elementi di navigazione ed enfasi</p>
+      </div>
+    </div>
+  </div>
+  <div className="col-md-3">
+    <div className="card border-0 h-100">
+      <div style={{height: '80px', backgroundColor: '#FFFFFF', border: '1px solid #dee2e6'}} className="rounded-top"></div>
+      <div className="card-body">
+        <h6 className="card-title mb-1">Bianco Puro</h6>
+        <code>#FFFFFF</code>
+        <p className="small mt-2">Sfondo principale per massima chiarezza</p>
+      </div>
+    </div>
+  </div>
+  <div className="col-md-3">
+    <div className="card border-0 h-100">
+      <div style={{height: '80px', backgroundColor: '#2D2D2D'}} className="rounded-top"></div>
+      <div className="card-body">
+        <h6 className="card-title mb-1">Grigio Morbido</h6>
+        <code>#2D2D2D</code>
+        <p className="small mt-2">Testo principale ad alto contrasto</p>
+      </div>
+    </div>
+  </div>
+  <div className="col-md-3">
+    <div className="card border-0 h-100">
+      <div style={{height: '80px', backgroundColor: '#F8FAFC'}} className="rounded-top"></div>
+      <div className="card-body">
+        <h6 className="card-title mb-1">Azzurro Tenue</h6>
+        <code>#F8FAFC</code>
+        <p className="small mt-2">Sfondi secondari e separatori</p>
+      </div>
+    </div>
+  </div>
+</div>
 
 ## Typography Showcase
 
-### Headings Hierarchy
-The headings use **Playfair Display** - an elegant serif font that brings sophistication while maintaining excellent readability:
+### Gerarchia dei Titoli
+I titoli utilizzano **Fraunces** - un carattere serif elegante e autorevole:
 
-# Main Heading (H1)
-Featuring gradient text effect and optimized spacing for maximum impact.
+# Titolo Principale (H1)
+Design pulito e minimale per massimo impatto visivo.
 
-## Section Heading (H2) 
-Clean, professional styling with elegant serif typography for major sections.
+## Titolo di Sezione (H2) 
+Tipografia serif sofisticata per organizzare i contenuti principali.
 
-### Subsection Heading (H3)
-Perfect for detailed content organization with refined styling.
+### Sottotitolo (H3)
+Perfetto per l'organizzazione dettagliata del contenuto con stile raffinato.
 
-#### Minor Heading (H4)
-For fine-grained content structuring with consistent hierarchy.
+#### Titolo Minore (H4)
+Per la strutturazione accurata del contenuto con gerarchia coerente.
 
-### Body Text
-Body text now uses **Inter** - a modern, highly readable sans-serif font designed specifically for digital interfaces. At 1.125rem base size with improved line-height, it ensures excellent readability across all devices while maintaining a contemporary, professional appearance perfect for academic content.
+##### Micro Titolo (H5)
+Dettagli e specifiche con eleganza tipografica.
 
-> **Blockquotes** are styled with modern borders and typography to highlight important information or citations in academic context.
+###### Caption (H6)
+Per note e riferimenti con stile consistente.
 
-## Color Palette
+### Testo del Corpo
+Il corpo del testo utilizza **Plus Jakarta Sans** - un carattere sans-serif moderno progettato specificamente per interfacce digitali. Con dimensione base di 1.125rem e line-height migliorato a 1.7, garantisce eccellente leggibilità su tutti i dispositivi mantenendo un aspetto contemporaneo e professionale perfetto per contenuti accademici.
 
-Our academic color palette creates a professional yet modern appearance:
+> Le **citazioni** sono stilizzate con bordi minimali e tipografia elegante per evidenziare informazioni importanti o riferimenti in contesti accademici con il nuovo stile Technical Minimalism.
 
-<div className="row g-4 my-4">
-  <div className="col-md-4">
-    <div className="card-academic p-4 text-center">
-      <div style={{backgroundColor: '#1e3a8a', width: '100%', height: '60px', borderRadius: '8px', marginBottom: '1rem'}}></div>
-      <strong>Deep Academic Blue</strong><br/>
-      <code>#1e3a8a</code><br/>
-      Primary color for trust and professionalism
-    </div>
-  </div>
-  <div className="col-md-4">
-    <div className="card-academic p-4 text-center">
-      <div style={{backgroundColor: '#d97706', width: '100%', height: '60px', borderRadius: '8px', marginBottom: '1rem'}}></div>
-      <strong>Scholarly Amber</strong><br/>
-      <code>#d97706</code><br/>
-      Accent color for emphasis and highlights
-    </div>
-  </div>
-  <div className="col-md-4">
-    <div className="card-academic p-4 text-center">
-      <div style={{backgroundColor: '#64748b', width: '100%', height: '60px', borderRadius: '8px', marginBottom: '1rem'}}></div>
-      <strong>Sophisticated Gray</strong><br/>
-      <code>#64748b</code><br/>
-      Secondary color for subtle elements
-    </div>
-  </div>
-</div>
-
-## Interactive Components
-
-### Modern Buttons
-<div className="d-flex gap-3 my-4 flex-wrap">
-  <button className="btn-academic">Academic Style Button</button>
-  <button className="btn btn-primary">Bootstrap Primary</button>
-  <button className="btn btn-outline-secondary">Secondary Outline</button>
-</div>
-
-### Enhanced Cards
-<div className="row g-4 my-4">
-  <div className="col-md-6">
-    <div className="card-academic p-4">
-      <h4>Research Publication</h4>
-      <p className="text-muted mb-3">
-        Modern card design with subtle shadows and hover effects perfect for showcasing academic content, publications, or research highlights.
-      </p>
-      <button className="btn btn-sm btn-primary">Read More</button>
-    </div>
-  </div>
-  <div className="col-md-6">
-    <div className="card-academic p-4">
-      <h4>Digital Archive</h4>
-      <p className="text-muted mb-3">
-        Clean, professional styling that enhances readability while maintaining visual interest through modern design elements.
-      </p>
-      <button className="btn btn-sm btn-outline-primary">Explore</button>
-    </div>
-  </div>
-</div>
-
-## Code Display
-
-Code blocks use **JetBrains Mono** for optimal readability:
+### Testo Codice
+Per il codice inline come `npm install` o blocchi di codice utilizziamo **JetBrains Mono** - un font monospace progettato per sviluppatori:
 
 ```javascript
-// Modern academic theme configuration
-const academicTheme = {
-  primary: '#1e3a8a',
-  secondary: '#64748b', 
-  accent: '#d97706',
+// Configurazione Technical Minimalism Theme
+const technicalMinimalism = {
+  primary: '#0056B3',
+  white: '#FFFFFF', 
+  darkGray: '#2D2D2D',
+  lightGray: '#F8FAFC',
   fonts: {
-    heading: 'Playfair Display',
-    body: 'Inter',
+    heading: 'Fraunces',
+    body: 'Plus Jakarta Sans',
     mono: 'JetBrains Mono'
   },
   typography: {
@@ -114,30 +105,115 @@ const academicTheme = {
 };
 ```
 
-Inline code like `fetch()` and `const myVariable = 'value'` maintains readability within paragraphs.
+## Elementi Interfaccia
 
-## Navigation & Layout Features
+### Bottoni
+Esempi dei nuovi stili per i bottoni con design minimale:
 
-### Fixed Navigation Bar
-- **Modern backdrop blur effect** for contemporary feel
-- **Smooth hover animations** with color transitions  
-- **Enhanced mobile responsiveness** with improved toggle design
-- **Active link highlighting** for better user orientation
+<div className="d-flex gap-3 flex-wrap my-4">
+  <button className="btn btn-primary">Primario</button>
+  <button className="btn btn-outline-primary">Outline Primario</button>
+  <button className="btn btn-secondary">Secondario</button>
+  <button className="btn btn-outline-secondary">Outline Secondario</button>
+  <button className="btn btn-light">Chiaro</button>
+</div>
 
-### Footer Enhancement  
-- **Gradient backgrounds** for visual depth
-- **Interactive hover effects** on links and logos
-- **Improved responsive layout** for mobile devices
-- **Modern button styling** for external links
+### Cards e Contenuti
 
-## Design Principles
+<div className="row g-4 my-4">
+  <div className="col-md-6">
+    <div className="card">
+      <div className="card-body">
+        <h5 className="card-title">Card Principale</h5>
+        <p className="card-text">Esempio di card con il nuovo design minimale. Ombre sottili, bordi puliti e tipografia ottimizzata per la lettura.</p>
+        <a href="#" className="btn btn-primary">Leggi di più</a>
+      </div>
+    </div>
+  </div>
+  <div className="col-md-6">
+    <div className="card">
+      <div className="card-body">
+        <h5 className="card-title">Card Secondaria</h5>
+        <p className="card-text">Design coerente con spaziatura armoniosa e gerarchia visiva chiara per facilitare la navigazione dei contenuti.</p>
+        <a href="#" className="btn btn-outline-primary">Esplora</a>
+      </div>
+    </div>
+  </div>
+</div>
 
-This academic theme follows key design principles:
+### Alerts e Messaggi
 
-1. **Readability First**: Typography choices optimize for extended reading sessions
-2. **Professional Aesthetics**: Color palette suitable for academic institutions
-3. **Modern Interactions**: Subtle animations and hover effects enhance user experience
-4. **Accessibility**: High contrast ratios and clear visual hierarchy
-5. **Responsive Design**: Seamless experience across all device sizes
+<div className="alert alert-primary" role="alert">
+  <strong>Informazione:</strong> Esempio di alert informativo con il nuovo styling minimale e tipografia migliorata.
+</div>
 
-The theme maintains the separation between core functionality and user customization, allowing for easy updates while preserving institutional branding and custom styling preferences.
+<div className="alert alert-success" role="alert">
+  <strong>Successo:</strong> Messaggio di conferma con design pulito e colori armonizzati.
+</div>
+
+<div className="alert alert-warning" role="alert">
+  <strong>Attenzione:</strong> Alert di avvertimento con visibilità ottimale ma non invasivo.
+</div>
+
+## Liste e Contenuti Strutturati
+
+### Lista Ordinata
+1. **Principio di Semplicità** - Ridurre il rumore visivo per enfatizzare i contenuti
+2. **Gerarchia Chiara** - Tipografia e spaziature che guidano la lettura naturalmente  
+3. **Accessibilità** - Contrasti ottimali e testi leggibili su tutti i dispositivi
+4. **Professionalità** - Design adatto a contesti accademici e istituzionali
+
+### Lista Non Ordinata
+- **Tipografia Serif** per i titoli (Fraunces) - eleganza e autorevolezza
+- **Sans-serif** per il corpo (Plus Jakarta Sans) - leggibilità digitale ottimale
+- **Monospace** per il codice (JetBrains Mono) - chiarezza tecnica
+- **Palette colori** blu istituzionale con grigio morbido e bianco puro
+
+### Tabella Demo
+
+| Elemento | Carattere | Dimensione | Utilizzo |
+|----------|-----------|------------|----------|
+| Titoli | Fraunces | 2.5rem - 1.25rem | H1 - H6 |
+| Corpo | Plus Jakarta Sans | 1.125rem | Paragrafi, liste |
+| Codice | JetBrains Mono | 0.875rem | Code, pre |
+| Small | Plus Jakarta Sans | 0.875rem | Note, caption |
+
+## Caratteristiche Layout & Navigazione
+
+### Navbar Fissa
+- **Sfondo bianco pulito** con bordo sottile per definizione moderna
+- **Animazioni fluide al hover** con transizioni di colore eleganti  
+- **Responsive migliorata** con toggle design ottimizzato per mobile
+- **Evidenziazione link attivi** per migliore orientamento utente
+
+### Footer Migliorato  
+- **Sfondi coordinati** con lo schema colori principale
+- **Effetti hover interattivi** sui link e loghi
+- **Layout responsive** ottimizzato per dispositivi mobili
+- **Styling bottoni moderno** per link esterni
+
+## Principi di Design
+
+Il tema Technical Minimalism segue principi di design fondamentali:
+
+1. **Leggibilità Prioritaria**: Scelte tipografiche ottimizzate per sessioni di lettura estese
+2. **Estetica Professionale**: Palette colori adatta a istituzioni accademiche e tecniche
+3. **Interazioni Moderne**: Animazioni sottili ed effetti hover migliorano l'esperienza utente
+4. **Accessibilità**: Rapporti di contrasto elevati e gerarchia visuale chiara
+5. **Design Responsivo**: Esperienza fluida su tutte le dimensioni di dispositivo
+6. **Minimalismo Funzionale**: Ogni elemento serve uno scopo specifico senza decorazioni superflue
+
+Il tema mantiene la separazione tra funzionalità core e personalizzazioni utente, permettendo aggiornamenti semplici preservando il branding istituzionale e le preferenze di styling personalizzate.
+
+---
+
+## Status del Progetto
+
+- ✅ **Tipografia** - Sistema tipografico completo implementato con Fraunces + Plus Jakarta Sans
+- ✅ **Palette Colori** - Colori istituzionali Technical Minimalism (#0056B3, #FFFFFF, #2D2D2D, #F8FAFC)
+- ✅ **Componenti** - Bootstrap 5.3 con customizzazioni minimali e design pulito
+- ✅ **Responsive** - Design ottimizzato per tutti i dispositivi con layout armonioso
+- ✅ **Accessibilità** - Contrasti WCAG AA compliant e navigazione chiara
+- ✅ **Migrazione** - Transizione completa da Tailwind a Bootstrap completata
+
+*Ultima modifica: Dicembre 2024 - Technical Minimalism Implementation*

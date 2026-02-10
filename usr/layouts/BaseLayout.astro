@@ -53,7 +53,7 @@ const isActive = (item: any) => {
   </head>
   <body class="d-flex flex-column min-vh-100">
     <!-- Enhanced Navigation with modern academic styling -->
-    <nav class="navbar navbar-expand-lg fixed-top">
+    <nav class="navbar navbar-expand-lg sticky-top">
       <div class="container">
         <a class="navbar-brand d-flex align-items-center" href="/">
           <span class="fw-bold">
@@ -69,10 +69,7 @@ const isActive = (item: any) => {
               menuItems.map(item => (
                 <li class="nav-item">
                   <a
-                    class:list={[
-                      "nav-link",
-                      isActive(item) ? "active" : "",
-                    ]}
+                    class:list={["nav-link", isActive(item) ? "active" : ""]}
                     href={item.href}
                   >
                     {item.label}
@@ -86,61 +83,58 @@ const isActive = (item: any) => {
     </nav>
 
     <!-- Main content with proper spacing for fixed navbar -->
-    <main class="container flex-grow-1" style="padding-top: 6rem; padding-bottom: 3rem;">
+    <main
+      class="container flex-grow-1"
+      style="padding-top: 6rem; padding-bottom: 3rem;"
+    >
       <slot />
     </main>
 
     <!-- Enhanced Footer with modern academic styling -->
-    <footer class="footer-enhanced py-5 mt-auto">
+    <footer class="py-5 mt-auto border-top bg-light">
       <div class="container">
-        <div class="footer-content p-4">
-          <div class="row align-items-center">
-            <div class="col-md-3 text-center mb-3 mb-md-0">
-              <div class="footer-logo">
-                <img
-                  alt="s:CMS & LAD Logo"
-                  src="./images/scms-lad.png"
-                  class="img-fluid"
-                  style="max-height: 80px;"
-                />
-              </div>
-            </div>
-            <div class="col-md-9">
-              <div class="ps-md-4 border-start border-info border-3 d-none d-md-block"></div>
-              <div class="ps-md-4">
-                <p class="mb-2 fw-medium text-light">
-                  <strong style="background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">s:CMS</strong> 
-                  <span class="text-light opacity-75">(v{packageJson.version})</span>
-                </p>
-                <p class="mb-2 text-light opacity-90">
-                  Progetto ideato e sviluppato dal <br />
-                  <a
-                    href="https://lad.saras.uniroma1.it"
-                    target="_blank"
-                    rel="noreferrer"
-                    class="fw-medium"
-                  >
-                    LAD: Laboratorio di Archeologia Digitale alla Sapienza
-                  </a>
-                </p>
-                <div class="d-flex gap-3 flex-wrap">
-                  <a
-                    href="https://github.com/lad-sapienza/sCMS"
-                    target="_blank"
-                    rel="noreferrer"
-                    class="btn btn-sm btn-outline-light"
-                  >
-                    📝 Code
-                  </a>
-                  <a
-                    href="https://github.com/lad-sapienza/sCMS/issues"
-                    target="_blank"
-                    rel="noreferrer"
-                    class="btn btn-sm btn-outline-info"
-                  >
-                    🐛 Issues
-                  </a>
-                </div>
+        <div class="p-4">
+          <div class="d-flex align-items-center">
+            <img
+              alt="s:CMS & LAD Logo"
+              src="./images/scms-lad.png"
+              class="img-fluid"
+              style="max-height: 80px; margin-right: 1rem;"
+            />
+            <div class="ps-md-4 border-start">
+              <h3>
+                s:CMS  <small class="text-muted"
+                  >(v{packageJson.version})</small
+                >
+              </h3>
+              <p>
+                A project by 
+                <a
+                  href="https://lad.saras.uniroma1.it"
+                  target="_blank"
+                  rel="noreferrer"
+                  class="fw-medium"
+                >
+                  LAD: Laboratorio di Archeologia Digitale alla Sapienza
+                </a>
+              </p>
+              <div class="d-flex gap-3 flex-wrap">
+                <a
+                  href="https://github.com/lad-sapienza/sCMS"
+                  target="_blank"
+                  rel="noreferrer"
+                  class="btn btn-sm btn-outline-primary"
+                >
+                  Code
+                </a>
+                <a
+                  href="https://github.com/lad-sapienza/sCMS/issues"
+                  target="_blank"
+                  rel="noreferrer"
+                  class="btn btn-sm btn-outline-primary"
+                >
+                  Issues
+                </a>
               </div>
             </div>
           </div>
