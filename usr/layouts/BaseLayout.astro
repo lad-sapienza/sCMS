@@ -4,6 +4,7 @@ import "../styles/global.css"
 import SEO from "../../core/components/SEO/SEO.astro"
 import { siteMetadata } from "../user.config.mjs"
 import { NavbarToggle } from "../components/NavbarToggle"
+import packageJson from "../../package.json"
 
 interface Props {
   title?: string
@@ -47,7 +48,6 @@ const isActive = (item: any) => {
     <slot name="head" />
   </head>
   <body>
-
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow">
       <div class="container">
         <a class="navbar-brand text-dark fw-bold" href="/">
@@ -82,16 +82,42 @@ const isActive = (item: any) => {
       <slot />
     </main>
 
-    <footer class="bg-white border-top mt-5">
-      <div class="container py-4 text-center text-muted">
-        <p class="mb-0">
-          Built with ♥️ by <a
-            href="https://lad.saras.uniroma1.it"
-            class="text-primary text-decoration-none"
-            target="_blank"
-            rel="noreferrer">{siteMetadata.siteName}</a
-          >
-        </p>
+    <footer class="bg-white border-top mt-5 text-muted shadow">
+      <div class="container">
+        <div class="row my-4">
+          <div class="col-4 col-md-2">
+            <div class="d-flex flex-row align-items-center mb-3">
+              <div class="p-4">
+                  <img
+                    alt=""
+                    src="./images/scms-lad.png"
+                  />
+              </div>
+            </div>
+          </div>
+          <div class="col-8 col-md-10">
+            <div class="p-3 border-start border-primary">
+              <p class="p-s-3">
+                <strong>s:CMS</strong> (v{packageJson.version}) è un progetto
+                ideato e sviluppato dal<!-- -->
+                <br /><a
+                  href="https://lad.saras.uniroma1.it"
+                  target="_blank"
+                  rel="noreferrer"
+                  >LAD: Laboratorio di Archeologia Digitale alla Sapienza</a
+                ><br /><a
+                  href="https://github.com/lad-sapienza/sCMS"
+                  target="_blank"
+                  rel="noreferrer">Code</a
+                >&nbsp;|&nbsp;<a
+                  href="https://github.com/lad-sapienza/sCMS/issues"
+                  target="_blank"
+                  rel="noreferrer">Issues</a
+                >
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </footer>
   </body>
