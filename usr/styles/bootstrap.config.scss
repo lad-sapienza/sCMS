@@ -8,25 +8,40 @@
 // Import Bootstrap's functions first (required for custom variables)
 @import "bootstrap/scss/functions";
 
-// Define custom variables that override Bootstrap defaults
-// These match the existing s:CMS theme CSS variables
-$primary: #fe04fc !default;
-$secondary: #6b7280 !default;
-$success: #00a86b !default;
-$info: #0066cc !default;
-$warning: #ffcc00 !default;
-$danger: #dc3545 !default;
-$light: #f9fafb !default;
-$dark: #333 !default;
+// Define custom variables for academic theme
+// Modern, professional color palette suitable for academic content
+$primary: #1e3a8a !default;     // Deep academic blue
+$secondary: #64748b !default;   // Sophisticated gray
+$success: #059669 !default;     // Academic green
+$info: #0ea5e9 !default;        // Sky blue
+$warning: #d97706 !default;     // Scholarly amber
+$danger: #dc2626 !default;      // Refined red
+$light: #f8fafc !default;       // Soft white
+$dark: #1e293b !default;        // Rich dark slate
 
-// Typography
-$font-family-sans-serif: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif !default;
-$font-family-monospace: 'Courier New', Courier, monospace !default;
+// Typography - Modern, readable fonts
+$font-family-sans-serif: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !default;
+$font-family-heading: 'Playfair Display', Georgia, 'Times New Roman', serif !default;
+$font-family-monospace: 'JetBrains Mono', 'SF Mono', Monaco, Inconsolata, 'Roboto Mono', Consolas, 'Courier New', monospace !default;
 
 // Base color variables
 $body-bg: #ffffff !default;
-$body-color: #333 !default;
-$text-muted: #6b7280 !default;
+$body-color: #1e293b !default;
+$text-muted: #64748b !default;
+
+// Enhanced typography scale
+$font-size-base: 1.125rem !default;
+$font-weight-lighter: 300 !default;
+$font-weight-normal: 400 !default;
+$font-weight-medium: 500 !default;
+$font-weight-semibold: 600 !default;
+$font-weight-bold: 700 !default;
+
+// Heading styles
+$headings-font-family: $font-family-heading !default;
+$headings-font-weight: 600 !default;
+$headings-line-height: 1.3 !default;
+$headings-color: $dark !default;
 
 // Border radius (matches existing scms theme)
 $border-radius: 6px !default;
@@ -44,15 +59,6 @@ $spacers: (
   5: $spacer * 3,
   18: $spacer * 4.5, // s:CMS custom spacing
   88: $spacer * 22,  // s:CMS custom spacing
-) !default;
-
-// Container max widths (matches current max-w-7xl)
-$container-max-widths: (
-  sm: 540px,
-  md: 720px,
-  lg: 960px,
-  xl: 1140px,
-  xxl: 1320px
 ) !default;
 
 // Import Bootstrap's variables (after our custom ones)

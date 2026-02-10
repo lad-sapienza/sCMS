@@ -19,6 +19,7 @@ const currentPath = Astro.url.pathname
 // Navigation menu items
 const menuItems = [
   { href: "/", label: "Home", exact: true },
+  { href: "/theme-preview", label: "Theme Preview", exact: true },
   { href: "/datatable-demo", label: "DataTb Demo", exact: true },
   { href: "/map-demo", label: "Map Demo", exact: true },
   { href: "/gallery-demo", label: "Gallery Demo", exact: true },
@@ -45,13 +46,19 @@ const isActive = (item: any) => {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <SEO title={title} description={description} siteMetadata={siteMetadata} />
     <link rel="icon" type="image/png" href="/images/favicon.png" />
+    <!-- Preload critical fonts for better performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <slot name="head" />
   </head>
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow">
+  <body class="d-flex flex-column min-vh-100">
+    <!-- Enhanced Navigation with modern academic styling -->
+    <nav class="navbar navbar-expand-lg fixed-top">
       <div class="container">
-        <a class="navbar-brand text-dark fw-bold" href="/">
-          {siteMetadata.title}
+        <a class="navbar-brand d-flex align-items-center" href="/">
+          <span class="fw-bold">
+            {siteMetadata.title}
+          </span>
         </a>
 
         <NavbarToggle targetId="navbarNav" client:load />
@@ -64,7 +71,7 @@ const isActive = (item: any) => {
                   <a
                     class:list={[
                       "nav-link",
-                      isActive(item) ? "active fw-semibold" : "",
+                      isActive(item) ? "active" : "",
                     ]}
                     href={item.href}
                   >
@@ -78,43 +85,63 @@ const isActive = (item: any) => {
       </div>
     </nav>
 
-    <main class="container py-5">
+    <!-- Main content with proper spacing for fixed navbar -->
+    <main class="container flex-grow-1" style="padding-top: 6rem; padding-bottom: 3rem;">
       <slot />
     </main>
 
-    <footer class="bg-white border-top mt-5 text-muted shadow">
+    <!-- Enhanced Footer with modern academic styling -->
+    <footer class="footer-enhanced py-5 mt-auto">
       <div class="container">
-        <div class="row my-4">
-          <div class="col-4 col-md-2">
-            <div class="d-flex flex-row align-items-center mb-3">
-              <div class="p-4">
-                  <img
-                    alt=""
-                    src="./images/scms-lad.png"
-                  />
+        <div class="footer-content p-4">
+          <div class="row align-items-center">
+            <div class="col-md-3 text-center mb-3 mb-md-0">
+              <div class="footer-logo">
+                <img
+                  alt="s:CMS & LAD Logo"
+                  src="./images/scms-lad.png"
+                  class="img-fluid"
+                  style="max-height: 80px;"
+                />
               </div>
             </div>
-          </div>
-          <div class="col-8 col-md-10">
-            <div class="p-3 border-start border-primary">
-              <p class="p-s-3">
-                <strong>s:CMS</strong> (v{packageJson.version}) è un progetto
-                ideato e sviluppato dal<!-- -->
-                <br /><a
-                  href="https://lad.saras.uniroma1.it"
-                  target="_blank"
-                  rel="noreferrer"
-                  >LAD: Laboratorio di Archeologia Digitale alla Sapienza</a
-                ><br /><a
-                  href="https://github.com/lad-sapienza/sCMS"
-                  target="_blank"
-                  rel="noreferrer">Code</a
-                >&nbsp;|&nbsp;<a
-                  href="https://github.com/lad-sapienza/sCMS/issues"
-                  target="_blank"
-                  rel="noreferrer">Issues</a
-                >
-              </p>
+            <div class="col-md-9">
+              <div class="ps-md-4 border-start border-primary border-3 d-none d-md-block"></div>
+              <div class="ps-md-4">
+                <p class="mb-2 fw-medium" style="color: #1e293b;">
+                  <strong style="background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">s:CMS</strong> 
+                  <span class="text-muted">(v{packageJson.version})</span>
+                </p>
+                <p class="mb-2 text-muted">
+                  Progetto ideato e sviluppato dal <br />
+                  <a
+                    href="https://lad.saras.uniroma1.it"
+                    target="_blank"
+                    rel="noreferrer"
+                    class="fw-medium"
+                  >
+                    LAD: Laboratorio di Archeologia Digitale alla Sapienza
+                  </a>
+                </p>
+                <div class="d-flex gap-3 flex-wrap">
+                  <a
+                    href="https://github.com/lad-sapienza/sCMS"
+                    target="_blank"
+                    rel="noreferrer"
+                    class="btn btn-sm btn-outline-primary"
+                  >
+                    📝 Code
+                  </a>
+                  <a
+                    href="https://github.com/lad-sapienza/sCMS/issues"
+                    target="_blank"
+                    rel="noreferrer"
+                    class="btn btn-sm btn-outline-secondary"
+                  >
+                    🐛 Issues
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
