@@ -19,16 +19,28 @@ const { maxDepth = 3, minDepth = 2, title = "Table of Contents" } = Astro.props;
 const tocId = `toc-${Math.random().toString(36).substring(7)}`;
 ---
 
-<nav id={tocId} class="toc bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 mb-6">
-  <h2>{title}</h2>
-  <ul class="toc-list text-sm"></ul>
+<nav id={tocId} class="toc bg-light border border-secondary rounded p-3 mb-4 shadow-sm">
+  <h2 class="h5 mb-3 text-secondary">{title}</h2>
+  <ul class="toc-list small"></ul>
 </nav>
 
 <style>
-  @media (prefers-color-scheme: dark) {
-    .toc h2 {
-      color: #f3f4f6 !important;
-    }
+  .toc {
+    background-color: var(--bs-light);
+    border-color: var(--bs-secondary);
+  }
+  
+  a.toc-link {
+    color: var(--bs-secondary);
+    text-decoration: none;
+    transition: color 0.15s ease-in-out;
+    display: block;
+    padding: 0.25rem 0;
+  }
+  
+  a.toc-link:hover {
+    color: var(--bs-primary);
+    text-decoration: underline;
   }
 </style>
 
@@ -64,7 +76,7 @@ const tocId = `toc-${Math.random().toString(36).substring(7)}`;
       const a = document.createElement('a');
       a.href = `#${id}`;
       a.textContent = text;
-      a.className = 'text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:underline transition-colors';
+      a.className = 'toc-link';
       
       li.appendChild(a);
       tocList.appendChild(li);

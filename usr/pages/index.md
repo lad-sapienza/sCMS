@@ -15,12 +15,27 @@ s:CMS is an open source, ready-to-use content management system for [generating 
 
 Our goal is to enable researchers to publish rich data portals online, pulling information from a wide range of sources—static files, remote services, or online databases. We build components—reusing well-known open source projects—to make integration seamless and offer a simplified workflow for securely publishing content.
 
-**Why static sites?**
-
-Static sites are fast, secure, and durable: no databases to manage, no code that gets outdated, no performance issues. Once you build and deploy your site, you can be confident it will keep working.
-
-### What can I do with s:CMS?
-
-Set up a fully working, secure website in minutes. Combine static pages, text, and images with rich data pulled in real time from remote databases or self-hosted static files. Build maps and fully searchable tables. Customize the layout and look & feel to fit your needs.
+<div className="row g-4 my-4">
+  <div className="col-md-6">
+    <div className="card-academic p-4">
+      <h4>Why static sites?</h4>
+      <p className="text-muted mb-3">
+        Static sites are fast, secure, and durable: no databases to manage, no code that gets outdated, no performance issues. Once you build and deploy your site, you can be confident it will keep working.
+      </p>
+    </div>
+  </div>
+  <div className="col-md-6">
+    <div className="card-academic p-4">
+      <h4>What can I do with s:CMS?</h4>
+      <p className="text-muted mb-3">
+        Set up a fully working, secure website in minutes. Combine static pages, text, and images with rich data pulled in real time from remote databases or self-hosted static files. Build maps and fully searchable tables. Customize the layout and look & feel to fit your needs.
 
 *Think of s:CMS as the public, fully customizable front-end of your research database—now powered by Astro.*
+      </p>
+    </div>
+  </div>
+</div>
+
+
+
+
