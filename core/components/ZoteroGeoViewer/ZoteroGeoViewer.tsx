@@ -13,9 +13,9 @@ export function ZoteroGeoViewer(props: ZoteroGeoViewerProps) {
   // Add error handling for props
   if (!props) {
     return (
-      <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-        <h3 className="font-semibold text-red-800">Error loading Zotero data</h3>
-        <p className="text-red-600 mt-1">Component props are undefined</p>
+      <div className="alert alert-danger">
+        <h3 className="fw-semibold">Error loading Zotero data</h3>
+        <p className="mb-0">Component props are undefined</p>
       </div>
     );
   }
@@ -32,10 +32,10 @@ export function ZoteroGeoViewer(props: ZoteroGeoViewerProps) {
   // Add error handling for required props
   if (!groupId) {
     return (
-      <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-        <h3 className="font-semibold text-red-800">Error loading Zotero data</h3>
-        <p className="text-red-600 mt-1">Group ID is required</p>
-        <p className="text-sm text-red-500 mt-1">Group ID: {groupId}</p>
+      <div className="alert alert-danger">
+        <h3 className="fw-semibold">Error loading Zotero data</h3>
+        <p className="mb-1">Group ID is required</p>
+        <p className="small mb-0">Group ID: {groupId}</p>
       </div>
     );
   }
@@ -258,66 +258,68 @@ export function ZoteroGeoViewer(props: ZoteroGeoViewerProps) {
   const getLayoutClasses = () => {
     switch (layout) {
       case 'vertical':
-        return 'flex flex-col space-y-4';
+        return 'd-flex flex-column gap-3';
       case 'horizontal':
-        return 'flex flex-col md:flex-row gap-4';
+        return 'd-flex flex-column flex-md-row gap-3';
       case '6x6':
-        return 'grid grid-cols-1 md:grid-cols-12 gap-4';
+        return 'row g-3';
       case '8x4':
-        return 'grid grid-cols-1 md:grid-cols-12 gap-4';
+        return 'row g-3';
       case '4x8':
-        return 'grid grid-cols-1 md:grid-cols-12 gap-4';
+        return 'row g-3';
       case '12x4':
-        return 'flex flex-col space-y-4';
+        return 'd-flex flex-column gap-3';
       default:
-        return 'grid grid-cols-1 md:grid-cols-12 gap-4';
+        return 'row g-3';
     }
   };
 
   const getMapColSpan = () => {
     switch (layout) {
-      case 'horizontal': return 'md:w-2/3';
-      case '6x6': return 'md:col-span-6';
-      case '8x4': return 'md:col-span-8';
-      case '4x8': return 'md:col-span-4';
-      case '12x4': return 'w-full';
-      default: return 'md:col-span-8';
+      case 'horizontal': return 'col-md-8';
+      case '6x6': return 'col-md-6';
+      case '8x4': return 'col-md-8';
+      case '4x8': return 'col-md-4';
+      case '12x4': return 'col-12';
+      default: return 'col-md-8';
     }
   };
 
   const getControlsColSpan = () => {
     switch (layout) {
-      case 'horizontal': return 'md:w-1/3';
-      case '6x6': return 'md:col-span-6';
-      case '8x4': return 'md:col-span-4';
-      case '4x8': return 'md:col-span-8';
-      case '12x4': return 'w-full';
-      default: return 'md:col-span-4';
+      case 'horizontal': return 'col-md-4';
+      case '6x6': return 'col-md-6';
+      case '8x4': return 'col-md-4';
+      case '4x8': return 'col-md-8';
+      case '12x4': return 'col-12';
+      default: return 'col-md-4';
     }
   };
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center p-8">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
-        <span className="ml-2">Loading Zotero library...</span>
-        <div className="ml-4 text-xs text-gray-500">Group ID: {groupId}</div>
+      <div className="d-flex align-items-center justify-content-center p-4">
+        <div className="spinner-border text-primary" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+        <span className="ms-2">Loading Zotero library...</span>
+        <div className="ms-3 small text-secondary">Group ID: {groupId}</div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-        <h3 className="text-red-800 font-semibold">Error loading Zotero data</h3>
-        <p className="text-red-600 text-sm mt-1">{error}</p>
-        <p className="text-red-500 text-xs mt-2">Group ID: {groupId}</p>
+      <div className="alert alert-danger">
+        <h3 className="fw-semibold">Error loading Zotero data</h3>
+        <p className="small mb-1">{error}</p>
+        <p className="small mb-0">Group ID: {groupId}</p>
       </div>
     );
   }
 
   if (!data || !mapped) {
-    return <div className="p-4 text-gray-500">No data loaded</div>;
+    return <div className="p-3 text-secondary">No data loaded</div>;
   }
 
   // Prepare GeoJSON for map
@@ -379,26 +381,26 @@ export function ZoteroGeoViewer(props: ZoteroGeoViewerProps) {
 
         {/* Controls and Stats */}
         <div className={getControlsColSpan()}>
-          <div className="space-bottom-4">
-            {/* Statistics */}
-            <div className="bg-gray-50 rounded-lg p-4">
-              <h3 className="font-semibold mb-3">Library Statistics</h3>
-              <div className="grid grid-cols-2 gap-4 text-sm">
-                <div className="text-center">
-                  <div className="text-xl font-bold text-blue-600">{totalItems}</div>
-                  <div className="text-gray-600">Total Items</div>
+          <div className="mb-3">
+            {/* Library Statistics */}
+            <div className="bg-light rounded p-3 mb-3">
+              <h3 className="fw-semibold mb-3">Library Statistics</h3>
+              <div className="row g-3 small">
+                <div className="col-6 text-center">
+                  <div className="h4 fw-bold text-primary">{totalItems}</div>
+                  <div className="text-secondary">Total Items</div>
                 </div>
-                <div className="text-center">
-                  <div className="text-xl font-bold text-green-600">{geoItems}</div>
-                  <div className="text-gray-600">Georeferenced</div>
+                <div className="col-6 text-center">
+                  <div className="h4 fw-bold text-success">{geoItems}</div>
+                  <div className="text-secondary">Georeferenced</div>
                 </div>
               </div>
             </div>
 
             {/* Tag Search */}
-            <div className="bg-white border border-gray-200 rounded-lg p-4">
-              <h3 className="font-semibold mb-3">Search Tags</h3>
-              <div className="relative">
+            <div className="bg-white border rounded p-3">
+              <h3 className="fw-semibold mb-3">Search Tags</h3>
+              <div className="position-relative">
                 <input
                   type="text"
                   placeholder="Search for locations..."
@@ -409,12 +411,12 @@ export function ZoteroGeoViewer(props: ZoteroGeoViewerProps) {
                   }}
                   onFocus={() => setShowDropdown(true)}
                   onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="form-control form-control-sm"
                 />
                 
                 {/* Simple autocomplete */}
                 {showDropdown && filteredSuggestions.length > 0 && (
-                  <div className="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-md shadow-lg max-h-48 overflow-y-auto">
+                  <div className="position-absolute w-100 mt-1 bg-white border rounded shadow" style={{zIndex: 1000, maxHeight: '12rem', overflowY: 'auto'}}>
                     {filteredSuggestions.map((tag, index) => (
                       <button
                         key={index}
@@ -426,11 +428,11 @@ export function ZoteroGeoViewer(props: ZoteroGeoViewerProps) {
                           });
                           setShowDropdown(false);
                         }}
-                        className="w-full px-3 py-2 text-left hover:bg-gray-100 focus:bg-gray-100 focus:outline-none"
+                        className="w-100 px-3 py-2 text-start btn btn-sm"
                       >
-                        <div className="font-medium">{tag.label}</div>
+                        <div className="fw-medium">{tag.label}</div>
                         {tag.alts.length > 0 && (
-                          <div className="text-xs text-gray-500">
+                          <div className="small text-secondary">
                             Also: {tag.alts.slice(0, 3).join(', ')}
                             {tag.alts.length > 3 && ` +${tag.alts.length - 3} more`}
                           </div>
@@ -448,7 +450,7 @@ export function ZoteroGeoViewer(props: ZoteroGeoViewerProps) {
                     setSelectedTag(null);
                     setShowDropdown(false);
                   }}
-                  className="mt-2 text-sm text-blue-600 hover:text-blue-800"
+                  className="mt-2 small btn btn-link p-0"
                 >
                   Clear search
                 </button>
@@ -457,14 +459,14 @@ export function ZoteroGeoViewer(props: ZoteroGeoViewerProps) {
 
             {/* Selected tag info */}
             {selectedTag && (
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                <h4 className="font-semibold text-blue-900">Selected: {selectedTag.main}</h4>
+              <div className="alert alert-info">
+                <h4 className="fw-semibold alert-heading">Selected: {selectedTag.main}</h4>
                 {selectedTag.alternatives.length > 0 && (
-                  <p className="text-sm text-blue-700 mt-1">
+                  <p className="small mb-1">
                     Also includes: {selectedTag.alternatives.join(', ')}
                   </p>
                 )}
-                <p className="text-xs text-blue-600 mt-2">
+                <p className="small mb-0">
                   Use the map markers to explore items at this location.
                 </p>
               </div>

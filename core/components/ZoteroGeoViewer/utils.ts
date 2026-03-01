@@ -186,23 +186,23 @@ export function generatePopupContent(feature: ZoteroGeoData['features'][0]): str
     const year = item.data.date ? new Date(item.data.date).getFullYear() : '';
     
     return `
-      <div class="border-b border-gray-200 py-1 last:border-b-0">
-        <div class="text-sm font-medium text-blue-600">
-          <a href="${item.links.alternate.href}" target="_blank" class="hover:underline">
+      <div class="border-bottom py-1">
+        <div class="small fw-medium">
+          <a href="${item.links.alternate.href}" target="_blank" class="text-primary text-decoration-none">
             ${item.data.title || 'Untitled'}
           </a>
         </div>
-        <div class="text-xs text-gray-600">${authors}${year ? ` (${year})` : ''}</div>
+        <div class="small text-secondary">${authors}${year ? ` (${year})` : ''}</div>
       </div>
     `;
   }).join('');
   
-  const moreText = items.length > 5 ? `<div class="text-xs text-gray-500 mt-2">...and ${items.length - 5} more items</div>` : '';
+  const moreText = items.length > 5 ? `<div class="small text-secondary mt-2">...and ${items.length - 5} more items</div>` : '';
   
   return `
-    <div class="p-3 max-w-xs">
-      <h3 class="font-bold text-sm mb-2">${properties.name}</h3>
-      <div class="text-xs text-gray-600 mb-2">${items.length} item${items.length !== 1 ? 's' : ''}</div>
+    <div class="p-3" style="max-width: 20rem;">
+      <h3 class="fw-bold small mb-2">${properties.name}</h3>
+      <div class="small text-secondary mb-2">${items.length} item${items.length !== 1 ? 's' : ''}</div>
       ${itemsHtml}
       ${moreText}
     </div>

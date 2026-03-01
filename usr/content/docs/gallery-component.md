@@ -115,7 +115,7 @@ interface GalleryItem {
   sortable                    <!-- Enable sort options -->
   columns={3}
   gap="0.5rem"
-  className="rounded-lg overflow-hidden"
+  className="rounded overflow-hidden"
   client:idle 
 />
 ```

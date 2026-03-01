@@ -121,19 +121,19 @@ export function ZoteroRecordsPreview({ groupId, tag }: ZoteroRecordsPreviewProps
   if (!tag || !tag.main) return null;
   
   return (
-    <div className="mt-4">
-      <h4 className="text-lg font-semibold">
-        Zotero records for <span className="text-blue-600">{tag.main}</span>
+    <div className="mt-3">
+      <h4 className="h5 fw-semibold">
+        Zotero records for <span className="text-primary">{tag.main}</span>
         {tag.alternatives && tag.alternatives.length > 0 && (
-          <small className="text-gray-500 ml-2">{' '}
+          <small className="text-secondary ms-2">{' '}
             (including: {tag.alternatives.join(", ")})
           </small>
         )}
       </h4>
-      {loading && <div className="text-blue-600">Loading records...</div>}
-      {error && <div className="text-red-600">Error: {error}</div>}
+      {loading && <div className="text-primary">Loading records...</div>}
+      {error && <div className="text-danger">Error: {error}</div>}
       {!loading && records && records.length > 0 && (
-        <ol className="mt-3 space-y-2">
+        <ol className="mt-3">
           {records.map(item => {
             const key = item.key || item.data?.key;
             const zoteroLink = key
@@ -142,7 +142,7 @@ export function ZoteroRecordsPreview({ groupId, tag }: ZoteroRecordsPreviewProps
             return (
               <li
                 key={key}
-                className="mb-2 pl-4"
+                className="mb-2 ps-3"
                 style={{  }}
               >
                 {item.bib ? (
@@ -163,7 +163,7 @@ export function ZoteroRecordsPreview({ groupId, tag }: ZoteroRecordsPreviewProps
                       href={zoteroLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm text-blue-600 hover:text-blue-800 underline"
+                      className="small text-primary text-decoration-underline"
                       style={{ whiteSpace: "nowrap" }}
                     >
                       View in the Zotero Library
@@ -176,7 +176,7 @@ export function ZoteroRecordsPreview({ groupId, tag }: ZoteroRecordsPreviewProps
         </ol>
       )}
       {!loading && (!records || records.length === 0) && !error && (
-        <div className="text-red-600">No records found for this tag.</div>
+        <div className="text-danger">No records found for this tag.</div>
       )}
     </div>
   );

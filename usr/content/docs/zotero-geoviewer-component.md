@@ -221,12 +221,14 @@ import { ZoteroGeoViewer } from '@core/components/ZoteroGeoViewer';
 
 export function ResearchDashboard() {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-      <ZoteroGeoViewer
-        groupId={336647}
-        layout="vertical"
-        mapHeight="400px"
-      />
+    <div className="row g-3">
+      <div className="col-lg-6">
+        <ZoteroGeoViewer
+          groupId={336647}
+          layout="vertical"
+          mapHeight="400px"
+        />
+      </div>
     </div>
   );
 }

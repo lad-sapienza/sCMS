@@ -68,7 +68,7 @@ interface TableOfContentsProps {
   title="Article Outline"
   smooth={true}
   offset={100}
-  className="bg-gray-50 p-4 rounded-lg"
+  className="bg-light p-3 rounded"
 />
 
 <!-- Mobile-friendly -->

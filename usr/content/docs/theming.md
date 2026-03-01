@@ -30,13 +30,13 @@ Edit `usr/styles/user-theme.css` to override core design tokens:
 }
 ```
 
-### 2. Use Tailwind Utilities
-Thanks to CSS variable integration, you can now use:
+### 2. Use Bootstrap Utilities
+Thanks to Bootstrap 5 integration, you can now use:
 
 ```html
-<button class="bg-primary text-white px-4 py-2">Primary Button</button>
-<div class="text-primary border-primary">Brand colored content</div>
-<h1 class="font-sans text-text">Styled with your custom fonts & colors</h1>
+<button class="btn btn-primary">Primary Button</button>
+<div class="text-primary border border-primary">Brand colored content</div>
+<h1 class="fw-bold">Styled with Bootstrap utilities</h1>
 ```
 
 ### 3. Extend Tailwind Theme
