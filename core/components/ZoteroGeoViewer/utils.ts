@@ -52,15 +52,24 @@ export async function loadCoordinateData(url = '/data/zoteroTagCoordinates.geojs
     
     const geoJson: GeoJSON.FeatureCollection = await response.json();
     
-    const coordinates = geoJson.features.map(feature => ({
-      name: feature.properties?.name || '',
-      altLabel: feature.properties?.altLabel,
-      id: feature.properties?.id || 0,
-      source: feature.properties?.source,
-      coordinates: feature.geometry?.type === 'Point' 
-        ? (feature.geometry.coordinates as [number, number])
-        : [0, 0]
-    }));
+    const coordinates: CoordinateData[] = geoJson.features.map((feature): CoordinateData => {
+      const pointCoordinates = feature.geometry?.type === 'Point' ? feature.geometry.coordinates : undefined;
+      const normalizedCoordinates: [number, number] =
+        Array.isArray(pointCoordinates) &&
+        pointCoordinates.length >= 2 &&
+        typeof pointCoordinates[0] === 'number' &&
+        typeof pointCoordinates[1] === 'number'
+          ? [pointCoordinates[0], pointCoordinates[1]]
+          : [0, 0];
+
+      return {
+        name: feature.properties?.name || '',
+        altLabel: feature.properties?.altLabel,
+        id: feature.properties?.id || 0,
+        source: feature.properties?.source,
+        coordinates: normalizedCoordinates,
+      };
+    });
     
     console.log('Successfully loaded', coordinates.length, 'coordinate entries');
     return coordinates;

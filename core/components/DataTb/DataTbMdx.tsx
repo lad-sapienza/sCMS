@@ -7,12 +7,12 @@
 
 import React, { useMemo } from 'react';
 import { DataTb as DataTbCore } from './DataTb';
-import type { DataTbProps } from './types';
+import type { DataTbProps, SourceConfig } from './types';
 import { directusShorthandToConfig } from '../../utils/directus-config';
 
 export function DataTb(props: DataTbProps) {
   // Resolve source from simplified props or original source prop
-  const resolvedSource = useMemo(() => {
+  const resolvedSource = useMemo<SourceConfig | undefined>(() => {
     // If explicit source object is provided, use it (memoized later)
     if (props.source) return props.source;
 
@@ -36,7 +36,8 @@ export function DataTb(props: DataTbProps) {
 
     // Handle simplified Directus prop (same interface as Map component)
     if (props.directus) {
-      return directusShorthandToConfig(props.directus);
+      const directusSource = directusShorthandToConfig(props.directus);
+      return directusSource ?? undefined;
     }
 
     return undefined;
