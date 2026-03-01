@@ -62,12 +62,15 @@ export async function getRecord(options: GetRecordOptions): Promise<any | null> 
       return null;
     }
 
+    // Normalize ID: convert to number if it looks numeric, otherwise keep as string
+    const normalizedId = /^\d+$/.test(id) ? Number(id) : id;
+
     // Fetch the record
     const recordData = await fetchData({
       type: 'directus',
       collection: table,
       config: config.config,
-      itemId: id,
+      itemId: normalizedId,
       fields
     });
     
@@ -112,8 +115,18 @@ export async function getRecordById(table: string, id: string): Promise<any | nu
  */
 export async function getRecordFromParams(astro: any): Promise<any | null> {
   const { table, id } = astro.params;
+
   if (!table || !id) {
     return null;
   }
-  return getRecord({ table, id });
+
+  const fieldsParam = astro?.url?.searchParams?.get('fields');
+  const fields = fieldsParam
+    ? fieldsParam
+        .split(',')
+        .map((field: string) => field.trim())
+        .filter(Boolean)
+    : undefined;
+
+  return getRecord({ table, id, fields });
 }

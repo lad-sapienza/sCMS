@@ -1,0 +1,75 @@
+---
+import { getValueByDotPath, Image } from '@core/components/Record';
+
+interface Props {
+  record: any;
+  table?: string;
+  id?: string;
+}
+
+const { record, table, id } = Astro.props;
+
+
+// Extract thumbnail fields (common naming patterns)
+const thumbnailFields = ['thumbnail', 'Thumbnail', 'image', 'Image', 'featured_image', 'featured', 'cover'];
+let thumbnailFieldName = '';
+for (const fieldName of thumbnailFields) {
+  if (fieldName in record) {
+    thumbnailFieldName = fieldName;
+    break;
+  }
+}
+
+
+const entries = Object.entries(record || {})
+  .filter(([key]) => !thumbnailFieldName || key !== thumbnailFieldName)
+  .filter(([, value]) => {
+    if (value === null || value === undefined) return false;
+    if (typeof value === 'string' && value.trim() === '') return false;
+    return true;
+  });
+
+const heading =
+  getValueByDotPath(record, 'title') ||
+  getValueByDotPath(record, 'name') ||
+  getValueByDotPath(record, 'Site_Name') ||
+  `Record ${id}`;
+---
+
+<div class="container py-4">
+  <div class="mb-4">
+    <h1 class="display-6 fw-bold mb-2">{heading}</h1>
+    <p class="small text-secondary mb-0">Table: {table} | ID: {id}</p>
+  </div>
+
+  {thumbnailFieldName && (
+    <div class="mb-4">
+      <Image
+        fieldName={thumbnailFieldName}
+        record={record}
+        className="img-fluid rounded shadow"
+        alt={heading}
+      />
+    </div>
+  )}
+
+  {entries.length > 0 ? (
+    <div class="row g-3">
+      {entries.map(([key, value]) => (
+        <div class="col-12 col-md-6">
+          <div class="border rounded p-3 h-100">
+            <div class="small fw-semibold text-secondary mb-1">{key}</div>
+            <div class="small">
+              {typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean'
+                ? String(value)
+                : JSON.stringify(value, null, 2)}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  ) : (
+    <div class="alert alert-info mb-0" role="alert">Record is empty.</div>
+  )}
+</div>
+

@@ -14,6 +14,10 @@ export { SearchUI, SearchUISimple, SearchUIAdvanced } from './components/Map/Sea
 export { ZoteroGeoViewer } from './components/ZoteroGeoViewer';
 export type { ZoteroGeoViewerProps, ZoteroItem, CoordinateData, LayoutType } from './components/ZoteroGeoViewer';
 
+// Record helpers
+export { RecordProvider, Field, Image, getValueByDotPath } from './components/Record';
+export type { RecordProviderProps, FieldProps, ImageProps } from './components/Record';
+
 // Layouts
 export { default as BaseLayout } from './layouts/BaseLayout.astro';
 
