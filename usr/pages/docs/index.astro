@@ -10,32 +10,32 @@ const sortedDocs = docs.sort((a, b) => (a.data.order || 999) - (b.data.order || 
 ---
 
 <BaseLayout title="Documentation" description="Technical documentation for s:CMS">
-  <main class="mx-auto max-w-7xl px-4 py-8">
-    <div class="prose max-w-none">
+  <main class="container py-4">
+    <div>
       <h1>Documentation</h1>
-      <p class="text-lg text-gray-600">
+      <p class="lead text-secondary">
         Welcome to the s:CMS documentation. Here you'll find technical guides and information about the system architecture.
       </p>
 
-      <div class="grid gap-6 mt-8">
+      <div class="row g-3 mt-4">
         {sortedDocs.map((doc) => (
-          <a 
+          <a
             href={`/docs/${doc.id.replace('.md', '')}`}
-            class="block p-6 bg-white border border-gray-200 rounded-lg hover:border-blue-500 hover:shadow-md transition-all no-underline"
+            class="col-12 card p-4 text-decoration-none border shadow-sm"
           >
-            <h3 class="text-xl font-semibold text-gray-900 mb-2 mt-0">
+            <h3 class="h4 fw-semibold text-body mb-2 mt-0">
               {doc.data.title}
             </h3>
-            <p class="text-gray-600 mb-0">
+            <p class="text-secondary mb-0">
               {doc.data.description}
             </p>
           </a>
         ))}
       </div>
 
-      <hr class="mt-12" />
-      <p class="text-sm text-gray-500">
-        <em>This documentation covers the technical aspects of s:CMS. For usage examples and component demos, check out the <a href="/" class="text-blue-600 hover:underline">main demo pages</a>.</em>
+      <hr class="my-4" />
+      <p class="small text-secondary">
+        <em>This documentation covers the technical aspects of s:CMS. For usage examples and component demos, check out the <a href="/" class="text-primary text-decoration-underline">main demo pages</a>.</em>
       </p>
     </div>
   </main>
