@@ -36,6 +36,9 @@ export function DataTb({
   loadingMessage = 'Loading data...',
   emptyMessage = 'No data available',
   errorMessage = 'Error loading data',
+  truncateContent = true,
+  truncateMaxWidth = '20rem',
+  contentSize = 'sm',
 }: DataTbProps) {
   const [data, setData] = useState<DataRow[]>([]);
   const [loading, setLoading] = useState(true);
@@ -54,6 +57,7 @@ export function DataTb({
   const paginationConfig = typeof pagination === 'object' ? pagination : {};
   const pageSize = paginationConfig.pageSize || 10;
   const pageSizeOptions = paginationConfig.pageSizeOptions || [10, 20, 50, 100];
+  const contentSizeClass = contentSize === 'sm' ? 'small' : '';
 
   // Fetch data based on source configuration
   useEffect(() => {
@@ -133,7 +137,7 @@ export function DataTb({
   if (loading) {
     return (
       <div className="datatb-container">
-        <div className="datatb-loading p-8 text-center text-gray-600">
+        <div className="datatb-loading p-4 text-center text-secondary">
           {loadingMessage}
         </div>
       </div>
@@ -144,7 +148,7 @@ export function DataTb({
   if (error) {
     return (
       <div className="datatb-container">
-        <div className="datatb-error p-8 text-center text-red-600">
+        <div className="datatb-error p-4 text-center text-danger">
           {errorMessage}: {error.message}
         </div>
       </div>
@@ -155,7 +159,7 @@ export function DataTb({
   if (data.length === 0) {
     return (
       <div className="datatb-container">
-        <div className="datatb-empty p-8 text-center text-gray-600">
+        <div className="datatb-empty p-4 text-center text-secondary">
           {emptyMessage}
         </div>
       </div>
@@ -167,28 +171,29 @@ export function DataTb({
 
       {/* Search input */}
       {searchable && (
-        <div className="datatb-search mb-4">
+        <div className="datatb-search mb-3">
           <input
             type="text"
             value={globalFilter ?? ''}
             onChange={(e) => setGlobalFilter(e.target.value)}
             placeholder="Search..."
-            className="w-full md:w-96 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="form-control form-control-sm"
+            style={{ maxWidth: '24rem' }}
           />
         </div>
       )}
 
       {/* Table */}
-      <div className="datatb-table-wrapper overflow-x-auto border border-gray-200 rounded-lg shadow-sm">
-        <table className="datatb-table min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
+      <div className="datatb-table-wrapper table-responsive border rounded shadow-sm">
+        <table className="datatb-table table table-sm table-hover mb-0">
+          <thead className="table-light">
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header, index) => (
                   <th
                     key={header.id}
-                    className={`p-4 text-left text-xs font-medium text-gray-700 uppercase tracking-wider ${
-                      index === 0 ? 'pl-6 pr-6' : 'px-6'
+                    className={`py-2 text-start small fw-semibold text-uppercase ${
+                      index === 0 ? 'ps-3 pe-3' : 'px-3'
                     }`}
                     style={{ width: header.getSize() !== 150 ? header.getSize() : undefined }}
                   >
@@ -196,17 +201,18 @@ export function DataTb({
                       <div
                         className={
                           header.column.getCanSort()
-                            ? 'flex items-center gap-2 cursor-pointer select-none hover:text-gray-900'
-                            : 'flex items-center gap-2'
+                            ? 'd-flex align-items-center gap-2 user-select-none'
+                            : 'd-flex align-items-center gap-2'
                         }
                         onClick={header.column.getToggleSortingHandler()}
+                        style={header.column.getCanSort() ? { cursor: 'pointer' } : undefined}
                       >
                         {flexRender(
                           header.column.columnDef.header,
                           header.getContext()
                         )}
                         {header.column.getCanSort() && (
-                          <span className="text-gray-400">
+                          <span className="text-secondary">
                             {{
                               asc: '↑',
                               desc: '↓',
@@ -220,17 +226,35 @@ export function DataTb({
               </tr>
             ))}
           </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
+          <tbody>
             {table.getRowModel().rows.map((row) => (
-              <tr key={row.id} className="hover:bg-gray-50">
+              <tr key={row.id}>
                 {row.getVisibleCells().map((cell, index) => (
                   <td
                     key={cell.id}
-                    className={`p-4 text-sm text-gray-900 ${
-                      index === 0 ? 'pl-6 pr-6' : 'px-6'
+                    className={`py-2 ${contentSizeClass} ${
+                      index === 0 ? 'ps-3 pe-3' : 'px-3'
                     }`}
                   >
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    {(() => {
+                      const cellContent = flexRender(cell.column.columnDef.cell, cell.getContext());
+                      const isSimpleText =
+                        typeof cellContent === 'string' || typeof cellContent === 'number';
+
+                      if (!truncateContent) {
+                        return cellContent;
+                      }
+
+                      return (
+                        <div
+                          className="text-truncate"
+                          style={{ maxWidth: truncateMaxWidth }}
+                          title={isSimpleText ? String(cellContent) : undefined}
+                        >
+                          {cellContent}
+                        </div>
+                      );
+                    })()}
                   </td>
                 ))}
               </tr>
@@ -241,40 +265,40 @@ export function DataTb({
 
       {/* Pagination */}
       {pagination && (
-        <div className="datatb-pagination mt-3 flex flex-row items-center justify-between gap-2 text-sm">
-          <div className="inline-flex rounded-md shadow-sm" role="group">
+        <div className="datatb-pagination mt-3 d-flex flex-row align-items-center justify-content-between gap-2">
+          <div className="btn-group" role="group">
             <button
               onClick={() => table.setPageIndex(0)}
               disabled={!table.getCanPreviousPage()}
-              className="scms-btn scms-btn-secondary scms-btn-sm rounded-r-none border-r-0"
+              className="btn btn-outline-secondary btn-sm"
             >
               {'<<'}
             </button>
             <button
               onClick={() => table.previousPage()}
               disabled={!table.getCanPreviousPage()}
-              className="scms-btn scms-btn-secondary scms-btn-sm rounded-none border-r-0"
+              className="btn btn-outline-secondary btn-sm"
             >
               {'<'}
             </button>
             <button
               onClick={() => table.nextPage()}
               disabled={!table.getCanNextPage()}
-              className="scms-btn scms-btn-secondary scms-btn-sm rounded-none border-r-0"
+              className="btn btn-outline-secondary btn-sm"
             >
               {'>'}
             </button>
             <button
               onClick={() => table.setPageIndex(table.getPageCount() - 1)}
               disabled={!table.getCanNextPage()}
-              className="scms-btn scms-btn-secondary scms-btn-sm rounded-l-none"
+              className="btn btn-outline-secondary btn-sm"
             >
               {'>>'}
             </button>
           </div>
 
-          <div className="flex items-center gap-2 flex-nowrap">
-            <span className="text-xs text-text-light whitespace-nowrap">
+          <div className="d-flex align-items-center gap-2 flex-nowrap">
+            <span className="small text-secondary text-nowrap">
               Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
             </span>
 
@@ -284,8 +308,8 @@ export function DataTb({
                 onChange={(e) => {
                   table.setPageSize(Number(e.target.value));
                 }}
-                className="scms-select text-xs px-4 py-1 min-w-0"
-                style={{ width: 'auto', padding: '.25rem 1.5rem .25rem .5rem' }}
+                className="form-select form-select-sm"
+                style={{ width: 'auto' }}
               >
                 {pageSizeOptions.map((size) => (
                   <option key={size} value={size}>
@@ -295,7 +319,7 @@ export function DataTb({
               </select>
             )}
 
-            <span className="text-xs text-text-light whitespace-nowrap">
+            <span className="small text-secondary text-nowrap">
               ({data.length} total)
             </span>
           </div>

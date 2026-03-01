@@ -184,6 +184,15 @@ export interface DataTbProps {
   /** Error message */
   errorMessage?: string;
 
+  /** Truncate large cell content by default */
+  truncateContent?: boolean;
+
+  /** Max width for truncated cell content (CSS value) */
+  truncateMaxWidth?: string;
+
+  /** Table body content size */
+  contentSize?: 'sm' | 'md';
+
   /** Simplified CSV Source URL (MDX friendly) */
   csv?: string;
 

@@ -118,6 +118,9 @@ Override column display, formatting, and rendering:
 | `loadingMessage` | `string` | `'Loading data...'` | Loading message |
 | `emptyMessage` | `string` | `'No data available'` | Empty state message |
 | `errorMessage` | `string` | `'Error loading data'` | Error message |
+| `truncateContent` | `boolean` | `true` | Truncate large cell content with ellipsis |
+| `truncateMaxWidth` | `string` | `'20rem'` | Max width for truncated cell content |
+| `contentSize` | `'sm' \| 'md'` | `'sm'` | Table body text size |
 
 ### Column Config
 
