@@ -36,9 +36,9 @@ const titleId = title
   : undefined;
 ---
 
-{title && <h2 id={titleId} class="h3 fw-bold mb-3">{title}</h2>}
+{title && <h2 id={titleId}>{title}</h2>}
 
-<div class="mb-3 p-3 alert alert-info border-start border-4 border-primary small fst-italic">
+<div class="alert alert-info">
   <slot name="intro" />
 </div>
 

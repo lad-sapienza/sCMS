@@ -57,8 +57,29 @@ interface DataTbProps {
   loadingMessage?: string;
   emptyMessage?: string;
   errorMessage?: string;
+
+  // Cell display
+  truncateContent?: boolean;
+  truncateMaxWidth?: string;
+  contentSize?: 'sm' | 'md';
 }
 ```
+
+### Content Display Controls
+
+```mdx
+<DataTb
+  csv="/data/ksa.csv"
+  truncateContent={true}
+  truncateMaxWidth="24rem"
+  contentSize="sm"
+  client:idle
+/>
+```
+
+- `truncateContent`: Enables/disables cell truncation for long values (default: `true`)
+- `truncateMaxWidth`: CSS max width used for truncated cell content (default: `'20rem'`)
+- `contentSize`: Table body text size (`'sm'` or `'md'`, default: `'sm'`)
 
 ### ColumnConfig Interface
 
@@ -309,5 +330,3 @@ For datasets with thousands of rows:
 - ✅ **Focus Management** - Clear focus indicators and logical tab order
 - ✅ **Sort Indicators** - Visual and screen reader sort direction feedback
 - ✅ **Loading States** - Accessible loading and error announcements
-
-## Integration Patterns
