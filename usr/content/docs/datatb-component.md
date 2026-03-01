@@ -4,6 +4,8 @@ description: API reference for the DataTb component - interactive data tables wi
 order: 13
 ---
 
+# DataTb Component
+
 Interactive data tables with built-in sorting, filtering, pagination, and multiple data source support. Built on React and TanStack Table.
 
 **Live Examples**: See [DataTb Demo](/datatable-demo) for working examples with output.
