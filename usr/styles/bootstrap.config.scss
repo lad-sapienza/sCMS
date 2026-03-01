@@ -21,7 +21,7 @@ $dark: #2D2D2D !default;        // Soft dark gray
 
 // Typography - Technical Minimalism fonts
 $font-family-sans-serif: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif !default;
-$font-family-serif: 'Fraunces', Georgia, 'Times New Roman', serif !default;
+$font-family-serif: 'DM Serif Display', Georgia, 'Times New Roman', serif !default;
 $font-family-heading: $font-family-serif !default;
 $font-family-monospace: 'JetBrains Mono', 'SF Mono', Monaco, Inconsolata, 'Roboto Mono', Consolas, 'Courier New', monospace !default;
 
@@ -114,24 +114,3 @@ $spacers: (
 
 // Generate utilities
 @import "bootstrap/scss/utilities/api";
-
-// Custom s:CMS utilities that work with the existing CSS variables
-.text-primary-custom {
-  color: var(--color-primary) !important;
-}
-
-.text-primary-hover-custom:hover {
-  color: var(--color-primary-hover) !important;
-}
-
-.bg-primary-custom {
-  background-color: var(--color-primary) !important;
-}
-
-.border-scms {
-  border-radius: var(--radius-base, 6px) !important;
-}
-
-.shadow-scms {
-  box-shadow: var(--shadow-focus, 0 0 0 3px rgba(37, 99, 235, 0.1)) !important;
-}
