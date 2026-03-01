@@ -130,29 +130,29 @@ export function SearchUIAdvanced({
         {/* Connector selection (only show if more than one filter) */}
         {filters.length > 1 && (
           <div className="mb-3">
-            <div className="flex gap-2">
-              <label className="flex items-center gap-2">
+            <div className="d-flex gap-3">
+              <label className="d-flex align-items-center gap-2">
                 <input
                   type="radio"
                   name="connector"
                   value="_and"
                   checked={connector === '_and'}
                   onChange={(e) => setConnector(e.target.value as '_and' | '_or')}
-                  className="text-blue-600 focus:ring-blue-500"
+                  className="form-check-input"
                 />
-                <span className="text-sm">{DEFAULT_CONNECTORS._and}</span>
+                <span className="small">{DEFAULT_CONNECTORS._and}</span>
               </label>
               
-              <label className="flex items-center gap-2">
+              <label className="d-flex align-items-center gap-2">
                 <input
                   type="radio"
                   name="connector"
                   value="_or"
                   checked={connector === '_or'}
                   onChange={(e) => setConnector(e.target.value as '_and' | '_or')}
-                  className="text-blue-600 focus:ring-blue-500"
+                  className="form-check-input"
                 />
-                <span className="text-sm">{DEFAULT_CONNECTORS._or}</span>
+                <span className="small">{DEFAULT_CONNECTORS._or}</span>
               </label>
             </div>
           </div>
@@ -160,11 +160,11 @@ export function SearchUIAdvanced({
 
         {/* Filter rows */}
         {filters.map((filter, index) => (
-          <div key={index} className="grid grid-cols-12 gap-2 mb-2 items-center">
+          <div key={index} className="row g-2 mb-2 align-items-center">
             {/* Field selection */}
-            <div className="col-span-3">
+            <div className="col-3">
               <select
-                className="scms-input scms-select"
+                className="form-select form-select-sm"
                 value={filter.field}
                 onChange={(e) => updateFilter(index, 'field', e.target.value)}
                 disabled={isLoading}
@@ -178,9 +178,9 @@ export function SearchUIAdvanced({
             </div>
             
             {/* Operator selection */}
-            <div className="col-span-3">
+            <div className="col-3">
               <select
-                className="scms-input scms-select"
+                className="form-select form-select-sm"
                 value={filter.operator}
                 onChange={(e) => updateFilter(index, 'operator', e.target.value)}
                 disabled={isLoading}
@@ -194,10 +194,10 @@ export function SearchUIAdvanced({
             </div>
             
             {/* Value input */}
-            <div className="col-span-4">
+            <div className="col-4">
               {hasFieldValues(filter.field) ? (
                 <select
-                  className="scms-input scms-select"
+                  className="form-select form-select-sm"
                   value={filter.value}
                   onChange={(e) => updateFilter(index, 'value', e.target.value)}
                   disabled={isLoading}
@@ -211,7 +211,7 @@ export function SearchUIAdvanced({
               ) : (
                 <input
                   type="text"
-                  className="scms-input"
+                  className="form-control form-control-sm"
                   value={filter.value}
                   onChange={(e) => updateFilter(index, 'value', e.target.value)}
                   disabled={isLoading}
@@ -220,10 +220,10 @@ export function SearchUIAdvanced({
             </div>
             
             {/* Actions */}
-            <div className="col-span-2 flex gap-1">
+            <div className="col-2 d-flex gap-1">
               <button
                 type="button"
-                className="scms-btn scms-btn-icon scms-btn-danger"
+                className="btn btn-danger btn-sm"
                 onClick={() => removeFilter(index)}
                 disabled={isLoading || filters.length === 1}
                 title={filters.length === 1 ? "Cannot remove the last filter" : "Remove filter"}
@@ -238,7 +238,7 @@ export function SearchUIAdvanced({
         <div className="mb-3">
           <button
             type="button"
-            className="scms-btn scms-btn-secondary text-sm"
+            className="btn btn-secondary btn-sm"
             onClick={addFilter}
             disabled={isLoading}
           >
@@ -248,14 +248,16 @@ export function SearchUIAdvanced({
         </div>
 
         {/* Actions */}
-        <div className="flex gap-2 mt-3">
+        <div className="d-flex gap-2 mt-3">
           <button 
             type="submit" 
-            className="scms-btn scms-btn-primary"
+            className="btn btn-primary btn-sm"
             disabled={isLoading}
           >
             {isLoading ? (
-              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+              <span className="spinner-border spinner-border-sm" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </span>
             ) : (
               <Search className="scms-icon scms-icon-sm" />
             )}
@@ -263,7 +265,7 @@ export function SearchUIAdvanced({
           </button>
           <button 
             type="button" 
-            className="scms-btn scms-btn-secondary"
+            className="btn btn-secondary btn-sm"
             onClick={handleClear}
             disabled={isLoading || !hasFilters()}
           >
@@ -273,7 +275,7 @@ export function SearchUIAdvanced({
           {onToggleSimple && (
             <button 
               type="button"
-              className="scms-btn scms-btn-icon text-blue-600 hover:text-blue-800"
+              className="btn btn-sm btn-link"
               onClick={onToggleSimple}
             >
               <ArrowLeft className="scms-icon scms-icon-sm" />

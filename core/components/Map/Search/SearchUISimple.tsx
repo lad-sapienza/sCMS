@@ -63,10 +63,10 @@ export function SearchUISimple({
   return (
     <div className="search-ui-simple">
       <form onSubmit={handleSubmit} className="mb-3">
-        <div className="flex gap-2">
+        <div className="d-flex gap-2">
           <input
             type="text"
-            className="scms-input"
+            className="form-control form-control-sm"
             placeholder="Search..."
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
@@ -74,11 +74,13 @@ export function SearchUISimple({
           />
           <button 
             type="submit" 
-            className="scms-btn scms-btn-primary"
+            className="btn btn-primary btn-sm"
             disabled={isLoading}
           >
             {isLoading ? (
-              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+              <span className="spinner-border spinner-border-sm" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </span>
             ) : (
               <Search className="scms-icon scms-icon-sm" />
             )}
@@ -86,7 +88,7 @@ export function SearchUISimple({
           </button>
           <button 
             type="button" 
-            className="scms-btn scms-btn-secondary"
+            className="btn btn-secondary btn-sm"
             onClick={handleClear}
             disabled={isLoading || !searchText}
           >
@@ -100,7 +102,7 @@ export function SearchUISimple({
         <div className="text-center">
           <button 
             type="button"
-            className="scms-btn scms-btn-icon text-blue-600 hover:text-blue-800"
+            className="btn btn-sm btn-link"
             onClick={onToggleAdvanced}
           >
             <TextSearch className="scms-icon scms-icon-sm" />

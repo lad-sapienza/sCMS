@@ -242,25 +242,25 @@ function LayerControlUI({
           onClick={handleSearchClose}
         >
           <div
-            className="bg-white rounded-lg shadow-xl w-[500px] max-w-[90vw] mx-4 my-8"
-            style={{ maxHeight: 'calc(100vh - 4rem)' }}
+            className="bg-white rounded shadow"
+            style={{ maxHeight: 'calc(100vh - 4rem)', width: '500px', maxWidth: '90vw', margin: '2rem 1rem' }}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex justify-between items-center p-4 border-b border-gray-200">
-              <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2 flex-1 pr-2">
+            <div className="d-flex justify-content-between align-items-center p-3 border-bottom">
+              <h3 className="h5 fw-semibold mb-0 d-flex align-items-center gap-2 flex-grow-1 pe-2">
                 <Search className="scms-icon scms-icon-md" />
                 Search {searchModal.layerName}
               </h3>
               <button
                 onClick={handleSearchClose}
-                className="p-2 hover:bg-gray-100 rounded-md transition-colors text-gray-400 hover:text-gray-600 flex-shrink-0"
+                className="btn btn-sm btn-light flex-shrink-0"
                 aria-label="Close modal"
               >
                 <X className="scms-icon scms-icon-md" />
               </button>
             </div>
             
-            <div className="p-4 overflow-y-auto">
+            <div className="p-3" style={{ overflowY: 'auto' }}>
               <SearchUI
                 fieldList={searchModal.fieldList}
                 onSearch={handleSearch}

@@ -33,7 +33,7 @@ export function SearchUI({
 
   if (!fieldList || Object.keys(fieldList).length === 0) {
     return (
-      <div className="text-red-600 text-sm">
+      <div className="text-danger small">
         No searchable fields configured for this layer.
       </div>
     );
@@ -46,8 +46,8 @@ export function SearchUI({
     <div className="search-ui">
       {isLoading && (
         <div className="text-center mb-3">
-          <div className="w-6 h-6 mx-auto border-2 border-blue-600 border-t-transparent rounded-full animate-spin" role="status">
-            <span className="sr-only">Loading...</span>
+          <div className="spinner-border text-primary" role="status">
+            <span className="visually-hidden">Loading...</span>
           </div>
         </div>
       )}
