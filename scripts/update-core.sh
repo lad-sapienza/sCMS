@@ -38,6 +38,46 @@ echo "📥 Fetching latest changes from upstream..."
 git fetch upstream "$UPSTREAM_BRANCH"
 echo ""
 
+# Check for orphaned core files (files deleted upstream but still exist locally)
+echo "🔍 Checking for orphaned files..."
+TEMP_DIR=$(mktemp -d)
+git ls-files | grep -E "^(core/|scripts/|\.)" | grep -v "^usr/" | sort > "$TEMP_DIR/local_core_files.txt"
+git ls-tree -r --name-only upstream/"$UPSTREAM_BRANCH" | grep -E "^(core/|scripts/|\.)" | grep -v "^usr/" | sort > "$TEMP_DIR/upstream_core_files.txt" 
+
+ORPHANED_FILES="$TEMP_DIR/orphaned_files.txt"
+comm -23 "$TEMP_DIR/local_core_files.txt" "$TEMP_DIR/upstream_core_files.txt" > "$ORPHANED_FILES"
+
+if [ -s "$ORPHANED_FILES" ]; then
+  echo ""
+  echo "⚠️  Found orphaned files (deleted upstream but still exist locally):"
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  cat "$ORPHANED_FILES" | sed 's/^/  • /'
+  echo ""
+  
+  read -p "Remove orphaned files automatically? (y/N): " -n 1 -r
+  echo ""
+  if [[ $REPLY =~ ^[Yy]$ ]]; then
+    echo "🗑️  Removing orphaned files..."
+    while IFS= read -r file; do
+      if [ -f "$file" ]; then
+        git rm "$file" && echo "  ✓ Removed $file"
+      fi
+    done < "$ORPHANED_FILES"
+    
+    # Remove empty directories
+    find core/ scripts/ -type d -empty -delete 2>/dev/null || true
+    
+    echo "✓ Orphaned files cleaned up"
+    echo ""
+  else
+    echo "➡️  Orphaned files preserved (you can remove them manually later)"
+    echo ""
+  fi
+fi
+
+# Cleanup temp files
+rm -rf "$TEMP_DIR"
+
 # Show what will be updated
 echo "📋 Changes in this update:"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━"
