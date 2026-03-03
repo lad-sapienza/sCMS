@@ -59,7 +59,11 @@ echo "Note: Your usr/ folder is protected and will not be overwritten"
 echo ""
 
 # Merge with strategy to protect usr/
-if git merge upstream/"$UPSTREAM_BRANCH" --no-edit; then
+echo "🔀 Attempting smart merge with conflict resolution..."
+
+# Try merge with unrelated histories and auto-resolve core files
+if git merge upstream/"$UPSTREAM_BRANCH" --allow-unrelated-histories --no-edit \
+   -X ours; then
   echo ""
   echo "✅ Merge successful!"
   echo ""
@@ -82,21 +86,56 @@ if git merge upstream/"$UPSTREAM_BRANCH" --no-edit; then
   echo ""
 else
   echo ""
-  echo "⚠️  Merge conflicts detected!"
+  echo "🔧 Auto-resolving conflicts..."
   echo ""
-  echo "Common conflicts and how to resolve them:"
-  echo "  • package.json - Merge dependencies manually, keep yours + add new ones"
-  echo "  • astro.config.mjs - Should auto-merge (coreConfig + userConfig)"
-  echo "  • Other configs - Review and merge as needed"
-  echo ""
-  echo "To resolve:"
-  echo "  1. Fix conflicts in the files listed above"
-  echo "  2. git add <resolved-files>"
-  echo "  3. git commit"
-  echo ""
-  echo "To abort:"
-  echo "  git merge --abort"
-  echo "  git checkout $BACKUP_BRANCH"
+  
+  # Auto-resolve core files (take upstream version)
+  if git status --porcelain | grep -q "^AA core/"; then
+    echo "📁 Taking upstream version for core/ files..."
+    git checkout --theirs core/
+    git add core/
+  fi
+  
+  # Auto-resolve package files (take upstream, user can customize later)
+  if git status --porcelain | grep -q "^AA package"; then
+    echo "📦 Taking upstream package.json (you can customize after)..."
+    git checkout --theirs package.json package-lock.json
+    git add package.json package-lock.json
+  fi
+  
+  # Auto-resolve astro.config.mjs (take upstream, uses user.config.mjs for customization)
+  if git status --porcelain | grep -q "^AA astro.config.mjs"; then
+    echo "⚙️  Taking upstream astro.config.mjs..."
+    git checkout --theirs astro.config.mjs
+    git add astro.config.mjs
+  fi
+  
+  # Check if any conflicts remain
+  if git status --porcelain | grep -q "^AA"; then
+    echo ""
+    echo "⚠️  Some conflicts need manual resolution:"
+    git status --porcelain | grep "^AA" | while read status file; do
+      echo "  • $file"
+    done
+    echo ""
+    echo "For usr/ files, consider:"
+    echo "  • Keep your changes: git checkout --ours <file>"
+    echo "  • Take upstream: git checkout --theirs <file>"
+    echo "  • Edit manually to merge both versions"
+    echo ""
+    echo "After resolving, run: git add . && git commit"
+    echo "To abort: git merge --abort && git checkout $BACKUP_BRANCH"
+    exit 1
+  else
+    echo ""
+    echo "✅ All conflicts auto-resolved! Completing merge..."
+    git commit --no-edit
+    
+    # Install updated dependencies
+    echo "📦 Installing updated dependencies..."
+    npm install
+    echo "✓ Dependencies installed"
+  fi
   echo ""
   exit 1
 fi
