@@ -11,6 +11,7 @@
     "astro": "astro",
     "setup-upstream": "bash scripts/setup-upstream.sh",
     "update-core": "bash scripts/update-core.sh"
+    "upgrade": "bash scripts/upgrade.sh"
   },
   "keywords": [
     "astro",
