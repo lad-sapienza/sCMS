@@ -21,3 +21,4 @@ usr/components/Example.astro merge=theirs
 
 # User configuration should always be preserved
 usr/user.config.mjs merge=ours
+src/usr/** merge=ours
