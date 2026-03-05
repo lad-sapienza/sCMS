@@ -58,16 +58,25 @@ echo "📂 Applying upstream files..."
 echo "Note: Your usr/ folder will not be touched"
 echo ""
 
+# Snapshot your usr/ contents before upstream checkout
+TEMP_USR=$(mktemp -d)
+if [ -d "usr/" ]; then
+  cp -r usr/. "$TEMP_USR/"
+fi
+
 # Checkout everything from upstream
 git checkout upstream/"$UPSTREAM_BRANCH" -- .
 
-# Immediately restore your usr/ folder from your own HEAD
-if git ls-files --error-unmatch usr/ > /dev/null 2>&1; then
-  git checkout HEAD -- usr/
-  echo "✓ usr/ folder restored"
+# Wipe whatever upstream put in usr/ and restore your exact snapshot
+rm -rf usr/
+if [ "$(ls -A "$TEMP_USR" 2>/dev/null)" ]; then
+  mkdir -p usr/
+  cp -r "$TEMP_USR"/. usr/
+  echo "✓ usr/ folder restored (upstream changes blocked)"
 else
-  echo "➡️  No usr/ folder found in index, skipping restore"
+  echo "➡️  usr/ was empty, nothing to restore"
 fi
+rm -rf "$TEMP_USR"
 
 echo "✓ Core files updated"
 echo ""
