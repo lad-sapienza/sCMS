@@ -329,7 +329,7 @@ export function ZoteroGeoViewer(props: ZoteroGeoViewerProps) {
     features: featuresWithGeometry,
   };
 
-  const totalTags = Object.keys(data).length;
+  // ...existing code...
   const totalItems = Object.values(data).reduce((sum, count) => sum + count, 0);
   const geoItems = featuresWithGeometry.reduce((sum, f) => sum + (f.properties.zoteroCount || 0), 0);
 

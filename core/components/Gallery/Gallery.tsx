@@ -4,7 +4,7 @@
  * React component for displaying image gallery with PhotoSwipe lightbox
  */
 
-import React from 'react';
+
 import { Gallery as PhotoSwipeGallery, Item } from 'react-photoswipe-gallery';
 import type { GalleryImage } from './types';
 import 'photoswipe/dist/photoswipe.css';

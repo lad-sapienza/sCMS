@@ -128,5 +128,5 @@ const articleJsonLd = isArticle ? {
 
 <!-- Structured Data -->
 {articleJsonLd && (
-  <script type="application/ld+json" set:html={JSON.stringify(articleJsonLd)} />
+  <script type="application/ld+json" set:html={JSON.stringify(articleJsonLd)} is:inline />
 )}

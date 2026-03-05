@@ -15,8 +15,6 @@ interface Props {
 
 const { frontmatter } = Astro.props;
 
-// Convert date to Date object if it's a string
-const dateObj = frontmatter.date ? (typeof frontmatter.date === 'string' ? new Date(frontmatter.date) : frontmatter.date) : null;
 ---
 
 <BaseLayout title={frontmatter.title} description={frontmatter.description}>

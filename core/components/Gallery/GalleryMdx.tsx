@@ -5,7 +5,7 @@
  * Automatically processes raw import.meta.glob output
  */
 
-import React from 'react';
+
 import { Gallery as GalleryClient } from './Gallery';
 import { processGalleryImages } from './galleryUtils';
 import type { GalleryProps, GalleryImage } from './types';

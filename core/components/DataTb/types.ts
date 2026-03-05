@@ -4,7 +4,7 @@
  * Core types for the DataTb component system
  */
 
-import type { ColumnDef } from '@tanstack/react-table';
+
 import type { DirectusShorthand, DirectusSourceConfig } from '../../utils/directus-config';
 
 /**

@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { Source, Layer } from '@vis.gl/react-maplibre';
 
 interface RasterLayerProps {

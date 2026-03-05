@@ -22,6 +22,8 @@ const blogCollection = defineCollection({
     tags: z.array(z.string()).optional(),
     image: z.string().optional(),
     draft: z.boolean().optional(),
+    menu_position: z.number().optional(),
+    slug: z.string().optional(),
   }),
 });
 
@@ -36,6 +38,8 @@ const docsCollection = defineCollection({
     description: z.string(),
     order: z.number().optional(),
     draft: z.boolean().optional(),
+    menu_position: z.number().optional(),
+    slug: z.string().optional(),
   }),
 });
 

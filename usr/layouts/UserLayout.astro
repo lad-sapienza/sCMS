@@ -1,22 +1,10 @@
-/**
- * User Layout Example
- * 
- * This file demonstrates how to extend or override the core BaseLayout.
- * You can import the core layout and wrap it with your customizations.
- */
 
 ---
 import BaseLayout from '@core/layouts/BaseLayout.astro';
-
-interface Props {
-  title?: string;
-  description?: string;
-}
-
-const { title, description } = Astro.props;
 ---
 
-<BaseLayout title={title} description={description}>
+
+<BaseLayout title={Astro.props.title} description={Astro.props.description}>
   <!-- Add custom header content -->
   <div slot="header-extra" class="user-header">
     <p>Custom header content</p>

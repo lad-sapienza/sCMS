@@ -16,19 +16,26 @@ export async function getSortedCollection<T extends 'docs' | 'blog'>(
   const entries = await getCollection(collectionName);
   
   return entries.sort((a, b) => {
-    const aValue = a.data[sortField];
-    const bValue = b.data[sortField];
-    
-    if (aValue instanceof Date && bValue instanceof Date) {
-      return order === 'desc' 
-        ? bValue.valueOf() - aValue.valueOf()
-        : aValue.valueOf() - bValue.valueOf();
+    const aValue = a.data[sortField as keyof typeof a.data];
+    const bValue = b.data[sortField as keyof typeof b.data];
+    if (aValue === undefined || bValue === undefined) return 0;
+    // Date comparison
+    if (
+      Object.prototype.toString.call(aValue) === '[object Date]' &&
+      Object.prototype.toString.call(bValue) === '[object Date]'
+    ) {
+      const aTime = (aValue as unknown as Date).getTime();
+      const bTime = (bValue as unknown as Date).getTime();
+      return order === 'desc' ? bTime - aTime : aTime - bTime;
     }
-    
+    // Number comparison
     if (typeof aValue === 'number' && typeof bValue === 'number') {
       return order === 'desc' ? bValue - aValue : aValue - bValue;
     }
-    
+    // String comparison
+    if (typeof aValue === 'string' && typeof bValue === 'string') {
+      return order === 'desc' ? bValue.localeCompare(aValue) : aValue.localeCompare(bValue);
+    }
     return 0;
   });
 }
@@ -44,7 +51,7 @@ export async function getMenuItems() {
     .sort((a, b) => (a.data.menu_position || 0) - (b.data.menu_position || 0))
     .map(doc => ({
       title: doc.data.title,
-      slug: doc.slug,
+      slug: doc.id,
       position: doc.data.menu_position,
     }));
 }

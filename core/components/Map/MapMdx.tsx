@@ -2,7 +2,7 @@
  * MDX-safe wrapper for Map component
  */
 
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { Map as MapCore } from './Map';
 import type { MapProps } from './types';
 

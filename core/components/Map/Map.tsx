@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect, useRef } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import MapLibreMap, {
   NavigationControl,
   FullscreenControl,
@@ -15,7 +15,7 @@ import { RasterLayerLibre } from './RasterLayerLibre';
 import { LayerControlIControl } from './LayerControl';
 import { directusShorthandToConfig } from '../../utils/directus-config';
 import type { BaseLayerConfig } from './types';
-import { defaultBasemaps, getBasemap, type BasemapKey } from './defaultBasemaps';
+import { defaultBasemaps, getBasemap } from './defaultBasemaps';
 import { fetchData } from '../../utils/data-fetcher';
 import { dataToGeoJson, parseStringTemplate, filterObjectToPredicate, searchQueryToMapLibreFilter, searchQueryToPredicate } from './utils';
 import type { FeatureCollection } from 'geojson';
@@ -460,7 +460,11 @@ export function Map({
 
     return () => {
       if (layerControlRef.current && map) {
-        map.removeControl(layerControlRef.current);
+        setTimeout(() => {
+          if (layerControlRef.current && map) {
+            map.removeControl(layerControlRef.current);
+          }
+        }, 0);
       }
     };
   }, [mapLoaded, layerControl, resolvedBaseLayers, allVectorLayers.length, handleLayerSearch]);

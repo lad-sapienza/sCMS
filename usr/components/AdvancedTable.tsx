@@ -1,4 +1,4 @@
-import React from 'react';
+// ...existing code...
 import { DataTb } from '@core/components/DataTb';
 import type { ColumnConfig } from '@core/components/DataTb/types';
 
@@ -47,7 +47,7 @@ export default function AdvancedTable() {
       source={{ type: 'json', data }}
       columns={columns}
       searchable
-      client:load
+    // ...existing code...
     />
   );
 }

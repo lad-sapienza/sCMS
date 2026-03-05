@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import type { SearchInFields, SearchQuery, SearchOperators } from '../types';
 import { SearchUISimple } from './SearchUISimple';
 import { SearchUIAdvanced } from './SearchUIAdvanced';

@@ -47,7 +47,7 @@ export function CsvSource({
               data = data.slice(skipRows);
             }
             
-            onDataLoad(data);
+            onDataLoad(data as import('../types').DataRow[]);
             onLoadingChange?.(false);
           },
           error: (error) => {

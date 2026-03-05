@@ -5,7 +5,7 @@
  * Supports sorting, filtering, and pagination
  */
 
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import {
   useReactTable,
   getCoreRowModel,
@@ -17,7 +17,7 @@ import {
   type ColumnFiltersState,
 } from '@tanstack/react-table';
 import { fetchData } from '../../utils/data-fetcher';
-import type { DataRow, DataTbProps, ColumnConfig, SourceConfig } from './types';
+import type { DataRow, DataTbProps } from './types';
 import {
   autoDetectColumns,
   mergeColumns,

@@ -5,7 +5,7 @@
  * to prevent infinite re-renders in MDX context
  */
 
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { DataTb as DataTbCore } from './DataTb';
 import type { DataTbProps, SourceConfig } from './types';
 import { directusShorthandToConfig } from '../../utils/directus-config';
