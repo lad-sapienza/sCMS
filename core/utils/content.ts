@@ -6,18 +6,17 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 
 /**
- * Get all entries from a collection sorted by a field
+ * Get all entries from a collection sorted by a field (agnostic to collection name)
  */
-export async function getSortedCollection<T extends 'docs' | 'blog'>(
-  collectionName: T,
-  sortField: keyof CollectionEntry<T>['data'] = 'date' as any,
+export async function getSortedCollection(
+  collectionName: string,
+  sortField: string = 'date',
   order: 'asc' | 'desc' = 'desc'
 ) {
-  const entries = await getCollection(collectionName);
-  
+  const entries = await getCollection(collectionName as any);
   return entries.sort((a, b) => {
-    const aValue = a.data[sortField as keyof typeof a.data];
-    const bValue = b.data[sortField as keyof typeof b.data];
+    const aValue = a.data[sortField];
+    const bValue = b.data[sortField];
     if (aValue === undefined || bValue === undefined) return 0;
     // Date comparison
     if (
@@ -40,21 +39,7 @@ export async function getSortedCollection<T extends 'docs' | 'blog'>(
   });
 }
 
-/**
- * Get menu items from docs collection
- */
-export async function getMenuItems() {
-  const docs = await getCollection('docs');
-  
-  return docs
-    .filter(doc => doc.data.menu_position && doc.data.menu_position > 0)
-    .sort((a, b) => (a.data.menu_position || 0) - (b.data.menu_position || 0))
-    .map(doc => ({
-      title: doc.data.title,
-      slug: doc.id,
-      position: doc.data.menu_position,
-    }));
-}
+// Menu extraction logic should be implemented in user code (usr/), not in core.
 
 /**
  * Parse CSV string to JSON
