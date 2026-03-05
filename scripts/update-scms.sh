@@ -55,14 +55,19 @@ fi
 
 echo ""
 echo "📂 Applying upstream files..."
-echo "Note: Your src/usr/ folder will not be touched"
+echo "Note: Your usr/ folder will not be touched"
 echo ""
 
 # Checkout everything from upstream
 git checkout upstream/"$UPSTREAM_BRANCH" -- .
 
 # Immediately restore your usr/ folder from your own HEAD
-git checkout HEAD -- src/usr/
+if git ls-files --error-unmatch usr/ > /dev/null 2>&1; then
+  git checkout HEAD -- usr/
+  echo "✓ usr/ folder restored"
+else
+  echo "➡️  No usr/ folder found in index, skipping restore"
+fi
 
 echo "✓ Core files updated"
 echo ""
@@ -70,7 +75,7 @@ echo ""
 # Check for orphaned files (exist locally but no longer in upstream)
 echo "🔍 Checking for orphaned files..."
 TEMP_DIR=$(mktemp -d)
-git ls-files | grep -v "^src/usr/" | sort > "$TEMP_DIR/local_files.txt"
+git ls-files | grep -v "^usr/" | sort > "$TEMP_DIR/local_files.txt"
 git ls-tree -r --name-only upstream/"$UPSTREAM_BRANCH" | sort > "$TEMP_DIR/upstream_files.txt"
 
 ORPHANED_FILES="$TEMP_DIR/orphaned_files.txt"
