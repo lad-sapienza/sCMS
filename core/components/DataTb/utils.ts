@@ -59,6 +59,7 @@ export function formatValue(value: any, format?: string): string {
  */
 export function formatDate(value: any): string {
   try {
+    if (!value) return '';
     const date = new Date(value);
     if (isNaN(date.getTime())) return String(value);
     

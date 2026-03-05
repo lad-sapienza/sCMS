@@ -65,7 +65,7 @@ const pageTitle = meta.titleTemplate ? meta.titleTemplate.replace('%s', resolved
 const formatDate = (date?: string | Date) => {
   if (!date) return null;
   const d = typeof date === 'string' ? new Date(date) : date;
-  return d.toISOString();
+  return d ? d.toISOString() : '';
 };
 
 const pubDate = formatDate(datePublished);
