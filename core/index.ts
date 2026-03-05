@@ -18,9 +18,6 @@ export type { ZoteroGeoViewerProps, ZoteroItem, CoordinateData, LayoutType } fro
 export { RecordProvider, Field, Image, getValueByDotPath } from './components/Record';
 export type { RecordProviderProps, FieldProps, ImageProps } from './components/Record';
 
-// Layouts
-export { default as BaseLayout } from './layouts/BaseLayout.astro';
-
 // Utils
 export * from './utils/directus';
 export * from './utils/record-fetcher';
