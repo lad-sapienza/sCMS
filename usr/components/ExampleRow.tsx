@@ -25,13 +25,27 @@ const resultColClass: Record<NonNullable<Props['codeWidth']>, string> = {
   full:    'col-12',
 };
 
+const codeBlockStyle: React.CSSProperties = {
+  background: '#0d1117',
+  color: '#e6edf3',
+  fontFamily: 'ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace',
+  fontSize: '0.85em',
+  lineHeight: '1.6',
+  padding: '1rem 1.25rem',
+  borderRadius: '0.375rem',
+  border: '1px solid #30363d',
+  overflowX: 'auto',
+  margin: 0,
+  whiteSpace: 'pre',
+};
+
 export default function ExampleRow({ code, children, title, codeWidth = 'default' }: Props) {
   return (
     <>
       {title && <h2>{title}</h2>}
       <div className="row g-3">
         <div className={codeColClass[codeWidth]}>
-          <pre><code>{code}</code></pre>
+          <pre style={codeBlockStyle}><code>{code}</code></pre>
         </div>
         <div className={resultColClass[codeWidth]}>
           {children}
