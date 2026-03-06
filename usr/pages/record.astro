@@ -1,14 +1,7 @@
 ---
 import BaseLayout from './../layouts/BaseLayout.astro';
 import RecordView from './../components/RecordView.tsx';
-
-const directusUrl = import.meta.env.PUBLIC_DIRECTUS_URL || '';
-const directusToken = import.meta.env.PUBLIC_DIRECTUS_TOKEN || '';
 ---
 <BaseLayout title="Record">
-  <RecordView 
-    directusUrl={directusUrl}
-    directusToken={directusToken}
-    client:load 
-  />
+  <RecordView client:load />
 </BaseLayout>
