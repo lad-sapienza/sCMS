@@ -28,22 +28,32 @@ const allImageModules = import.meta.glob(
   '../../../usr/pages/**/gallery/*.{jpg,jpeg,png,gif,webp,avif}',
   { eager: true }
 );
+const allContentImageModules = import.meta.glob(
+  '../../../usr/content/**/gallery/*.{jpg,jpeg,png,gif,webp,avif}',
+  { eager: true }
+);
 
 // Load captions.json files
 const captionsModules = import.meta.glob(
   '../../../usr/pages/**/gallery/captions.json',
   { eager: true }
 );
+const contentCaptionsModules = import.meta.glob(
+  '../../../usr/content/**/gallery/captions.json',
+  { eager: true }
+);
 
 const currentPagePath = path || Astro.url.pathname;
 const normalizedPagePath = currentPagePath.replace(/\/$/, '');
 
-const autoLoadedImages: GalleryImage[] = Object.entries(allImageModules)
+const autoLoadedImages: GalleryImage[] = [
+  ...Object.entries(allImageModules),
+  ...Object.entries(allContentImageModules),
+]
   .filter(([filepath]) => {
-    const match = filepath.match(/\/pages(.+)\/gallery\//);
+    const match = filepath.match(/\/(pages|content)(.+)\/gallery\//);
     if (!match) return false;
-    const imagePath = match[1];
-    return normalizedPagePath === imagePath;
+    return normalizedPagePath === match[2];
   })
   .map(([filepath, module]: [string, any]) => {
     const img = module.default;
@@ -60,13 +70,17 @@ const autoLoadedImages: GalleryImage[] = Object.entries(allImageModules)
 
 // Load custom captions if available
 let customCaptions: Record<string, string> | undefined;
-const captionsPath = Object.keys(captionsModules).find(filepath => {
-  const match = filepath.match(/\/pages(.+)\/gallery\/captions\.json/);
-  return match && match[1] === normalizedPagePath;
+const captionsPath = [
+  ...Object.keys(captionsModules),
+  ...Object.keys(contentCaptionsModules),
+].find(filepath => {
+  const match = filepath.match(/\/(pages|content)(.+)\/gallery\/captions\.json/);
+  return match && match[2] === normalizedPagePath;
 });
 
 if (captionsPath) {
-  const captionsModule = captionsModules[captionsPath] as any;
+  const allCaptionsModules = { ...captionsModules, ...contentCaptionsModules };
+  const captionsModule = allCaptionsModules[captionsPath] as any;
   customCaptions = captionsModule.default || captionsModule;
 }
 
@@ -75,17 +89,13 @@ const imagesWithCaptions = applyCaptions(baseImages, customCaptions);
 const finalImages = reverseSorting ? sortImages(imagesWithCaptions, reverseSorting) : imagesWithCaptions;
 ---
 
-{finalImages.length > 0 ? (
+{finalImages.length > 0 && (
   <GalleryClient 
     images={finalImages}
     columns={columns}
     className={className}
     client:idle 
   />
-) : (
-  <div class="gallery-empty">
-    <p>No images found. Please provide images via the <code>images</code> prop.</p>
-  </div>
 )}
 
 <style>
