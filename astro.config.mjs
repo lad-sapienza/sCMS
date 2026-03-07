@@ -7,8 +7,10 @@ import expressiveCode from 'astro-expressive-code';
 import { pluginLineNumbers } from '@expressive-code/plugin-line-numbers';
 import rehypeSlug from 'rehype-slug';
 import { userConfig } from './usr/user.config.mjs';
+import { contentAssetsIntegration } from './core/integrations/contentAssetsIntegration.ts';
 
 const coreIntegrations = [
+  contentAssetsIntegration(),
   expressiveCode({
     themes: ['github-dark'],
     plugins: [pluginLineNumbers()],
