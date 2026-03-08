@@ -58,10 +58,15 @@ echo "📂 Applying upstream files..."
 echo "Note: Your usr/ folder will not be touched"
 echo ""
 
-# Snapshot your usr/ contents before upstream checkout
+# Snapshot your usr/ and .github/ contents before upstream checkout
 TEMP_USR=$(mktemp -d)
 if [ -d "usr/" ]; then
   cp -r usr/. "$TEMP_USR/"
+fi
+
+TEMP_GITHUB=$(mktemp -d)
+if [ -d ".github/" ]; then
+  cp -r .github/. "$TEMP_GITHUB/"
 fi
 
 # Checkout everything from upstream
@@ -77,6 +82,17 @@ else
   echo "➡️  usr/ was empty, nothing to restore"
 fi
 rm -rf "$TEMP_USR"
+
+# Restore .github/ by merging: start from user's snapshot, then overlay upstream on top
+# This keeps user-defined workflows/deployments while letting upstream's copilot-instructions.md win
+if [ "$(ls -A "$TEMP_GITHUB" 2>/dev/null)" ]; then
+  cp -r "$TEMP_GITHUB"/. .github/
+  git checkout upstream/"$UPSTREAM_BRANCH" -- .github/
+  echo "✓ .github/ folder restored (user files kept, upstream copilot-instructions.md applied)"
+else
+  echo "➡️  .github/ was empty, nothing to restore"
+fi
+rm -rf "$TEMP_GITHUB"
 
 echo "✓ Core files updated"
 echo ""
