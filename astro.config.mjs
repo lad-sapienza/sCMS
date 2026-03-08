@@ -29,7 +29,7 @@ const coreAlias = {
   '@content': fileURLToPath(new URL('./usr/content', import.meta.url)),
 };
 
-const coreDedupe = ['react', 'react-dom', '@tanstack/react-table'];
+const coreDedupe = ['react', 'react-dom', 'react-dom/client', 'react/jsx-runtime', 'react/jsx-dev-runtime', 'scheduler', '@tanstack/react-table'];
 
 export default defineConfig({
   site: userConfig.site ?? 'https://lad-sapienza.it',
@@ -53,6 +53,23 @@ export default defineConfig({
 
   vite: {
     ...(userConfig.vite || {}),
+    esbuild: {
+      target: 'es2022',
+      ...(userConfig.vite?.esbuild || {}),
+    },
+    optimizeDeps: {
+      include: [
+        'react',
+        'react-dom',
+        'react-dom/client',
+        'react/jsx-runtime',
+        'react/jsx-dev-runtime',
+      ],
+      esbuildOptions: {
+        target: 'es2022',
+      },
+      ...(userConfig.vite?.optimizeDeps || {}),
+    },
     resolve: {
       ...(userConfig.vite?.resolve || {}),
       alias: {

@@ -337,7 +337,7 @@ export class LayerControlClass implements IControl {
 // React component wrapper for use in @vis.gl/react-maplibre
 export function LayerControl(props: LayerControlProps) {
   const controlRef = useRef<LayerControlClass | null>(null);
-  const previousPropsRef = useRef<LayerControlProps>();
+  const previousPropsRef = useRef<LayerControlProps | undefined>(undefined);
 
   // Only update if props have actually changed
   useEffect(() => {
