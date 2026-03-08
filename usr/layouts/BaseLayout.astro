@@ -5,6 +5,7 @@ import { siteMetadata } from "../user.config.mjs"
 import packageJson from "../../package.json"
 
 import BSNavbar from "../../core/components/BSNavbar.tsx"
+import { getEntry } from 'astro:content'
 
 interface Props {
   title?: string
@@ -15,54 +16,8 @@ const { title = siteMetadata.title, description = siteMetadata.description } =
   Astro.props
 
 const currentPath = Astro.url.pathname
-
-// Navigation menu items
-const menuItems = [
-  {
-    href: "/",
-    label: "Home",
-    isActive: currentPath === "/",
-  },
-  {
-    href: "/blog",
-    label: "Blog",
-    isActive: currentPath.startsWith("/blog"),
-  },
-  {
-    label: "Docs",
-    isActive: currentPath.startsWith("/docs"),
-    children: [
-      {
-        label: "Guides",
-        children: [
-          { href: "/docs/guides/getting-started", label: "Getting Started", isActive: currentPath === "/docs/guides/getting-started" },
-          { href: "/docs/guides/architecture", label: "Architecture", isActive: currentPath === "/docs/guides/architecture" },
-          { href: "/docs/guides/theming",      label: "Theming",      isActive: currentPath === "/docs/guides/theming" },
-          { href: "/docs/guides/deployment",   label: "Deployment",   isActive: currentPath === "/docs/guides/deployment" },
-          { href: "/docs/guides/updating",     label: "Updating",     isActive: currentPath === "/docs/guides/updating" },
-        ],
-      },
-      {
-        label: "Components",
-        children: [
-          { href: "/docs/components/datatb",           label: "DataTb",            isActive: currentPath === "/docs/components/datatb" },
-          { href: "/docs/components/gallery",          label: "Gallery",           isActive: currentPath === "/docs/components/gallery" },
-          { href: "/docs/components/map",              label: "Map",               isActive: currentPath === "/docs/components/map" },
-          { href: "/docs/components/zotero-geoviewer", label: "Zotero GeoViewer", isActive: currentPath === "/docs/components/zotero-geoviewer" },
-          { href: "/docs/components/seo",              label: "SEO",               isActive: currentPath === "/docs/components/seo" },
-          { href: "/docs/components/tableofcontents",  label: "Table of Contents", isActive: currentPath === "/docs/components/tableofcontents" },
-        ],
-      },
-      { href: "/docs", label: "All docs", isActive: currentPath === "/docs" },
-    ],
-  },
-  {
-    href: "/credits",
-    label: "Credits",
-    isActive: currentPath.startsWith("/credits"),
-  },
-]
-
+const menuEntry = await getEntry('menu', 'menu')
+const menuItems = menuEntry?.data ?? []
 ---
 
 <!doctype html>
@@ -82,6 +37,7 @@ const menuItems = [
     <BSNavbar
       client:load
       menuItems={menuItems}
+      currentPath={currentPath}
       cssClasses={{
         nav: "bg-body-tertiary navbar-expand-md sticky-top shadow-sm border-bottom",
         ul: "ms-auto mb-2 mb-md-0",
