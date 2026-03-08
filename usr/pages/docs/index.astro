@@ -1,42 +1,68 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 export const prerender = true;
 
-// Get all docs, sorted by order
 const docs = await getCollection('docs');
-const sortedDocs = docs.sort((a, b) => (a.data.order || 999) - (b.data.order || 999));
+
+type DocEntry = CollectionEntry<'docs'>;
+
+function getCategory(doc: DocEntry) {
+  const parts = doc.id.split('/');
+  return parts.length > 1 ? parts[0] : 'other';
+}
+
+const categories = [
+  { key: 'guides',     label: 'Guides',     icon: '📖' },
+  { key: 'components', label: 'Components', icon: '🧩' },
+];
+
+function docsInCategory(key: string) {
+  return docs
+    .filter(d => getCategory(d) === key && !d.data.draft)
+    .sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999));
+}
+
+function docHref(doc: DocEntry) {
+  return `/docs/${doc.id.replace(/\.mdx?$/, '')}`;
+}
 ---
 
-<BaseLayout title="Documentation" description="Technical documentation for s:CMS">
+<BaseLayout title="Documentation" description="Guides and component reference for s:CMS">
   <main class="container py-4">
     <div>
       <h1>Documentation</h1>
       <p class="lead text-secondary">
-        Welcome to the s:CMS documentation. Here you'll find technical guides and information about the system architecture.
+        Guides, component references, and live examples for s:CMS.
       </p>
 
-      <div class="row g-3 mt-4">
-        {sortedDocs.map((doc) => (
-          <a
-            href={`/docs/${doc.id.replace('.md', '')}`}
-            class="col-12 card p-4 text-decoration-none border shadow-sm"
-          >
-            <h3 class="h4 fw-semibold text-body mb-2 mt-0">
-              {doc.data.title}
-            </h3>
-            <p class="text-secondary mb-0">
-              {doc.data.description}
-            </p>
-          </a>
-        ))}
-      </div>
-
-      <hr class="my-4" />
-      <p class="small text-secondary">
-        <em>This documentation covers the technical aspects of s:CMS. For usage examples and component demos, check out the <a href="/" class="text-primary text-decoration-underline">main demo pages</a>.</em>
-      </p>
+      {categories.map(({ key, label, icon }) => {
+        const items = docsInCategory(key);
+        if (items.length === 0) return null;
+        return (
+          <section class="mt-5">
+            <h2 class="h4 fw-bold mb-3">{icon} {label}</h2>
+            <div class="row g-3">
+              {items.map(doc => (
+                <div class="col-12 col-md-6">
+                  <a
+                    href={docHref(doc)}
+                    class="card p-4 h-100 text-decoration-none border shadow-sm d-block"
+                  >
+                    <h3 class="h5 fw-semibold text-body mb-2 mt-0">
+                      {doc.data.title}
+                    </h3>
+                    <p class="text-secondary mb-0 small">
+                      {doc.data.description}
+                    </p>
+                  </a>
+                </div>
+              ))}
+            </div>
+          </section>
+        );
+      })}
     </div>
   </main>
 </BaseLayout>

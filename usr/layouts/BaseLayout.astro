@@ -24,34 +24,36 @@ const menuItems = [
     isActive: currentPath === "/",
   },
   {
-    href: "/datatable-demo",
-    label: "DataTb Demo",
-    isActive: currentPath.startsWith("/datatable-demo"),
-  },
-  {
-    href: "/map-demo",
-    label: "Map Demo",
-    isActive: currentPath.startsWith("/map-demo"),
-  },
-  {
-    href: "/gallery-demo",
-    label: "Gallery Demo",
-    isActive: currentPath.startsWith("/gallery-demo"),
-  },
-  {
-    href: "/zotero-demo",
-    label: "Zotero Demo",
-    isActive: currentPath.startsWith("/zotero-demo"),
-  },
-  {
     href: "/blog",
     label: "Blog",
     isActive: currentPath.startsWith("/blog"),
   },
   {
-    href: "/docs",
     label: "Docs",
     isActive: currentPath.startsWith("/docs"),
+    children: [
+      {
+        label: "Guides",
+        children: [
+          { href: "/docs/guides/architecture", label: "Architecture", isActive: currentPath === "/docs/guides/architecture" },
+          { href: "/docs/guides/theming",      label: "Theming",      isActive: currentPath === "/docs/guides/theming" },
+          { href: "/docs/guides/deployment",   label: "Deployment",   isActive: currentPath === "/docs/guides/deployment" },
+          { href: "/docs/guides/updating",     label: "Updating",     isActive: currentPath === "/docs/guides/updating" },
+        ],
+      },
+      {
+        label: "Components",
+        children: [
+          { href: "/docs/components/datatb",           label: "DataTb",            isActive: currentPath === "/docs/components/datatb" },
+          { href: "/docs/components/gallery",          label: "Gallery",           isActive: currentPath === "/docs/components/gallery" },
+          { href: "/docs/components/map",              label: "Map",               isActive: currentPath === "/docs/components/map" },
+          { href: "/docs/components/zotero-geoviewer", label: "Zotero GeoViewer", isActive: currentPath === "/docs/components/zotero-geoviewer" },
+          { href: "/docs/components/seo",              label: "SEO",               isActive: currentPath === "/docs/components/seo" },
+          { href: "/docs/components/tableofcontents",  label: "Table of Contents", isActive: currentPath === "/docs/components/tableofcontents" },
+        ],
+      },
+      { href: "/docs", label: "All docs", isActive: currentPath === "/docs" },
+    ],
   },
   {
     href: "/credits",

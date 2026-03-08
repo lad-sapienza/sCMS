@@ -37,6 +37,7 @@ const docsCollection = defineCollection({
     title: z.string(),
     description: z.string(),
     order: z.number().optional(),
+    category: z.string().optional(),
     draft: z.boolean().optional(),
     menu_position: z.number().optional(),
     slug: z.string().optional(),

@@ -9,7 +9,7 @@ export async function getStaticPaths() {
   const docs = await getCollection("docs")
 
   return docs.map(doc => ({
-    params: { slug: doc.id.replace(".md", "") },
+    params: { slug: doc.id.replace(/\.mdx?$/, "") },
     props: { doc },
   }))
 }
