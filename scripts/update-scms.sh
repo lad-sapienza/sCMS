@@ -121,7 +121,7 @@ rm -rf "$TEMP_USR"
 # This keeps user-defined workflows/deployments while letting upstream's copilot-instructions.md win
 if [ "$(ls -A "$TEMP_GITHUB" 2>/dev/null)" ]; then
   cp -r "$TEMP_GITHUB"/. .github/
-  git checkout upstream/"$UPSTREAM_BRANCH" -- .github/
+  git checkout upstream/"$UPSTREAM_BRANCH" -- .github/copilot-instructions.md 2>/dev/null || true
   echo "✓ .github/ folder restored (user files kept, upstream copilot-instructions.md applied)"
 else
   echo "➡️  .github/ was empty, nothing to restore"
@@ -134,7 +134,7 @@ echo ""
 # Check for orphaned files (exist locally but no longer in upstream)
 echo "🔍 Checking for orphaned files..."
 TEMP_DIR=$(mktemp -d)
-git ls-files | grep -v "^usr/" | sort > "$TEMP_DIR/local_files.txt"
+git ls-files | grep -v "^usr/" | grep -v "^\.github/" | sort > "$TEMP_DIR/local_files.txt"
 git ls-tree -r --name-only upstream/"$UPSTREAM_BRANCH" | sort > "$TEMP_DIR/upstream_files.txt"
 
 ORPHANED_FILES="$TEMP_DIR/orphaned_files.txt"
