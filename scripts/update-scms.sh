@@ -75,7 +75,7 @@ echo ""
 # Show what will be updated
 echo "📋 Changes in this update:"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━"
-git log HEAD..upstream/"$UPSTREAM_BRANCH" --oneline --graph --decorate --max-count=10
+git --no-pager log HEAD..upstream/"$UPSTREAM_BRANCH" --oneline --graph --decorate --max-count=10
 echo ""
 
 # Ask for confirmation
