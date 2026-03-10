@@ -189,6 +189,21 @@ fi
 # Always reinstall site-specific packages (they are wiped when upstream package.json is applied)
 install_local_packages
 
+# If install_local_packages modified package.json or package-lock.json, offer to commit
+git add -A
+if ! git diff-index --quiet HEAD --; then
+  echo "📝 package.json / package-lock.json changed after installing site-specific packages."
+  read -p "Commit these changes? (y/N): " -n 1 -r
+  echo ""
+  if [[ $REPLY =~ ^[Yy]$ ]]; then
+    git commit -m "chore: add site-specific packages $(date +'%Y-%m-%d')"
+    echo "✓ Committed"
+  else
+    echo "➡️  Skipped commit — changes remain staged"
+  fi
+  echo ""
+fi
+
 # Push to origin
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo "✅ Update complete!"
