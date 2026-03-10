@@ -247,7 +247,56 @@ import BaseLayout from '@core/layouts/BaseLayout.astro';
 
 Add your styles to `src/styles/global.css` or create component-specific styles.
 
-## 🚀 Building for Production
+## �️ Scaffolding Scripts
+
+Two interactive CLI scripts help you add new content to the project without editing config files by hand. Both run with Node.js — no extra dependencies or shell required.
+
+### `npm run add-collection`
+
+Scaffolds a **complete new Astro content collection** from scratch:
+
+1. Reads `usr/content/config.ts` and lists existing collections.
+2. Prompts for:
+   - **Collection name** — lowercase letters, numbers, and hyphens (e.g. `my-news`).
+   - **Collection type** — choose one of three presets:
+     | Type | Schema fields |
+     |------|--------------|
+     | `blog` | `title`, `description`, `date`, `author`, `tags`, `image`, `draft` |
+     | `docs` | `title`, `description`, `order`, `category`, `draft` |
+     | `generic` | `title`, `description`, `draft` |
+3. Creates or updates the following files:
+
+   | File | What it does |
+   |------|--------------|
+   | `usr/content/config.ts` | Adds the new `defineCollection` block and registers it in the exports |
+   | `usr/content/<name>/sample-{post,doc,entry}.md` | A sample Markdown file with pre-filled frontmatter |
+   | `usr/pages/<name>/index.astro` | Listing page for the collection |
+   | `usr/pages/<name>/[...slug].astro` | Detail page for individual entries |
+
+After running, review the generated schema in `usr/content/config.ts` — the `TODO` comment marks where you can customise the fields — and edit the page templates in `usr/pages/<name>/` to match your design.
+
+---
+
+### `npm run add-content`
+
+Adds a **single new content file** to an existing collection:
+
+1. Lists all collections that have a content directory under `usr/content/`.
+2. Prompts for:
+   - **Collection** — pick by name or number from the list.
+   - **File format** — `md` or `mdx` (defaults to whichever is already used in the collection).
+   - **Slug** — becomes both the file name and the URL path; subfolders are supported (e.g. `guides/my-topic`).
+   - **Frontmatter fields** — detected automatically from the Zod schema in `usr/content/config.ts`. Each field is prompted interactively with smart defaults (`date` → today, `author` → `git config user.name`, `draft` → `true`). Optional fields can be skipped by pressing Enter.
+3. Writes the file to `usr/content/<collection>/<slug>.<ext>` with:
+   - A complete YAML frontmatter block
+   - A `# Title` heading
+   - A `<!-- Write your content here -->` placeholder
+
+After running, open the created file, write your content, and set `draft: false` when it is ready to publish.
+
+---
+
+## �🚀 Building for Production
 
 ```bash
 npm run build
