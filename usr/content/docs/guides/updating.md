@@ -37,6 +37,7 @@ This configures the connection to the s:CMS repository for receiving updates.
 ### 🛡️ Always Protected (Your Content)
 - `usr/**` - All your content, components, and customizations
 - `usr/user.config.mjs` - Your site configuration
+- `usr/scripts/local-packages.yml` - Your site-specific npm packages (see below)
 
 ### ⚠️ May Need Review (Shared Files)
 - `package.json` - Dependencies may need merging
@@ -66,6 +67,42 @@ The script will:
 4. **Ask confirmation** - You decide whether to proceed
 5. **Merge updates** - Integrates changes while protecting `usr/`
 6. **Install dependencies** - Updates packages if needed
+
+## Site-Specific Packages
+
+Because `npm run update-scms` replaces `package.json` with the upstream (core) version, any packages you added manually to `package.json` would be wiped on every update.
+
+The solution is `usr/scripts/local-packages.yml` — a YAML list of npm packages specific to your implementation. This file lives inside `usr/`, so it is **always preserved** across updates. The update script reads it and runs `npm install` for those packages automatically at the end of every update.
+
+### Setup
+
+Create or edit `usr/scripts/local-packages.yml`:
+
+```yaml
+# usr/scripts/local-packages.yml
+- gsap
+- d3
+- @types/d3      # inline comments are supported
+- swiper@11      # pin to a specific version
+```
+
+You can also install them manually at any time without running the full update:
+
+```bash
+# parse and install local packages directly
+grep -E '^\s*-\s+[^#]' usr/scripts/local-packages.yml \
+  | sed 's/^\s*-\s*//' | sed 's/\s*#.*//' \
+  | xargs npm install
+```
+
+### How It Works
+
+During `npm run update-scms` the script:
+1. Replaces `package.json` with the upstream version and runs `npm install`
+2. Reads `usr/scripts/local-packages.yml`
+3. Runs `npm install <packages>` for every package listed there
+
+If the file does not exist or contains no uncommented entries, this step is silently skipped.
 
 ### Step 3: Review and Test
 

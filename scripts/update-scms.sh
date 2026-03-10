@@ -5,6 +5,38 @@
 set -e
 
 UPSTREAM_BRANCH="scms-astro"
+
+# Install site-specific packages listed in usr/scripts/local-packages.yml
+# This file is preserved across updates (lives in usr/) and allows each custom
+# implementation to declare its own npm dependencies that survive core updates.
+install_local_packages() {
+  local FILE="usr/scripts/local-packages.yml"
+
+  if [ ! -f "$FILE" ]; then
+    return 0
+  fi
+
+  # Parse YAML list items: lines matching "  - package-name" or "- package-name"
+  local PACKAGES
+  PACKAGES=$(grep -E '^[[:space:]]*-[[:space:]]+[^#]' "$FILE" \
+    | sed 's/^[[:space:]]*-[[:space:]]*//' \
+    | sed 's/[[:space:]]*#.*//' \
+    | tr '\n' ' ' \
+    | xargs)  # trim leading/trailing whitespace
+
+  if [ -z "$PACKAGES" ]; then
+    echo "➡️  No packages listed in $FILE, skipping"
+    return 0
+  fi
+
+  echo "📦 Installing site-specific packages from $FILE..."
+  echo "   Packages: $PACKAGES"
+  # shellcheck disable=SC2086  # intentional word-splitting for package list
+  npm install $PACKAGES
+  echo "✓ Site-specific packages installed"
+  echo ""
+}
+
 BACKUP_BRANCH="backup-before-update-$(date +%Y%m%d-%H%M%S)"
 
 echo "🔄 s:CMS Core Update Script"
@@ -147,6 +179,9 @@ if git diff HEAD~1 HEAD --name-only | grep -q "package.json"; then
   echo "✓ Dependencies installed"
   echo ""
 fi
+
+# Always reinstall site-specific packages (they are wiped when upstream package.json is applied)
+install_local_packages
 
 # Push to origin
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━"
