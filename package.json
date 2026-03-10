@@ -11,8 +11,8 @@
     "astro": "astro",
     "setup-upstream": "bash scripts/setup-upstream.sh",
     "update-scms": "bash scripts/update-scms.sh",
-    "add-collection": "bash scripts/add-collection.sh",
-    "add-content": "bash scripts/add-content.sh"
+    "add-collection": "node scripts/add-collection.mjs",
+    "add-content": "node scripts/add-content.mjs"
   },
   "keywords": [
     "astro",
