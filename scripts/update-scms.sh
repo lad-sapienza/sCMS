@@ -170,12 +170,16 @@ rm -rf "$TEMP_DIR"
 # Commit the update
 echo "💬 Committing update..."
 git add -A
-git commit -m "chore: update s:CMS core from upstream $(date +'%Y-%m-%d')"
-echo "✓ Committed"
+if git diff-index --quiet HEAD --; then
+  echo "➡️  Nothing to commit, working tree clean"
+else
+  git commit -m "chore: update s:CMS core from upstream $(date +'%Y-%m-%d')"
+  echo "✓ Committed"
+fi
 echo ""
 
 # Check if package.json changed and reinstall dependencies
-if git diff HEAD~1 HEAD --name-only | grep -q "package.json"; then
+if git diff "$BACKUP_BRANCH" HEAD --name-only | grep -q "package.json"; then
   echo "📦 package.json was updated - installing dependencies..."
   npm install
   echo "✓ Dependencies installed"
