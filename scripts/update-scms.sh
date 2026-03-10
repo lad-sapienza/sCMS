@@ -10,9 +10,11 @@ UPSTREAM_BRANCH="scms-astro"
 # This file is preserved across updates (lives in usr/) and allows each custom
 # implementation to declare its own npm dependencies that survive core updates.
 install_local_packages() {
+  echo "🔍 Checking for site-specific packages to install..."
   local FILE="usr/scripts/local-packages.yml"
 
   if [ ! -f "$FILE" ]; then
+    echo "➡️  No $FILE found, skipping"
     return 0
   fi
 
