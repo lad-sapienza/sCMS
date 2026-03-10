@@ -111,6 +111,7 @@ function isItemActive(item: MenuItem, currentPath: string): boolean {
 // ---------------------------------------------------------------------------
 const DropdownItem: React.FC<{ item: MenuItem; currentPath: string }> = ({ item, currentPath }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [openLeft, setOpenLeft] = useState(false);
   const ref = useRef<HTMLLIElement>(null);
   const hasChildren = !!item.children?.length;
   const active = isItemActive(item, currentPath);
@@ -123,6 +124,14 @@ const DropdownItem: React.FC<{ item: MenuItem; currentPath: string }> = ({ item,
     document.addEventListener("mousedown", close);
     return () => document.removeEventListener("mousedown", close);
   }, [isOpen]);
+
+  const handleToggle = () => {
+    if (!isOpen && ref.current) {
+      const rect = ref.current.getBoundingClientRect();
+      setOpenLeft(rect.left > window.innerWidth / 2);
+    }
+    setIsOpen(p => !p);
+  };
 
   if (!hasChildren) {
     return (
@@ -142,7 +151,7 @@ const DropdownItem: React.FC<{ item: MenuItem; currentPath: string }> = ({ item,
       <button
         type="button"
         className={`dropdown-item d-flex justify-content-between align-items-center${active ? " active" : ""}`}
-        onClick={() => setIsOpen(p => !p)}
+        onClick={handleToggle}
         aria-expanded={isOpen}
       >
         {item.label}
@@ -151,7 +160,10 @@ const DropdownItem: React.FC<{ item: MenuItem; currentPath: string }> = ({ item,
       {isOpen && (
         <ul
           className="dropdown-menu show"
-          style={{ position: "absolute", left: "100%", top: 0, minWidth: "12rem" }}
+          style={openLeft
+            ? { position: "absolute", right: "100%", left: "auto", top: 0, minWidth: "12rem" }
+            : { position: "absolute", left: "100%", top: 0, minWidth: "12rem" }
+          }
         >
           {item.children!.map((child, i) => (
             <DropdownItem key={child.href ?? i} item={child} currentPath={currentPath} />
