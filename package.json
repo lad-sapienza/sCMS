@@ -10,7 +10,8 @@
     "copy-images": "node scripts/copy-content-images.js",
     "astro": "astro",
     "setup-upstream": "bash scripts/setup-upstream.sh",
-    "update-scms": "bash scripts/update-scms.sh"
+    "update-scms": "bash scripts/update-scms.sh",
+    "add-collection": "bash scripts/add-collection.sh"
   },
   "keywords": [
     "astro",
