@@ -23,7 +23,6 @@ const blogCollection = defineCollection({
     image: z.string().optional(),
     draft: z.boolean().optional(),
     menu_position: z.number().optional(),
-    slug: z.string().optional(),
   }),
 });
 
@@ -40,7 +39,6 @@ const docsCollection = defineCollection({
     category: z.string().optional(),
     draft: z.boolean().optional(),
     menu_position: z.number().optional(),
-    slug: z.string().optional(),
   }),
 });
 

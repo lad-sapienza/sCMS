@@ -2,7 +2,6 @@
 layout: ../layouts/MarkdownLayout.astro
 title: "s:CMS by LAD"
 date: 2026-01-14
-slug: "home"
 description: "Homepage project"
 ---
 
