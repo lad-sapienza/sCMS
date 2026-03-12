@@ -17,7 +17,7 @@ A static site Content Management System developed and maintained by [LAD: Labora
 ## 📁 Project Structure
 
 ```
-scms-astro/
+scms/
 ├── core/                     # Core system (updateable)
 │   ├── components/           # Core components (DataTb, Search, etc.)
 │   ├── layouts/             # Base layouts
@@ -25,12 +25,10 @@ scms-astro/
 │   ├── integrations/        # Custom Astro integrations
 │   └── types/               # TypeScript type definitions
 │
-├── src/
+├── usr/
 │   ├── content/             # Your content
 │   │   ├── config.ts        # Collection schemas
-│   │   ├── docs/            # Documentation pages (.md, .mdx)
-│   │   ├── blog/            # Blog posts (.md, .mdx)
-│   │   └── data/            # Data files (.json, .yaml, .csv)
+│   │   └── <collection>/    # One folder per content collection
 │   │
 │   ├── components/          # Your custom components
 │   ├── layouts/             # Your custom layouts
@@ -43,7 +41,7 @@ scms-astro/
 │
 ├── public/                  # Static assets
 ├── astro.config.mjs        # Astro configuration (merges core + user)
-├── user.config.mjs         # User configuration (edit this!)
+├── usr/user.config.mjs     # User configuration (edit this!)
 ├── tsconfig.json           # TypeScript configuration
 └── package.json
 ```
@@ -60,7 +58,7 @@ scms-astro/
 1. **Clone or download this repository**
 
 ```bash
-git clone https://github.com/lad-sapienza/scms-astro.git my-project
+git clone https://github.com/lad-sapienza/sCMS.git my-project
 cd my-project
 ```
 
@@ -72,10 +70,10 @@ npm install
 
 3. **Configure your site**
 
-Edit `user.config.mjs` to set your site's metadata:
+Edit `usr/user.config.mjs` to set your site's metadata:
 
 ```javascript
-export const userConfig = {
+export const siteMetadata = {
   site: 'https://yourdomain.com',
   title: 'Your Site Title',
   description: 'Your site description',
@@ -94,8 +92,8 @@ cp .env.example .env
 Edit `.env` to add your Directus credentials:
 
 ```env
-DIRECTUS_URL=https://your-directus-instance.com
-DIRECTUS_TOKEN=your-directus-token
+PUBLIC_DIRECTUS_URL=https://your-directus-instance.com
+PUBLIC_DIRECTUS_TOKEN=your-directus-token
 ```
 
 5. **Start the development server**
@@ -110,7 +108,7 @@ Your site will be available at `http://localhost:4321`
 
 ### Documentation Pages
 
-Create `.md` or `.mdx` files in `src/content/docs/`:
+Create `.md` or `.mdx` files in `usr/content/docs/`:
 
 ```markdown
 ---
@@ -127,7 +125,7 @@ Your content here...
 
 ### Blog Posts
 
-Create `.md` or `.mdx` files in `src/content/blog/`:
+Create `.md` or `.mdx` files in `usr/content/blog/`:
 
 ```markdown
 ---
@@ -165,7 +163,7 @@ import { DataTb, Map } from '@core';
 
 ### User Configuration
 
-Edit `user.config.mjs` to customize your site. This file is merged with the core configuration, allowing you to:
+Edit `usr/user.config.mjs` to customize your site. This file is merged with the core configuration, allowing you to:
 
 - Override site metadata
 - Add custom integrations
@@ -174,13 +172,13 @@ Edit `user.config.mjs` to customize your site. This file is merged with the core
 
 ### Content Collections
 
-Edit `src/content/config.ts` to define your content schemas with Zod validation:
+Edit `usr/content/config.ts` to define your content schemas with Zod validation:
 
 ```typescript
 import { defineCollection, z } from 'astro:content';
 
 const myCollection = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/my-collection' }),
+  loader: glob({ pattern: '**/*.md', base: './usr/content/my-collection' }),
   schema: z.object({
     title: z.string(),
     // Add your fields
@@ -193,8 +191,8 @@ const myCollection = defineCollection({
 ### Using the Directus Loader
 
 ```typescript
-// src/content/config.ts
-import { directusLoader } from '../core/integrations/directusLoader';
+// usr/content/config.ts
+import { directusLoader } from '@core/integrations/directusLoader';
 
 const products = defineCollection({
   loader: directusLoader({
@@ -225,7 +223,7 @@ import { DataTb, DirectusSource } from '@core';
 
 ### Override Core Components
 
-Create a component with the same name in `src/components/` to override core components.
+Create a component with the same name in `usr/components/` to override core components.
 
 ### Extend Layouts
 
@@ -245,7 +243,7 @@ import BaseLayout from '@core/layouts/BaseLayout.astro';
 
 ### Custom Styles
 
-Add your styles to `src/styles/global.css` or create component-specific styles.
+Add your styles to `usr/styles/global.css` or create component-specific styles.
 
 ## �️ Scaffolding Scripts
 
@@ -312,14 +310,10 @@ npm run preview
 
 ## 📦 Updating the Core
 
-If the core is maintained as a separate package or git submodule:
+Run the built-in update script to pull the latest core from upstream while preserving your `usr/` customizations:
 
 ```bash
-# If using npm package
-npm update @yourorg/scms-astro-core
-
-# If using git submodule
-git submodule update --remote core
+npm run update-scms
 ```
 
 ## 🧰 Available Components
@@ -333,14 +327,14 @@ Interactive maps with MapLibre GL JS and vector layers
 ### Gallery
 Responsive image galleries with lightbox
 
-See [Components Documentation](src/content/docs/components.md) for detailed usage.
+See [Components Documentation](usr/content/docs/components.md) for detailed usage.
 
 ## 🗂️ Core Architecture
 
 This starter uses a **core/user separation** pattern:
 
 - **Core files** (`core/`) contain the framework components and utilities
-- **User files** (`src/`) contain your content and customizations
+- **User files** (`usr/`) contain your content and customizations
 - Core can be updated without affecting your customizations
 - You can override any core component by creating a file with the same name
 
@@ -361,8 +355,8 @@ Built with ♥ by [LAD @Sapienza](https://lad.saras.uniroma1.it)
 
 ## 🆘 Support
 
-- **Documentation**: Check the [docs](src/content/docs/)
-- **GitHub Issues**: [Report bugs or request features](https://github.com/lad-sapienza/scms-astro/issues)
+- **Documentation**: Check the [docs](usr/content/docs/)
+- **GitHub Issues**: [Report bugs or request features](https://github.com/lad-sapienza/sCMS/issues)
 - **Contact**: LAD @Sapienza
 
 ---

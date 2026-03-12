@@ -5,7 +5,7 @@
 set -e
 
 UPSTREAM_REPO="https://github.com/lad-sapienza/sCMS.git"
-UPSTREAM_BRANCH="scms-astro"
+UPSTREAM_BRANCH="main"
 
 echo "🔧 Setting up upstream remote for s:CMS updates..."
 

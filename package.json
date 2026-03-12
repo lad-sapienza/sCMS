@@ -1,7 +1,7 @@
 {
-  "name": "scms-astro",
+  "name": "scms",
   "version": "6.0.0",
-  "description": "s:CMS - Static site Content Management System, migrated to Astro",
+  "description": "s:CMS - Static site Content Management System by LAD @Sapienza",
   "type": "module",
   "scripts": {
     "dev": "astro dev",

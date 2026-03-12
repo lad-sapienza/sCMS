@@ -4,7 +4,7 @@
 
 set -e
 
-UPSTREAM_BRANCH="scms-astro"
+UPSTREAM_BRANCH="main"
 
 # Install site-specific packages listed in usr/scripts/local-packages.yml
 # This file is preserved across updates (lives in usr/) and allows each custom

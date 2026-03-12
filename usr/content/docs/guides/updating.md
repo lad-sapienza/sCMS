@@ -170,7 +170,7 @@ git commit
     "photoswipe": "^5.4.4"
   }
 }
->>>>>>> upstream/scms-astro
+>>>>>>> upstream/scms
 
 // Resolve to:
 {
@@ -214,10 +214,10 @@ If you prefer manual control:
 git checkout -b backup-before-update
 
 # 2. Fetch upstream
-git fetch upstream scms-astro
+git fetch upstream main
 
 # 3. Merge (protecting usr/)
-git merge upstream/scms-astro
+git merge upstream/main
 
 # 4. Resolve any conflicts
 # ... edit files ...
