@@ -32,7 +32,7 @@ const coreAlias = {
 const coreDedupe = ['react', 'react-dom', 'react-dom/client', 'react/jsx-runtime', 'react/jsx-dev-runtime', 'scheduler', '@tanstack/react-table'];
 
 export default defineConfig({
-  site: userConfig.site ?? 'https://lad-sapienza.it',
+  site: userConfig.site ?? 'https://scms.lad-sapienza.it/',
   output: 'static',
   srcDir: fileURLToPath(new URL('./usr', import.meta.url)),
   publicDir: fileURLToPath(new URL('./usr/public', import.meta.url)),
