@@ -86,7 +86,7 @@ interface SEOProps {
 - Essential for content pages and data visualizations
   // ... other config
 });
-```
+
 
 ## Best Practices
 
