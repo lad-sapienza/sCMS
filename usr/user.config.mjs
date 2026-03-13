@@ -9,7 +9,7 @@
 
 export const userConfig = {
   // Site URL (required for sitemap and canonical URLs)
-  site: 'https://yourdomain.com',
+  site: 'https://scms.lad-sapienza.it',
   
   // Base path (if deploying to a subdirectory)
   // base: '/my-site',
