@@ -172,7 +172,7 @@ Edit `usr/user.config.mjs` to customize your site. This file is merged with the 
 
 ### Content Collections
 
-Edit `usr/content/config.ts` to define your content schemas with Zod validation:
+Edit `usr/content.config.ts` to define your content schemas with Zod validation:
 
 ```typescript
 import { defineCollection, z } from 'astro:content';
@@ -191,7 +191,7 @@ const myCollection = defineCollection({
 ### Using the Directus Loader
 
 ```typescript
-// usr/content/config.ts
+// usr/content.config.ts
 import { directusLoader } from '@core/integrations/directusLoader';
 
 const products = defineCollection({
@@ -253,7 +253,7 @@ Two interactive CLI scripts help you add new content to the project without edit
 
 Scaffolds a **complete new Astro content collection** from scratch:
 
-1. Reads `usr/content/config.ts` and lists existing collections.
+1. Reads `usr/content.config.ts` and lists existing collections.
 2. Prompts for:
    - **Collection name** — lowercase letters, numbers, and hyphens (e.g. `my-news`).
    - **Collection type** — choose one of three presets:
@@ -266,12 +266,12 @@ Scaffolds a **complete new Astro content collection** from scratch:
 
    | File | What it does |
    |------|--------------|
-   | `usr/content/config.ts` | Adds the new `defineCollection` block and registers it in the exports |
+   | `usr/content.config.ts` | Adds the new `defineCollection` block and registers it in the exports |
    | `usr/content/<name>/sample-{post,doc,entry}.md` | A sample Markdown file with pre-filled frontmatter |
    | `usr/pages/<name>/index.astro` | Listing page for the collection |
    | `usr/pages/<name>/[...slug].astro` | Detail page for individual entries |
 
-After running, review the generated schema in `usr/content/config.ts` — the `TODO` comment marks where you can customise the fields — and edit the page templates in `usr/pages/<name>/` to match your design.
+After running, review the generated schema in `usr/content.config.ts` — the `TODO` comment marks where you can customise the fields — and edit the page templates in `usr/pages/<name>/` to match your design.
 
 ---
 
@@ -284,7 +284,7 @@ Adds a **single new content file** to an existing collection:
    - **Collection** — pick by name or number from the list.
    - **File format** — `md` or `mdx` (defaults to whichever is already used in the collection).
    - **Slug** — becomes both the file name and the URL path; subfolders are supported (e.g. `guides/my-topic`).
-   - **Frontmatter fields** — detected automatically from the Zod schema in `usr/content/config.ts`. Each field is prompted interactively with smart defaults (`date` → today, `author` → `git config user.name`, `draft` → `true`). Optional fields can be skipped by pressing Enter.
+   - **Frontmatter fields** — detected automatically from the Zod schema in `usr/content.config.ts`. Each field is prompted interactively with smart defaults (`date` → today, `author` → `git config user.name`, `draft` → `true`). Optional fields can be skipped by pressing Enter.
 3. Writes the file to `usr/content/<collection>/<slug>.<ext>` with:
    - A complete YAML frontmatter block
    - A `# Title` heading

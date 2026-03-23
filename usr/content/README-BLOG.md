@@ -55,7 +55,7 @@ Your content goes here...
 
 ## Schema Validation
 
-The blog schema is defined in `usr/content/config.ts` and provides:
+The blog schema is defined in `usr/content.config.ts` and provides:
 
 - Type safety in TypeScript
 - Automatic validation on build

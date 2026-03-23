@@ -5,7 +5,8 @@
  * Collections provide type-safe content management with automatic validation.
  */
 
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
+import { z } from 'zod';
 import { glob } from 'astro/loaders';
 
 // Schema for blog posts
@@ -49,10 +50,10 @@ const dataCollection = defineCollection({
     pattern: ['**/*.{json,yaml,csv}', '!menu.yaml'], 
     base: './usr/content/data' 
   }),
-  schema: z.object({
+  schema: z.looseObject({
     // Flexible schema for data files
-    id: z.string().or(z.number()).optional(),
-  }).passthrough(),
+    id: z.union([z.string(), z.number()]).optional(),
+  }),
 });
 
 // Recursive schema for a single menu item (supports up to any nesting depth)

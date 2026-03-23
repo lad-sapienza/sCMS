@@ -11,7 +11,7 @@ import { execSync } from 'node:child_process';
 
 const __dirname    = dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR     = join(__dirname, '..');
-const CONFIG_FILE  = join(ROOT_DIR, 'usr', 'content', 'config.ts');
+const CONFIG_FILE  = join(ROOT_DIR, 'usr', 'content.config.ts');
 const CONTENT_BASE = join(ROOT_DIR, 'usr', 'content');
 
 // ─── Color helpers ────────────────────────────────────────────────────────────

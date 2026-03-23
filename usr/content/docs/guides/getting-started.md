@@ -133,7 +133,7 @@ date: 2026-01-01
 Project details here.
 ```
 
-**4b.** Open `usr/content/config.ts` and register the new collection by adding a few lines:
+**4b.** Open `usr/content.config.ts` and register the new collection by adding a few lines:
 
 ```ts
 import { defineCollection, z } from 'astro:content';
@@ -242,5 +242,5 @@ From now on, every time you push a change to the `main` branch, the site rebuild
 | Navigation links | `usr/layouts/BaseLayout.astro` |
 | Blog posts | `usr/content/blog/*.md` |
 | Documentation pages | `usr/content/docs/*.md` |
-| Register a new collection | `usr/content/config.ts` |
+| Register a new collection | `usr/content.config.ts` |
 | Global colours and fonts | `usr/styles/global.css` |

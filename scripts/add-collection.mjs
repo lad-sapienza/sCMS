@@ -10,7 +10,7 @@ import { fileURLToPath } from 'node:url';
 
 const __dirname   = dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR    = join(__dirname, '..');
-const CONFIG_FILE = join(ROOT_DIR, 'usr', 'content', 'config.ts');
+const CONFIG_FILE = join(ROOT_DIR, 'usr', 'content.config.ts');
 
 // ─── Color helpers ────────────────────────────────────────────────────────────
 const G = '\x1b[32m', Y = '\x1b[33m', R = '\x1b[31m';
@@ -445,7 +445,7 @@ async function main() {
   ok(`Type: ${colType}`);
   rl.close();
 
-  // ─── 1. Update usr/content/config.ts ─────────────────────────────────────
+  // ─── 1. Update usr/content.config.ts ──────────────────────────────────────
   const newBlock =
     `\n// Schema for ${colName} entries  [${colType} type]\n` +
     `// TODO: customize the schema fields to match your content structure\n` +
@@ -469,7 +469,7 @@ async function main() {
     (_, open, inner, close) => `${open}${inner.trimEnd()}\n  ${colName}: ${varName},\n${close}`
   );
   writeFileSync(CONFIG_FILE, cfg, 'utf8');
-  ok('usr/content/config.ts updated');
+  ok('usr/content.config.ts updated');
 
   // ─── 2. Sample content file ───────────────────────────────────────────────
   const today      = new Date().toISOString().slice(0, 10);
@@ -517,7 +517,7 @@ async function main() {
   console.log(`${G}${B}Collection '${colName}' scaffolded successfully!${X}`);
   console.log('');
   console.log(`  ${B}Next steps:${X}`);
-  console.log(`    1. Open ${B}usr/content/config.ts${X} and review the schema for '${colName}'`);
+  console.log(`    1. Open ${B}usr/content.config.ts${X} and review the schema for '${colName}'`);
   console.log(`    2. Edit the page files in ${B}usr/pages/${colName}/${X} to customise the UI`);
   console.log(`    3. Replace the sample file in ${B}usr/content/${colName}/${X} with real content`);
   console.log(`    4. Run ${B}npm run dev${X} and visit ${B}/${colName}${X}`);

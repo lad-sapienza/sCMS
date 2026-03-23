@@ -239,7 +239,7 @@ jobs:
 
 ### Example: Directus Integration with Secrets
 
-**usr/content/config.ts:**
+**usr/content.config.ts:**
 ```typescript
 import { defineCollection } from 'astro:content';
 import { directusLoader } from '@core/integrations/directusLoader';

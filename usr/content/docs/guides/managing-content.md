@@ -14,7 +14,7 @@ This guide explains how content is organised in s:CMS, how to scaffold new colle
 
 A **content collection** is a folder of Markdown (`.md`) or MDX (`.mdx`) files that share the same shape — the same set of frontmatter fields. For example, a `blog` collection might contain one file per article, each with a `title`, a `date`, and a `draft` flag.
 
-Collections are registered in `usr/content/config.ts`, where a **Zod schema** declares exactly which frontmatter fields each collection expects and what type they must be. Astro validates every file against this schema at build time, so typos or missing required fields are caught before the site is published.
+Collections are registered in `usr/content.config.ts`, where a **Zod schema** declares exactly which frontmatter fields each collection expects and what type they must be. Astro validates every file against this schema at build time, so typos or missing required fields are caught before the site is published.
 
 Each collection also gets two routes:
 
@@ -51,12 +51,12 @@ The script will:
 
    | File | What changes |
    |------|--------------|
-   | `usr/content/config.ts` | New `defineCollection` block added; name registered in the `collections` export |
+   | `usr/content.config.ts` | New `defineCollection` block added; name registered in the `collections` export |
    | `usr/content/<name>/sample-*.md` | A ready-to-edit sample file with pre-filled frontmatter |
    | `usr/pages/<name>/index.astro` | Listing page for all entries in the collection |
    | `usr/pages/<name>/[...slug].astro` | Detail page for individual entries |
 
-After scaffolding, open `usr/content/config.ts` and look for the `TODO` comment inside the new block — that is where you adjust the schema fields to match your actual data needs.
+After scaffolding, open `usr/content.config.ts` and look for the `TODO` comment inside the new block — that is where you adjust the schema fields to match your actual data needs.
 
 ---
 
@@ -164,7 +164,7 @@ import BlogLayout from '../../layouts/BlogLayout.astro';
 
 ## Editing the schema after creation
 
-You can add, rename, or remove fields in `usr/content/config.ts` at any time. Remember to:
+You can add, rename, or remove fields in `usr/content.config.ts` at any time. Remember to:
 
 1. Update every existing content file to include (or remove) the changed field, or mark new fields as `.optional()` so old files remain valid.
 2. Update the listing and detail page templates to display the new field.

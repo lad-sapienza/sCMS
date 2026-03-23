@@ -38,7 +38,7 @@ Example: `import { DataTb } from '@core/components/DataTb'`
 - `@astrojs/mdx`, `@astrojs/react`, `@astrojs/sitemap`
 
 ### Content Collections
-[usr/content/config.ts](usr/content/config.ts) defines schemas with Zod validation. Use `glob` loader for local files, `directusLoader` from `core/integrations/directusLoader.ts` for CMS data.
+[usr/content.config.ts](usr/content.config.ts) defines schemas with Zod validation. Use `glob` loader for local files, `directusLoader` from `core/integrations/directusLoader.ts` for CMS data.
 
 ## Core Components
 
@@ -158,7 +158,7 @@ Users extend core by:
 
 - [astro.config.mjs](astro.config.mjs): Main config with merge logic
 - [usr/user.config.mjs](usr/user.config.mjs): User overrides (`userConfig`) and site metadata (`siteMetadata`)
-- [usr/content/config.ts](usr/content/config.ts): Content collection schemas
+- [usr/content.config.ts](usr/content.config.ts): Content collection schemas
 - [core/index.ts](core/index.ts): Core package exports
 - [core/utils/data-fetcher.ts](core/utils/data-fetcher.ts): Unified data loading
 - [core/utils/directus-config.ts](core/utils/directus-config.ts): `DirectusShorthand` and `DirectusSourceConfig` types
