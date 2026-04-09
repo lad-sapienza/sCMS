@@ -23,13 +23,12 @@ interface Props {
 const props = Astro.props;
 const { path, reverseSorting = false, columns = { min: 200, max: 1 }, className, images: propImages } = props;
 
-// Load images at top level
 const allImageModules = import.meta.glob(
-  '../../../usr/pages/**/gallery/*.{jpg,jpeg,png,gif,webp,avif}',
+  '../../../usr/pages/**/gallery/*.{jpg,jpeg,png,gif,webp,avif,JPG,JPEG,PNG,GIF,WEBP,AVIF}',
   { eager: true }
 );
 const allContentImageModules = import.meta.glob(
-  '../../../usr/content/**/gallery/*.{jpg,jpeg,png,gif,webp,avif}',
+  '../../../usr/content/**/gallery/*.{jpg,jpeg,png,gif,webp,avif,JPG,JPEG,PNG,GIF,WEBP,AVIF}',
   { eager: true }
 );
 
