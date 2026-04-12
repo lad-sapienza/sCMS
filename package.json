@@ -1,6 +1,6 @@
 {
   "name": "scms",
-  "version": "6.1.4",
+  "version": "6.1.5",
   "description": "s:CMS - Static site Content Management System by LAD @Sapienza",
   "type": "module",
   "scripts": {
@@ -38,7 +38,7 @@
     "astro": "^6.0.8",
     "astro-expressive-code": "^0.41.6",
     "bootstrap": "^5.3.8",
-    "lucide-react": "^0.577.0",
+    "lucide-react": "^1.8.0",
     "maplibre-gl": "^5.21.0",
     "papaparse": "^5.5.3",
     "photoswipe": "^5.4.4",
@@ -54,7 +54,7 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "sass": "^1.98.0",
-    "typescript": "^5.9.3"
+    "typescript": "^6.0.2"
   },
   "overrides": {
     "@vitejs/plugin-react": "^5.1.4"
