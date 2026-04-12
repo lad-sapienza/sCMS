@@ -1,364 +1,262 @@
-# s:CMS - Astro Edition
+# s:CMS
 
-A static site Content Management System developed and maintained by [LAD: Laboratorio di Archeologia Digitale alla Sapienza](https://lad.saras.uniroma1.it).
+A static site Content Management System built on [Astro](https://astro.build/), developed and maintained by [LAD: Laboratorio di Archeologia Digitale alla Sapienza](https://lad.saras.uniroma1.it).
 
-## 🚀 Features
+## Features
 
-- **📝 Content Collections**: Type-safe content management with automatic validation
-- **🗺️ Interactive Maps**: Display geographical data with Leaflet integration
-- **🔍 Search Functionality**: Build powerful search interfaces with custom templates
-- **📊 Data Tables**: Create customizable tables from databases or static files
-- **🖼️ Image Galleries**: Responsive galleries with lightbox functionality
-- **🔌 Directus Integration**: Connect to Directus CMS for dynamic content
-- **⚡ Lightning Fast**: Built on Astro for optimal performance
-- **🎨 Fully Customizable**: Override any component or layout
-- **🔄 Updateable Core**: Separate core from user files for easy updates
+- **Content Collections** — type-safe content management with Zod schema validation (Markdown and MDX)
+- **Interactive Maps** — display geographical data with [MapLibre GL JS](https://maplibre.org/) and multiple data sources
+- **Data Tables** — sortable, filterable, paginated tables from CSV, JSON, API, or Directus
+- **Image Galleries** — responsive galleries with PhotoSwipe lightbox
+- **Table of Contents** — auto-generated from page headings with smooth scrolling
+- **Diagrams** — Mermaid diagram support
+- **Directus Integration** — connect to a [Directus](https://directus.io/) instance for dynamic content
+- **SEO** — meta tags, Open Graph, and JSON-LD structured data
+- **Fast by default** — 100% static output via Astro
+- **Updateable core** — framework code in `core/` is updated independently from your content in `usr/`
 
-## 📁 Project Structure
+---
+
+## Project Structure
 
 ```
 scms/
-├── core/                     # Core system (updateable)
-│   ├── components/           # Core components (DataTb, Search, etc.)
-│   ├── layouts/             # Base layouts
-│   ├── utils/               # Utility functions
-│   ├── integrations/        # Custom Astro integrations
-│   └── types/               # TypeScript type definitions
+├── core/                      # Framework (updateable — do not edit)
+│   ├── components/            # DataTb, Map, Gallery, SEO, TableOfContents, …
+│   ├── integrations/          # Astro integrations (assets, Directus loader)
+│   ├── utils/                 # Helper utilities
+│   └── types/                 # TypeScript definitions
 │
-├── usr/
-│   ├── content/             # Your content
-│   │   ├── config.ts        # Collection schemas
-│   │   └── <collection>/    # One folder per content collection
-│   │
-│   ├── components/          # Your custom components
-│   ├── layouts/             # Your custom layouts
-│   ├── pages/               # Page routes
-│   │   ├── index.astro      # Homepage
-│   │   └── [...slug].astro  # Dynamic content pages
-│   │
-│   └── styles/              # Your styles
-│       └── global.css
+├── usr/                       # Your site (preserved during updates)
+│   ├── content.config.ts      # Collection schemas (Zod)
+│   ├── user.config.mjs        # Site configuration (edit this)
+│   ├── content/               # Your content files
+│   │   ├── blog/              # Blog posts (.md / .mdx)
+│   │   ├── docs/              # Documentation pages (.md / .mdx)
+│   │   └── data/              # Data files (CSV, JSON, YAML)
+│   ├── components/            # Custom components (override core here)
+│   ├── layouts/               # Page layouts
+│   ├── pages/                 # Astro routes
+│   ├── public/                # Static assets
+│   └── styles/
+│       └── global.css         # Global stylesheet
 │
-├── public/                  # Static assets
-├── astro.config.mjs        # Astro configuration (merges core + user)
-├── usr/user.config.mjs     # User configuration (edit this!)
-├── tsconfig.json           # TypeScript configuration
+├── astro.config.mjs           # Astro configuration (merges core + user)
+├── tsconfig.json
 └── package.json
 ```
 
-## 🏃 Getting Started
+---
+
+## Getting Started
 
 ### Prerequisites
 
-- Node.js 18.0 or higher
-- npm, pnpm, or yarn
+- Node.js 22 or higher
+- npm
 
 ### Installation
 
-1. **Clone or download this repository**
+1. **Create a new repository from the template**
 
-```bash
-git clone https://github.com/lad-sapienza/sCMS.git my-project
-cd my-project
-```
+   Go to [github.com/lad-sapienza/sCMS](https://github.com/lad-sapienza/sCMS), click **"Use this template"**, and create a new repository.
 
-2. **Install dependencies**
+2. **Clone and install**
 
-```bash
-npm install
-```
+   ```bash
+   git clone https://github.com/YOUR-USERNAME/my-site.git
+   cd my-site
+   npm install
+   ```
 
-3. **Configure your site**
+3. **Start the development server**
 
-Edit `usr/user.config.mjs` to set your site's metadata:
+   ```bash
+   npm run dev
+   ```
 
-```javascript
+   The site is available at **http://localhost:4321**.
+
+---
+
+## Minimum Configuration
+
+Open `usr/user.config.mjs` and fill in your site details:
+
+```js
+export const userConfig = {
+  site: 'https://yourdomain.com',   // full URL of your published site
+  // base: '/my-repo',              // uncomment if not deployed at root (e.g. GitHub Pages subpath)
+};
+
 export const siteMetadata = {
-  site: 'https://yourdomain.com',
-  title: 'Your Site Title',
-  description: 'Your site description',
+  title: 'My Site',
+  description: 'A short description used by search engines.',
   author: 'Your Name',
+  siteName: 'My Site',
+  defaultImage: '/images/social-preview.png',
 };
 ```
 
-4. **Set up environment variables (optional)**
+For styling, edit `usr/styles/global.css`. For the navigation menu, edit the `menuItems` array in `usr/layouts/BaseLayout.astro`.
 
-Copy `.env.example` to `.env` and configure:
+### Directus (optional)
 
-```bash
-cp .env.example .env
-```
-
-Edit `.env` to add your Directus credentials:
+If you connect to a Directus instance, create a `.env` file in the project root:
 
 ```env
 PUBLIC_DIRECTUS_URL=https://your-directus-instance.com
-PUBLIC_DIRECTUS_TOKEN=your-directus-token
+PUBLIC_DIRECTUS_TOKEN=your-token
 ```
 
-5. **Start the development server**
+---
 
-```bash
-npm run dev
-```
+## Creating Content
 
-Your site will be available at `http://localhost:4321`
+Content lives in `usr/content/`. Each subfolder is a collection.
 
-## 📝 Creating Content
+| Folder | Purpose |
+|---|---|
+| `usr/content/blog/` | Blog posts and news |
+| `usr/content/docs/` | Documentation and guides |
+| `usr/content/data/` | Data files (CSV, JSON, YAML) |
 
-### Documentation Pages
-
-Create `.md` or `.mdx` files in `usr/content/docs/`:
+### Blog post
 
 ```markdown
 ---
-title: "My Page"
-description: "Page description"
-menu_position: 1
-date: 2026-01-13
+title: 'My First Post'
+description: 'A short description'
+date: 2026-01-01
+author: 'Your Name'
+tags: ['news']
 ---
 
-# My Page Content
-
-Your content here...
+Write your content here.
 ```
 
-### Blog Posts
-
-Create `.md` or `.mdx` files in `usr/content/blog/`:
+### Documentation page
 
 ```markdown
 ---
-title: "My Blog Post"
-description: "Post description"
-date: 2026-01-13
-author: "Your Name"
-tags: ["astro", "cms"]
+title: 'My Page'
+description: 'A short description'
+order: 1
+category: 'guides'
 ---
 
-Your blog post content...
+Write your content here.
 ```
 
-### Using Components
+Place images in a subfolder next to the content file and reference them with a standard Markdown image tag. s:CMS copies them automatically during build.
 
-Import and use core components in your content:
+For full details see [Managing Content](usr/content/docs/guides/managing-content.md).
+
+---
+
+## Available Components
+
+Import components from `@core` in any `.mdx` file:
 
 ```mdx
----
-title: "Example Page"
----
-
-import { DataTb, Map } from '@core';
-
-# My Data
-
-<DataTb 
-  source={{ directus: { table: 'your_table' } }}
-  columns={['id', 'name', 'description']}
-  client:idle
-/>
+import { DataTb, Map, Gallery } from '@core';
 ```
 
-## 🔧 Configuration
+| Component | Description | Documentation |
+|---|---|---|
+| `DataTb` | Sortable, filterable, paginated data table | [datatb.mdx](usr/content/docs/components/datatb.mdx) |
+| `Map` | Interactive map with MapLibre GL JS | [map.mdx](usr/content/docs/components/map.mdx) |
+| `Gallery` | Responsive image gallery with lightbox | [gallery.mdx](usr/content/docs/components/gallery.mdx) |
+| `SEO` | Meta tags, Open Graph, JSON-LD | [seo.md](usr/content/docs/components/seo.md) |
+| `TableOfContents` | Auto-generated TOC from headings | [tableofcontents.md](usr/content/docs/components/tableofcontents.md) |
+| `ZoteroGeoViewer` | Zotero library visualised on a map | [zotero-geoviewer.mdx](usr/content/docs/components/zotero-geoviewer.mdx) |
 
-### User Configuration
+---
 
-Edit `usr/user.config.mjs` to customize your site. This file is merged with the core configuration, allowing you to:
+## Directus Integration
 
-- Override site metadata
-- Add custom integrations
-- Modify Vite configuration
-- Customize markdown settings
+Use the built-in loader to pull content from Directus into a collection:
 
-### Content Collections
-
-Edit `usr/content.config.ts` to define your content schemas with Zod validation:
-
-```typescript
-import { defineCollection, z } from 'astro:content';
-
-const myCollection = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './usr/content/my-collection' }),
-  schema: z.object({
-    title: z.string(),
-    // Add your fields
-  }),
-});
-```
-
-## 🔌 Directus Integration
-
-### Using the Directus Loader
-
-```typescript
+```ts
 // usr/content.config.ts
 import { directusLoader } from '@core/integrations/directusLoader';
 
-const products = defineCollection({
+const articles = defineCollection({
   loader: directusLoader({
-    table: 'products',
-    fields: ['id', 'name', 'description', 'price'],
+    table: 'articles',
+    fields: ['id', 'title', 'body', 'date_created'],
     sort: ['-date_created'],
   }),
 });
 ```
 
-### Using Directus in Components
+Use Directus data sources directly in `DataTb` or `Map` components — see their documentation pages linked above.
 
-```astro
----
-import { DataTb, DirectusSource } from '@core';
 ---
 
-<DataTb searchable pagination client:idle>
-  <DirectusSource 
-    table="articles" 
-    queryString="filter[status][_eq]=published" 
-  />
-</DataTb>
-/>
-```
+## Scaffolding Scripts
 
-## 🎨 Customization
-
-### Override Core Components
-
-Create a component with the same name in `usr/components/` to override core components.
-
-### Extend Layouts
-
-```astro
----
-import BaseLayout from '@core/layouts/BaseLayout.astro';
----
-
-<BaseLayout title="My Page">
-  <div slot="header-extra">
-    Custom header content
-  </div>
-  
-  <slot />
-</BaseLayout>
-```
-
-### Custom Styles
-
-Add your styles to `usr/styles/global.css` or create component-specific styles.
-
-## �️ Scaffolding Scripts
-
-Two interactive CLI scripts help you add new content to the project without editing config files by hand. Both run with Node.js — no extra dependencies or shell required.
+Two CLI scripts help you add content without editing config files by hand.
 
 ### `npm run add-collection`
 
-Scaffolds a **complete new Astro content collection** from scratch:
-
-1. Reads `usr/content.config.ts` and lists existing collections.
-2. Prompts for:
-   - **Collection name** — lowercase letters, numbers, and hyphens (e.g. `my-news`).
-   - **Collection type** — choose one of three presets:
-     | Type | Schema fields |
-     |------|--------------|
-     | `blog` | `title`, `description`, `date`, `author`, `tags`, `image`, `draft` |
-     | `docs` | `title`, `description`, `order`, `category`, `draft` |
-     | `generic` | `title`, `description`, `draft` |
-3. Creates or updates the following files:
-
-   | File | What it does |
-   |------|--------------|
-   | `usr/content.config.ts` | Adds the new `defineCollection` block and registers it in the exports |
-   | `usr/content/<name>/sample-{post,doc,entry}.md` | A sample Markdown file with pre-filled frontmatter |
-   | `usr/pages/<name>/index.astro` | Listing page for the collection |
-   | `usr/pages/<name>/[...slug].astro` | Detail page for individual entries |
-
-After running, review the generated schema in `usr/content.config.ts` — the `TODO` comment marks where you can customise the fields — and edit the page templates in `usr/pages/<name>/` to match your design.
-
----
+Scaffolds a complete new content collection: updates `usr/content.config.ts`, creates a sample content file, and generates listing and detail page templates.
 
 ### `npm run add-content`
 
-Adds a **single new content file** to an existing collection:
-
-1. Lists all collections that have a content directory under `usr/content/`.
-2. Prompts for:
-   - **Collection** — pick by name or number from the list.
-   - **File format** — `md` or `mdx` (defaults to whichever is already used in the collection).
-   - **Slug** — becomes both the file name and the URL path; subfolders are supported (e.g. `guides/my-topic`).
-   - **Frontmatter fields** — detected automatically from the Zod schema in `usr/content.config.ts`. Each field is prompted interactively with smart defaults (`date` → today, `author` → `git config user.name`, `draft` → `true`). Optional fields can be skipped by pressing Enter.
-3. Writes the file to `usr/content/<collection>/<slug>.<ext>` with:
-   - A complete YAML frontmatter block
-   - A `# Title` heading
-   - A `<!-- Write your content here -->` placeholder
-
-After running, open the created file, write your content, and set `draft: false` when it is ready to publish.
+Adds a single content file to an existing collection, prompting for frontmatter fields based on the Zod schema.
 
 ---
 
-## �🚀 Building for Production
+## Build and Deploy
 
 ```bash
-npm run build
+npm run build     # production build → dist/
+npm run preview   # local preview of the production build
 ```
 
-The built site will be in the `dist/` directory.
+For deployment to GitHub Pages, Netlify, Vercel, or Cloudflare Pages, see [Deployment](usr/content/docs/guides/deployment.md).
 
-### Preview Production Build
+---
 
-```bash
-npm run preview
-```
+## Updating the Core
 
-## 📦 Updating the Core
-
-Run the built-in update script to pull the latest core from upstream while preserving your `usr/` customizations:
+Pull the latest framework updates without touching your `usr/` files:
 
 ```bash
 npm run update-scms
 ```
 
-## 🧰 Available Components
-
-### DataTb
-Display data in sortable, filterable tables with modern React-based interface
-
-### Map
-Interactive maps with MapLibre GL JS and vector layers
-
-### Gallery
-Responsive image galleries with lightbox
-
-See [Components Documentation](usr/content/docs/components.md) for detailed usage.
-
-## 🗂️ Core Architecture
-
-This starter uses a **core/user separation** pattern:
-
-- **Core files** (`core/`) contain the framework components and utilities
-- **User files** (`usr/`) contain your content and customizations
-- Core can be updated without affecting your customizations
-- You can override any core component by creating a file with the same name
-
-## 🤝 Contributing
-
-Contributions are welcome! Please open an issue or pull request on GitHub.
-
-## 📄 License
-
-BSD-0-Clause - see [LICENSE](LICENSE) file for details.
-
-## 👥 Credits
-
-Built with ♥ by [LAD @Sapienza](https://lad.saras.uniroma1.it)
-
-- **Framework**: [Astro](https://astro.build/)
-- **Original Gatsby Version**: [lad-sapienza/scms](https://github.com/lad-sapienza/scms)
-
-## 🆘 Support
-
-- **Documentation**: Check the [docs](usr/content/docs/)
-- **GitHub Issues**: [Report bugs or request features](https://github.com/lad-sapienza/sCMS/issues)
-- **Contact**: LAD @Sapienza
+See [Updating](usr/content/docs/guides/updating.md) for details on handling conflicts and site-specific packages.
 
 ---
 
-**Happy building! 🚀**
+## Documentation
+
+| Guide | File |
+|---|---|
+| Getting Started | [guides/getting-started.md](usr/content/docs/guides/getting-started.md) |
+| Architecture | [guides/architecture.md](usr/content/docs/guides/architecture.md) |
+| Managing Content | [guides/managing-content.md](usr/content/docs/guides/managing-content.md) |
+| Theming | [guides/theming.md](usr/content/docs/guides/theming.md) |
+| Deployment | [guides/deployment.md](usr/content/docs/guides/deployment.md) |
+| Updating | [guides/updating.md](usr/content/docs/guides/updating.md) |
+
+---
+
+## License
+
+BSD-0-Clause — see [LICENSE](LICENSE).
+
+---
+
+## Built by LAD
+
+<a href="https://lad.saras.uniroma1.it">
+  <img src="https://lad-sapienza.it/images/lad-blue.png" alt="LAD: Laboratorio di Archeologia Digitale alla Sapienza" height="60">
+</a>
+
+s:CMS is developed and maintained by [LAD: Laboratorio di Archeologia Digitale alla Sapienza](https://lad.saras.uniroma1.it), Università degli Studi di Roma "La Sapienza".
+
+- GitHub Issues: [lad-sapienza/sCMS](https://github.com/lad-sapienza/sCMS/issues)
+- Previous Gatsby version: [lad-sapienza/scms](https://github.com/lad-sapienza/scms)
