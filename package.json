@@ -1,6 +1,6 @@
 {
   "name": "scms",
-  "version": "6.1.6",
+  "version": "6.1.7",
   "description": "s:CMS - Static site Content Management System by LAD @Sapienza",
   "type": "module",
   "scripts": {
