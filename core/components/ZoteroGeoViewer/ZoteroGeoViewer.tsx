@@ -25,8 +25,8 @@ export function ZoteroGeoViewer(props: ZoteroGeoViewerProps) {
     layout = '8x4',
     mapHeight = '600px',
     mapCenter = '20.5,40.0,8',
-    tagAutocomplete = true,
-    maxItems = 1000
+    tagAutocomplete: _tagAutocomplete = true,
+    maxItems: _maxItems = 1000
   } = props;
 
   // Add error handling for required props

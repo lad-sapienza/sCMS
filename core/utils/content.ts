@@ -3,7 +3,7 @@
  * Helper functions for working with Astro Content Collections
  */
 
-import { getCollection, type CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
 
 /**
  * Get all entries from a collection sorted by a field (agnostic to collection name)

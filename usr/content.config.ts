@@ -43,19 +43,6 @@ const docsCollection = defineCollection({
   }),
 });
 
-// Schema for static data files (CSV, JSON, YAML)
-// menu.yaml is excluded here — it has its own `menuCollection` below.
-const dataCollection = defineCollection({
-  loader: glob({ 
-    pattern: ['**/*.{json,yaml,csv}', '!menu.yaml'], 
-    base: './usr/content/data' 
-  }),
-  schema: z.looseObject({
-    // Flexible schema for data files
-    id: z.union([z.string(), z.number()]).optional(),
-  }),
-});
-
 // Recursive schema for a single menu item (supports up to any nesting depth)
 type MenuItem = {
   href?: string;
@@ -85,6 +72,5 @@ const menuCollection = defineCollection({
 export const collections = {
   blog: blogCollection,
   docs: docsCollection,
-  data: dataCollection,
   menu: menuCollection,
 };

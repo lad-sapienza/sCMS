@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState, type SyntheticEvent } from 'react';
 import { Search, X, TextSearch } from 'lucide-react';
-import type { SearchInFields, SearchQuery, SearchFilter, SearchOperators } from '../types';
+import type { SearchInFields, SearchQuery, SearchFilter } from '../types';
 
 export interface SearchUISimpleProps {
   fieldList: SearchInFields;
@@ -33,7 +33,7 @@ export function SearchUISimple({
 
   const [searchText, setSearchText] = useState(getInitialSearchText());
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     
     if (!searchText.trim()) {

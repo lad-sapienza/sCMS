@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, type SyntheticEvent } from 'react';
 import { Search, X, Plus, Minus, ArrowLeft } from 'lucide-react';
 import type { SearchInFields, SearchQuery, SearchFilter, SearchOperators } from '../types';
 import { DEFAULT_OPERATORS, DEFAULT_CONNECTORS } from './SearchOperators';
@@ -81,7 +81,7 @@ export function SearchUIAdvanced({
     setFilters(newFilters);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     
     // Filter out empty values
@@ -169,7 +169,7 @@ export function SearchUIAdvanced({
                 onChange={(e) => updateFilter(index, 'field', e.target.value)}
                 disabled={isLoading}
               >
-                {Object.entries(fieldList).map(([fieldName, config]) => (
+                {Object.entries(fieldList).map(([fieldName, _config]) => (
                   <option key={fieldName} value={fieldName}>
                     {getFieldLabel(fieldName)}
                   </option>

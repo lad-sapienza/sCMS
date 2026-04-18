@@ -13,7 +13,6 @@ export function buildDirectusUrl(
   filter?: Record<string, any>
 ): string {
   const endpoint = source.endpoint || import.meta.env.DIRECTUS_URL;
-  const token = source.token || import.meta.env.DIRECTUS_TOKEN;
   
   if (!endpoint) {
     throw new Error('Directus endpoint not configured. Set DIRECTUS_URL in .env');
