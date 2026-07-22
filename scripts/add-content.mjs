@@ -156,8 +156,8 @@ async function main() {
       warn('Slug must contain only lowercase letters, numbers, hyphens, underscores, and forward slashes.');
       continue;
     }
-    if (existsSync(join(colDir, `${raw}.${ext}`))) {
-      warn(`File already exists: usr/content/${collection}/${raw}.${ext}`);
+    if (existsSync(join(colDir, raw, `index.${ext}`))) {
+      warn(`File already exists: usr/content/${collection}/${raw}/index.${ext}`);
       continue;
     }
     slug = raw;
@@ -208,8 +208,9 @@ async function main() {
   rl.close();
 
   // ─── Write file ───────────────────────────────────────────────────────────
-  const targetPath = join(colDir, `${slug}.${ext}`);
-  mkdirSync(dirname(targetPath), { recursive: true });
+  const targetDir  = join(colDir, slug);
+  const targetPath = join(targetDir, `index.${ext}`);
+  mkdirSync(targetDir, { recursive: true });
 
   const content = [
     '---',
@@ -232,7 +233,7 @@ async function main() {
   console.log(`${G}${B}Done!${X}`);
   console.log('');
   console.log(`  ${B}Next steps:${X}`);
-  console.log(`    1. Open ${B}usr/content/${collection}/${slug}.${ext}${X} and write your content`);
+  console.log(`    1. Open ${B}usr/content/${collection}/${slug}/index.${ext}${X} and write your content`);
   console.log(`    2. Set ${B}draft: false${X} when the content is ready to publish`);
   console.log(`    3. Run ${B}npm run dev${X} and visit ${B}/${collection}/${slug}${X}`);
   console.log('');
