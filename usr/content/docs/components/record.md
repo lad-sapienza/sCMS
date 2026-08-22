@@ -9,10 +9,10 @@ category: components
 
 A small family of components for rendering a **single Directus record** as a detail page — the kind of page a `Map` popup, a `DataTb` row, or a search result would link to. They handle fetching, loading/error states, and reading fields (including nested ones) without you having to write that boilerplate for every layout.
 
-All are exported from `@core`:
+All are exported from `@lad-sapienza/scms-core`:
 
 ```ts
-import { RecordProvider, Field, Image, RecordFetcher, useRecordFetcher } from '@core';
+import { RecordProvider, Field, Image, RecordFetcher, useRecordFetcher } from '@lad-sapienza/scms-core';
 ```
 
 ## The two ways to build a record page
@@ -24,7 +24,7 @@ import { RecordProvider, Field, Image, RecordFetcher, useRecordFetcher } from '@
 ```astro
 ---
 // usr/pages/record.astro
-import { RecordFetcher } from '@core';
+import { RecordFetcher } from '@lad-sapienza/scms-core';
 import MyRecordLayout from '../layouts/record/default.astro';
 ---
 
@@ -50,8 +50,8 @@ If you're building your own React component instead of an Astro layout, `useReco
 
 ```tsx
 // usr/components/RecordView.tsx
-import { useRecordFetcher } from '@core';
-import { RecordProvider, Field, Image } from '@core';
+import { useRecordFetcher } from '@lad-sapienza/scms-core';
+import { RecordProvider, Field, Image } from '@lad-sapienza/scms-core';
 
 export default function RecordView() {
   const { record, loading, error, table, id } = useRecordFetcher();
@@ -122,11 +122,11 @@ Resolves a field to one or more `<img>` tags. Handles three shapes automatically
 
 ## Fetching a record server-side instead
 
-If you'd rather fetch the record at build/request time in an Astro frontmatter block (no client-side fetch, no loading state to handle) rather than using `RecordFetcher`/`useRecordFetcher`, use the plain async helpers from `@core`:
+If you'd rather fetch the record at build/request time in an Astro frontmatter block (no client-side fetch, no loading state to handle) rather than using `RecordFetcher`/`useRecordFetcher`, use the plain async helpers from `@lad-sapienza/scms-core`:
 
 ```astro
 ---
-import { getRecordFromParams } from '@core';
+import { getRecordFromParams } from '@lad-sapienza/scms-core';
 
 const record = await getRecordFromParams(Astro); // reads table/id from Astro.params
 ---
@@ -140,7 +140,7 @@ const record = await getRecordFromParams(Astro); // reads table/id from Astro.pa
 The dot-path resolver used internally by `Field` and `Image` is also exported directly, for when you need the raw value without rendering it:
 
 ```ts
-import { getValueByDotPath } from '@core';
+import { getValueByDotPath } from '@lad-sapienza/scms-core';
 
 const lat = getValueByDotPath(record, 'geometry.coordinates.1');
 ```

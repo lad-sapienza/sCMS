@@ -3,10 +3,9 @@ import { fileURLToPath } from 'url';
 import rehypeSlug from 'rehype-slug';
 import { unified } from '@astrojs/markdown-remark';
 import { userConfig } from './usr/user.config.mjs';
-import { scms } from './core/scms.ts';
+import { scms } from '@lad-sapienza/scms-core/scms';
 
 const coreAlias = {
-  '@core': fileURLToPath(new URL('./core', import.meta.url)),
   '@user': fileURLToPath(new URL('./usr', import.meta.url)),
   '@components': fileURLToPath(new URL('./usr/components', import.meta.url)),
   '@layouts': fileURLToPath(new URL('./usr/layouts', import.meta.url)),

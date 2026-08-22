@@ -186,7 +186,7 @@ jobs:
 **usr/content.config.ts:**
 ```typescript
 import { defineCollection } from 'astro:content';
-import { directusLoader } from '@core/integrations/directusLoader';
+import { directusLoader } from '@lad-sapienza/scms-core/integrations/directusLoader';
 
 const articlesCollection = defineCollection({
   loader: directusLoader({

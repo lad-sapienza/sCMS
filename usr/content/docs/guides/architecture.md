@@ -36,7 +36,7 @@ sCMS/
 
 - **`core/`** contains every reusable component, integration, and utility. It's what `npm run update-scms` overwrites when you pull a new s:CMS release.
 - **`usr/`** contains everything specific to your site: content, pages, layouts, styling, and configuration. It is never touched by the update script.
-- Components are consumed from `core/` via the `@core` import alias (configured in `astro.config.mjs` / `tsconfig.json`), so your MDX files write `import { DataTb } from '@core'` rather than a relative path into `core/`.
+- Components are consumed from `core/` via the `@lad-sapienza/scms-core` import alias (configured in `astro.config.mjs` / `tsconfig.json`), so your MDX files write `import { DataTb } from '@lad-sapienza/scms-core'` rather than a relative path into `core/`.
 
 This is a convention enforced by the update tooling, not a hard technical boundary — nothing stops you from editing files inside `core/`, but doing so means your changes will be silently overwritten (or need manual reconciliation) the next time you run `npm run update-scms`. Keep all customization in `usr/`.
 

@@ -5,9 +5,9 @@ order: 31
 category: components
 ---
 
-import { Gallery } from '@core/components/Gallery';
+import { Gallery } from '@lad-sapienza/scms-core/components/Gallery';
 import Example from '@components/Example.astro';
-import TableOfContents from '@core/components/TableOfContents/TableOfContents.astro';
+import TableOfContents from '@lad-sapienza/scms-core/components/TableOfContents/TableOfContents.astro';
 
 The **Gallery** component displays images in a responsive grid layout with [PhotoSwipe](https://photoswipe.com/) lightbox functionality. It works the same way in `.astro` files and MDX content — no `import.meta.glob` needed in your own page or content file.
 
@@ -37,7 +37,7 @@ The **Gallery** component displays images in a responsive grid layout with [Phot
 
   <Fragment slot="code">
     ```mdx
-    import { Gallery } from '@core/components/Gallery';
+    import { Gallery } from '@lad-sapienza/scms-core/components/Gallery';
 
     <Gallery />
     ```

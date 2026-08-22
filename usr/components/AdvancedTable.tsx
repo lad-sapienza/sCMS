@@ -1,5 +1,5 @@
-import { DataTb } from '@core/components/DataTb';
-import type { ColumnConfig } from '@core/components/DataTb/types';
+import { DataTb } from '@lad-sapienza/scms-core/components/DataTb';
+import type { ColumnConfig } from '@lad-sapienza/scms-core/components/DataTb/types';
 
 export default function AdvancedTable() {
   const data = [

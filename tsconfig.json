@@ -8,13 +8,12 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "paths": {
-      "@core/*": ["./core/*"],
       "@user/*": ["./usr/*"],
       "@components/*": ["./usr/components/*"],
       "@layouts/*": ["./usr/layouts/*"],
       "@content/*": ["./usr/content/*"]
     }
   },
-  "include": ["usr/**/*", "core/**/*"],
+  "include": ["usr/**/*"],
   "exclude": ["node_modules", "dist"]
 }

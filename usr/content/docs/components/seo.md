@@ -14,7 +14,7 @@ Manages meta tags, Open Graph data, structured data, and page titles for better 
 
 ```astro
 ---
-import SEO from '@core/components/SEO/SEO.astro';
+import SEO from '@lad-sapienza/scms-core/components/SEO/SEO.astro';
 ---
 
 <head>

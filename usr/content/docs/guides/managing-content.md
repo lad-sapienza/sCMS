@@ -182,7 +182,7 @@ date: 2026-03-10
 draft: false
 ---
 
-import { DataTb } from '@core';
+import { DataTb } from '@lad-sapienza/scms-core';
 
 # My Interactive Post
 
@@ -194,4 +194,4 @@ Here is a live data table:
 />
 ```
 
-All core components (maps, galleries, data tables, etc.) are importable from `@core`. See the components section of the documentation for the full list.
+All core components (maps, galleries, data tables, etc.) are importable from `@lad-sapienza/scms-core`. See the components section of the documentation for the full list.

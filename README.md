@@ -156,10 +156,10 @@ For full details see [Managing Content](usr/content/docs/guides/managing-content
 
 ## Available Components
 
-Import components from `@core` in any `.mdx` file:
+Import components from `@lad-sapienza/scms-core` in any `.mdx` file:
 
 ```mdx
-import { DataTb, Map, Gallery } from '@core';
+import { DataTb, Map, Gallery } from '@lad-sapienza/scms-core';
 ```
 
 | Component | Description | Documentation |
@@ -172,7 +172,7 @@ import { DataTb, Map, Gallery } from '@core';
 | `ZoteroGeoViewer` | Zotero library visualised on a map | [zotero-geoviewer.mdx](usr/content/docs/components/zotero-geoviewer.mdx) |
 | `RecordProvider`, `Field`, `Image`, `RecordFetcher`, `useRecordFetcher` | Build single-record detail pages against Directus | [record.md](usr/content/docs/components/record.md) |
 
-`SearchUI`, `SearchUISimple`, and `SearchUIAdvanced` (the field/operator/value search interface used by `Map`'s `searchInFields`) are also exported from `@core` for building custom search UIs — see the [Vector Layer Search section](usr/content/docs/components/map.mdx) of the Map docs.
+`SearchUI`, `SearchUISimple`, and `SearchUIAdvanced` (the field/operator/value search interface used by `Map`'s `searchInFields`) are also exported from `@lad-sapienza/scms-core` for building custom search UIs — see the [Vector Layer Search section](usr/content/docs/components/map.mdx) of the Map docs.
 
 ---
 
@@ -182,7 +182,7 @@ Use the built-in loader to pull content from Directus into a collection:
 
 ```ts
 // usr/content.config.ts
-import { directusLoader } from '@core/integrations/directusLoader';
+import { directusLoader } from '@lad-sapienza/scms-core/integrations/directusLoader';
 
 const articles = defineCollection({
   loader: directusLoader({

@@ -5,11 +5,11 @@ order: 30
 category: components
 ---
 
-import DataTb from '@core/components/DataTb/DataTbMdx';
+import DataTb from '@lad-sapienza/scms-core/components/DataTb/DataTbMdx';
 import AdvancedTable from '@components/AdvancedTable';
 import CsvSourceDemo from '@components/CsvSourceDemo';
 import Example from '@components/Example.astro';
-import TableOfContents from '@core/components/TableOfContents/TableOfContents.astro';
+import TableOfContents from '@lad-sapienza/scms-core/components/TableOfContents/TableOfContents.astro';
 
 The `DataTb` component provides a powerful, flexible way to display tabular data from various sources with built-in sorting, filtering, and pagination. Built on React and [TanStack Table](https://tanstack.com/table).
 
@@ -239,15 +239,15 @@ export const jsonData = [
 
 <Example title="Headless Source Components" codeWidth='full'>
   <Fragment slot="intro">
-    `CsvSource`, `JsonSource`, `DirectusSource`, and `ApiSource` are also exported from `@core/components/DataTb` as standalone, headless data-loaders — they render nothing and instead call `onDataLoad` / `onLoadingChange` / `onError` props, so you can drive **your own** custom UI (not a table at all) with the same fetching logic `DataTb` uses internally. They are not children of `<DataTb>` — it has no children/composition API.
+    `CsvSource`, `JsonSource`, `DirectusSource`, and `ApiSource` are also exported from `@lad-sapienza/scms-core/components/DataTb` as standalone, headless data-loaders — they render nothing and instead call `onDataLoad` / `onLoadingChange` / `onError` props, so you can drive **your own** custom UI (not a table at all) with the same fetching logic `DataTb` uses internally. They are not children of `<DataTb>` — it has no children/composition API.
   </Fragment>
 
   <Fragment slot="code" codeWidth='full'>
     ```tsx
     // CsvSourceDemo.tsx
     import { useState } from 'react';
-    import { CsvSource } from '@core/components/DataTb';
-    import type { DataRow } from '@core/components/DataTb/types';
+    import { CsvSource } from '@lad-sapienza/scms-core/components/DataTb';
+    import type { DataRow } from '@lad-sapienza/scms-core/components/DataTb/types';
 
     export default function CsvSourceDemo() {
       const [rows, setRows] = useState<DataRow[]>([]);

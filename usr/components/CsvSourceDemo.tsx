@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { CsvSource } from '@core/components/DataTb';
-import type { DataRow } from '@core/components/DataTb/types';
+import { CsvSource } from '@lad-sapienza/scms-core/components/DataTb';
+import type { DataRow } from '@lad-sapienza/scms-core/components/DataTb/types';
 
 export default function CsvSourceDemo() {
   const [rows, setRows] = useState<DataRow[]>([]);

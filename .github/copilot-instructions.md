@@ -12,13 +12,13 @@ This separation allows users to update core functionality via `npm run update-sc
 ### Path Aliases
 
 Always use these TypeScript aliases for imports:
-- `@core/*` → `core/*` (framework components/utils)
+- `@lad-sapienza/scms-core/*` → `core/*` (framework components/utils)
 - `@user/*` → `usr/*` (user code)
 - `@components/*` → `usr/components/*`
 - `@layouts/*` → `usr/layouts/*`
 - `@content/*` → `usr/content/*`
 
-Example: `import { DataTb } from '@core/components/DataTb'`
+Example: `import { DataTb } from '@lad-sapienza/scms-core/components/DataTb'`
 
 ## Configuration System
 
@@ -56,7 +56,7 @@ Example: `import { DataTb } from '@core/components/DataTb'`
 | `TableOfContents` | `default TableOfContents` | Astro component |
 | `ZoteroGeoViewer` | `ZoteroGeoViewer` | Yes — `.astro` wrapper available |
 
-All exports are available via `@core` (from [core/index.ts](core/index.ts)).
+All exports are available via `@lad-sapienza/scms-core` (from [core/index.ts](core/index.ts)).
 
 ### Hybrid Rendering Architecture
 Interactive components use a **React client** pattern. Some also have an **Astro wrapper** for SSR data fetching:
@@ -133,7 +133,7 @@ npm run update-scms      # Pull latest core from upstream
 
 ### Customizing for Users
 Users extend core by:
-- Importing core components: `import { DataTb } from '@core'`
+- Importing core components: `import { DataTb } from '@lad-sapienza/scms-core'`
 - Creating custom components in `usr/components/`
 - Modifying `usr/layouts/` to wrap or replace core layouts
 - Adding styles in `usr/styles/global.css`
@@ -168,7 +168,7 @@ Users extend core by:
 ## Common Pitfalls
 
 - **Don't edit `core/` directly** in user projects; changes will be lost on updates
-- **Always use path aliases** (`@core`, `@user`) instead of relative paths
+- **Always use path aliases** (`@lad-sapienza/scms-core`, `@user`) instead of relative paths
 - **BSNavbar needs `client:load`** (not `client:idle`) because it controls toggle state immediately on render
 - **Map and Search components** have no Astro wrapper — use them directly with `client:idle`
 - **Directus env vars must be `PUBLIC_`-prefixed** (`PUBLIC_DIRECTUS_URL`, `PUBLIC_DIRECTUS_TOKEN`) for client-side access
