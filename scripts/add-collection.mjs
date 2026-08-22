@@ -21,10 +21,29 @@ const error = (...a) => { console.error(`${R}✖${X}  ${a.join(' ')}`); process.
 
 if (!existsSync(CONFIG_FILE)) error(`Cannot find ${CONFIG_FILE} — are you running from the project root?`);
 
+// ─── Object key helper ─────────────────────────────────────────────────────
+// Collection names may contain hyphens (the prompt below explicitly allows
+// them), which aren't valid in a bare JS/TS object-key identifier — e.g.
+// `my-collection: fooCollection` is a syntax error (parsed as subtraction).
+// Quote the key whenever it isn't a valid identifier on its own.
+const toObjectKey = (name) => /^[A-Za-z_$][\w$]*$/.test(name) ? name : `'${name}'`;
+
 // ─── Readline helper ──────────────────────────────────────────────────────────
+// Uses the readline interface as an async iterator rather than repeated
+// rl.question() calls: with piped/pasted (non-TTY) input, multiple lines can
+// arrive in a single chunk, and question()'s one-shot 'line' listener isn't
+// registered in time to catch answers past the first — they're silently
+// dropped and the prompt hangs forever with no error. Iterating the interface
+// consumes lines through its internal queue instead, so it doesn't race.
 const rl  = createInterface({ input: process.stdin, output: process.stdout });
 rl.on('SIGINT', () => { console.log(''); process.exit(0); });
-const ask = (prompt) => new Promise(resolve => rl.question(prompt, resolve));
+const rlIterator = rl[Symbol.asyncIterator]();
+const ask = async (prompt) => {
+  process.stdout.write(prompt);
+  const { value, done } = await rlIterator.next();
+  if (done) { console.log(''); process.exit(0); }
+  return value;
+};
 
 // ─── Schema fields per collection type ───────────────────────────────────────
 const SCHEMA = {
@@ -404,7 +423,7 @@ async function main() {
   const cfgSrc    = readFileSync(CONFIG_FILE, 'utf8');
   const exportM   = cfgSrc.match(/export const collections\s*=\s*\{([^}]+)\}/s);
   const existing  = exportM
-    ? [...exportM[1].matchAll(/(\w+)\s*:/g)].map(m => m[1])
+    ? [...exportM[1].matchAll(/(?:['"]([\w-]+)['"]|(\w+))\s*:/g)].map(m => m[1] ?? m[2])
     : [];
 
   console.log('');
@@ -466,7 +485,7 @@ async function main() {
   cfg = cfg.replace(MARKER, newBlock + MARKER);
   cfg = cfg.replace(
     /(export const collections\s*=\s*\{)([^}]+)(\};)/s,
-    (_, open, inner, close) => `${open}${inner.trimEnd()}\n  ${colName}: ${varName},\n${close}`
+    (_, open, inner, close) => `${open}${inner.trimEnd()}\n  ${toObjectKey(colName)}: ${varName},\n${close}`
   );
   writeFileSync(CONFIG_FILE, cfg, 'utf8');
   ok('usr/content.config.ts updated');

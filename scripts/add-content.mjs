@@ -24,9 +24,21 @@ const error = (...a) => { console.error(`${R}✖${X}  ${a.join(' ')}`); process.
 if (!existsSync(CONFIG_FILE)) error(`Cannot find ${CONFIG_FILE}`);
 
 // ─── Readline helper ──────────────────────────────────────────────────────────
+// Uses the readline interface as an async iterator rather than repeated
+// rl.question() calls: with piped/pasted (non-TTY) input, multiple lines can
+// arrive in a single chunk, and question()'s one-shot 'line' listener isn't
+// registered in time to catch answers past the first — they're silently
+// dropped and the prompt hangs forever with no error. Iterating the interface
+// consumes lines through its internal queue instead, so it doesn't race.
 const rl  = createInterface({ input: process.stdin, output: process.stdout });
 rl.on('SIGINT', () => { console.log(''); process.exit(0); });
-const ask = (prompt) => new Promise(resolve => rl.question(prompt, resolve));
+const rlIterator = rl[Symbol.asyncIterator]();
+const ask = async (prompt) => {
+  process.stdout.write(prompt);
+  const { value, done } = await rlIterator.next();
+  if (done) { console.log(''); process.exit(0); }
+  return value;
+};
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -34,7 +46,9 @@ const ask = (prompt) => new Promise(resolve => rl.question(prompt, resolve));
 function parseCollections(src) {
   const m = src.match(/export const collections\s*=\s*\{([^}]+)\}/s);
   if (!m) return [];
-  return [...m[1].matchAll(/(\w+)\s*:/g)].map(x => x[1]);
+  // Keys may be quoted (e.g. 'my-collection': ...) when the name isn't a
+  // valid bare identifier — see toObjectKey() in add-collection.mjs.
+  return [...m[1].matchAll(/(?:['"]([\w-]+)['"]|(\w+))\s*:/g)].map(x => x[1] ?? x[2]);
 }
 
 /** Count .md / .mdx files recursively in a directory */
@@ -81,6 +95,11 @@ function parseSchemaFields(src, colName) {
   return fields;
 }
 
+/** Escape a value for a YAML double-quoted scalar (backslash first, then quotes) */
+function yamlQuote(value) {
+  return `"${value.replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`;
+}
+
 /** Format a single frontmatter line for a given value and Zod kind */
 function toYamlLine(name, value, kind) {
   if (kind === 'boolean') {
@@ -90,10 +109,10 @@ function toYamlLine(name, value, kind) {
   if (kind === 'number') return `${name}: ${value}`;
   if (kind === 'array') {
     const items = value.split(',').map(s => s.trim()).filter(Boolean);
-    return `${name}: [${items.map(i => `"${i}"`).join(', ')}]`;
+    return `${name}: [${items.map(yamlQuote).join(', ')}]`;
   }
   if (kind === 'date') return `${name}: ${value}`;
-  return `${name}: "${value.replace(/"/g, '\\"')}"`;
+  return `${name}: ${yamlQuote(value)}`;
 }
 
 // ─── Main ─────────────────────────────────────────────────────────────────────
