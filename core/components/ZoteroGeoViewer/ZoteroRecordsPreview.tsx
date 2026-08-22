@@ -27,9 +27,11 @@ interface ZoteroTag {
 interface ZoteroRecordsPreviewProps {
   groupId: number;
   tag: ZoteroTag | null;
+  /** Maximum number of records to fetch/display (default: 1000) */
+  maxItems?: number;
 }
 
-export function ZoteroRecordsPreview({ groupId, tag }: ZoteroRecordsPreviewProps) {
+export function ZoteroRecordsPreview({ groupId, tag, maxItems = 1000 }: ZoteroRecordsPreviewProps) {
   const [records, setRecords] = useState<ZoteroItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -68,7 +70,7 @@ export function ZoteroRecordsPreview({ groupId, tag }: ZoteroRecordsPreviewProps
         let total: number | null = null;
         let hasNext = true;
 
-        while (hasNext) {
+        while (hasNext && all.length < maxItems) {
           const resp = await fetch(buildUrl(start), {
             headers: { Accept: "application/json" },
           });
@@ -101,10 +103,10 @@ export function ZoteroRecordsPreview({ groupId, tag }: ZoteroRecordsPreviewProps
           start += page.length;
 
           // Update progressively so the UI shows results while loading
-          setRecords([...all]);
+          setRecords(all.slice(0, maxItems));
         }
 
-        if (!cancelled) setRecords(all);
+        if (!cancelled) setRecords(all.slice(0, maxItems));
       } catch (err) {
         if (!cancelled) setError(err instanceof Error ? err.message : "Error fetching records");
       } finally {
@@ -116,7 +118,7 @@ export function ZoteroRecordsPreview({ groupId, tag }: ZoteroRecordsPreviewProps
     return () => {
       cancelled = true;
     };
-  }, [groupId, tag]);
+  }, [groupId, tag, maxItems]);
 
   if (!tag || !tag.main) return null;
   

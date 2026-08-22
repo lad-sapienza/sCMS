@@ -72,14 +72,9 @@ export function Gallery({
               
               pswpInstance.on('change', () => {
                 const currSlideElement = pswpInstance.currSlide?.data?.element;
-                let captionHTML = '';
-                if (currSlideElement) {
-                  const caption = currSlideElement.getAttribute('data-caption');
-                  if (caption) {
-                    captionHTML = caption;
-                  }
-                }
-                el.innerHTML = captionHTML || '';
+                // Captions are plain text (from captions.json or a filename) — use
+                // textContent, not innerHTML, so caption text can never be parsed as markup.
+                el.textContent = currSlideElement?.getAttribute('data-caption') || '';
               });
             },
           },

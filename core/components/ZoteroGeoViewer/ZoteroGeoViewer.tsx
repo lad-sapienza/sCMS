@@ -25,8 +25,8 @@ export function ZoteroGeoViewer(props: ZoteroGeoViewerProps) {
     layout = '8x4',
     mapHeight = '600px',
     mapCenter = '20.5,40.0,8',
-    tagAutocomplete: _tagAutocomplete = true,
-    maxItems: _maxItems = 1000
+    tagAutocomplete = true,
+    maxItems = 1000
   } = props;
 
   // Add error handling for required props
@@ -329,7 +329,6 @@ export function ZoteroGeoViewer(props: ZoteroGeoViewerProps) {
     features: featuresWithGeometry,
   };
 
-  // ...existing code...
   const totalItems = Object.values(data).reduce((sum, count) => sum + count, 0);
   const geoItems = featuresWithGeometry.reduce((sum, f) => sum + (f.properties.zoteroCount || 0), 0);
 
@@ -415,7 +414,7 @@ export function ZoteroGeoViewer(props: ZoteroGeoViewerProps) {
                 />
                 
                 {/* Simple autocomplete */}
-                {showDropdown && filteredSuggestions.length > 0 && (
+                {tagAutocomplete && showDropdown && filteredSuggestions.length > 0 && (
                   <div className="position-absolute w-100 mt-1 bg-white border rounded shadow" style={{zIndex: 1000, maxHeight: '12rem', overflowY: 'auto'}}>
                     {filteredSuggestions.map((tag, index) => (
                       <button
@@ -474,7 +473,7 @@ export function ZoteroGeoViewer(props: ZoteroGeoViewerProps) {
 
             {/* Zotero Records Preview */}
             {selectedTag && (
-              <ZoteroRecordsPreview groupId={groupId} tag={selectedTag} />
+              <ZoteroRecordsPreview groupId={groupId} tag={selectedTag} maxItems={maxItems} />
             )}
           </div>
         </div>

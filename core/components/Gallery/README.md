@@ -157,8 +157,6 @@ The component will automatically:
 
 ### Manual Image Array
 
-### Manual Image Array
-
 For more control, pass images directly:
 
 ```jsx
@@ -304,14 +302,6 @@ The component uses inline styles for the grid layout. To customize:
 }
 ```
 
-## Migration Notes
-
-This component was migrated from the Gatsby version with these changes:
-- **GraphQL → Props**: Images are now passed as props instead of GraphQL queries
-- **GatsbyImage → img**: Standard img tags replace GatsbyImage
-- **Path handling**: Removed automatic file system loading; images must be passed explicitly
-- **Astro integration**: Added Astro wrapper following the core component pattern
-
 ## Complete Example
 
 ```astro
@@ -319,26 +309,27 @@ This component was migrated from the Gatsby version with these changes:
 // In an Astro page
 import { Gallery } from '@core/components/Gallery';
 
+// Files here are served from usr/public/gallery/... at the site root — no /public prefix in the URL
 const galleryImages = [
   {
-    src: '/public/gallery/beach1.jpg',
-    thumb: '/public/gallery/thumbs/beach1.jpg',
+    src: '/gallery/beach1.jpg',
+    thumb: '/gallery/thumbs/beach1.jpg',
     width: 1920,
     height: 1280,
     alt: 'Beach sunset',
     caption: 'Beautiful sunset at the beach'
   },
   {
-    src: '/public/gallery/beach2.jpg',
-    thumb: '/public/gallery/thumbs/beach2.jpg',
+    src: '/gallery/beach2.jpg',
+    thumb: '/gallery/thumbs/beach2.jpg',
     width: 1920,
     height: 1280,
     alt: 'Beach waves',
     caption: 'Crashing waves'
   },
   {
-    src: '/public/gallery/beach3.jpg',
-    thumb: '/public/gallery/thumbs/beach3.jpg',
+    src: '/gallery/beach3.jpg',
+    thumb: '/gallery/thumbs/beach3.jpg',
     width: 1920,
     height: 1280,
     alt: 'Beach rocks',
@@ -363,14 +354,5 @@ const galleryImages = [
 
 ## Known Limitations
 
-- Images must be manually specified (no automatic directory scanning)
-- Thumbnails must be pre-generated
-- Full-size images should be optimized before uploading
-
-## Future Enhancements
-
-- [ ] Automatic thumbnail generation using Sharp
-- [ ] Directory-based image loading with glob patterns
-- [ ] Lazy loading for large galleries
-- [ ] Image optimization integration
-- [ ] Virtual scrolling for very large galleries
+- No separate thumbnail generation — `Gallery.astro`'s auto-loading uses the same file for `src` and `thumb` (Astro's own image processing still optimizes it, but there's no distinct low-res thumbnail variant)
+- No lazy loading or virtual scrolling for very large galleries — all images render into the grid at once

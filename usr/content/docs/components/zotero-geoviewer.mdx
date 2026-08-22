@@ -63,6 +63,34 @@ The `ZoteroGeoViewer` component connects to a public [Zotero](https://www.zotero
 
 ---
 
+<Example title="Autocomplete off, capped records preview" codeWidth='full'>
+  <Fragment slot="intro">
+    Set `tagAutocomplete={false}` to hide the suggestions dropdown while typing in the tag search box (you still get results on an exact/partial match). `maxItems` caps how many records the selected-tag preview list fetches and displays — useful for locations with very large libraries.
+  </Fragment>
+
+  <Fragment slot="code">
+  ```jsx
+  <ZoteroGeoViewer
+    groupId={336647} 
+    layout="vertical"
+    mapHeight="400px"
+    tagAutocomplete={false}
+    maxItems={5}
+    client:load />
+  ```
+  </Fragment>
+
+  <ZoteroGeoViewer
+    groupId={336647} 
+    layout="vertical"
+    mapHeight="400px"
+    tagAutocomplete={false}
+    maxItems={5}
+    client:load />
+</Example>
+
+---
+
 ## Features
 
 ### Geographical Visualization
@@ -135,7 +163,7 @@ The `ZoteroGeoViewer` component connects to a public [Zotero](https://www.zotero
 | `mapHeight` | `string` | — | CSS height for the map panel |
 | `mapCenter` | `string` | — | Initial center as `"lng,lat,zoom"` |
 | `tagAutocomplete` | `boolean` | `true` | Show autocomplete in tag search |
-| `maxItems` | `number` | — | Maximum items to fetch from Zotero API |
+| `maxItems` | `number` | `1000` | Maximum records to fetch/display in the selected-tag preview list |
 
 `LayoutType`: `'vertical' | '6x6' | '8x4' | '4x8' | '12x4' | 'horizontal'`
 

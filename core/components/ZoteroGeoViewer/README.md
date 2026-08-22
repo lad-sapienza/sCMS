@@ -66,8 +66,8 @@ export function MyPage() {
 | `layout` | `LayoutType` | `"8x4"` | Display layout configuration |
 | `mapHeight` | `string` | `"600px"` | Height of the map container |
 | `mapCenter` | `string` | `"20.5,40.0,8"` | Map center (lng,lat,zoom) |
-| `tagAutocomplete` | `boolean` | `true` | Enable tag autocomplete |
-| `maxItems` | `number` | `1000` | Maximum items to fetch |
+| `tagAutocomplete` | `boolean` | `true` | Show the autocomplete dropdown in tag search |
+| `maxItems` | `number` | `1000` | Maximum records to fetch/display in the selected-tag preview list |
 
 ### Layout Options
 
@@ -132,7 +132,7 @@ The component uses the public Zotero API:
 
 ## Styling
 
-The component uses Tailwind CSS classes and follows the s:CMS design system:
+The component uses Bootstrap 5 classes and follows the s:CMS design system:
 
 - **Color Scheme**: Blue for primary actions, gray for neutral elements
 - **Responsive Design**: Adapts to mobile and desktop layouts
@@ -180,7 +180,7 @@ The component uses Tailwind CSS classes and follows the s:CMS design system:
 
 - **React**: Component framework
 - **MapLibre GL**: Map rendering
-- **Tailwind CSS**: Styling
+- **Bootstrap 5**: Styling
 - **Zotero API**: Data source
 - **s:CMS Map Component**: Map integration
 
