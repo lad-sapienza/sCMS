@@ -331,6 +331,12 @@ export function Map({
       
       // Check which layers need to be loaded
       for (const layer of allVectorLayers) {
+        // Vector-tile sources (parsed from a mapStyle JSON) are rendered
+        // natively by MapLibre from the style's own tiles/sources — they
+        // aren't rows to fetch, so skip them here to avoid a spurious
+        // "unsupported source type" error on every load.
+        if (layer.source.type === 'vector') continue;
+
         const layerKey = JSON.stringify(layer.source);
         if (!loadedLayers.current.has(layerKey) && layer.visible !== false) {
           layersToLoad.push(layer);
