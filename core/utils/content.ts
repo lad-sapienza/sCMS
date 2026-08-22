@@ -4,6 +4,7 @@
  */
 
 import { getCollection } from 'astro:content';
+import Papa from 'papaparse';
 
 /**
  * Get all entries from a collection sorted by a field (agnostic to collection name)
@@ -54,22 +55,12 @@ export async function getSortedCollection(
  * Parse CSV string to JSON
  */
 export async function parseCSV(csvText: string): Promise<any[]> {
-  const lines = csvText.split('\n').filter(line => line.trim());
-  if (lines.length === 0) return [];
-
-  const headers = lines[0].split(',').map(h => h.trim());
-  const results = [];
-
-  for (let i = 1; i < lines.length; i++) {
-    const values = lines[i].split(',').map(v => v.trim());
-    const obj: any = {};
-    headers.forEach((header, index) => {
-      obj[header] = values[index];
-    });
-    results.push(obj);
-  }
-
-  return results;
+  const { data } = Papa.parse(csvText, {
+    header: true,
+    skipEmptyLines: true,
+    dynamicTyping: true,
+  });
+  return data as any[];
 }
 
 /**

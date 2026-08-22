@@ -12,10 +12,10 @@ export function buildDirectusUrl(
   source: DirectusSource['directus'],
   filter?: Record<string, any>
 ): string {
-  const endpoint = source.endpoint || import.meta.env.DIRECTUS_URL;
-  
+  const endpoint = source.endpoint || import.meta.env.PUBLIC_DIRECTUS_URL;
+
   if (!endpoint) {
-    throw new Error('Directus endpoint not configured. Set DIRECTUS_URL in .env');
+    throw new Error('Directus endpoint not configured. Set PUBLIC_DIRECTUS_URL in .env');
   }
 
   let url = `${endpoint}/items/${source.table}`;
@@ -57,7 +57,7 @@ export async function fetchFromDirectus<T = any>(
   filter?: Record<string, any>
 ): Promise<T> {
   const url = buildDirectusUrl(source, filter);
-  const token = source.token || import.meta.env.DIRECTUS_TOKEN;
+  const token = source.token || import.meta.env.PUBLIC_DIRECTUS_TOKEN;
 
   const headers: HeadersInit = {
     'Content-Type': 'application/json',

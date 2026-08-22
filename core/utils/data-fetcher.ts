@@ -117,6 +117,11 @@ export async function fetchData(source: SourceConfig): Promise<DataRow[]> {
         fetchedData = [apiData];
       }
       break;
+
+    default:
+      // e.g. 'vector' (MapLibre vector tile sources) — these are rendered
+      // directly by MapLibre from tiles, not fetched/converted to rows here.
+      throw new Error(`fetchData: unsupported source type "${(source as SourceConfig).type}"`);
   }
 
   return fetchedData;
