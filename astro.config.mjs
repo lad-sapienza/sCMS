@@ -6,6 +6,7 @@ import { fileURLToPath } from 'url';
 import expressiveCode from 'astro-expressive-code';
 import { pluginLineNumbers } from '@expressive-code/plugin-line-numbers';
 import rehypeSlug from 'rehype-slug';
+import { unified } from '@astrojs/markdown-remark';
 import { userConfig } from './usr/user.config.mjs';
 import { contentAssetsIntegration } from './core/integrations/contentAssetsIntegration.ts';
 
@@ -31,6 +32,13 @@ const coreAlias = {
 
 const coreDedupe = ['react', 'react-dom', 'react-dom/client', 'react/jsx-runtime', 'react/jsx-dev-runtime', 'scheduler', '@tanstack/react-table'];
 
+const {
+  rehypePlugins: userRehypePlugins,
+  remarkPlugins: userRemarkPlugins,
+  remarkRehype: userRemarkRehype,
+  ...userMarkdownConfig
+} = userConfig.markdown || {};
+
 export default defineConfig({
   site: userConfig.site ?? 'https://scms.lad-sapienza.it/',
   base: userConfig.base,
@@ -39,12 +47,12 @@ export default defineConfig({
   publicDir: fileURLToPath(new URL('./usr/public', import.meta.url)),
 
   markdown: {
-    rehypePlugins: [rehypeSlug],
-    ...(userConfig.markdown || {}),
-    rehypePlugins: [
-      rehypeSlug,
-      ...(userConfig.markdown?.rehypePlugins || []),
-    ],
+    ...userMarkdownConfig,
+    processor: unified({
+      remarkPlugins: [...(userRemarkPlugins || [])],
+      rehypePlugins: [rehypeSlug, ...(userRehypePlugins || [])],
+      ...(userRemarkRehype ? { remarkRehype: userRemarkRehype } : {}),
+    }),
   },
 
   integrations: [
