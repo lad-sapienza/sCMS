@@ -8,7 +8,6 @@ scripts/** merge=theirs
 package.json merge=theirs
 package-lock.json merge=theirs
 astro.config.mjs merge=theirs
-tailwind.config.js merge=theirs
 tsconfig.json merge=theirs
 
 # User files - preserve local customizations (ours)
@@ -21,4 +20,3 @@ usr/components/Example.astro merge=theirs
 
 # User configuration should always be preserved
 usr/user.config.mjs merge=ours
-src/usr/** merge=ours

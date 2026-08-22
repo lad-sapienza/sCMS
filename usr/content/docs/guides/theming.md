@@ -1,143 +1,99 @@
 ---
 title: Theming
 description: Customization and theming information for s:CMS
-order: 3
+order: 4
 ---
 
-# s:CMS Theming Guide
+s:CMS ships with [Bootstrap 5](https://getbootstrap.com/) as its base design system. Theming works by overriding Bootstrap's Sass/CSS variables and adding your own rules in a single stylesheet you own: `usr/styles/global.css`.
 
-s:CMS provides a flexible theming system that combines **CSS variables** with **Tailwind CSS** for maximum customization power.
-
-## Architecture Overview
+## Where styles live
 
 ```
-core/styles/global.css     → Framework design system & CSS variables
-usr/styles/user-theme.css  → Your custom overrides & styles  
-tailwind.config.js         → Core Tailwind theme with CSS variable integration
-usr/tailwind.user.config.js → Example user Tailwind extensions
+usr/styles/global.css   → your stylesheet — edit this
+core/                    → framework components (do not edit)
 ```
 
-## Quick Start
+`global.css` is imported once by `usr/layouts/BaseLayout.astro` and applies to the whole site. There is no separate "core" stylesheet to merge with — this file *is* your theme.
 
-### 1. Override CSS Variables
-Edit `usr/styles/user-theme.css` to override core design tokens:
+## Quick start
 
-```css
-:root {
-  --color-primary: #0066cc;        /* Your brand color */
-  --color-text: #2d3748;           /* Custom text color */
-  --font-sans: 'Inter', sans-serif; /* Custom typography */
-}
-```
+`global.css` already does three things out of the box; edit them directly:
 
-### 2. Use Bootstrap Utilities
-Thanks to Bootstrap 5 integration, you can now use:
+1. **Import a font** (optional) — the starter imports a Google Font:
+
+   ```css
+   @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+   ```
+
+2. **Import Bootstrap's compiled CSS**:
+
+   ```css
+   @import "bootstrap/dist/css/bootstrap.min.css";
+   ```
+
+3. **Override Bootstrap's CSS variables** — this is the main lever for brand colors, typography, and body styling:
+
+   ```css
+   :root {
+     --bs-primary: #6366f1;
+     --bs-secondary: #8b5cf6;
+     --bs-success: #06b6d4;
+     --bs-body-font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+     --bs-body-color: #334155;
+     --bs-body-bg: #fafafa;
+     --bs-heading-color: #1e1b4b;
+     --bs-border-color: #e7e5e4;
+   }
+   ```
+
+Because these are plain CSS custom properties (not a Sass build step), changes take effect immediately in the dev server — no rebuild of Bootstrap required.
+
+## Using Bootstrap utility classes
+
+With Bootstrap's CSS loaded, its utility classes are available everywhere in your Astro/MDX content:
 
 ```html
-<button class="btn btn-primary">Primary Button</button>
-<div class="text-primary border border-primary">Brand colored content</div>
-<h1 class="fw-bold">Styled with Bootstrap utilities</h1>
-```
-
-### 3. Extend Tailwind Theme
-Copy `usr/tailwind.user.config.js` to `usr/tailwind.config.js` and customize:
-
-```javascript
-export default {
-  theme: {
-    extend: {
-      colors: {
-        brand: { blue: '#0066cc', green: '#00a86b' },
-        success: '#10b981',
-      },
-      fontFamily: {
-        display: ['Inter', 'var(--font-sans)'],
-      }
-    }
-  }
-}
-```
-
-## Available Design Tokens
-
-### Colors (CSS Variables + Tailwind Classes)
-| Variable | Tailwind Class | Purpose |
-|----------|----------------|---------|
-| `--color-primary` | `bg-primary`, `text-primary`, `border-primary` | Brand color |
-| `--color-text` | `text-text` | Main text |
-| `--color-bg` | `bg-background` | Background |
-| `--color-border` | `border-border` | Borders |
-
-### Typography
-| Variable | Tailwind Class | Purpose |
-|----------|----------------|---------|
-| `--font-sans` | `font-sans` | Body text |
-| `--font-mono` | `font-mono` | Code text |
-
-### Custom Design Tokens
-| Variable | Tailwind Class | Purpose |
-|----------|----------------|---------|
-| `--radius-base` | `rounded-scms` | Component border radius |
-| `--shadow-focus` | `shadow-scms` | Focus states |
-
-## Component Classes
-
-s:CMS provides ready-to-use component classes that respect your theme:
-
-### Form Elements
-```html
-<input class="scms-input" />        <!-- Styled input with theme colors -->
-<select class="scms-select">        <!-- Styled select dropdown -->
-<button class="scms-btn-primary">   <!-- Primary button -->
-<button class="scms-btn-secondary"> <!-- Secondary button -->
-```
-
-### Advanced Usage
-```html
-<!-- Combine s:CMS classes with Tailwind utilities -->
-<button class="scms-btn-primary text-lg shadow-scms-lg">
-  Large primary button with custom shadow
-</button>
-
-<!-- Use CSS variables in custom styles -->
-<div style="background: linear-gradient(var(--color-primary), var(--color-primary-dark))">
-  Gradient using theme colors
+<button class="btn btn-primary">Primary button</button>
+<div class="text-primary border border-primary">Brand-colored content</div>
+<h1 class="fw-bold">Bold heading</h1>
+<div class="row g-3">
+  <div class="col-md-6">Half-width column</div>
 </div>
 ```
 
-## Best Practices
+See the [Bootstrap documentation](https://getbootstrap.com/docs/5.3/getting-started/introduction/) for the full utility and component reference.
 
-1. **Override CSS variables** for brand consistency across all components
-2. **Use Tailwind utilities** for layout, spacing, and custom styling  
-3. **Extend Tailwind theme** for additional utility classes
-4. **Combine both approaches** for maximum flexibility
+## Custom rules beyond variable overrides
 
-## Examples
+Anything Bootstrap's variables don't cover, write as plain CSS in `global.css`, after the imports. The starter includes examples for headings, buttons, cards, form controls, badges, and a mobile breakpoint — extend these or add your own selectors:
 
-### Brand Color Override
 ```css
-/* usr/styles/user-theme.css */
-:root {
-  --color-primary: #7c3aed;
-  --color-primary-hover: #6d28d9;
+.btn-primary {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  font-weight: 600;
+}
+
+.card {
+  border: none;
+  border-radius: 1.25rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+@media (max-width: 768px) {
+  h1 { font-size: 2rem; }
 }
 ```
 
-### Dark Theme
-```css
-:root {
-  --color-text: #f9fafb;
-  --color-bg: #111827;
-  --color-border: #374151;
-}
-```
+## Navigation bar
 
-### Custom Component
-```css
-.my-hero {
-  @apply bg-primary text-white p-8 rounded-scms;
-  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
-}
-```
+The top navigation (`BSNavbar`, `core/components/BSNavbar.tsx`) is a Bootstrap navbar rendered from the `menuItems` array in `usr/layouts/BaseLayout.astro` — see [Getting Started](getting-started.md) for how to edit the menu. It picks up the same `--bs-*` variables as the rest of the site, so no separate theming is needed for it.
 
-This hybrid approach gives you the power of utility-first CSS with the consistency of a design system!
+## Component-level styling
+
+Core components (`DataTb`, `Map`, `Gallery`, etc.) render mostly plain HTML with Bootstrap classes, so global overrides in `global.css` apply to them too. A few components pull in their own third-party CSS (e.g. MapLibre GL, PhotoSwipe) for functionality that Bootstrap doesn't cover (map controls, the lightbox) — those are scoped to the component and won't conflict with your theme.
+
+## Best practices
+
+1. **Override `--bs-*` variables first** — it's the fastest way to get consistent brand colors across every Bootstrap-based component.
+2. **Add custom CSS after the imports** in `global.css`, so it can override Bootstrap's defaults.
+3. **Don't edit `core/`** — component markup lives there and is updated by `npm run update-scms`; keep all visual customization in `usr/styles/global.css`.

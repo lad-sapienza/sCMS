@@ -1,7 +1,7 @@
 ---
 title: Updating
 description: How to update the s:CMS core system
-order: 4
+order: 6
 ---
 
 This guide explains how to update your s:CMS installation to the latest version while preserving your customizations.
@@ -9,13 +9,13 @@ This guide explains how to update your s:CMS installation to the latest version 
 ## TL;DR - Quick Update
 
 ```bash
-npm run update-core
+npm run update-scms
 ```
 
 This automated script will:
 1. Create a backup branch
-2. Fetch latest changes from upstream
-3. Merge updates while protecting your `usr/` folder
+2. Fetch the latest changes from upstream
+3. Replace framework files with the upstream version while protecting your `usr/` folder
 4. Install new dependencies if needed
 
 ## First Time Setup
@@ -26,47 +26,50 @@ If you haven't set up the update system yet:
 npm run setup-upstream
 ```
 
-This configures the connection to the s:CMS repository for receiving updates.
+This adds an `upstream` git remote pointing at `github.com/lad-sapienza/sCMS`, so `npm run update-scms` has something to fetch from. You only need to run it once per clone.
 
 ## What Gets Updated vs. What Stays Yours
 
-### ✅ Always Updated (Framework Code)
-- `core/**` - All framework components, layouts, and utilities
-- Core package dependencies
+### ✅ Always Updated (Replaced by the upstream version)
+- `core/**` — all framework components, layouts, and utilities
+- `scripts/**` — the update/scaffolding scripts themselves
+- Shared config files: `package.json`, `package-lock.json`, `astro.config.mjs`, `tsconfig.json`
+- Any other tracked file outside `usr/` and `.github/`
 
-### 🛡️ Always Protected (Your Content)
-- `usr/**` - All your content, components, and customizations
-- `usr/user.config.mjs` - Your site configuration
-- `usr/scripts/local-packages.yml` - Your site-specific npm packages (see below)
+### 🛡️ Always Protected (Never touched by the script)
+- `usr/**` — all your content, components, layouts, and customizations
+- `usr/user.config.mjs` — your site configuration
+- `usr/scripts/local-packages.yml` — your site-specific npm packages (see below)
 
-### ⚠️ May Need Review (Shared Files)
-- `package.json` - Dependencies may need merging
-- `astro.config.mjs` - Usually auto-merges correctly
-- `.github/workflows/**` - Deployment configurations
-- `tsconfig.json`, `tailwind.config.js` - Build configurations
+### ⚠️ Partially Protected
+- `.github/**` — your own workflow files (e.g. `deploy.yml`) are preserved, but `.github/copilot-instructions.md` is always taken from upstream.
+
+Unlike a typical framework updater, `update-scms.sh` does **not** perform a `git merge` and there is no field-by-field merging of `package.json` or `astro.config.mjs` — those files are replaced outright with the upstream version. That's the reason `usr/scripts/local-packages.yml` exists (see below): it's the one place your own npm dependencies survive an update.
 
 ## Update Process Details
 
 ### Step 1: Prepare Your Environment
 
 Before updating, ensure:
-- All changes are committed: `git status`
+- All changes are committed: `git status` (the script refuses to run with uncommitted changes)
 - Your site builds successfully: `npm run build`
-- (Optional) Test your site: `npm run dev`
 
 ### Step 2: Run Update Script
 
 ```bash
-npm run update-core
+npm run update-scms
 ```
 
 The script will:
-1. **Create backup** - Saves current state to a dated branch
-2. **Fetch changes** - Downloads latest s:CMS updates
-3. **Show preview** - Lists what will change
-4. **Ask confirmation** - You decide whether to proceed
-5. **Merge updates** - Integrates changes while protecting `usr/`
-6. **Install dependencies** - Updates packages if needed
+1. **Create a backup branch** — `backup-before-update-<timestamp>`, so you can always roll back
+2. **Fetch upstream** and show a preview of the incoming commits
+3. **Ask for confirmation** before touching anything
+4. **Snapshot `usr/` and `.github/`**, then check out every file from the upstream branch
+5. **Restore your snapshot** of `usr/` and (mostly) `.github/` on top, so those stay yours
+6. **Flag orphaned files** — anything that exists locally but was removed upstream — and offer to delete them
+7. **Commit** the result
+8. **Reinstall dependencies** if `package.json` changed, and reinstall your own packages from `usr/scripts/local-packages.yml`
+9. **Offer to push** the update to `origin`
 
 ## Site-Specific Packages
 
@@ -135,79 +138,19 @@ If something went wrong:
 git reset --hard backup-before-update-20260202-123456
 ```
 
-## Handling Merge Conflicts
+## Since There's No Merge — What About Conflicts?
 
-If the update script reports conflicts, don't panic! Here's how to resolve them:
+The scripted update never produces `git merge` conflict markers: `core/` and shared config files are simply overwritten with upstream's version, and `usr/` is simply restored from your snapshot. There is nothing to resolve by hand in the normal case.
 
-### package.json Conflicts
+What you *do* need to check after updating:
 
-**Strategy:** Keep your dependencies + add new framework dependencies
+- **Your own npm dependencies** — make sure everything you rely on is listed in `usr/scripts/local-packages.yml` (see above), or it will be silently dropped by the next update.
+- **Custom edits inside `core/`** — if you ever modified a file in `core/` directly (not recommended), those edits are lost on update. Keep customizations in `usr/` instead.
+- **Orphaned files** — the script warns you about files that exist locally but were removed upstream, and asks before deleting them.
 
-```bash
-# 1. Open package.json
-# 2. Look for conflict markers: <<<<<<<, =======, >>>>>>>
-# 3. Merge dependencies from both sections
-# 4. Remove conflict markers
-# 5. Save and run:
-git add package.json
-npm install
-git commit
-```
+### Manual Update (Alternative)
 
-**Example:**
-```json
-<<<<<<< HEAD (your version)
-{
-  "dependencies": {
-    "astro": "^5.0.0",
-    "my-custom-package": "^1.0.0"
-  }
-}
-=======
-{
-  "dependencies": {
-    "astro": "^5.1.0",
-    "photoswipe": "^5.4.4"
-  }
-}
->>>>>>> upstream/scms
-
-// Resolve to:
-{
-  "dependencies": {
-    "astro": "^5.1.0",           // Use newer version
-    "my-custom-package": "^1.0.0", // Keep your addition
-    "photoswipe": "^5.4.4"         // Add new framework dep
-  }
-}
-```
-
-### astro.config.mjs Conflicts
-
-**Usually auto-merges** due to the coreConfig + userConfig pattern. If not:
-
-1. Keep the merge structure
-2. Ensure your `usr/user.config.mjs` imports are preserved
-3. Verify the merge function is intact
-
-### Other Config Files
-
-Review changes and decide case-by-case:
-- `.github/workflows/**` - Keep your deployment setup, review new features
-- `tsconfig.json` - Usually safe to accept upstream version
-- `tailwind.config.js` - Merge your customizations with new settings
-
-## Release Notes & Migration Guides
-
-Always check the [CHANGELOG.md](../CHANGELOG.md) after updating for:
-- Breaking changes
-- New features
-- Manual migration steps
-- Deprecated APIs
-
-## Manual Update (Alternative)
-
-If you prefer manual control:
+If you prefer a real `git merge` instead of the scripted checkout/restore — for example to review changes hunk-by-hunk before accepting them — you can merge upstream directly. This is the one path where `.gitattributes`' `merge=ours` / `merge=theirs` strategies actually apply (they tell git to auto-resolve `usr/**` in your favor and `core/**` in upstream's favor during a real merge):
 
 ```bash
 # 1. Create backup
@@ -216,10 +159,10 @@ git checkout -b backup-before-update
 # 2. Fetch upstream
 git fetch upstream main
 
-# 3. Merge (protecting usr/)
+# 3. Merge (usr/** kept via .gitattributes, core/** taken from upstream)
 git merge upstream/main
 
-# 4. Resolve any conflicts
+# 4. Resolve any remaining conflicts
 # ... edit files ...
 git add .
 git commit
@@ -247,11 +190,11 @@ git commit -m "Save work before update"
 
 ### Update fails but you want to retry
 
-Reset and try again:
+If you used the manual `git merge` alternative and want to abort it:
 ```bash
 git merge --abort
-npm run update-core
 ```
+The scripted `npm run update-scms` path doesn't leave a merge in progress — if it fails partway, restore from the backup branch it created and try again.
 
 ### Completely undo an update
 
@@ -262,11 +205,11 @@ git reset --hard backup-before-update-YYYYMMDD-HHMMSS
 
 ## Best Practices
 
-1. **Update regularly** - Smaller, frequent updates are easier than large jumps
-2. **Read changelogs** - Know what's changing before you update
-3. **Test locally first** - Always test after updating before deploying
+1. **Update regularly** - Smaller, frequent updates are easier to review than large jumps
+2. **Check the upstream repo's commit history / releases** before updating, to know what's changing
+3. **Test locally first** - Always run `npm run dev` after updating before deploying
 4. **Keep backups** - The script creates them automatically
-5. **Don't edit core/** - Make customizations in `usr/` only
+5. **Don't edit `core/`** - Make customizations in `usr/` only
 
 ## File Ownership Reference
 
@@ -274,18 +217,18 @@ git reset --hard backup-before-update-YYYYMMDD-HHMMSS
 .
 ├── core/                    # ❌ Never edit (framework code)
 │   ├── components/          # Framework components
-│   ├── layouts/             # Base layouts
-│   └── utils/               # Framework utilities
+│   ├── integrations/        # Framework Astro integrations
+│   └── utils/                # Framework utilities
 ├── usr/                     # ✅ Your code (always protected)
-│   ├── content/             # Your content
-│   ├── pages/               # Your pages
-│   ├── components/          # Your components
-│   ├── layouts/             # Your custom layouts
-│   └── user.config.mjs      # Your settings
-├── astro.config.mjs         # ⚠️ Merges automatically
-├── package.json             # ⚠️ May need manual merge
-├── tsconfig.json            # ⚠️ Review on update
-└── .github/workflows/       # ⚠️ Your deployment (review updates)
+│   ├── content/              # Your content
+│   ├── pages/                 # Your pages
+│   ├── components/            # Your components
+│   ├── layouts/                # Your custom layouts
+│   └── user.config.mjs         # Your settings
+├── astro.config.mjs         # ❌ Replaced by upstream on every update
+├── package.json              # ❌ Replaced by upstream (use local-packages.yml for your own deps)
+├── tsconfig.json              # ❌ Replaced by upstream on every update
+└── .github/workflows/          # 🛡️ Your deployment files (preserved)
 ```
 
 ## Getting Help
@@ -293,8 +236,7 @@ git reset --hard backup-before-update-YYYYMMDD-HHMMSS
 If you encounter issues:
 1. Check [Discussions](https://github.com/lad-sapienza/sCMS/discussions)
 2. Review [Issues](https://github.com/lad-sapienza/sCMS/issues)
-3. Ask in the community
 
 ---
 
-**Remember:** The `core/usr` separation is designed to make updates safe and painless. Your customizations in `usr/` are always protected! 🛡️
+**Remember:** The `core/usr` separation is designed to make updates safe and predictable. Your customizations in `usr/` are always protected!

@@ -33,6 +33,7 @@ const coreDedupe = ['react', 'react-dom', 'react-dom/client', 'react/jsx-runtime
 
 export default defineConfig({
   site: userConfig.site ?? 'https://scms.lad-sapienza.it/',
+  base: userConfig.base,
   output: 'static',
   srcDir: fileURLToPath(new URL('./usr', import.meta.url)),
   publicDir: fileURLToPath(new URL('./usr/public', import.meta.url)),

@@ -1,7 +1,7 @@
 ---
 title: Deployment & Updates
 description: Deployment and hosting guides for s:CMS
-order: 2
+order: 5
 ---
 
 ## Quick Start - Deploy Your Site
@@ -12,78 +12,22 @@ s:CMS can be deployed to any static hosting platform. Choose your preferred opti
 
 **Option 1: GitHub Actions (Recommended)**
 
+The template already ships a working workflow at `.github/workflows/deploy.yml` (Node 22, builds with `npm run build`, deploys `dist/` via `actions/deploy-pages`). You normally only need to:
+
 1. **Configure your site URL** in `usr/user.config.mjs`:
     ```js
-    export const siteMetadata = {
-      siteUrl: 'https://username.github.io/repo-name',
+    export const userConfig = {
+      site: 'https://username.github.io/repo-name',
+      base: '/repo-name', // omit if deploying to a custom domain or a user/org root site
     }
     ```
 
-2. **Create GitHub Actions workflow**:
-   Create `.github/workflows/deploy.yml`:
-
-    ```yaml
-    name: Deploy to GitHub Pages
-
-    on:
-      # Runs on pushes targeting the default branch
-      push:
-        branches: ["main"]
-      
-      # Allows you to run this workflow manually from the Actions tab
-      workflow_dispatch:
-
-    # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-
-    # Allow only one concurrent deployment
-    concurrency:
-      group: "pages"
-      cancel-in-progress: false
-
-    jobs:
-      build:
-        runs-on: ubuntu-latest
-        steps:
-          - name: Checkout
-            uses: actions/checkout@v4
-          
-          - name: Setup Node
-            uses: actions/setup-node@v4
-            with:
-              node-version: "20"
-              cache: npm
-          
-          - name: Install dependencies
-            run: npm ci
-          
-          - name: Build with Astro
-            run: npm run build
-          
-          - name: Upload artifact
-            uses: actions/upload-pages-artifact@v3
-            with:
-              path: ./dist
-
-      deploy:
-        environment:
-          name: github-pages
-          url: ${{ steps.deployment.outputs.page_url }}
-        runs-on: ubuntu-latest
-        needs: build
-        steps:
-          - name: Deploy to GitHub Pages
-            id: deployment
-            uses: actions/deploy-pages@v4
-    ```
-
-3. **Enable GitHub Pages** in repo settings:
+2. **Enable GitHub Pages** in repo settings:
    - Settings → Pages → Source: GitHub Actions
 
-4. **Push to GitHub** - automatic deployment on every push
+3. **Push to GitHub** - automatic deployment on every push
+
+If you need to customize the workflow (different Node version, extra build steps, environment secrets), edit `.github/workflows/deploy.yml` directly — it lives in `.github/`, which is preserved across `npm run update-scms` runs (see [Updating](updating.md)).
 
 **Option 2: Manual Build & Deploy**
 

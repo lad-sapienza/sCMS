@@ -9,7 +9,7 @@ A static site Content Management System built on [Astro](https://astro.build/), 
 - **Data Tables** — sortable, filterable, paginated tables from CSV, JSON, API, or Directus
 - **Image Galleries** — responsive galleries with PhotoSwipe lightbox
 - **Table of Contents** — auto-generated from page headings with smooth scrolling
-- **Diagrams** — Mermaid diagram support
+- **Syntax-highlighted code blocks** — via [Expressive Code](https://expressive-code.com/), with line numbers
 - **Directus Integration** — connect to a [Directus](https://directus.io/) instance for dynamic content
 - **SEO** — meta tags, Open Graph, and JSON-LD structured data
 - **Fast by default** — 100% static output via Astro
@@ -170,6 +170,9 @@ import { DataTb, Map, Gallery } from '@core';
 | `SEO` | Meta tags, Open Graph, JSON-LD | [seo.md](usr/content/docs/components/seo.md) |
 | `TableOfContents` | Auto-generated TOC from headings | [tableofcontents.md](usr/content/docs/components/tableofcontents.md) |
 | `ZoteroGeoViewer` | Zotero library visualised on a map | [zotero-geoviewer.mdx](usr/content/docs/components/zotero-geoviewer.mdx) |
+| `RecordProvider`, `Field`, `Image`, `RecordFetcher`, `useRecordFetcher` | Build single-record detail pages against Directus | [record.md](usr/content/docs/components/record.md) |
+
+`SearchUI`, `SearchUISimple`, and `SearchUIAdvanced` (the field/operator/value search interface used by `Map`'s `searchInFields`) are also exported from `@core` for building custom search UIs — see the [Vector Layer Search section](usr/content/docs/components/map.mdx) of the Map docs.
 
 ---
 

@@ -178,38 +178,7 @@ const menuItems = [
 
 **6a.** In your repository on GitHub, go to **Settings → Pages**. Under "Source", select **"GitHub Actions"**.
 
-**6b.** In your code editor, create the file `.github/workflows/deploy.yml` with this content:
-
-```yaml
-name: Deploy to GitHub Pages
-
-on:
-  push:
-    branches: [main]
-
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-      - run: npm install
-      - run: npm run build
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist/
-      - id: deployment
-        uses: actions/deploy-pages@v4
-```
+**6b.** The template already includes a working deploy workflow at `.github/workflows/deploy.yml` — you don't need to create anything. It builds with `npm run build` and publishes `dist/` on every push to `main`. Open it if you want to customize the Node version or add build steps.
 
 **6c.** If your repository is not at the root of a domain (e.g. it will live at `https://username.github.io/my-site` rather than `https://username.github.io`), open `usr/user.config.mjs` and also set the `base` path:
 

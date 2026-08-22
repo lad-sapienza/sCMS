@@ -1,195 +1,62 @@
 ---
 title: Architecture
 description: s:CMS system architecture and design patterns
-order: 1
+order: 2
 ---
 
-# s:CMS Update & Deployment System
+# Architecture
 
-## Overview
+s:CMS separates **framework code** from **your site** so that framework updates never overwrite your work.
 
-s:CMS uses a **core/usr separation architecture** that allows you to:
-- ✅ Receive framework updates without losing customizations
-- 🛡️ Keep your content and configurations protected
-- 🚀 Deploy to any platform (GitHub Pages, Netlify, Vercel, etc.)
-
-## Quick Commands
-
-```bash
-# One-time setup (after creating from template)
-npm run setup-upstream
-
-# Update to latest s:CMS version
-npm run update-core
-
-# Deploy
-git push  # Auto-deploys via GitHub Actions
-```
-
-## File Structure
+## The core / usr split
 
 ```
-s:CMS/
-├── core/              # ❌ Framework code (receives updates)
-│   ├── components/    # React & Astro components
-│   ├── layouts/       # Base layouts
-│   └── utils/         # Framework utilities
+sCMS/
+├── core/                      # Framework — do not edit
+│   ├── components/            # DataTb, Map, Gallery, SEO, TableOfContents, Record, …
+│   ├── integrations/          # Astro integrations (content assets, Directus loader)
+│   ├── utils/                 # Directus / data-fetching helpers
+│   └── types/                 # TypeScript definitions
 │
-├── usr/               # ✅ Your code (always protected)
-│   ├── content/       # Your content (MDX, blog posts)
-│   ├── pages/         # Your pages
-│   ├── components/    # Your custom components
-│   ├── layouts/       # Your custom layouts
-│   ├── public/        # Your static assets
-│   └── user.config.mjs # Your site configuration
+├── usr/                       # Your site — always preserved
+│   ├── content.config.ts      # Collection schemas (Zod)
+│   ├── user.config.mjs        # Site configuration
+│   ├── content/                # Your content (blog, docs, data, …)
+│   ├── components/             # Your custom components
+│   ├── layouts/                 # Your layouts
+│   ├── pages/                   # Your routes
+│   ├── public/                  # Static assets
+│   └── styles/global.css        # Your stylesheet
 │
-├── scripts/           # Update automation scripts
-│   ├── setup-upstream.sh
-│   └── update-core.sh
-│
-├── docs/
-│   ├── UPDATING.md    # Detailed update guide
-│   └── DEPLOYMENT.md  # Deployment instructions
-│
-└── .gitattributes     # Protects usr/ during merges
+├── scripts/                    # Scaffolding & update automation
+├── astro.config.mjs             # Astro config — imports both core integrations and usr settings
+├── tsconfig.json
+└── package.json
 ```
 
-## How It Works
+- **`core/`** contains every reusable component, integration, and utility. It's what `npm run update-scms` overwrites when you pull a new s:CMS release.
+- **`usr/`** contains everything specific to your site: content, pages, layouts, styling, and configuration. It is never touched by the update script.
+- Components are consumed from `core/` via the `@core` import alias (configured in `astro.config.mjs` / `tsconfig.json`), so your MDX files write `import { DataTb } from '@core'` rather than a relative path into `core/`.
 
-### 1. Protected Folders
-`.gitattributes` tells git to preserve `usr/**` during merges:
-```
-usr/** merge=ours
-```
-
-### 2. Update Script
-`npm run update-core` automates:
-1. Creates backup branch
-2. Fetches latest s:CMS release
-3. Merges with `usr/` protection
-4. Installs new dependencies
-5. Shows what changed
-
-### 3. Merged Configs
-`astro.config.mjs` combines core + user settings:
-```js
-import coreConfig from './core/core.config.mjs'
-import userConfig from './usr/user.config.mjs'
-export default merge(coreConfig, userConfig)
-```
-
-## Update Workflow
-
-```
-┌─────────────────────────────────────────┐
-│ 1. Run: npm run update-core             │
-└─────────────────────────────────────────┘
-                    ↓
-┌─────────────────────────────────────────┐
-│ 2. Script creates backup branch         │
-│    backup-before-update-TIMESTAMP       │
-└─────────────────────────────────────────┘
-                    ↓
-┌─────────────────────────────────────────┐
-│ 3. Fetches latest from upstream         │
-│    github.com/lad-sapienza/sCMS         │
-└─────────────────────────────────────────┘
-                    ↓
-┌─────────────────────────────────────────┐
-│ 4. Shows preview of changes             │
-│    You confirm to proceed               │
-└─────────────────────────────────────────┘
-                    ↓
-┌─────────────────────────────────────────┐
-│ 5. Merges updates                       │
-│    • core/ updated                      │
-│    • usr/ protected                     │
-│    • configs merged                     │
-└─────────────────────────────────────────┘
-                    ↓
-┌─────────────────────────────────────────┐
-│ 6. Installs new dependencies            │
-│    npm install (if package.json changed)│
-└─────────────────────────────────────────┘
-                    ↓
-┌─────────────────────────────────────────┐
-│ 7. Test: npm run dev                    │
-│    If OK: delete backup branch          │
-│    If issues: git reset --hard backup   │
-└─────────────────────────────────────────┘
-```
-
-## Deployment Options
-
-### GitHub Pages (Included)
-- ✅ Workflow already configured: `.github/workflows/deploy.yml`
-- ✅ Push to main → automatic deployment
-- Set repo to public or GitHub Pro for private repos
-
-### Other Platforms
-- **Netlify**: Build command `npm run build`, Publish dir `dist`
-- **Vercel**: Auto-detects Astro, just connect repo
-- **Cloudflare Pages**: Same as Netlify
-- **Traditional hosting**: Upload `dist/` folder after `npm run build`
+This is a convention enforced by the update tooling, not a hard technical boundary — nothing stops you from editing files inside `core/`, but doing so means your changes will be silently overwritten (or need manual reconciliation) the next time you run `npm run update-scms`. Keep all customization in `usr/`.
 
 ## Configuration
 
-### Site URL
-Edit `usr/user.config.mjs`:
-```js
-export const siteMetadata = {
-  siteUrl: 'https://yourdomain.com',
-  title: 'Your Site Title',
-  // ... other settings
-}
-```
+`astro.config.mjs` at the project root wires together the framework's Astro integrations (from `core/integrations/`) with your site settings from `usr/user.config.mjs`. You generally don't need to edit `astro.config.mjs` directly — site-level settings (URL, base path, metadata) belong in `usr/user.config.mjs`.
 
-### Astro Settings
-Edit `usr/user.config.mjs`:
-```js
-export const userConfig = {
-  integrations: [
-    // Your custom integrations
-  ],
-  // Other Astro config overrides
-}
-```
+## Content collections
 
-## Handling Merge Conflicts
+Collections are declared with Zod schemas in `usr/content.config.ts`. Each collection maps to a folder under `usr/content/` and gets a listing + detail route under `usr/pages/`. See [Managing Content](managing-content.md) for the full workflow, including the `npm run add-collection` / `npm run add-content` scaffolding scripts.
 
-If `package.json` conflicts occur:
-1. Keep your dependencies
-2. Add new framework dependencies
-3. Update shared dependencies to newer versions
+## Keeping the core up to date
 
-Example merge:
-```json
-// Your version + upstream version = merged result
-{
-  "dependencies": {
-    "astro": "^5.1.0",          // Updated version
-    "my-package": "^1.0.0",     // Your addition
-    "photoswipe": "^5.4.4"      // New framework dep
-  }
-}
-```
+Framework updates are pulled with `npm run update-scms`, which fetches the latest `core/` (and other shared files) from the upstream `lad-sapienza/sCMS` repository while leaving `usr/` untouched. See [Updating](updating.md) for the full mechanics, backup/rollback process, and how to handle your own npm dependencies across updates.
 
-## Best Practices
+## Deployment
 
-1. ✅ **Never edit `core/`** - Framework receives updates
-2. ✅ **Customize in `usr/`** - Always protected
-3. ✅ **Update regularly** - Easier than large jumps
-4. ✅ **Test after updating** - Run `npm run dev`
-5. ✅ **Read changelogs** - Know what's changing
+s:CMS builds to a static `dist/` folder (`npm run build`) that can be hosted anywhere — GitHub Pages, Netlify, Vercel, Cloudflare Pages, or a plain file server. See [Deployment](deployment.md) for platform-specific instructions.
 
-## For More Details
-
-- 📖 [Complete Update Guide](docs/UPDATING.md)
-- 🚀 [Deployment Instructions](docs/DEPLOYMENT.md)
-- 🔧 [Configuration Guide](usr/README.md)
-
-## Support
+## Getting help
 
 - [GitHub Discussions](https://github.com/lad-sapienza/sCMS/discussions)
 - [Issue Tracker](https://github.com/lad-sapienza/sCMS/issues)
-- [Documentation](https://github.com/lad-sapienza/sCMS#readme)
