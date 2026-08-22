@@ -2,7 +2,6 @@
  * Gallery Component Exports
  */
 
-export { Gallery } from './Gallery';
-export { GalleryMdx } from './GalleryMdx';
+export { default as Gallery } from './Gallery.astro';
 export type { GalleryProps, GalleryImage } from './types';
-export { sortImages, getFileName, formatFilename, processGalleryImages } from './galleryUtils';
+export { sortImages, getFileName, formatFilename } from './galleryUtils';

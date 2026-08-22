@@ -1,6 +1,8 @@
 /**
  * Utility functions for Gallery component
  */
+import { z } from 'zod';
+import * as manifest from 'virtual:scms/galleries';
 import type { GalleryImage } from './types';
 
 /**
@@ -37,42 +39,32 @@ function getBaseFilename(filename: string): string {
 }
 
 /**
- * Apply custom captions from a captions object
- * Uses fuzzy matching to handle different image resolutions
- * Falls back to filename-based captions if not found
+ * Build a caption lookup with multiple keys for fuzzy matching (exact
+ * filename, filename without extension, filename without a resolution
+ * suffix), keyed by the *source* filename as written in captions.json.
  */
-export function applyCaptions(
-  images: GalleryImage[],
-  captions?: Record<string, string>
-): GalleryImage[] {
-  if (!captions) return images;
-
-  // Create lookup map with multiple keys for fuzzy matching
-  const captionLookup = new Map<string, string>();
+function buildCaptionLookup(captions: Record<string, string>): Map<string, string> {
+  const lookup = new Map<string, string>();
   Object.entries(captions).forEach(([key, value]) => {
-    const baseKey = getBaseFilename(key);
-    captionLookup.set(baseKey, value); // Base filename (fuzzy match)
-    captionLookup.set(key, value); // Exact filename match
-    captionLookup.set(key.replace(/\.[^.]+$/, ''), value); // Filename without extension
+    lookup.set(getBaseFilename(key), value);
+    lookup.set(key, value);
+    lookup.set(key.replace(/\.[^.]+$/, ''), value);
   });
+  return lookup;
+}
 
-  return images.map(img => {
-    // Extract filename from Astro-processed path
-    const srcParts = img.src.split('/');
-    const srcFilename = srcParts[srcParts.length - 1].split('?')[0];
-    const filenameNoExt = srcFilename.replace(/\.[^.]+$/, '');
-    const baseFilename = getBaseFilename(srcFilename);
-    
-    // Try matching: exact → no ext → base (fuzzy)
-    const customCaption = 
-      captionLookup.get(srcFilename) ||
-      captionLookup.get(filenameNoExt) ||
-      captionLookup.get(baseFilename);
-    
-    return customCaption
-      ? { ...img, caption: customCaption, alt: customCaption }
-      : img;
-  });
+/**
+ * Look up a caption for a source filename (exact → no ext → fuzzy base match).
+ *
+ * Must be matched against the *original* source filename (from the
+ * import.meta.glob key), not the Astro-processed `src` — Astro renames
+ * output files to `name.HASH.ext`, which would never match a captions.json
+ * key written against the original filename.
+ */
+function lookupCaption(sourceFilename: string, lookup: Map<string, string>): string | undefined {
+  const noExt = sourceFilename.replace(/\.[^.]+$/, '');
+  const base = getBaseFilename(sourceFilename);
+  return lookup.get(sourceFilename) ?? lookup.get(noExt) ?? lookup.get(base);
 }
 
 /**
@@ -88,48 +80,107 @@ export function sortImages(images: GalleryImage[], reverse: boolean = false): Ga
   return reverse ? sorted.reverse() : sorted;
 }
 
+const captionsSchema = z.record(z.string(), z.string());
+
 /**
- * Process image modules from import.meta.glob into GalleryImage format
- * Use this in MDX frontmatter to prepare images for Gallery component
- * 
- * @example
- * ```tsx
- * // In MDX frontmatter:
- * import { processGalleryImages } from '@core/components/Gallery';
- * 
- * export const images = import.meta.glob('./gallery/*.{jpg,jpeg,png,gif,webp,avif}', { eager: true });
- * 
- * // In content:
- * <GalleryMdx images={images} client:idle />
- * ```
+ * Validate a raw captions.json payload. Logs a warning and returns undefined
+ * (falling back to filename-based captions) rather than throwing, so a
+ * malformed captions.json degrades gracefully instead of breaking the build.
  */
-export function processGalleryImages(
-  imageModules: Record<string, any>,
-  options?: {
-    reverseSorting?: boolean;
-    captions?: Record<string, string>;
+function parseCaptions(raw: unknown, source: string): Record<string, string> | undefined {
+  const result = captionsSchema.safeParse(raw);
+  if (!result.success) {
+    console.warn(`[Gallery] Invalid captions.json at "${source}" — ignoring custom captions.`, result.error.message);
+    return undefined;
   }
-): GalleryImage[] {
-  const { reverseSorting = false, captions } = options || {};
-  
-  const images = Object.entries(imageModules).map(([filepath, module]) => {
-    const img = module.default;
-    const filename = getFileName(filepath);
-    return {
-      src: img.src,
-      thumb: img.src,
-      width: img.width,
-      height: img.height,
-      alt: formatFilename(filename),
-      caption: formatFilename(filename)
-    } as GalleryImage;
+  return result.data;
+}
+
+function unwrapModule<T>(mod: { default: T } | T): T {
+  return (mod as { default: T }).default ?? (mod as T);
+}
+
+function rawFileName(filepath: string): string {
+  return filepath.split('/').pop() ?? filepath;
+}
+
+function moduleToGalleryImage(
+  filepath: string,
+  mod: { default: { src: string; width: number; height: number } },
+  captionLookup?: Map<string, string>
+): GalleryImage {
+  const img = unwrapModule(mod);
+  const custom = captionLookup ? lookupCaption(rawFileName(filepath), captionLookup) : undefined;
+  const label = custom ?? formatFilename(getFileName(filepath));
+  return {
+    src: img.src,
+    thumb: img.src,
+    width: img.width,
+    height: img.height,
+    alt: label,
+    caption: label,
+  };
+}
+
+const normalizePath = (pathname: string): string => pathname.replace(/\/$/, '');
+
+const COLOCATED_GALLERY_PATTERN = /\/(pages|content)(.+)\/gallery\//;
+const SHARED_GALLERY_PATTERN = /\/galleries\/([^/]+)\//;
+
+export function getColocatedCaptions(pathname: string): Record<string, string> | undefined {
+  const normalized = normalizePath(pathname);
+  const allCaptions = { ...manifest.pagesCaptions, ...manifest.contentCaptions };
+  const entry = Object.entries(allCaptions).find(([filepath]) => {
+    const match = filepath.match(COLOCATED_GALLERY_PATTERN);
+    return !!match && normalized === match[2];
   });
+  if (!entry) return undefined;
+  const [filepath, mod] = entry;
+  return parseCaptions(unwrapModule(mod), filepath);
+}
 
-  const imagesWithCaptions = applyCaptions(images, captions);
+export function getSharedCaptions(name: string): Record<string, string> | undefined {
+  const entry = Object.entries(manifest.sharedCaptions).find(([filepath]) => {
+    const match = filepath.match(SHARED_GALLERY_PATTERN);
+    return !!match && match[1] === name;
+  });
+  if (!entry) return undefined;
+  const [filepath, mod] = entry;
+  return parseCaptions(unwrapModule(mod), filepath);
+}
 
-  if (reverseSorting) {
-    return imagesWithCaptions.reverse();
-  }
+/**
+ * Images from a `gallery/` folder colocated with the current page/content
+ * file, matched by comparing the current URL path against the folder
+ * structure under usr/pages/ or usr/content/. Applies captions.json from
+ * the same folder, if present.
+ *
+ * Known limitation (unchanged from before this redesign): if a content
+ * collection entry overrides its slug, or the site has a non-root `base`,
+ * the URL path diverges from the on-disk folder path and matching silently
+ * finds nothing.
+ */
+export function getColocatedGalleryImages(pathname: string): GalleryImage[] {
+  const normalized = normalizePath(pathname);
+  const allImages = { ...manifest.pagesImages, ...manifest.contentImages };
+  const captions = getColocatedCaptions(pathname);
+  const captionLookup = captions ? buildCaptionLookup(captions) : undefined;
+  return Object.entries(allImages)
+    .filter(([filepath]) => {
+      const match = filepath.match(COLOCATED_GALLERY_PATTERN);
+      return !!match && normalized === match[2];
+    })
+    .map(([filepath, mod]) => moduleToGalleryImage(filepath, mod, captionLookup));
+}
 
-  return imagesWithCaptions;
+/** Images from a shared gallery at usr/galleries/<name>/. Applies captions.json from the same folder, if present. */
+export function getSharedGalleryImages(name: string): GalleryImage[] {
+  const captions = getSharedCaptions(name);
+  const captionLookup = captions ? buildCaptionLookup(captions) : undefined;
+  return Object.entries(manifest.sharedImages)
+    .filter(([filepath]) => {
+      const match = filepath.match(SHARED_GALLERY_PATTERN);
+      return !!match && match[1] === name;
+    })
+    .map(([filepath, mod]) => moduleToGalleryImage(filepath, mod, captionLookup));
 }

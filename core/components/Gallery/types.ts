@@ -13,15 +13,15 @@ export interface GalleryImage {
 
 export interface GalleryProps {
   /**
-   * Optional path to the gallery folder relative to public/
-   * If not provided, uses images from current page location
-   * Example: "data/my-gallery"
+   * Name of a shared gallery under usr/galleries/<name>/
+   * If not provided (and `images` isn't either), auto-loads from the
+   * `gallery/` folder colocated with the current page/content file.
    */
-  path?: string;
+  name?: string;
 
   /**
    * Array of image objects to display
-   * Can be provided directly instead of using path-based loading
+   * Explicit escape hatch — takes precedence over `name` and auto-loading
    */
   images?: GalleryImage[];
 

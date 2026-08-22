@@ -11,7 +11,9 @@
     "setup-upstream": "bash scripts/setup-upstream.sh",
     "update-scms": "bash scripts/update-scms.sh",
     "add-collection": "node scripts/add-collection.mjs",
-    "add-content": "node scripts/add-content.mjs"
+    "add-content": "node scripts/add-content.mjs",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "keywords": [
     "astro",
@@ -51,7 +53,8 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "sass": "^1.98.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.11"
   },
   "overrides": {
     "@vitejs/plugin-react": "^5.1.4"

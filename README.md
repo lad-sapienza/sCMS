@@ -166,7 +166,7 @@ import { DataTb, Map, Gallery } from '@core';
 |---|---|---|
 | `DataTb` | Sortable, filterable, paginated data table | [datatb.mdx](usr/content/docs/components/datatb.mdx) |
 | `Map` | Interactive map with MapLibre GL JS | [map.mdx](usr/content/docs/components/map.mdx) |
-| `Gallery` | Responsive image gallery with lightbox | [gallery.mdx](usr/content/docs/components/gallery.mdx) |
+| `Gallery` | Responsive image gallery with lightbox | [gallery/index.mdx](usr/content/docs/components/gallery/index.mdx) |
 | `SEO` | Meta tags, Open Graph, JSON-LD | [seo.md](usr/content/docs/components/seo.md) |
 | `TableOfContents` | Auto-generated TOC from headings | [tableofcontents.md](usr/content/docs/components/tableofcontents.md) |
 | `ZoteroGeoViewer` | Zotero library visualised on a map | [zotero-geoviewer.mdx](usr/content/docs/components/zotero-geoviewer.mdx) |

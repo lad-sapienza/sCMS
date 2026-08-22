@@ -1,36 +1,87 @@
 # Gallery Component
 
-A responsive image gallery component with PhotoSwipe lightbox integration, migrated from the Gatsby version.
+A responsive image gallery component with PhotoSwipe lightbox integration. One component, usable the same way from `.astro` files and MDX content — no `import.meta.glob` needed in your own page or content file.
 
 ## Features
 
 - 📸 **PhotoSwipe Lightbox**: Full-screen image viewing with zoom and navigation
 - 🎨 **Responsive Grid**: Auto-adjusting columns based on screen size
-- 🔍 **Custom Captions**: Display image names or custom captions in lightbox
-- 📝 **Caption JSON Support**: Optionally provide custom captions via `captions.json` file
+- 🔄 **Auto-loading**: automatically discovers images in a `gallery/` folder colocated with the current page/content file
+- 🔗 **Shared galleries**: reference one set of images by name from `usr/galleries/<name>/`
+- 🔍 **Custom Captions**: via `captions.json`, or auto-generated from filenames
 - ⌨️ **Keyboard Navigation**: Arrow keys and ESC support
 - ♿ **Accessible**: Proper ARIA labels and keyboard support
-- 📁 **Auto-loading**: Automatically loads images from local `gallery/` folder (in `.astro` files only)
-- 📦 **Flexible Loading**: Pass images directly for use in MDX
+
+## How auto-loading works
+
+`Gallery.astro` doesn't glob its own files — a separate integration
+(`core/integrations/galleryIntegration.ts`, registered in `astro.config.mjs`)
+generates a Vite virtual module (`virtual:scms/galleries`) containing the
+`import.meta.glob()` calls, at project build time. `Gallery.astro` just reads
+from that virtual module and matches by URL path. This exists so the component
+can move into an npm package later without losing auto-loading (a component
+shipped in `node_modules/` can't statically glob a consumer project's files;
+the integration generating the glob call at the consumer's own build time
+can). See `core/integrations/galleryIntegration.ts`'s own doc comment for
+details, and `core/components/Gallery/galleryUtils.ts` for the matching logic.
+
+## Usage
+
+### Colocated (default) — auto-loads from a sibling `gallery/` folder
+
+```
+usr/content/blog/my-post/
+  index.mdx
+  gallery/
+    photo1.jpg
+    photo2.jpg
+    captions.json      ← optional
+```
+
+```mdx
+import { Gallery } from '@core/components/Gallery';
+
+<Gallery client:idle />
+```
+
+Matching is based on the current page's URL path against the folder
+structure on disk. **Known limitation**: if a content collection entry
+overrides its slug, or the site is deployed under a non-root `base`, the URL
+path can diverge from the on-disk folder path and the match silently finds
+nothing. Use `name` (below) or `images` as a workaround in that case.
+
+### Shared — referenced by name from any page
+
+```
+usr/galleries/
+  scavi-2024/
+    photo1.jpg
+    photo2.jpg
+    captions.json      ← optional
+```
+
+```mdx
+<Gallery name="scavi-2024" client:idle />
+```
+
+### Explicit — pass images directly
+
+Escape hatch for remote images, a Directus-backed source, or a custom order.
+Takes precedence over both `name` and auto-loading.
+
+```jsx
+<Gallery
+  images={[
+    { src: '/photos/img1.jpg', thumb: '/photos/img1.jpg', width: 1200, height: 800, alt: 'Description', caption: 'My custom caption' },
+  ]}
+  client:idle
+/>
+```
 
 ## Custom Captions
 
-By default, captions are generated from filenames (e.g., `my-photo.jpg` → "My Photo").
+By default, captions are generated from filenames (e.g., `my-photo.jpg` → "My Photo"). Place a `captions.json` file in the same `gallery/` folder (colocated) or shared-gallery folder to override them:
 
-### Using captions.json (Astro files)
-
-Place a `captions.json` file in your gallery folder:
-
-```
-pages/
-  my-page/
-    gallery/
-      photo1.jpg
-      photo2.jpg
-      captions.json
-```
-
-Format of `captions.json`:
 ```json
 {
   "photo1.jpg": "A beautiful sunset over the mountains",
@@ -38,321 +89,31 @@ Format of `captions.json`:
 }
 ```
 
-The component automatically loads and applies these captions!
+Keys can be filenames with or without extensions, and can use a different
+resolution suffix than the actual file (`_1280`, `_1920`, etc.) — matching is
+fuzzy on the base filename. A malformed `captions.json` (not a flat
+string-to-string map) is ignored with a console warning rather than breaking
+the build.
 
-### Custom captions in MDX
+## Props API
 
-Use the `processGalleryImages` options:
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `name` | `string` | — | Load a shared gallery from `usr/galleries/<name>/` |
+| `images` | `GalleryImage[]` | — | Explicit images — takes precedence over `name` and auto-loading |
+| `reverseSorting` | `boolean` | `false` | Reverse the default alphabetical sort |
+| `columns` | `{ min?: number, max?: number }` | `{ min: 200, max: 1 }` | `min` = minimum item width in px; `max` = maximum column count |
+| `className` | `string` | — | Additional CSS classes |
 
-```mdx
-import { GalleryMdx, processGalleryImages } from '@core/components/Gallery';
+### GalleryImage Type
 
-export const images = import.meta.glob('./gallery/*.jpg', { eager: true });
-export const captions = {
-  "photo1.jpg": "Custom caption here",
-  "photo2.jpg": "Another custom caption"
-};
-
-<GalleryMdx images={processGalleryImages(images, { captions })} client:idle />
-```
-
-## Important: Usage Depends on File Type
-
-### In `.astro` Files - Auto-Loading Works
-
-Place images in a `gallery/` subfolder next to your page:
-
-```
-pages/
-  my-page.astro
-  my-page/
-    gallery/
-      photo1.jpg
-      photo2.jpg
-```
-
-Then use the Astro component:
-
-```astro
----
-import Gallery from '@core/components/Gallery/Gallery.astro';
----
-
-<Gallery />
-```
-
-### In `.mdx` Files - Use import.meta.glob in Frontmatter
-
-MDX files **can** use auto-loading by leveraging `import.meta.glob` in the frontmatter:
-
-```mdx
----
-title: My Gallery
----
-
-import { GalleryMdx, processGalleryImages } from '@core/components/Gallery';
-
-export const imageModules = import.meta.glob('./gallery/*.{jpg,jpeg,png,gif,webp,avif}', { eager: true });
-export const galleryImages = processGalleryImages(imageModules);
-
-<GalleryMdx images={galleryImages} client:idle />
-```
-
-**Key requirements:**
-- `import.meta.glob` must be in the frontmatter with a **static string literal** path
-- Use relative paths from the MDX file (e.g., `./gallery/*.jpg`)
-- The `{ eager: true }` option enables build-time optimization
-- `processGalleryImages` formats the images for the Gallery component
-
-Alternatively, pass images manually:
-
-```mdx
-import { GalleryMdx } from '@core/components/Gallery';
-
-<GalleryMdx images={[
-  {
-    src: '/gallery/img1.jpg',
-    thumb: '/gallery/img1-thumb.jpg',
-    width: 1200,
-    height: 800,
-    alt: 'Image 1',
-    caption: 'My custom caption'
-  }
-]} client:idle />
-```
-
-### Automatic Loading (Recommended for .astro pages)
-
-Place images in a `gallery/` subfolder next to your page, and the component will automatically load them:
-
-```
-pages/
-  my-page/
-    index.md
-    gallery/
-      photo1.jpg
-      photo2.jpg
-      photo3.jpg
-```
-
-Then in your page:
-
-```mdx
----
-title: My Page
----
-
-import { GalleryAstro as Gallery } from '@core';
-
-# My Photo Gallery
-
-<Gallery client:idle />
-```
-
-The component will automatically:
-1. Detect your current page path
-2. Look for images in the `gallery/` subfolder
-3. Load and display all supported image formats (jpg, jpeg, png, gif, webp, avif)
-4. Sort by filename (descending by default)
-
-### Manual Image Array
-
-For more control, pass images directly:
-
-```jsx
-import { Gallery } from '@core/components/Gallery';
-
-const images = [
-  {
-    src: '/images/photo1.jpg',
-    thumb: '/images/photo1-thumb.jpg',
-    width: 1920,
-    height: 1080,
-    alt: 'Photo 1',
-    caption: 'Beautiful landscape'
-  },
-  {
-    src: '/images/photo2.jpg',
-    thumb: '/images/photo2-thumb.jpg',
-    width: 1920,
-    height: 1080,
-    alt: 'Photo 2'
-  }
-];
-
-<Gallery images={images} client:idle />
-```
-
-### In MDX Files
-
-```mdx
----
-title: My Gallery Page
----
-
-import { GalleryMdx as Gallery } from '@core/components/Gallery';
-
-# My Photo Gallery
-
-<Gallery images={[
-  {
-    src: '/gallery/img1.jpg',
-    thumb: '/gallery/img1-thumb.jpg',
-    width: 1200,
-    height: 800,
-    alt: 'Image 1'
-  },
-  {
-    src: '/gallery/img2.jpg',
-    thumb: '/gallery/img2-thumb.jpg',
-    width: 1200,
-    height: 800,
-    alt: 'Image 2'
-  }
-]} />
-```
-
-### Advanced Configuration
-
-```jsx
-<Gallery 
-  images={images}
-  columns={{ min: 250, max: 1 }}
-  reverseSorting={true}
-  className="my-custom-gallery"
-  client:idle
-/>
-```
-
-## Props
-
-### `images` (required)
-- **Type**: `GalleryImage[]`
-- **Description**: Array of image objects to display
-
-Each image object should have:
 ```typescript
-{
-  src: string;        // Full-size image URL
-  thumb: string;      // Thumbnail image URL
-  width: number;      // Original image width
-  height: number;     // Original image height
-  alt: string;        // Alt text for accessibility
-  caption?: string;   // Optional caption (defaults to alt)
+interface GalleryImage {
+  src: string;       // Full-size image URL
+  thumb: string;     // Thumbnail URL
+  width: number;
+  height: number;
+  alt: string;
+  caption?: string;
 }
 ```
-
-### `columns`
-- **Type**: `{ min?: number; max?: number }`
-- **Default**: `{ min: 200, max: 1 }`
-- **Description**: Grid column configuration
-  - `min`: Minimum column width in pixels
-  - `max`: Maximum number of columns (1 = equal width columns)
-
-### `reverseSorting`
-- **Type**: `boolean`
-- **Default**: `false`
-- **Description**: Reverse the sorting order of images (applies to both auto-loaded and manual images)
-
-### `path`
-- **Type**: `string`
-- **Optional**
-- **Description**: Override the automatic path detection. Useful when you want to load images from a different page's gallery folder.
-
-### `className`
-- **Type**: `string`
-- **Default**: `''`
-- **Description**: Additional CSS classes for the gallery container
-
-## Image Preparation
-
-For best results, prepare two versions of each image:
-1. **Thumbnail**: Smaller, optimized for grid display (recommended: 300x300px)
-2. **Full-size**: Original or high-quality version for lightbox
-
-### Example Script to Generate Thumbnails
-
-```bash
-# Using ImageMagick
-for img in *.jpg; do
-  convert "$img" -resize 300x300^ -gravity center -extent 300x300 "thumbs/${img}"
-done
-```
-
-## Accessibility
-
-The component includes:
-- Proper `alt` attributes for all images
-- Keyboard navigation (Enter/Space to open, Arrow keys in lightbox, ESC to close)
-- ARIA labels for interactive elements
-- Focus management
-
-## Styling
-
-The component uses inline styles for the grid layout. To customize:
-
-```css
-/* In your global.css */
-.gallery-grid img {
-  transition: transform 0.2s;
-}
-
-.gallery-grid img:hover {
-  transform: scale(1.05);
-}
-```
-
-## Complete Example
-
-```astro
----
-// In an Astro page
-import { Gallery } from '@core/components/Gallery';
-
-// Files here are served from usr/public/gallery/... at the site root — no /public prefix in the URL
-const galleryImages = [
-  {
-    src: '/gallery/beach1.jpg',
-    thumb: '/gallery/thumbs/beach1.jpg',
-    width: 1920,
-    height: 1280,
-    alt: 'Beach sunset',
-    caption: 'Beautiful sunset at the beach'
-  },
-  {
-    src: '/gallery/beach2.jpg',
-    thumb: '/gallery/thumbs/beach2.jpg',
-    width: 1920,
-    height: 1280,
-    alt: 'Beach waves',
-    caption: 'Crashing waves'
-  },
-  {
-    src: '/gallery/beach3.jpg',
-    thumb: '/gallery/thumbs/beach3.jpg',
-    width: 1920,
-    height: 1280,
-    alt: 'Beach rocks',
-  }
-];
----
-
-<html>
-  <head>
-    <title>My Gallery</title>
-  </head>
-  <body>
-    <h1>Beach Photos</h1>
-    <Gallery 
-      images={galleryImages}
-      columns={{ min: 250, max: 1 }}
-      client:idle 
-    />
-  </body>
-</html>
-```
-
-## Known Limitations
-
-- No separate thumbnail generation — `Gallery.astro`'s auto-loading uses the same file for `src` and `thumb` (Astro's own image processing still optimizes it, but there's no distinct low-res thumbnail variant)
-- No lazy loading or virtual scrolling for very large galleries — all images render into the grid at once

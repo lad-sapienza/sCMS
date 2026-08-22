@@ -9,9 +9,11 @@ import rehypeSlug from 'rehype-slug';
 import { unified } from '@astrojs/markdown-remark';
 import { userConfig } from './usr/user.config.mjs';
 import { contentAssetsIntegration } from './core/integrations/contentAssetsIntegration.ts';
+import { galleryIntegration } from './core/integrations/galleryIntegration.ts';
 
 const coreIntegrations = [
   contentAssetsIntegration(),
+  galleryIntegration(),
   expressiveCode({
     themes: ['github-dark'],
     plugins: [pluginLineNumbers()],

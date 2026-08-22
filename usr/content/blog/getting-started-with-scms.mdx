@@ -102,12 +102,12 @@ Built on Astro's island architecture:
 Import and use core components in your MDX files:
 
 ```mdx
-import { GalleryMdx } from '@core/components/Gallery';
+import { Gallery } from '@core/components/Gallery';
 
-export const images = import.meta.glob('./gallery/*.jpg', { eager: true });
-
-<GalleryMdx images={images} columns={{ min: 200, max: 3 }} client:idle />
+<Gallery columns={{ min: 200, max: 3 }} client:idle />
 ```
+
+Drop images in a `gallery/` folder next to this page and `<Gallery />` finds them automatically — no `import.meta.glob` needed.
 
 ## Next Steps
 

@@ -1,6 +1,5 @@
 // Core package exports
-export { default as GalleryAstro } from './components/Gallery/Gallery.astro';
-export { Gallery, GalleryMdx, processGalleryImages } from './components/Gallery';
+export { Gallery } from './components/Gallery';
 export { default as TableOfContents } from './components/TableOfContents/TableOfContents.astro';
 
 // DataTb (recommended table component)

@@ -6,12 +6,9 @@ author: 's:CMS Team'
 tags: ['tutorial', 'gallery', 'images', 'components']
 ---
 
-import { GalleryMdx, processGalleryImages } from '@core/components/Gallery';
-
-export const demoImages = import.meta.glob('./building-photo-galleries-demo/*.{jpg,jpeg,png,gif,webp,avif}', { eager: true });
+import { Gallery } from '@core/components/Gallery';
 
 # Building Beautiful Photo Galleries
-
 
 One of s:CMS's most powerful features is its **Gallery component**, which combines Astro's image optimization with PhotoSwipe's beautiful lightbox experience.
 
@@ -26,33 +23,33 @@ One of s:CMS's most powerful features is its **Gallery component**, which combin
 
 ## Basic Usage
 
-The simplest way to create a gallery is to place images in a folder and auto-load them:
+Place an `index.mdx` (or `index.md`) file in its own folder, add a `gallery/` subfolder next to it, and drop images in — `<Gallery />` auto-loads them with no glob or import needed in your content:
+
+```
+usr/content/blog/my-post/
+  index.mdx
+  gallery/
+    photo1.jpg
+    photo2.jpg
+```
 
 ```mdx
----
-import { GalleryMdx } from '@core/components/Gallery';
+import { Gallery } from '@core/components/Gallery';
 
-export const images = import.meta.glob('./gallery/*.{jpg,png,webp}', { eager: true });
----
-
-<GalleryMdx images={images} client:idle />
+<Gallery />
 ```
 
 That's it! The component will:
-1. Find all images in the `gallery/` folder
+1. Find all images in the `gallery/` folder next to this file
 2. Generate optimized versions
 3. Create a responsive grid
 4. Add lightbox functionality
 
 ### Live Example
 
-Here's a working gallery with 3 sample images. Click any image to open the lightbox:
+Here's a working gallery with the 3 sample images that live in this very post's own `gallery/` folder. Click any image to open the lightbox:
 
-<GalleryMdx 
-  images={processGalleryImages(demoImages)} 
-  columns={{ min: 200, max: 3 }}
-  client:idle 
-/>
+<Gallery columns={{ min: 200, max: 3 }} client:idle />
 
 ---
 
@@ -61,11 +58,7 @@ Here's a working gallery with 3 sample images. Click any image to open the light
 Control the grid layout with the `columns` prop:
 
 ```jsx
-<GalleryMdx 
-  images={images}
-  columns={{ min: 200, max: 3 }}
-  client:idle 
-/>
+<Gallery columns={{ min: 200, max: 3 }} client:idle />
 ```
 
 - `min`: Minimum item width in pixels (default: 200)
@@ -85,20 +78,7 @@ Create a `captions.json` file next to your images:
 }
 ```
 
-Then load it in your MDX:
-
-```mdx
-import { processGalleryImages } from '@core/components/Gallery';
-
-export const images = import.meta.glob('./gallery/*.jpg', { eager: true });
-export const captionsData = import.meta.glob('./gallery/captions.json', { eager: true });
-export const captions = Object.values(captionsData)[0]?.default;
-
-<GalleryMdx 
-  images={processGalleryImages(images, { captions })}
-  client:idle 
-/>
-```
+`<Gallery />` picks it up automatically — no extra props needed. This post's own live example above is using exactly this file.
 
 ### Fuzzy Caption Matching
 
@@ -119,25 +99,35 @@ All three keys will match an image file like `photo_1280.jpg` because the compon
 By default, images are sorted in descending order by filename. To reverse this:
 
 ```jsx
-<GalleryMdx 
-  images={processGalleryImages(images, { reverseSorting: true })}
-  client:idle 
-/>
+<Gallery reverseSorting={true} client:idle />
 ```
 
-## Using in Astro Files
+## Shared Galleries
 
-For `.astro` files, use the Astro wrapper component:
+Need the same set of images across multiple pages, or a gallery that isn't tied to one specific article? Put it under `usr/galleries/<name>/` and reference it by name from anywhere:
 
-```astro
----
-import { Gallery } from '@core/components/Gallery';
+```
+usr/galleries/scavi-2024/
+  photo1.jpg
+  photo2.jpg
+  captions.json
+```
 
-const imageModules = import.meta.glob('./gallery/*.jpg', { eager: true });
-const images = processGalleryImages(imageModules);
----
+```mdx
+<Gallery name="scavi-2024" client:idle />
+```
 
-<Gallery images={images} client:idle />
+## Explicit Images
+
+For remote images, a custom order, or any source that isn't a local `gallery/` folder, pass images directly — this is the escape hatch that bypasses auto-loading entirely:
+
+```jsx
+<Gallery
+  images={[
+    { src: '/some/image.jpg', thumb: '/some/image.jpg', width: 1200, height: 800, alt: 'Description', caption: 'My custom caption' },
+  ]}
+  client:idle
+/>
 ```
 
 ## PhotoSwipe Features
@@ -150,15 +140,6 @@ The integrated PhotoSwipe lightbox provides:
 - **Captions overlay** - Beautiful caption display
 - **Responsive** - Works perfectly on mobile
 - **Accessible** - Full keyboard and screen reader support
-
-## Real-World Example
-
-Check out our [Gallery Demo](/gallery-demo) to see all these features in action, including:
-
-- Auto-loaded images from a folder
-- Custom captions from JSON
-- Responsive 3-column grid
-- Full PhotoSwipe integration
 
 ## Best Practices
 
