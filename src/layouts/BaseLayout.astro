@@ -58,51 +58,43 @@ const menuItems = menuEntry?.data ?? []
       <slot />
     </main>
 
-    <!-- Enhanced Footer with modern academic styling -->
-    <footer class="py-5 mt-auto border-top bg-light">
+    <!-- Footer -->
+    <footer class="py-5 mt-auto" style="background: var(--bs-heading-color); color: #d8cfc2;">
       <div class="container">
-        <div class="p-4">
-          <div class="d-flex align-items-center">
-            <img
-              alt="s:CMS & LAD Logo"
-              src="/images/scms-lad.png"
-              class="img-fluid"
-              style="max-height: 80px; margin-right: 1rem;"
-            />
-            <div class="ps-md-4 border-start">
-              <h3>
-                s:CMS <small class="text-muted">(v{packageJson.version})</small>
-              </h3>
-              <p>
-                A project by
-                <a
-                  href="https://lad.saras.uniroma1.it"
-                  target="_blank"
-                  rel="noreferrer"
-                  class="fw-medium"
-                >
-                  LAD: Laboratorio di Archeologia Digitale alla Sapienza
-                </a>
-              </p>
-              <div class="d-flex gap-3 flex-wrap">
-                <a
-                  href="https://github.com/lad-sapienza/sCMS"
-                  target="_blank"
-                  rel="noreferrer"
-                  class="btn btn-sm btn-outline-primary"
-                >
-                  Code
-                </a>
-                <a
-                  href="https://github.com/lad-sapienza/sCMS/issues"
-                  target="_blank"
-                  rel="noreferrer"
-                  class="btn btn-sm btn-outline-primary"
-                >
-                  Issues
-                </a>
-              </div>
-            </div>
+        <div class="d-flex align-items-center justify-content-between flex-wrap gap-4">
+          <div>
+            <h3 class="mb-1" style="color: #fff;">
+              s:CMS <small style="color: #a89a86; font-family: var(--bs-body-font-family); font-size: 0.8125rem;">(v{packageJson.version})</small>
+            </h3>
+            <p class="mb-0" style="color: #a89a86;">
+              A project by
+              <a
+                href="https://lad.saras.uniroma1.it"
+                target="_blank"
+                rel="noreferrer"
+                style="color: #d8cfc2; font-weight: 500;"
+              >
+                LAD: Laboratorio di Archeologia Digitale alla Sapienza
+              </a>
+            </p>
+          </div>
+          <div class="d-flex gap-4">
+            <a
+              href="https://github.com/lad-sapienza/sCMS"
+              target="_blank"
+              rel="noreferrer"
+              style="color: #d8cfc2;"
+            >
+              Code
+            </a>
+            <a
+              href="https://github.com/lad-sapienza/sCMS/issues"
+              target="_blank"
+              rel="noreferrer"
+              style="color: #d8cfc2;"
+            >
+              Issues
+            </a>
           </div>
         </div>
       </div>
