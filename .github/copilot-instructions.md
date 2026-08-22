@@ -149,7 +149,7 @@ Users extend core by:
 
 - **Bootstrap 5** is the CSS framework (`bootstrap` package)
 - Global styles in `src/styles/global.css` — imports Bootstrap and defines CSS custom properties overriding Bootstrap defaults (`--bs-primary`, `--bs-body-font-family`, etc.)
-- There is **no** `core/styles/` directory; all styles live under `src/`
+- All styles live under `src/`; the framework package ships no stylesheet of its own
 - Components use Bootstrap utility classes and component classes (e.g. `navbar`, `card`, `btn-primary`)
 - `sass` is available as a dev dependency for custom SCSS
 - `lucide-react` is available for icons

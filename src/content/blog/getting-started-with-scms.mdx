@@ -12,12 +12,14 @@ Welcome to **s:CMS**, a modern static content management system built on Astro! 
 
 ## What is s:CMS?
 
-s:CMS is built with a **strict separation between core system and user code**:
+s:CMS is built with a **strict separation between framework and your code**:
 
-- **`core/`**: Framework components, layouts, and utilities (updateable via git pull)
+- **`@lad-sapienza/scms-core`**: Framework components, layouts, and utilities — a normal npm dependency, updated with `npm update`
 - **`src/`**: Your content, custom components, and configurations (edit freely)
 
-This architecture allows you to update core functionality without losing your customizations!
+This architecture allows you to update the framework without losing your customizations!
+
+*(Editor's note: this post originally described an older, git-based update mechanism — updated above to reflect the current npm-package architecture.)*
 
 ## Key Features
 

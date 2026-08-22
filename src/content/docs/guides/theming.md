@@ -9,11 +9,11 @@ s:CMS ships with [Bootstrap 5](https://getbootstrap.com/) as its base design sys
 ## Where styles live
 
 ```
-src/styles/global.css   → your stylesheet — edit this
-core/                    → framework components (do not edit)
+src/styles/global.css                        → your stylesheet — edit this
+node_modules/@lad-sapienza/scms-core/         → framework components — no stylesheet of its own
 ```
 
-`global.css` is imported once by `src/layouts/BaseLayout.astro` and applies to the whole site. There is no separate "core" stylesheet to merge with — this file *is* your theme.
+`global.css` is imported once by `src/layouts/BaseLayout.astro` and applies to the whole site. There is no separate framework stylesheet to merge with — this file *is* your theme.
 
 ## Quick start
 
@@ -86,7 +86,7 @@ Anything Bootstrap's variables don't cover, write as plain CSS in `global.css`, 
 
 ## Navigation bar
 
-The top navigation (`BSNavbar`, `core/components/BSNavbar.tsx`) is a Bootstrap navbar rendered from the `menuItems` array in `src/layouts/BaseLayout.astro` — see [Getting Started](getting-started.md) for how to edit the menu. It picks up the same `--bs-*` variables as the rest of the site, so no separate theming is needed for it.
+The top navigation (`BSNavbar`, from `@lad-sapienza/scms-core/components/BSNavbar`) is a Bootstrap navbar rendered from the `menuItems` array in `src/layouts/BaseLayout.astro` — see [Getting Started](getting-started.md) for how to edit the menu. It picks up the same `--bs-*` variables as the rest of the site, so no separate theming is needed for it.
 
 ## Component-level styling
 
