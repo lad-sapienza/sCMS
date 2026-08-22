@@ -10,7 +10,7 @@ const posts = (await getCollection('blog'))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
 const title = 's:CMS Blog';
-const description = 'Tutorials, guides, and updates about s:CMS';
+const description = 'Example posts showing what the blog collection looks like with real content.';
 ---
 
 <BaseLayout title={title} description={description}>
@@ -18,7 +18,7 @@ const description = 'Tutorials, guides, and updates about s:CMS';
     <div class="mb-4">
       <h1 class="mb-0">Blog</h1>
       <p class="lead">
-        Tutorials, guides, and updates about building with s:CMS
+        Example posts — for a technical walkthrough, see the <a href="/docs/guides/getting-started">Getting Started guide</a> instead.
       </p>
     </div>
 
