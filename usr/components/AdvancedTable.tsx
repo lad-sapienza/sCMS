@@ -1,4 +1,3 @@
-// ...existing code...
 import { DataTb } from '@core/components/DataTb';
 import type { ColumnConfig } from '@core/components/DataTb/types';
 
@@ -17,12 +16,12 @@ export default function AdvancedTable() {
       header: 'Priority',
       render: (val) => {
         const colors = {
-          high: 'bg-red-100 text-red-800',
-          medium: 'bg-yellow-100 text-yellow-800',
-          low: 'bg-green-100 text-green-800'
+          high: 'bg-danger',
+          medium: 'bg-warning text-dark',
+          low: 'bg-success'
         };
         return (
-          <span className={`px-2 py-1 rounded-full text-xs font-semibold ${colors[val as keyof typeof colors] || ''}`}>
+          <span className={`badge ${colors[val as keyof typeof colors] || 'bg-secondary'}`}>
             {String(val).toUpperCase()}
           </span>
         );
@@ -32,9 +31,9 @@ export default function AdvancedTable() {
       key: 'status',
       header: 'Actions',
       render: (_, row) => (
-        <button 
+        <button
           onClick={() => alert(`Clicked task: ${row.task}`)}
-          className="scms-btn scms-btn-primary scms-btn-sm transition-colors"
+          className="btn btn-primary btn-sm"
         >
           View Details
         </button>
@@ -47,7 +46,6 @@ export default function AdvancedTable() {
       source={{ type: 'json', data }}
       columns={columns}
       searchable
-    // ...existing code...
     />
   );
 }

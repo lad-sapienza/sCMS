@@ -119,7 +119,7 @@ export function columnConfigToColumnDef(config: ColumnConfig): ColumnDef<DataRow
     accessorKey: config.key,
     header: config.header,
     enableSorting: config.sortable ?? true,
-    size: config.width ? parseInt(config.width) : undefined,
+    meta: { width: config.width },
     cell: (info) => {
       const value = info.getValue();
       const row = info.row.original;

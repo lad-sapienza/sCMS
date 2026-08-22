@@ -7,6 +7,7 @@ category: components
 
 import DataTb from '@core/components/DataTb/DataTbMdx';
 import AdvancedTable from '@components/AdvancedTable';
+import CsvSourceDemo from '@components/CsvSourceDemo';
 import Example from '@components/Example.astro';
 import TableOfContents from '@core/components/TableOfContents/TableOfContents.astro';
 
@@ -53,7 +54,7 @@ The `DataTb` component provides a powerful, flexible way to display tabular data
     <DataTb 
       csv="/data/ksa.csv"
       columns={[
-        { key: 'Item_Label', header: 'Site ID', sortable: true },
+        { key: 'Item_Label', header: 'Site ID', sortable: true, width: '15%' },
         { key: 'Name', header: 'Name', sortable: true },
         { key: 'Site_Name', header: 'Site Name' },
         { key: 'Survey_Year', header: 'Survey Year', format: 'number' },
@@ -70,7 +71,7 @@ The `DataTb` component provides a powerful, flexible way to display tabular data
   <DataTb 
     csv="/data/ksa.csv"
     columns={[
-      { key: 'Item_Label', header: 'Site ID', sortable: true },
+      { key: 'Item_Label', header: 'Site ID', sortable: true, width: '15%' },
       { key: 'Name', header: 'Name', sortable: true },
       { key: 'Site_Name', header: 'Site Name' },
       { key: 'Survey_Year', header: 'Survey Year', format: 'number' },
@@ -236,6 +237,57 @@ export const jsonData = [
 
 ---
 
+<Example title="Headless Source Components" codeWidth='full'>
+  <Fragment slot="intro">
+    `CsvSource`, `JsonSource`, `DirectusSource`, and `ApiSource` are also exported from `@core/components/DataTb` as standalone, headless data-loaders — they render nothing and instead call `onDataLoad` / `onLoadingChange` / `onError` props, so you can drive **your own** custom UI (not a table at all) with the same fetching logic `DataTb` uses internally. They are not children of `<DataTb>` — it has no children/composition API.
+  </Fragment>
+
+  <Fragment slot="code" codeWidth='full'>
+    ```tsx
+    // CsvSourceDemo.tsx
+    import { useState } from 'react';
+    import { CsvSource } from '@core/components/DataTb';
+    import type { DataRow } from '@core/components/DataTb/types';
+
+    export default function CsvSourceDemo() {
+      const [rows, setRows] = useState<DataRow[]>([]);
+      const [loading, setLoading] = useState(true);
+      const [error, setError] = useState<string | null>(null);
+
+      return (
+        <div>
+          <CsvSource
+            url="/data/ksa.csv"
+            onDataLoad={(data) => setRows(data.slice(0, 5))}
+            onLoadingChange={setLoading}
+            onError={(err) => setError(err.message)}
+          />
+
+          {loading && <p>Loading…</p>}
+          {error && <p>{error}</p>}
+          {!loading && !error && (
+            <ul>
+              {rows.map((row, i) => <li key={i}>{row.Site_Name}</li>)}
+            </ul>
+          )}
+        </div>
+      );
+    }
+    ```
+
+    ```jsx
+    // YourPage.mdx
+    import CsvSourceDemo from '@components/CsvSourceDemo';
+
+    <CsvSourceDemo client:load />
+    ```
+  </Fragment>
+
+  <CsvSourceDemo client:load />
+</Example>
+
+---
+
 ## Props API
 
 ### DataTbProps
@@ -249,7 +301,7 @@ export const jsonData = [
 | `source` | `SourceConfig` | — | Advanced source configuration |
 | `columns` | `ColumnConfig[]` | auto-detected | Column definitions |
 | `searchable` | `boolean` | `false` | Show global search box |
-| `pagination` | `boolean \| PaginationConfig` | `false` | Enable pagination |
+| `pagination` | `boolean \| PaginationConfig` | `true` | Enable pagination |
 | `sortable` | `boolean` | `true` | Enable column sorting |
 | `initialSort` | `{ columnKey, direction }` | — | Default sort state |
 | `truncateContent` | `boolean` | `true` | Truncate long cell values |

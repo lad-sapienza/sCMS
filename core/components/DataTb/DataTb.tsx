@@ -74,22 +74,32 @@ export function DataTb({
       return;
     }
 
+    // Guards against a stale response overwriting newer state if the source
+    // changes again before this fetch resolves.
+    let cancelled = false;
+
     const loadData = async () => {
       try {
         setLoading(true);
         setError(null);
 
         const fetchedData = await fetchData(source);
-        
+        if (cancelled) return;
+
         setData(fetchedData);
         setLoading(false);
       } catch (err) {
+        if (cancelled) return;
         setError(err instanceof Error ? err : new Error('Failed to load data'));
         setLoading(false);
       }
     };
 
     loadData();
+
+    return () => {
+      cancelled = true;
+    };
   }, [currentSourceKey]); // Use stringified source as dependency
 
   // Auto-detect or merge columns
@@ -195,7 +205,7 @@ export function DataTb({
                     className={`py-2 text-start small fw-semibold text-uppercase ${
                       index === 0 ? 'ps-3 pe-3' : 'px-3'
                     }`}
-                    style={{ width: header.getSize() !== 150 ? header.getSize() : undefined }}
+                    style={{ width: header.column.columnDef.meta?.width }}
                   >
                     {header.isPlaceholder ? null : (
                       <div

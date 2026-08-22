@@ -11,7 +11,7 @@ A powerful, flexible data table component for Astro with support for multiple da
 - 🎨 **Auto-detection**: Automatically detects columns from data
 - ⚙️ **Customizable**: Override columns, formatting, and rendering
 - 🎯 **TypeScript**: Full type safety
-- 💅 **Tailwind Styled**: Beautiful default styling
+- 💅 **Bootstrap Styled**: Uses the same Bootstrap 5 classes as the rest of s:CMS, themeable via `usr/styles/global.css`
 
 ## Basic Usage
 
@@ -46,16 +46,13 @@ import { DataTb } from '@core/components/DataTb';
 
 ### Directus Source
 
-```jsx
-import { directusConfig } from '@user/user.config.mjs';
+Reads `PUBLIC_DIRECTUS_URL` / `PUBLIC_DIRECTUS_TOKEN` from `.env` automatically — see [Directus Setup](#directus-setup) below.
 
+```jsx
 <DataTb 
-  source={{
-    type: 'directus',
-    collection: 'articles',
-    config: directusConfig,
-    filter: { status: { _eq: 'published' } },
-    sort: ['-date_published']
+  directus={{
+    table: 'articles',
+    queryString: 'filter[status][_eq]=published&sort=-date_published',
   }}
   searchable 
   pagination 
@@ -207,34 +204,31 @@ columns={[
 
 ## Directus Setup
 
-1. Add configuration to `usr/user.config.mjs`:
-
-```javascript
-export const directusConfig = {
-  url: 'https://your-directus-instance.com',
-  token: 'your-access-token',
-};
-```
-
-2. Generate a token in Directus admin panel:
+1. Generate a token in the Directus admin panel:
    - Settings → Access Tokens → Create Token
    - Set appropriate permissions
    - Copy the token
 
-3. Use in your component:
+2. Add it to `.env` in the project root:
+
+```env
+PUBLIC_DIRECTUS_URL=https://your-directus-instance.com
+PUBLIC_DIRECTUS_TOKEN=your-access-token
+```
+
+3. Use the simplified `directus` prop — `DataTb` reads the URL/token from those env vars automatically, no config object needed:
 
 ```jsx
-import { directusConfig } from '@user/user.config.mjs';
-
 <DataTb 
-  source={{
-    type: 'directus',
-    collection: 'your_collection',
-    config: directusConfig
+  directus={{
+    table: 'your_collection',
+    queryString: 'filter[status][_eq]=published',
   }}
   client:idle
 />
 ```
+
+The `source={{ type: 'directus', config: { url, token }, collection }}` form shown above is still supported for cases where you need to pass an explicit URL/token instead of the env vars (e.g. multiple Directus instances on one site).
 
 ## Client Hydration
 
@@ -269,11 +263,13 @@ For optimal performance, use appropriate hydration strategies:
 The DataTb component follows a simple, self-contained architecture:
 
 - **DataTb.tsx** - Main React component using TanStack Table with built-in data fetching
+- **DataTbMdx.tsx** - MDX-safe wrapper (memoizes props, resolves `csv`/`json`/`api`/`directus` shorthands) — this is what `@core/components/DataTb`'s `DataTb` export actually is
 - **types.ts** - TypeScript definitions for all source types
 - **utils.ts** - Helper functions for column detection, formatting
+- **sources/** - Standalone headless data-loaders (`CsvSource`, `JsonSource`, `DirectusSource`, `ApiSource`) for building a custom UI outside `DataTb` itself
 
-Data fetching is handled internally based on the `source` prop configuration, supporting CSV, JSON, Directus, and generic APIs.
+Data fetching is handled internally based on the `source`/`csv`/`json`/`api`/`directus` prop, supporting CSV, JSON, Directus, and generic APIs.
 
 ## Examples
 
-See the [DataTb Demo page](/datatable-demo) for live examples and more usage patterns.
+See the [DataTb docs page](../../../usr/content/docs/components/datatb.mdx) (rendered at `/docs/components/datatb` on a running site) for live, interactive examples of every prop and source type.

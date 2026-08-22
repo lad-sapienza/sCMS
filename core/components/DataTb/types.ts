@@ -7,6 +7,14 @@
 
 import type { DirectusShorthand, DirectusSourceConfig } from '../../utils/directus-config';
 
+declare module '@tanstack/react-table' {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  interface ColumnMeta<TData = unknown, TValue = unknown> {
+    /** Raw CSS width from ColumnConfig.width, applied directly to the <th>/<td> (any CSS length unit). */
+    width?: string;
+  }
+}
+
 /**
  * Base data row type - can be extended with specific fields
  */
