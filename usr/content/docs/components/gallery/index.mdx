@@ -39,11 +39,11 @@ The **Gallery** component displays images in a responsive grid layout with [Phot
     ```mdx
     import { Gallery } from '@core/components/Gallery';
 
-    <Gallery client:idle />
+    <Gallery />
     ```
   </Fragment>
 
-  <Gallery client:idle />
+  <Gallery />
 </Example>
 
 <details style={{ marginTop: '1rem' }}>
@@ -71,11 +71,11 @@ The **Gallery** component displays images in a responsive grid layout with [Phot
 
   <Fragment slot="code">
     ```jsx
-    <Gallery reverseSorting={true} client:idle />
+    <Gallery reverseSorting={true} />
     ```
   </Fragment>
 
-  <Gallery reverseSorting={true} client:idle />
+  <Gallery reverseSorting={true} />
 </Example>
 
 ---
@@ -87,11 +87,11 @@ The **Gallery** component displays images in a responsive grid layout with [Phot
 
   <Fragment slot="code">
     ```jsx
-    <Gallery columns={{ min: 200, max: 3 }} client:idle />
+    <Gallery columns={{ min: 200, max: 3 }} />
     ```
   </Fragment>
 
-  <Gallery columns={{ min: 200, max: 3 }} client:idle />
+  <Gallery columns={{ min: 200, max: 3 }} />
 </Example>
 
 ---
@@ -105,11 +105,11 @@ The **Gallery** component displays images in a responsive grid layout with [Phot
 
   <Fragment slot="code">
     ```jsx
-    <Gallery name="docs-demo" client:idle />
+    <Gallery name="docs-demo" />
     ```
   </Fragment>
 
-  <Gallery name="docs-demo" client:idle />
+  <Gallery name="docs-demo" />
 </Example>
 
 ---
@@ -125,7 +125,6 @@ The **Gallery** component displays images in a responsive grid layout with [Phot
       images={[
         { src: '/photos/img1.jpg', thumb: '/photos/img1.jpg', width: 1200, height: 800, alt: 'Description', caption: 'My custom caption' },
       ]}
-      client:idle
     />
     ```
   </Fragment>

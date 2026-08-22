@@ -15,7 +15,7 @@ A responsive image gallery component with PhotoSwipe lightbox integration. One c
 ## How auto-loading works
 
 `Gallery.astro` doesn't glob its own files — a separate integration
-(`core/integrations/galleryIntegration.ts`, registered in `astro.config.mjs`)
+(`core/integrations/galleryIntegration.ts`, bundled into `core/scms.ts` and wired into `astro.config.mjs`)
 generates a Vite virtual module (`virtual:scms/galleries`) containing the
 `import.meta.glob()` calls, at project build time. `Gallery.astro` just reads
 from that virtual module and matches by URL path. This exists so the component
@@ -41,7 +41,7 @@ usr/content/blog/my-post/
 ```mdx
 import { Gallery } from '@core/components/Gallery';
 
-<Gallery client:idle />
+<Gallery />
 ```
 
 Matching is based on the current page's URL path against the folder
@@ -61,7 +61,7 @@ usr/galleries/
 ```
 
 ```mdx
-<Gallery name="scavi-2024" client:idle />
+<Gallery name="scavi-2024" />
 ```
 
 ### Explicit — pass images directly
@@ -74,7 +74,6 @@ Takes precedence over both `name` and auto-loading.
   images={[
     { src: '/photos/img1.jpg', thumb: '/photos/img1.jpg', width: 1200, height: 800, alt: 'Description', caption: 'My custom caption' },
   ]}
-  client:idle
 />
 ```
 

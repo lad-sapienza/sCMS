@@ -1,28 +1,9 @@
 import { defineConfig } from 'astro/config';
-import mdx from '@astrojs/mdx';
-import react from '@astrojs/react';
-import sitemap from '@astrojs/sitemap';
 import { fileURLToPath } from 'url';
-import expressiveCode from 'astro-expressive-code';
-import { pluginLineNumbers } from '@expressive-code/plugin-line-numbers';
 import rehypeSlug from 'rehype-slug';
 import { unified } from '@astrojs/markdown-remark';
 import { userConfig } from './usr/user.config.mjs';
-import { contentAssetsIntegration } from './core/integrations/contentAssetsIntegration.ts';
-import { galleryIntegration } from './core/integrations/galleryIntegration.ts';
-
-const coreIntegrations = [
-  contentAssetsIntegration(),
-  galleryIntegration(),
-  expressiveCode({
-    themes: ['github-dark'],
-    plugins: [pluginLineNumbers()],
-    defaultProps: { showLineNumbers: true },
-  }),
-  mdx(),
-  react(),
-  sitemap(),
-];
+import { scms } from './core/scms.ts';
 
 const coreAlias = {
   '@core': fileURLToPath(new URL('./core', import.meta.url)),
@@ -31,8 +12,6 @@ const coreAlias = {
   '@layouts': fileURLToPath(new URL('./usr/layouts', import.meta.url)),
   '@content': fileURLToPath(new URL('./usr/content', import.meta.url)),
 };
-
-const coreDedupe = ['react', 'react-dom', 'react-dom/client', 'react/jsx-runtime', 'react/jsx-dev-runtime', 'scheduler', '@tanstack/react-table'];
 
 const {
   rehypePlugins: userRehypePlugins,
@@ -58,7 +37,7 @@ export default defineConfig({
   },
 
   integrations: [
-    ...coreIntegrations,
+    ...scms(),
     ...(userConfig.integrations || []),
   ],
 
@@ -68,29 +47,12 @@ export default defineConfig({
       target: 'es2022',
       ...(userConfig.vite?.esbuild || {}),
     },
-    optimizeDeps: {
-      include: [
-        'react',
-        'react-dom',
-        'react-dom/client',
-        'react/jsx-runtime',
-        'react/jsx-dev-runtime',
-      ],
-      esbuildOptions: {
-        target: 'es2022',
-      },
-      ...(userConfig.vite?.optimizeDeps || {}),
-    },
     resolve: {
       ...(userConfig.vite?.resolve || {}),
       alias: {
         ...coreAlias,
         ...(userConfig.vite?.resolve?.alias || {}),
       },
-      dedupe: [
-        ...coreDedupe,
-        ...(userConfig.vite?.resolve?.dedupe || []),
-      ],
     },
   },
 });

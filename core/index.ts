@@ -19,7 +19,6 @@ export type { RecordProviderProps, FieldProps, ImageProps, RecordFetcherProps, U
 
 // Utils
 export * from './utils/record-fetcher';
-export { getRecordFromParams } from './utils/record-fetcher';
 // Note: content utils not exported to prevent astro:content in client components
 export * from './utils/directus-config';
 

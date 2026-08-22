@@ -49,7 +49,7 @@ That's it! The component will:
 
 Here's a working gallery with the 3 sample images that live in this very post's own `gallery/` folder. Click any image to open the lightbox:
 
-<Gallery columns={{ min: 200, max: 3 }} client:idle />
+<Gallery columns={{ min: 200, max: 3 }} />
 
 ---
 
@@ -58,7 +58,7 @@ Here's a working gallery with the 3 sample images that live in this very post's 
 Control the grid layout with the `columns` prop:
 
 ```jsx
-<Gallery columns={{ min: 200, max: 3 }} client:idle />
+<Gallery columns={{ min: 200, max: 3 }} />
 ```
 
 - `min`: Minimum item width in pixels (default: 200)
@@ -99,7 +99,7 @@ All three keys will match an image file like `photo_1280.jpg` because the compon
 By default, images are sorted in descending order by filename. To reverse this:
 
 ```jsx
-<Gallery reverseSorting={true} client:idle />
+<Gallery reverseSorting={true} />
 ```
 
 ## Shared Galleries
@@ -114,7 +114,7 @@ usr/galleries/scavi-2024/
 ```
 
 ```mdx
-<Gallery name="scavi-2024" client:idle />
+<Gallery name="scavi-2024" />
 ```
 
 ## Explicit Images
@@ -126,7 +126,6 @@ For remote images, a custom order, or any source that isn't a local `gallery/` f
   images={[
     { src: '/some/image.jpg', thumb: '/some/image.jpg', width: 1200, height: 800, alt: 'Description', caption: 'My custom caption' },
   ]}
-  client:idle
 />
 ```
 

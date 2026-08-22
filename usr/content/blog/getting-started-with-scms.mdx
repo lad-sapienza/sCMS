@@ -104,7 +104,7 @@ Import and use core components in your MDX files:
 ```mdx
 import { Gallery } from '@core/components/Gallery';
 
-<Gallery columns={{ min: 200, max: 3 }} client:idle />
+<Gallery columns={{ min: 200, max: 3 }} />
 ```
 
 Drop images in a `gallery/` folder next to this page and `<Gallery />` finds them automatically — no `import.meta.glob` needed.

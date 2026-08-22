@@ -2,14 +2,16 @@
  * contentAssetsIntegration
  *
  * Astro integration that serves static assets (images, PDFs, etc.) co-located
- * in usr/content/ without requiring a manual copy step.
+ * in the content directory (usr/content/ by default) without requiring a
+ * manual copy step.
  *
  * - Dev server: a Vite middleware intercepts requests for static file extensions
- *   and serves them directly from usr/content/, mapping URL paths 1:1
+ *   and serves them directly from the content directory, mapping URL paths 1:1
  *   (e.g. /blog/post/image.jpg → usr/content/blog/post/image.jpg).
  *
- * - Production build: assets are copied from usr/content/ into dist/ with the
- *   same relative path structure, so they are available at the expected URLs.
+ * - Production build: assets are copied from the content directory into dist/
+ *   with the same relative path structure, so they are available at the
+ *   expected URLs.
  *
  * This replaces the scripts/copy-content-images.js pre-build script for
  * content-colocated assets.
@@ -19,6 +21,11 @@ import type { AstroIntegration } from 'astro';
 import { resolve, join, relative, extname, dirname } from 'node:path';
 import { existsSync, statSync, mkdirSync, copyFileSync, readdirSync, createReadStream } from 'node:fs';
 import { fileURLToPath } from 'node:url';
+
+export interface ContentAssetsOptions {
+  /** Path to the content directory, relative to the project root. Defaults to 'usr/content'. */
+  contentDir?: string;
+}
 
 /** File extensions treated as static assets. */
 const STATIC_EXTENSIONS = /\.(jpe?g|png|gif|svg|webp|pdf|avif|mp4|mp3|woff2?|ttf|ico)$/i;
@@ -52,16 +59,27 @@ function collectAssets(dir: string, results: string[] = []): string[] {
   return results;
 }
 
-export function contentAssetsIntegration(): AstroIntegration {
+export function contentAssetsIntegration(options: ContentAssetsOptions = {}): AstroIntegration {
+  const contentDirSegment = options.contentDir ?? join('usr', 'content');
+  // Resolved from Astro's own config root in astro:config:setup below, rather
+  // than assumed from process.cwd() — more portable if the process is ever
+  // invoked from somewhere other than the project root.
+  let projectRoot = process.cwd();
+
   return {
     name: 'content-assets',
     hooks: {
+      'astro:config:setup': ({ config }) => {
+        projectRoot = fileURLToPath(config.root);
+      },
+
       /**
        * Dev server: add a Connect middleware that serves static assets directly
-       * from usr/content/ without requiring them to be copied to usr/public/.
+       * from the content directory without requiring them to be copied to
+       * usr/public/.
        */
       'astro:server:setup': ({ server, logger }) => {
-        const contentDir = resolve(process.cwd(), 'usr', 'content');
+        const contentDir = resolve(projectRoot, contentDirSegment);
 
         server.middlewares.use((req, res, next) => {
           const url = req.url?.split('?')[0];
@@ -78,19 +96,19 @@ export function contentAssetsIntegration(): AstroIntegration {
           createReadStream(filePath).pipe(res as NodeJS.WritableStream);
         });
 
-        logger.info('Serving content assets directly from usr/content/');
+        logger.info(`Serving content assets directly from ${contentDirSegment}/`);
       },
 
       /**
-       * Production build: copy all static assets from usr/content/ into the
-       * dist/ output directory, preserving the relative path structure.
+       * Production build: copy all static assets from the content directory
+       * into the dist/ output directory, preserving the relative path structure.
        */
       'astro:build:done': ({ dir, logger }) => {
-        const contentDir = resolve(process.cwd(), 'usr', 'content');
+        const contentDir = resolve(projectRoot, contentDirSegment);
         const distDir = fileURLToPath(dir);
 
         if (!existsSync(contentDir)) {
-          logger.warn('usr/content/ not found – skipping content asset copy');
+          logger.warn(`${contentDirSegment}/ not found – skipping content asset copy`);
           return;
         }
 
