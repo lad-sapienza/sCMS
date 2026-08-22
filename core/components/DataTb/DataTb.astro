@@ -20,8 +20,13 @@
  * Components" section of usr/content/docs/components/datatb.mdx.
  */
 
-// Re-export for convenience
-export { DataTb, CsvSource, JsonSource, DirectusSource, ApiSource } from './index';
+// Re-export for convenience. `DataTb` itself is deliberately not re-exported
+// here — a named export called `DataTb` in DataTb.astro's own frontmatter
+// collides with Astro's implicit type for the file (same name as the file),
+// producing a "Duplicate identifier 'DataTb'" build error. Nothing in this
+// project imports DataTb from this file (use `@core` or
+// `@core/components/DataTb` instead), so this only affects the unused path.
+export { CsvSource, JsonSource, DirectusSource, ApiSource } from './index';
 export type * from './types';
 ---
 
