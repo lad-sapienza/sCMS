@@ -8,7 +8,7 @@ menu_position: 2
 
 s:CMS is a project of [LAD: Laboratorio di Archeologia Digitale alla Sapienza](https://purl.org/lad) aimed at providing an easy to use management system for rich and multimedial contents, with a particular attention to the publication online of research data and geodata hosted in external databases.
 
-It is built with [Astro](https://astro.build/), a modern web framework for building fast, content-focused websites, completed with [Tailwind CSS](https://tailwindcss.com/) for styling. The new version brings improved performance and a cleaner architecture.
+It is built with [Astro](https://astro.build/), a modern web framework for building fast, content-focused websites, completed with [Bootstrap](https://getbootstrap.com/) for styling. The new version brings improved performance and a cleaner architecture.
 
 ## Main features
 

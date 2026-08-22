@@ -73,14 +73,14 @@ const formattedDate = post.data.date.toLocaleDateString('en-US', {
       </div>
 
       <!-- Blog post content -->
-      <div class="blog-content my-5">
+      <div class="markdown-content my-5">
         <Content />
       </div>
 
       <!-- Back to blog link -->
       <div class="mt-5 border-top pt-4">
-        <a 
-          href="/blog" 
+        <a
+          href="/blog"
           class="btn btn-link text-primary text-decoration-none p-0"
         >
           ← Back to all posts
@@ -89,13 +89,3 @@ const formattedDate = post.data.date.toLocaleDateString('en-US', {
     </article>
   </main>
 </BaseLayout>
-
-<style>
-  .blog-content {
-    /* Bootstrap typography styles for blog content */
-    line-height: 1.6;
-  }
-  
-
-
-</style>
