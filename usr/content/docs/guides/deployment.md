@@ -27,7 +27,7 @@ The template already ships a working workflow at `.github/workflows/deploy.yml` 
 
 3. **Push to GitHub** - automatic deployment on every push
 
-If you need to customize the workflow (different Node version, extra build steps, environment secrets), edit `.github/workflows/deploy.yml` directly — it lives in `.github/`, which is preserved across `npm run update-scms` runs (see [Updating](updating.md)).
+If you need to customize the workflow (different Node version, extra build steps, environment secrets), edit `.github/workflows/deploy.yml` directly — it's a normal file in your repo, nothing special touches it.
 
 **Option 2: Manual Build & Deploy**
 
@@ -323,53 +323,19 @@ export default {
 
 ## Keeping s:CMS Up-to-Date
 
-s:CMS uses a **core/usr architecture** that keeps framework updates separate from your content.
-
-### First Time Setup
-
-After creating your site from the template:
+The s:CMS framework layer is the `@lad-sapienza/scms-core` npm package — updating it is an ordinary dependency update, not a custom script.
 
 ```bash
-npm run setup-upstream
+npm update @lad-sapienza/scms-core
 ```
 
-This configures the connection to receive s:CMS updates.
-
-### Updating to Latest Version
-
-```bash
-npm run update-core
-```
-
-This script will:
-- Create a backup of your current code
-- Fetch the latest s:CMS version
-- Merge updates while **protecting your `usr/` folder**
-- Install new dependencies if needed
-
-Your content and customizations in `usr/` are **never overwritten**! 🛡️
-
-### What Gets Updated
-
-| Path | Status | Description |
-|------|--------|-------------|
-| `core/**` | ✅ Updated | Framework components & utilities |
-| `usr/**` | 🛡️ Protected | Your content & customizations |
-| `package.json` | ⚠️ Review | May need manual dependency merge |
-| `astro.config.mjs` | ✅ Auto-merges | Uses coreConfig + userConfig pattern |
-
-### Detailed Documentation
-
-For complete update instructions, troubleshooting, and conflict resolution:
-
-📖 **[Read the full Update Guide](docs/UPDATING.md)**
+Your content and customizations in `usr/` are **never touched**, because the framework was never part of this repository to begin with — it lives entirely in `node_modules`. See [Updating](updating.md) for checking what's new before you update.
 
 ## Best Practices
 
-1. **Update regularly** - Smaller updates are easier to merge
+1. **Update regularly** - Smaller updates are easier to review
 2. **Test locally** - Always run `npm run dev` after updating
 3. **Read changelogs** - Review what's changing in each release
-4. **Don't edit core/** - Make all customizations in `usr/`
 
 ---
 

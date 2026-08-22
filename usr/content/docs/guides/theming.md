@@ -96,4 +96,4 @@ Core components (`DataTb`, `Map`, `Gallery`, etc.) render mostly plain HTML with
 
 1. **Override `--bs-*` variables first** — it's the fastest way to get consistent brand colors across every Bootstrap-based component.
 2. **Add custom CSS after the imports** in `global.css`, so it can override Bootstrap's defaults.
-3. **Don't edit `core/`** — component markup lives there and is updated by `npm run update-scms`; keep all visual customization in `usr/styles/global.css`.
+3. **Don't fork component markup** — it lives in the `@lad-sapienza/scms-core` package (`node_modules`, updated via `npm update`); keep all visual customization in `usr/styles/global.css`.

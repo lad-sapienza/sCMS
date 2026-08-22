@@ -224,13 +224,13 @@ For deployment to GitHub Pages, Netlify, Vercel, or Cloudflare Pages, see [Deplo
 
 ## Updating the Core
 
-Pull the latest framework updates without touching your `usr/` files:
+The framework layer is an ordinary npm dependency — update it like any other package:
 
 ```bash
-npm run update-scms
+npm update @lad-sapienza/scms-core
 ```
 
-See [Updating](usr/content/docs/guides/updating.md) for details on handling conflicts and site-specific packages.
+See [Updating](usr/content/docs/guides/updating.md) for checking what's new and picking a specific version.
 
 ---
 

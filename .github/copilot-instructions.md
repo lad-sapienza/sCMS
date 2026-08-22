@@ -2,23 +2,20 @@
 
 ## Architecture Overview
 
-s:CMS is a static CMS built on Astro with a **strict separation between core system and user code**:
+s:CMS is a static CMS built on Astro with a **strict separation between framework and user code** — enforced by the framework not being part of this repository at all:
 
-- **`core/`**: Framework components, layouts, and utilities (updateable, do not edit directly)
-- **`usr/`**: User content, custom components, and configurations (edit freely)
-
-This separation allows users to update core functionality via `npm run update-scms` without losing customizations. The update script protects `usr/` and merges `.github/` (user files are preserved, upstream `copilot-instructions.md` wins).
+- **`@lad-sapienza/scms-core`** (npm package, in `node_modules`, source at [lad-sapienza/scms-core](https://github.com/lad-sapienza/scms-core)): Framework components, layouts, and utilities. Update it like any dependency: `npm update @lad-sapienza/scms-core`.
+- **`usr/`**: User content, custom components, and configurations (edit freely) — this repo *is*, essentially, `usr/` plus the config files that wire the package in.
 
 ### Path Aliases
 
-Always use these TypeScript aliases for imports:
-- `@lad-sapienza/scms-core/*` → `core/*` (framework components/utils)
+`usr/`-relative aliases, configured in `astro.config.mjs` / `tsconfig.json`:
 - `@user/*` → `usr/*` (user code)
 - `@components/*` → `usr/components/*`
 - `@layouts/*` → `usr/layouts/*`
 - `@content/*` → `usr/content/*`
 
-Example: `import { DataTb } from '@lad-sapienza/scms-core/components/DataTb'`
+Framework components are a normal package import, not an alias: `import { DataTb } from '@lad-sapienza/scms-core/components/DataTb'`. The bare `@lad-sapienza/scms-core` specifier resolves to the package's barrel (component exports); its `scms()` Astro integration specifically lives at the `@lad-sapienza/scms-core/scms` subpath (importing it from the bare specifier breaks — the barrel re-exports `.astro` components, which can't be parsed yet at Astro's config-load time).
 
 ## Configuration System
 
@@ -38,7 +35,7 @@ Example: `import { DataTb } from '@lad-sapienza/scms-core/components/DataTb'`
 - `@astrojs/mdx`, `@astrojs/react`, `@astrojs/sitemap`
 
 ### Content Collections
-[usr/content.config.ts](usr/content.config.ts) defines schemas with Zod validation. Use `glob` loader for local files, `directusLoader` from `core/integrations/directusLoader.ts` for CMS data.
+[usr/content.config.ts](usr/content.config.ts) defines schemas with Zod validation. Use `glob` loader for local files, `directusLoader` from `@lad-sapienza/scms-core/integrations/directusLoader` for CMS data.
 
 ## Core Components
 
@@ -56,14 +53,14 @@ Example: `import { DataTb } from '@lad-sapienza/scms-core/components/DataTb'`
 | `TableOfContents` | `default TableOfContents` | Astro component |
 | `ZoteroGeoViewer` | `ZoteroGeoViewer` | Yes — `.astro` wrapper available |
 
-All exports are available via `@lad-sapienza/scms-core` (from [core/index.ts](core/index.ts)).
+Most exports are available via the `@lad-sapienza/scms-core` barrel; a few (`SEO`, `BSNavbar`, `directusLoader`) are subpath-only — see the package's own README for the full list of subpath-only exports.
 
 ### Hybrid Rendering Architecture
 Interactive components use a **React client** pattern. Some also have an **Astro wrapper** for SSR data fetching:
 
-1. **Astro wrapper** (e.g., [core/components/DataTb/DataTb.astro](core/components/DataTb/DataTb.astro)) handles SSR data fetching
-2. **React component** (e.g., [core/components/DataTb/DataTb.tsx](core/components/DataTb/DataTb.tsx)) provides interactivity
-3. **MDX wrapper** (e.g., [core/components/DataTb/DataTbMdx.tsx](core/components/DataTb/DataTbMdx.tsx)) wraps React for MDX use
+1. **Astro wrapper** (e.g., `DataTb.astro` in the package) handles SSR data fetching
+2. **React component** (e.g., `DataTb.tsx`) provides interactivity
+3. **MDX wrapper** (e.g., `DataTbMdx.tsx`) wraps React for MDX use
 
 Components without an Astro wrapper (BSNavbar, Map, Record, SearchUI*) are used directly as React components with a `client:` directive.
 
@@ -80,7 +77,7 @@ components/DataTb/
 ```
 
 ### Data Source Abstraction
-[core/utils/data-fetcher.ts](core/utils/data-fetcher.ts) re-exports `SourceConfig` from [core/components/DataTb/types.ts](core/components/DataTb/types.ts). Used by DataTb and Map vector layers:
+`@lad-sapienza/scms-core`'s `utils/data-fetcher.ts` re-exports `SourceConfig` from `components/DataTb/types.ts`. Used by DataTb and Map vector layers:
 
 ```typescript
 type SourceConfig =
@@ -106,11 +103,12 @@ interface DirectusShorthand {
 
 ### Running the Dev Server
 ```bash
-npm run dev              # Start dev server at localhost:4321
-npm run build            # Type-check + production build
-npm run preview          # Preview production build
-npm run setup-upstream   # Configure upstream remote for updates
-npm run update-scms      # Pull latest core from upstream
+npm run dev                          # Start dev server at localhost:4321
+npm run build                        # Type-check + production build
+npm run preview                      # Preview production build
+npm run add-collection                # Scaffold a new content collection (scms-add-collection CLI)
+npm run add-content                   # Add a content file to an existing collection (scms-add-content CLI)
+npm update @lad-sapienza/scms-core   # Update the framework layer
 ```
 
 ### Working with Directus
@@ -122,14 +120,16 @@ npm run update-scms      # Pull latest core from upstream
    Note: variables must be prefixed `PUBLIC_` to be accessible client-side.
 2. Use `directusLoader` in content collections for build-time data
 3. Use the `directus` shorthand prop on `DataTb` or `Map` for runtime data
-4. Directus SDK (`@directus/sdk`) is used internally in [core/utils/data-fetcher.ts](core/utils/data-fetcher.ts)
+4. Directus SDK (`@directus/sdk`) is used internally in `@lad-sapienza/scms-core`'s `utils/data-fetcher.ts`
 
-### Adding New Core Components
-1. Create component directory in `core/components/NewComponent/`
-2. Export from [core/index.ts](core/index.ts) for user access
+### Adding New Framework Components
+Framework components live in a separate repository, [lad-sapienza/scms-core](https://github.com/lad-sapienza/scms-core) — not here. To add one there:
+1. Create component directory in `components/NewComponent/`
+2. Export from `index.ts` for user access (or leave subpath-only, like `SEO`/`BSNavbar`)
 3. If interactive: create a `.tsx` React component with a `client:` directive
 4. If it needs SSR data: add an `.astro` wrapper and optionally a `Mdx.tsx` variant
 5. Add TypeScript types to `types.ts`, document in `README.md`
+6. Bump the version and publish (`npm publish --tag alpha --access public` for pre-1.0 releases)
 
 ### Customizing for Users
 Users extend core by:
@@ -156,21 +156,21 @@ Users extend core by:
 
 ## Critical Files
 
-- [astro.config.mjs](astro.config.mjs): Main config with merge logic
+- [astro.config.mjs](astro.config.mjs): Registers `scms()` and the `usr/`-relative path aliases
 - [usr/user.config.mjs](usr/user.config.mjs): User overrides (`userConfig`) and site metadata (`siteMetadata`)
 - [usr/content.config.ts](usr/content.config.ts): Content collection schemas
-- [core/index.ts](core/index.ts): Core package exports
-- [core/utils/data-fetcher.ts](core/utils/data-fetcher.ts): Unified data loading
-- [core/utils/directus-config.ts](core/utils/directus-config.ts): `DirectusShorthand` and `DirectusSourceConfig` types
-- [core/integrations/contentAssetsIntegration.ts](core/integrations/contentAssetsIntegration.ts): Co-located asset serving
-- [core/integrations/directusLoader.ts](core/integrations/directusLoader.ts): Astro content loader for Directus
+- `node_modules/@lad-sapienza/scms-core/index.ts`: Framework package exports (source: [lad-sapienza/scms-core](https://github.com/lad-sapienza/scms-core))
+- `node_modules/@lad-sapienza/scms-core/utils/data-fetcher.ts`: Unified data loading
+- `node_modules/@lad-sapienza/scms-core/utils/directus-config.ts`: `DirectusShorthand` and `DirectusSourceConfig` types
+- `node_modules/@lad-sapienza/scms-core/integrations/{contentAssetsIntegration,directusLoader}.ts`: Co-located asset serving; Astro content loader for Directus
 
 ## Common Pitfalls
 
-- **Don't edit `core/` directly** in user projects; changes will be lost on updates
-- **Always use path aliases** (`@lad-sapienza/scms-core`, `@user`) instead of relative paths
+- **Framework changes don't belong in this repo** — they go in [lad-sapienza/scms-core](https://github.com/lad-sapienza/scms-core); this repo only ever consumes the published package
+- **`scms()` must be imported from the `/scms` subpath**, not the bare `@lad-sapienza/scms-core` specifier (see Path Aliases above)
+- **Always use path aliases** (`@user`, `@components`, `@layouts`, `@content`) for `usr/`-relative imports instead of relative paths
 - **BSNavbar needs `client:load`** (not `client:idle`) because it controls toggle state immediately on render
 - **Map and Search components** have no Astro wrapper — use them directly with `client:idle`
 - **Directus env vars must be `PUBLIC_`-prefixed** (`PUBLIC_DIRECTUS_URL`, `PUBLIC_DIRECTUS_TOKEN`) for client-side access
-- **Stringify source objects** in `useEffect` deps to prevent infinite re-renders (see [DataTb.tsx](core/components/DataTb/DataTb.tsx))
+- **Stringify source objects** in `useEffect` deps to prevent infinite re-renders (see `DataTb.tsx` in the package)
 - **`contentAssetsIntegration`** handles images co-located in `usr/content/` — no need to copy them to `public/`

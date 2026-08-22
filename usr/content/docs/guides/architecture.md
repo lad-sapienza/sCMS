@@ -6,19 +6,20 @@ order: 2
 
 # Architecture
 
-s:CMS separates **framework code** from **your site** so that framework updates never overwrite your work.
+s:CMS separates **framework code** from **your site**: the framework is a published npm package, and this repository is only your site.
 
-## The core / usr split
+## The package / usr split
 
 ```
-sCMS/
-├── core/                      # Framework — do not edit
-│   ├── components/            # DataTb, Map, Gallery, SEO, TableOfContents, Record, …
-│   ├── integrations/          # Astro integrations (content assets, Directus loader)
-│   ├── utils/                 # Directus / data-fetching helpers
-│   └── types/                 # TypeScript definitions
+your-site/
+├── node_modules/
+│   └── @lad-sapienza/scms-core/   # Framework — a real npm dependency
+│       ├── components/            # DataTb, Map, Gallery, SEO, TableOfContents, Record, …
+│       ├── integrations/          # Astro integrations (content assets, Directus loader)
+│       ├── utils/                 # Directus / data-fetching helpers
+│       └── bin/                   # scms-add-collection / scms-add-content CLI
 │
-├── usr/                       # Your site — always preserved
+├── usr/                       # Your site — the only thing this repo owns
 │   ├── content.config.ts      # Collection schemas (Zod)
 │   ├── user.config.mjs        # Site configuration
 │   ├── content/                # Your content (blog, docs, data, …)
@@ -28,29 +29,28 @@ sCMS/
 │   ├── public/                  # Static assets
 │   └── styles/global.css        # Your stylesheet
 │
-├── scripts/                    # Scaffolding & update automation
-├── astro.config.mjs             # Astro config — imports both core integrations and usr settings
+├── astro.config.mjs             # Astro config — registers the scms() integration + your usr settings
 ├── tsconfig.json
-└── package.json
+└── package.json                 # @lad-sapienza/scms-core is a normal dependency here
 ```
 
-- **`core/`** contains every reusable component, integration, and utility. It's what `npm run update-scms` overwrites when you pull a new s:CMS release.
-- **`usr/`** contains everything specific to your site: content, pages, layouts, styling, and configuration. It is never touched by the update script.
-- Components are consumed from `core/` via the `@lad-sapienza/scms-core` import alias (configured in `astro.config.mjs` / `tsconfig.json`), so your MDX files write `import { DataTb } from '@lad-sapienza/scms-core'` rather than a relative path into `core/`.
+- **`@lad-sapienza/scms-core`** contains every reusable component, integration, and utility. It lives in `node_modules`, like any other npm package — there's nothing to "not edit," because it's not part of this repository at all.
+- **`usr/`** contains everything specific to your site: content, pages, layouts, styling, and configuration. This repo *is* essentially `usr/` plus the config files that wire the package in.
+- Components are imported from the package by name — `import { DataTb } from '@lad-sapienza/scms-core'` — the same way you'd import any other npm dependency.
 
-This is a convention enforced by the update tooling, not a hard technical boundary — nothing stops you from editing files inside `core/`, but doing so means your changes will be silently overwritten (or need manual reconciliation) the next time you run `npm run update-scms`. Keep all customization in `usr/`.
+Because the framework isn't in this repository, there's no "protected folder" convention to follow and nothing an update script needs to avoid touching — `npm update` only ever touches `node_modules` and your lockfile.
 
 ## Configuration
 
-`astro.config.mjs` at the project root wires together the framework's Astro integrations (from `core/integrations/`) with your site settings from `usr/user.config.mjs`. You generally don't need to edit `astro.config.mjs` directly — site-level settings (URL, base path, metadata) belong in `usr/user.config.mjs`.
+`astro.config.mjs` at the project root registers the framework's `scms()` Astro integration (imported from `@lad-sapienza/scms-core/scms`) alongside your site settings from `usr/user.config.mjs`. You generally don't need to edit `astro.config.mjs` directly — site-level settings (URL, base path, metadata) belong in `usr/user.config.mjs`.
 
 ## Content collections
 
-Collections are declared with Zod schemas in `usr/content.config.ts`. Each collection maps to a folder under `usr/content/` and gets a listing + detail route under `usr/pages/`. See [Managing Content](managing-content.md) for the full workflow, including the `npm run add-collection` / `npm run add-content` scaffolding scripts.
+Collections are declared with Zod schemas in `usr/content.config.ts`. Each collection maps to a folder under `usr/content/` and gets a listing + detail route under `usr/pages/`. See [Managing Content](managing-content.md) for the full workflow, including the `npm run add-collection` / `npm run add-content` scaffolding commands (themselves part of the `@lad-sapienza/scms-core` package, exposed as its `bin` CLI).
 
-## Keeping the core up to date
+## Keeping the framework up to date
 
-Framework updates are pulled with `npm run update-scms`, which fetches the latest `core/` (and other shared files) from the upstream `lad-sapienza/sCMS` repository while leaving `usr/` untouched. See [Updating](updating.md) for the full mechanics, backup/rollback process, and how to handle your own npm dependencies across updates.
+Framework updates are pulled with `npm update @lad-sapienza/scms-core`, the same as updating any other dependency — no custom tooling, no risk of overwriting `usr/` since the framework was never in this repository to begin with. See [Updating](updating.md) for checking what's new before you update.
 
 ## Deployment
 
