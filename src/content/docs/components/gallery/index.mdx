@@ -98,9 +98,9 @@ The **Gallery** component displays images in a responsive grid layout with [Phot
 
 <Example title="Shared gallery, referenced by name">
   <Fragment slot="intro">
-    A gallery that isn't tied to one specific page — put it under `usr/galleries/<name>/` and reference it with the `name` prop from anywhere in the site. Useful for a set of images reused across multiple articles.
+    A gallery that isn't tied to one specific page — put it under `src/galleries/<name>/` and reference it with the `name` prop from anywhere in the site. Useful for a set of images reused across multiple articles.
 
-    This demo loads from `usr/galleries/docs-demo/`.
+    This demo loads from `src/galleries/docs-demo/`.
   </Fragment>
 
   <Fragment slot="code">
@@ -148,7 +148,7 @@ my-post/
 Shared (referenced by name from any page):
 
 ```
-usr/galleries/
+src/galleries/
   scavi-2024/
     photo1.jpg
     photo2.jpg
@@ -163,7 +163,7 @@ usr/galleries/
 
 | Prop | Type | Default | Description |
 |---|---|---|---|
-| `name` | `string` | — | Load a shared gallery from `usr/galleries/<name>/` |
+| `name` | `string` | — | Load a shared gallery from `src/galleries/<name>/` |
 | `images` | `GalleryImage[]` | — | Explicit images — takes precedence over `name` and auto-loading |
 | `reverseSorting` | `boolean` | `false` | Reverse the default alphabetical sort |
 | `columns` | `{ min?: number, max?: number }` | `{ min: 200, max: 1 }` | `min` = minimum item width in px; `max` = maximum column count |

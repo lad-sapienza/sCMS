@@ -12,7 +12,7 @@ This guide explains how to update the s:CMS framework in your site.
 npm update @lad-sapienza/scms-core
 ```
 
-That's it. The framework layer (`DataTb`, `Map`, `Gallery`, `ZoteroGeoViewer`, `Record`, the Astro integrations, and the `scms-add-collection`/`scms-add-content` scaffolding commands) is an ordinary npm package, `@lad-sapienza/scms-core`. Updating it is exactly like updating any other dependency — there's no custom script, no protected folder to worry about, and nothing in `usr/` is ever touched, because the framework was never part of this repository in the first place.
+That's it. The framework layer (`DataTb`, `Map`, `Gallery`, `ZoteroGeoViewer`, `Record`, the Astro integrations, and the `scms-add-collection`/`scms-add-content` scaffolding commands) is an ordinary npm package, `@lad-sapienza/scms-core`. Updating it is exactly like updating any other dependency — there's no custom script, no protected folder to worry about, and nothing in `src/` is ever touched, because the framework was never part of this repository in the first place.
 
 ## Checking What's New
 

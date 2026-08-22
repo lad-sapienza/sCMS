@@ -23,7 +23,7 @@ import { RecordProvider, Field, Image, RecordFetcher, useRecordFetcher } from '@
 
 ```astro
 ---
-// usr/pages/record.astro
+// src/pages/record.astro
 import { RecordFetcher } from '@lad-sapienza/scms-core';
 import MyRecordLayout from '../layouts/record/default.astro';
 ---
@@ -31,7 +31,7 @@ import MyRecordLayout from '../layouts/record/default.astro';
 <RecordFetcher Layout={MyRecordLayout} client:load />
 ```
 
-Visiting `/record?table=sites&id=42` fetches `sites/42` from Directus and renders `MyRecordLayout` with `record`, `table`, and `id` props. This is the pattern used by the built-in demo at `usr/pages/record.astro` (paired with `usr/layouts/record/default.astro`).
+Visiting `/record?table=sites&id=42` fetches `sites/42` from Directus and renders `MyRecordLayout` with `record`, `table`, and `id` props. This is the pattern used by the built-in demo at `src/pages/record.astro` (paired with `src/layouts/record/default.astro`).
 
 `RecordFetcherProps`:
 
@@ -49,7 +49,7 @@ Visiting `/record?table=sites&id=42` fetches `sites/42` from Directus and render
 If you're building your own React component instead of an Astro layout, `useRecordFetcher()` gives you the same URL-driven fetch as a hook:
 
 ```tsx
-// usr/components/RecordView.tsx
+// src/components/RecordView.tsx
 import { useRecordFetcher } from '@lad-sapienza/scms-core';
 import { RecordProvider, Field, Image } from '@lad-sapienza/scms-core';
 
@@ -71,7 +71,7 @@ export default function RecordView() {
 
 ```astro
 ---
-// usr/pages/record.astro
+// src/pages/record.astro
 import RecordView from '../components/RecordView.tsx';
 ---
 <RecordView client:load />

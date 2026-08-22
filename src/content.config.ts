@@ -13,7 +13,7 @@ import { glob } from 'astro/loaders';
 const blogCollection = defineCollection({
   loader: glob({ 
     pattern: '**/*.{md,mdx}', 
-    base: './usr/content/blog' 
+    base: './src/content/blog' 
   }),
   schema: z.object({
     title: z.string(),
@@ -31,7 +31,7 @@ const blogCollection = defineCollection({
 const docsCollection = defineCollection({
   loader: glob({ 
     pattern: '**/*.{md,mdx}', 
-    base: './usr/content/docs' 
+    base: './src/content/docs' 
   }),
   schema: z.object({
     title: z.string(),
@@ -59,11 +59,11 @@ const menuItemSchema: z.ZodType<MenuItem> = z.lazy(() =>
   })
 );
 
-// Schema for usr/content/data/menu.yaml — top-level array of menu items
+// Schema for src/content/data/menu.yaml — top-level array of menu items
 const menuCollection = defineCollection({
   loader: glob({
     pattern: 'menu.yaml',
-    base: './usr/content/data',
+    base: './src/content/data',
   }),
   schema: z.array(menuItemSchema),
 });

@@ -2,14 +2,14 @@ import { defineConfig } from 'astro/config';
 import { fileURLToPath } from 'url';
 import rehypeSlug from 'rehype-slug';
 import { unified } from '@astrojs/markdown-remark';
-import { userConfig } from './usr/user.config.mjs';
+import { userConfig } from './src/user.config.mjs';
 import { scms } from '@lad-sapienza/scms-core/scms';
 
 const coreAlias = {
-  '@user': fileURLToPath(new URL('./usr', import.meta.url)),
-  '@components': fileURLToPath(new URL('./usr/components', import.meta.url)),
-  '@layouts': fileURLToPath(new URL('./usr/layouts', import.meta.url)),
-  '@content': fileURLToPath(new URL('./usr/content', import.meta.url)),
+  '@user': fileURLToPath(new URL('./src', import.meta.url)),
+  '@components': fileURLToPath(new URL('./src/components', import.meta.url)),
+  '@layouts': fileURLToPath(new URL('./src/layouts', import.meta.url)),
+  '@content': fileURLToPath(new URL('./src/content', import.meta.url)),
 };
 
 const {
@@ -23,8 +23,6 @@ export default defineConfig({
   site: userConfig.site ?? 'https://scms.lad-sapienza.it/',
   base: userConfig.base,
   output: 'static',
-  srcDir: fileURLToPath(new URL('./usr', import.meta.url)),
-  publicDir: fileURLToPath(new URL('./usr/public', import.meta.url)),
 
   markdown: {
     ...userMarkdownConfig,

@@ -4,16 +4,16 @@ description: Customization and theming information for s:CMS
 order: 4
 ---
 
-s:CMS ships with [Bootstrap 5](https://getbootstrap.com/) as its base design system. Theming works by overriding Bootstrap's Sass/CSS variables and adding your own rules in a single stylesheet you own: `usr/styles/global.css`.
+s:CMS ships with [Bootstrap 5](https://getbootstrap.com/) as its base design system. Theming works by overriding Bootstrap's Sass/CSS variables and adding your own rules in a single stylesheet you own: `src/styles/global.css`.
 
 ## Where styles live
 
 ```
-usr/styles/global.css   → your stylesheet — edit this
+src/styles/global.css   → your stylesheet — edit this
 core/                    → framework components (do not edit)
 ```
 
-`global.css` is imported once by `usr/layouts/BaseLayout.astro` and applies to the whole site. There is no separate "core" stylesheet to merge with — this file *is* your theme.
+`global.css` is imported once by `src/layouts/BaseLayout.astro` and applies to the whole site. There is no separate "core" stylesheet to merge with — this file *is* your theme.
 
 ## Quick start
 
@@ -86,7 +86,7 @@ Anything Bootstrap's variables don't cover, write as plain CSS in `global.css`, 
 
 ## Navigation bar
 
-The top navigation (`BSNavbar`, `core/components/BSNavbar.tsx`) is a Bootstrap navbar rendered from the `menuItems` array in `usr/layouts/BaseLayout.astro` — see [Getting Started](getting-started.md) for how to edit the menu. It picks up the same `--bs-*` variables as the rest of the site, so no separate theming is needed for it.
+The top navigation (`BSNavbar`, `core/components/BSNavbar.tsx`) is a Bootstrap navbar rendered from the `menuItems` array in `src/layouts/BaseLayout.astro` — see [Getting Started](getting-started.md) for how to edit the menu. It picks up the same `--bs-*` variables as the rest of the site, so no separate theming is needed for it.
 
 ## Component-level styling
 
@@ -96,4 +96,4 @@ Core components (`DataTb`, `Map`, `Gallery`, etc.) render mostly plain HTML with
 
 1. **Override `--bs-*` variables first** — it's the fastest way to get consistent brand colors across every Bootstrap-based component.
 2. **Add custom CSS after the imports** in `global.css`, so it can override Bootstrap's defaults.
-3. **Don't fork component markup** — it lives in the `@lad-sapienza/scms-core` package (`node_modules`, updated via `npm update`); keep all visual customization in `usr/styles/global.css`.
+3. **Don't fork component markup** — it lives in the `@lad-sapienza/scms-core` package (`node_modules`, updated via `npm update`); keep all visual customization in `src/styles/global.css`.

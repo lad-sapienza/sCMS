@@ -13,38 +13,33 @@ A static site Content Management System built on [Astro](https://astro.build/), 
 - **Directus Integration** — connect to a [Directus](https://directus.io/) instance for dynamic content
 - **SEO** — meta tags, Open Graph, and JSON-LD structured data
 - **Fast by default** — 100% static output via Astro
-- **Updateable core** — framework code in `core/` is updated independently from your content in `usr/`
+- **Updateable framework** — the framework layer is a real npm package ([`@lad-sapienza/scms-core`](https://github.com/lad-sapienza/scms-core)), updated with `npm update` like any other dependency
 
 ---
 
 ## Project Structure
 
 ```
-scms/
-├── core/                      # Framework (updateable — do not edit)
-│   ├── components/            # DataTb, Map, Gallery, SEO, TableOfContents, …
-│   ├── integrations/          # Astro integrations (assets, Directus loader)
-│   ├── utils/                 # Helper utilities
-│   └── types/                 # TypeScript definitions
-│
-├── usr/                       # Your site (preserved during updates)
+my-site/
+├── src/                       # Your site
 │   ├── content.config.ts      # Collection schemas (Zod)
 │   ├── user.config.mjs        # Site configuration (edit this)
 │   ├── content/               # Your content files
 │   │   ├── blog/              # Blog posts (.md / .mdx)
 │   │   ├── docs/              # Documentation pages (.md / .mdx)
 │   │   └── data/              # Data files (CSV, JSON, YAML)
-│   ├── components/            # Custom components (override core here)
+│   ├── components/            # Custom components
 │   ├── layouts/               # Page layouts
 │   ├── pages/                 # Astro routes
-│   ├── public/                # Static assets
 │   └── styles/
 │       └── global.css         # Global stylesheet
-│
-├── astro.config.mjs           # Astro configuration (merges core + user)
+├── public/                    # Static assets, served as-is
+├── astro.config.mjs           # Registers the scms() integration
 ├── tsconfig.json
-└── package.json
+└── package.json                # @lad-sapienza/scms-core is a normal dependency here
 ```
+
+This repository itself is s:CMS's demo/documentation site — a working example of every component, not the starting point for a new site (see below).
 
 ---
 
@@ -57,31 +52,37 @@ scms/
 
 ### Installation
 
-1. **Create a new repository from the template**
+The fastest way to start a new site is the guided generator, shipped inside `@lad-sapienza/scms-core`:
 
-   Go to [github.com/lad-sapienza/sCMS](https://github.com/lad-sapienza/sCMS), click **"Use this template"**, and create a new repository.
+```bash
+npx --package=@lad-sapienza/scms-core scms-create my-site
+cd my-site
+npm run dev
+```
 
-2. **Clone and install**
+It asks a few questions (title, description, author, site URL) and scaffolds a minimal, ready-to-run Astro + s:CMS project — no cloning, no leftover demo content to strip out.
 
-   ```bash
-   git clone https://github.com/YOUR-USERNAME/my-site.git
-   cd my-site
-   npm install
-   ```
+The site is available at **http://localhost:4321**.
 
-3. **Start the development server**
+<details>
+<summary>Alternative: clone this repo</summary>
 
-   ```bash
-   npm run dev
-   ```
+This repository is itself a working s:CMS site (the demo/docs site you're reading right now), so it can also be used as a starting point if you want a fuller example to trim down rather than an empty one to build up:
 
-   The site is available at **http://localhost:4321**.
+```bash
+git clone https://github.com/lad-sapienza/sCMS.git my-site
+cd my-site
+npm install
+npm run dev
+```
+
+</details>
 
 ---
 
 ## Minimum Configuration
 
-Open `usr/user.config.mjs` and fill in your site details:
+Open `src/user.config.mjs` and fill in your site details:
 
 ```js
 export const userConfig = {
@@ -98,7 +99,7 @@ export const siteMetadata = {
 };
 ```
 
-For styling, edit `usr/styles/global.css`. For the navigation menu, edit the `menuItems` array in `usr/layouts/BaseLayout.astro`.
+For styling, edit `src/styles/global.css`. For the navigation menu, edit the `menuItems` array in `src/layouts/BaseLayout.astro`.
 
 ### Directus (optional)
 
@@ -113,13 +114,13 @@ PUBLIC_DIRECTUS_TOKEN=your-token
 
 ## Creating Content
 
-Content lives in `usr/content/`. Each subfolder is a collection.
+Content lives in `src/content/`. Each subfolder is a collection.
 
 | Folder | Purpose |
 |---|---|
-| `usr/content/blog/` | Blog posts and news |
-| `usr/content/docs/` | Documentation and guides |
-| `usr/content/data/` | Data files (CSV, JSON, YAML) |
+| `src/content/blog/` | Blog posts and news |
+| `src/content/docs/` | Documentation and guides |
+| `src/content/data/` | Data files (CSV, JSON, YAML) |
 
 ### Blog post
 
@@ -150,7 +151,7 @@ Write your content here.
 
 Place images in a subfolder next to the content file and reference them with a standard Markdown image tag. s:CMS copies them automatically during build.
 
-For full details see [Managing Content](usr/content/docs/guides/managing-content.md).
+For full details see [Managing Content](src/content/docs/guides/managing-content.md).
 
 ---
 
@@ -164,15 +165,15 @@ import { DataTb, Map, Gallery } from '@lad-sapienza/scms-core';
 
 | Component | Description | Documentation |
 |---|---|---|
-| `DataTb` | Sortable, filterable, paginated data table | [datatb.mdx](usr/content/docs/components/datatb.mdx) |
-| `Map` | Interactive map with MapLibre GL JS | [map.mdx](usr/content/docs/components/map.mdx) |
-| `Gallery` | Responsive image gallery with lightbox | [gallery/index.mdx](usr/content/docs/components/gallery/index.mdx) |
-| `SEO` | Meta tags, Open Graph, JSON-LD | [seo.md](usr/content/docs/components/seo.md) |
-| `TableOfContents` | Auto-generated TOC from headings | [tableofcontents.md](usr/content/docs/components/tableofcontents.md) |
-| `ZoteroGeoViewer` | Zotero library visualised on a map | [zotero-geoviewer.mdx](usr/content/docs/components/zotero-geoviewer.mdx) |
-| `RecordProvider`, `Field`, `Image`, `RecordFetcher`, `useRecordFetcher` | Build single-record detail pages against Directus | [record.md](usr/content/docs/components/record.md) |
+| `DataTb` | Sortable, filterable, paginated data table | [datatb.mdx](src/content/docs/components/datatb.mdx) |
+| `Map` | Interactive map with MapLibre GL JS | [map.mdx](src/content/docs/components/map.mdx) |
+| `Gallery` | Responsive image gallery with lightbox | [gallery/index.mdx](src/content/docs/components/gallery/index.mdx) |
+| `SEO` | Meta tags, Open Graph, JSON-LD | [seo.md](src/content/docs/components/seo.md) |
+| `TableOfContents` | Auto-generated TOC from headings | [tableofcontents.md](src/content/docs/components/tableofcontents.md) |
+| `ZoteroGeoViewer` | Zotero library visualised on a map | [zotero-geoviewer.mdx](src/content/docs/components/zotero-geoviewer.mdx) |
+| `RecordProvider`, `Field`, `Image`, `RecordFetcher`, `useRecordFetcher` | Build single-record detail pages against Directus | [record.md](src/content/docs/components/record.md) |
 
-`SearchUI`, `SearchUISimple`, and `SearchUIAdvanced` (the field/operator/value search interface used by `Map`'s `searchInFields`) are also exported from `@lad-sapienza/scms-core` for building custom search UIs — see the [Vector Layer Search section](usr/content/docs/components/map.mdx) of the Map docs.
+`SearchUI`, `SearchUISimple`, and `SearchUIAdvanced` (the field/operator/value search interface used by `Map`'s `searchInFields`) are also exported from `@lad-sapienza/scms-core` for building custom search UIs — see the [Vector Layer Search section](src/content/docs/components/map.mdx) of the Map docs.
 
 ---
 
@@ -181,7 +182,7 @@ import { DataTb, Map, Gallery } from '@lad-sapienza/scms-core';
 Use the built-in loader to pull content from Directus into a collection:
 
 ```ts
-// usr/content.config.ts
+// src/content.config.ts
 import { directusLoader } from '@lad-sapienza/scms-core/integrations/directusLoader';
 
 const articles = defineCollection({
@@ -203,7 +204,7 @@ Two CLI scripts help you add content without editing config files by hand.
 
 ### `npm run add-collection`
 
-Scaffolds a complete new content collection: updates `usr/content.config.ts`, creates a sample content file, and generates listing and detail page templates.
+Scaffolds a complete new content collection: updates `src/content.config.ts`, creates a sample content file, and generates listing and detail page templates.
 
 ### `npm run add-content`
 
@@ -218,7 +219,7 @@ npm run build     # production build → dist/
 npm run preview   # local preview of the production build
 ```
 
-For deployment to GitHub Pages, Netlify, Vercel, or Cloudflare Pages, see [Deployment](usr/content/docs/guides/deployment.md).
+For deployment to GitHub Pages, Netlify, Vercel, or Cloudflare Pages, see [Deployment](src/content/docs/guides/deployment.md).
 
 ---
 
@@ -230,7 +231,7 @@ The framework layer is an ordinary npm dependency — update it like any other p
 npm update @lad-sapienza/scms-core
 ```
 
-See [Updating](usr/content/docs/guides/updating.md) for checking what's new and picking a specific version.
+See [Updating](src/content/docs/guides/updating.md) for checking what's new and picking a specific version.
 
 ---
 
@@ -238,12 +239,12 @@ See [Updating](usr/content/docs/guides/updating.md) for checking what's new and 
 
 | Guide | File |
 |---|---|
-| Getting Started | [guides/getting-started.md](usr/content/docs/guides/getting-started.md) |
-| Architecture | [guides/architecture.md](usr/content/docs/guides/architecture.md) |
-| Managing Content | [guides/managing-content.md](usr/content/docs/guides/managing-content.md) |
-| Theming | [guides/theming.md](usr/content/docs/guides/theming.md) |
-| Deployment | [guides/deployment.md](usr/content/docs/guides/deployment.md) |
-| Updating | [guides/updating.md](usr/content/docs/guides/updating.md) |
+| Getting Started | [guides/getting-started.md](src/content/docs/guides/getting-started.md) |
+| Architecture | [guides/architecture.md](src/content/docs/guides/architecture.md) |
+| Managing Content | [guides/managing-content.md](src/content/docs/guides/managing-content.md) |
+| Theming | [guides/theming.md](src/content/docs/guides/theming.md) |
+| Deployment | [guides/deployment.md](src/content/docs/guides/deployment.md) |
+| Updating | [guides/updating.md](src/content/docs/guides/updating.md) |
 
 ---
 

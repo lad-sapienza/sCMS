@@ -5,7 +5,7 @@ The s:CMS blog system uses Astro's content collections for type-safe, schema-val
 ## Structure
 
 ```
-usr/
+src/
 ├── content/
 │   ├── config.ts              # Content collection schemas
 │   └── blog/                  # Blog post content
@@ -20,7 +20,7 @@ usr/
 
 ## Creating a New Blog Post
 
-1. Create a new MDX file in `usr/content/blog/`:
+1. Create a new MDX file in `src/content/blog/`:
 
 ```mdx
 ---
@@ -55,7 +55,7 @@ Your content goes here...
 
 ## Schema Validation
 
-The blog schema is defined in `usr/content.config.ts` and provides:
+The blog schema is defined in `src/content.config.ts` and provides:
 
 - Type safety in TypeScript
 - Automatic validation on build

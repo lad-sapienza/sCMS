@@ -14,7 +14,7 @@ s:CMS can be deployed to any static hosting platform. Choose your preferred opti
 
 The template already ships a working workflow at `.github/workflows/deploy.yml` (Node 22, builds with `npm run build`, deploys `dist/` via `actions/deploy-pages`). You normally only need to:
 
-1. **Configure your site URL** in `usr/user.config.mjs`:
+1. **Configure your site URL** in `src/user.config.mjs`:
     ```js
     export const userConfig = {
       site: 'https://username.github.io/repo-name',
@@ -183,7 +183,7 @@ jobs:
 
 ### Example: Directus Integration with Secrets
 
-**usr/content.config.ts:**
+**src/content.config.ts:**
 ```typescript
 import { defineCollection } from 'astro:content';
 import { directusLoader } from '@lad-sapienza/scms-core/integrations/directusLoader';
@@ -284,7 +284,7 @@ export default {
 ### Images Not Loading
 
 **Check image paths:**
-- Use `/images/photo.jpg` for files in `usr/public/images/`
+- Use `/images/photo.jpg` for files in `public/images/`
 - Use relative paths `./photo.jpg` for images next to content
 - Astro optimizes images automatically
 
@@ -329,7 +329,7 @@ The s:CMS framework layer is the `@lad-sapienza/scms-core` npm package — updat
 npm update @lad-sapienza/scms-core
 ```
 
-Your content and customizations in `usr/` are **never touched**, because the framework was never part of this repository to begin with — it lives entirely in `node_modules`. See [Updating](updating.md) for checking what's new before you update.
+Your content and customizations in `src/` are **never touched**, because the framework was never part of this repository to begin with — it lives entirely in `node_modules`. See [Updating](updating.md) for checking what's new before you update.
 
 ## Best Practices
 

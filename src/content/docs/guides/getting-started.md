@@ -44,7 +44,7 @@ Open your browser at **http://localhost:4321** — you should see the s:CMS defa
 
 ### Step 2 — Make the site yours
 
-Open the file `usr/user.config.mjs` in your code editor. You will see two sections to fill in:
+Open the file `src/user.config.mjs` in your code editor. You will see two sections to fill in:
 
 ```js
 export const userConfig = {
@@ -64,17 +64,17 @@ Save the file. The preview in your browser updates automatically.
 
 ### Step 3 — Add your content
 
-All your content lives inside `usr/content/`. The folder is already organised into collections:
+All your content lives inside `src/content/`. The folder is already organised into collections:
 
 | Folder | What goes here |
 |---|---|
-| `usr/content/blog/` | Articles, news, posts |
-| `usr/content/docs/` | Documentation, guides |
-| `usr/content/data/` | CSV, JSON or YAML data files |
+| `src/content/blog/` | Articles, news, posts |
+| `src/content/docs/` | Documentation, guides |
+| `src/content/data/` | CSV, JSON or YAML data files |
 
 #### Creating a blog post
 
-Create a new file, for example `usr/content/blog/my-first-post.md`, and paste this template:
+Create a new file, for example `src/content/blog/my-first-post.md`, and paste this template:
 
 ```markdown
 ---
@@ -101,7 +101,7 @@ Save the file and check **http://localhost:4321/blog** — your post appears imm
 Place image files next to your content file, inside the same folder:
 
 ```
-usr/content/blog/
+src/content/blog/
 ├── my-first-post.md
 └── my-first-post/
     └── photo.jpg
@@ -121,7 +121,7 @@ No extra copy steps needed — s:CMS handles the rest.
 
 If `blog` and `docs` do not fit your needs, you can create your own collection. The following example creates a `projects` collection.
 
-**4a.** Create the folder `usr/content/projects/` and add a Markdown file inside it, e.g. `project-one.md`:
+**4a.** Create the folder `src/content/projects/` and add a Markdown file inside it, e.g. `project-one.md`:
 
 ```markdown
 ---
@@ -133,14 +133,14 @@ date: 2026-01-01
 Project details here.
 ```
 
-**4b.** Open `usr/content.config.ts` and register the new collection by adding a few lines:
+**4b.** Open `src/content.config.ts` and register the new collection by adding a few lines:
 
 ```ts
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
 const projectsCollection = defineCollection({
-  loader: glob({ pattern: '**/*.{md,mdx}', base: './usr/content/projects' }),
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/projects' }),
   schema: z.object({
     title: z.string(),
     description: z.string(),
@@ -156,13 +156,13 @@ export const collections = {
 };
 ```
 
-**4c.** Create the page `usr/pages/projects/index.astro` to list all projects. Use the existing `usr/pages/blog/index.astro` as a starting point — copy it, then replace every occurrence of `'blog'` with `'projects'` and adjust the title text.
+**4c.** Create the page `src/pages/projects/index.astro` to list all projects. Use the existing `src/pages/blog/index.astro` as a starting point — copy it, then replace every occurrence of `'blog'` with `'projects'` and adjust the title text.
 
 ---
 
 ### Step 5 — Customise the navigation menu
 
-Open `usr/layouts/BaseLayout.astro`. Near the top you will find a `menuItems` array — edit it to add or remove links:
+Open `src/layouts/BaseLayout.astro`. Near the top you will find a `menuItems` array — edit it to add or remove links:
 
 ```js
 const menuItems = [
@@ -180,7 +180,7 @@ const menuItems = [
 
 **6b.** The template already includes a working deploy workflow at `.github/workflows/deploy.yml` — you don't need to create anything. It builds with `npm run build` and publishes `dist/` on every push to `main`. Open it if you want to customize the Node version or add build steps.
 
-**6c.** If your repository is not at the root of a domain (e.g. it will live at `https://username.github.io/my-site` rather than `https://username.github.io`), open `usr/user.config.mjs` and also set the `base` path:
+**6c.** If your repository is not at the root of a domain (e.g. it will live at `https://username.github.io/my-site` rather than `https://username.github.io`), open `src/user.config.mjs` and also set the `base` path:
 
 ```js
 export const userConfig = {
@@ -207,9 +207,9 @@ From now on, every time you push a change to the `main` branch, the site rebuild
 
 | Task | What to edit |
 |---|---|
-| Site title, description, author | `usr/user.config.mjs` |
-| Navigation links | `usr/layouts/BaseLayout.astro` |
-| Blog posts | `usr/content/blog/*.md` |
-| Documentation pages | `usr/content/docs/*.md` |
-| Register a new collection | `usr/content.config.ts` |
-| Global colours and fonts | `usr/styles/global.css` |
+| Site title, description, author | `src/user.config.mjs` |
+| Navigation links | `src/layouts/BaseLayout.astro` |
+| Blog posts | `src/content/blog/*.md` |
+| Documentation pages | `src/content/docs/*.md` |
+| Register a new collection | `src/content.config.ts` |
+| Global colours and fonts | `src/styles/global.css` |

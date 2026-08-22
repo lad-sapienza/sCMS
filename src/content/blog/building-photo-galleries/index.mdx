@@ -26,7 +26,7 @@ One of s:CMS's most powerful features is its **Gallery component**, which combin
 Place an `index.mdx` (or `index.md`) file in its own folder, add a `gallery/` subfolder next to it, and drop images in — `<Gallery />` auto-loads them with no glob or import needed in your content:
 
 ```
-usr/content/blog/my-post/
+src/content/blog/my-post/
   index.mdx
   gallery/
     photo1.jpg
@@ -104,10 +104,10 @@ By default, images are sorted in descending order by filename. To reverse this:
 
 ## Shared Galleries
 
-Need the same set of images across multiple pages, or a gallery that isn't tied to one specific article? Put it under `usr/galleries/<name>/` and reference it by name from anywhere:
+Need the same set of images across multiple pages, or a gallery that isn't tied to one specific article? Put it under `src/galleries/<name>/` and reference it by name from anywhere:
 
 ```
-usr/galleries/scavi-2024/
+src/galleries/scavi-2024/
   photo1.jpg
   photo2.jpg
   captions.json
