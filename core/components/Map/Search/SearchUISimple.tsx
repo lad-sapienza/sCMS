@@ -82,7 +82,7 @@ export function SearchUISimple({
                 <span className="visually-hidden">Loading...</span>
               </span>
             ) : (
-              <Search className="scms-icon scms-icon-sm" />
+              <Search size={16} />
             )}
             Search
           </button>
@@ -92,7 +92,7 @@ export function SearchUISimple({
             onClick={handleClear}
             disabled={isLoading || !searchText}
           >
-            <X className="scms-icon scms-icon-sm" />
+            <X size={16} />
             Clear
           </button>
         </div>
@@ -105,7 +105,7 @@ export function SearchUISimple({
             className="btn btn-sm btn-link"
             onClick={onToggleAdvanced}
           >
-            <TextSearch className="scms-icon scms-icon-sm" />
+            <TextSearch size={16} />
             Advanced Search
           </button>
         </div>

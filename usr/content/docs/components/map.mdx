@@ -573,6 +573,8 @@ The `Map` component renders an interactive map using [MapLibre GL JS](https://ma
 | `filter` | `FilterObject \| function` | Client-side feature filter |
 | `searchInFields` | `SearchInFields` | Fields to expose in the search UI |
 
+The `popupTemplate` string itself is rendered as-is (so `<b>`, `<a href="...">`, etc. work), but every `${fieldName}` value substituted into it is HTML-escaped first — safe even when the data comes from a source you don't fully control (a public Directus collection, a third-party CSV/GeoJSON URL).
+
 ### DirectusShorthand (for Map)
 
 ```typescript

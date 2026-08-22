@@ -117,11 +117,29 @@ export function dataToGeoJson(
 }
 
 /**
- * Parses simple string templates with ${variable} syntax
+ * Escapes a string for safe interpolation into HTML markup/attributes.
+ */
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+/**
+ * Parses simple string templates with ${variable} syntax.
+ *
+ * The template itself is treated as trusted markup (it's author-supplied,
+ * e.g. `popupTemplate: '<b>${Title}</b>'`), but each interpolated value comes
+ * from feature/row data — which may be third-party or user-submitted content
+ * (CSV, GeoJSON, Directus) — and is HTML-escaped before substitution, since
+ * the result is rendered via dangerouslySetInnerHTML.
  */
 export function parseStringTemplate(template: string, data: Record<string, any>): string {
   return template.replace(/\$\{([^}]+)\}/g, (_, key) => {
-    return data[key] !== undefined ? String(data[key]) : '';
+    return data[key] !== undefined ? escapeHtml(String(data[key])) : '';
   });
 }
 

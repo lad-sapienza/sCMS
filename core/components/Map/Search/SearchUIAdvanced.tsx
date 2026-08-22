@@ -228,7 +228,7 @@ export function SearchUIAdvanced({
                 disabled={isLoading || filters.length === 1}
                 title={filters.length === 1 ? "Cannot remove the last filter" : "Remove filter"}
               >
-                <Minus className="scms-icon scms-icon-sm" />
+                <Minus size={16} />
               </button>
             </div>
           </div>
@@ -242,7 +242,7 @@ export function SearchUIAdvanced({
             onClick={addFilter}
             disabled={isLoading}
           >
-            <Plus className="scms-icon scms-icon-sm" />
+            <Plus size={16} />
             Add Filter
           </button>
         </div>
@@ -259,7 +259,7 @@ export function SearchUIAdvanced({
                 <span className="visually-hidden">Loading...</span>
               </span>
             ) : (
-              <Search className="scms-icon scms-icon-sm" />
+              <Search size={16} />
             )}
             Search
           </button>
@@ -269,7 +269,7 @@ export function SearchUIAdvanced({
             onClick={handleClear}
             disabled={isLoading || !hasFilters()}
           >
-            <X className="scms-icon scms-icon-sm" />
+            <X size={16} />
             Clear
           </button>
           {onToggleSimple && (
@@ -278,7 +278,7 @@ export function SearchUIAdvanced({
               className="btn btn-sm btn-link"
               onClick={onToggleSimple}
             >
-              <ArrowLeft className="scms-icon scms-icon-sm" />
+              <ArrowLeft size={16} />
               Simple Search
             </button>
           )}

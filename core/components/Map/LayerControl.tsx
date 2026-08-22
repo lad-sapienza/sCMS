@@ -129,7 +129,7 @@ function LayerControlUI({
           zIndex: 1
         }}
       >
-        {!isExpanded && <Layers className="scms-icon scms-icon-lg" />}
+        {!isExpanded && <Layers size={20} />}
       </div>
       
       {isExpanded && (
@@ -170,12 +170,12 @@ function LayerControlUI({
                     <button
                       type="button"
                       onClick={() => handleSearchClick(layer.id, layer.name, layer.searchInFields!)}
-                      className={`scms-btn-icon scms-btn-sm ${
-                        layerSearchQueries[layer.id]?.filters?.length ? 'active' : ''
+                      className={`btn btn-sm p-1 lh-1 border-0 ${
+                        layerSearchQueries[layer.id]?.filters?.length ? 'btn-primary' : 'btn-light'
                       }`}
                       title={`Search ${layer.name}${layerSearchQueries[layer.id]?.filters?.length ? ' (Active)' : ''}`}
                     >
-                      <Search className="scms-icon scms-icon-sm" />
+                      <Search size={14} />
                     </button>
                   )}
                 </div>
@@ -248,7 +248,7 @@ function LayerControlUI({
           >
             <div className="d-flex justify-content-between align-items-center p-3 border-bottom">
               <h3 className="h5 fw-semibold mb-0 d-flex align-items-center gap-2 flex-grow-1 pe-2">
-                <Search className="scms-icon scms-icon-md" />
+                <Search size={18} />
                 Search {searchModal.layerName}
               </h3>
               <button
@@ -256,7 +256,7 @@ function LayerControlUI({
                 className="btn btn-sm btn-light flex-shrink-0"
                 aria-label="Close modal"
               >
-                <X className="scms-icon scms-icon-md" />
+                <X size={18} />
               </button>
             </div>
             
