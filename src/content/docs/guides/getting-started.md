@@ -17,34 +17,30 @@ This guide walks you through everything you need — no coding experience requir
 
 ---
 
-### Step 1 — Get a copy of s:CMS
+### Step 1 — Create your site
 
-1. Go to the [s:CMS repository on GitHub](https://github.com/lad-sapienza/sCMS).
-2. Click the green **"Use this template"** button, then **"Create a new repository"**.
-3. Give your repository a name (e.g. `my-site`), keep it **Public**, and click **"Create repository"**.
-4. On your computer, open a terminal (on Mac: Terminal app; on Windows: Command Prompt or PowerShell) and run:
+On your computer, open a terminal (on Mac: Terminal app; on Windows: Command Prompt or PowerShell) and run:
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/my-site.git
-cd my-site
-npm install
+npx --package=@lad-sapienza/scms-core scms-create my-site
 ```
 
-> Replace `YOUR-USERNAME` with your GitHub username and `my-site` with your repository name.
+You'll be asked a few questions (site title, description, author, site URL) — answer them, then it scaffolds a minimal site and installs its dependencies for you.
 
-Once installation finishes, start the local preview server:
+Once it finishes, start the local preview server:
 
 ```bash
+cd my-site
 npm run dev
 ```
 
-Open your browser at **http://localhost:4321** — you should see the s:CMS default homepage.
+Open your browser at **http://localhost:4321** — you should see your new site's homepage.
 
 ---
 
 ### Step 2 — Make the site yours
 
-Open the file `src/user.config.mjs` in your code editor. You will see two sections to fill in:
+Open the file `src/user.config.mjs` in your code editor. You will see two sections — `scms-create` already filled these in from your answers, but you can edit them any time:
 
 ```js
 export const userConfig = {
@@ -62,19 +58,25 @@ Save the file. The preview in your browser updates automatically.
 
 ---
 
-### Step 3 — Add your content
+### Step 3 — Add your first content collection
 
-All your content lives inside `src/content/`. The folder is already organised into collections:
+A freshly created site starts with no content collections at all — `src/content.config.ts` is empty. The fastest way to add one:
 
-| Folder | What goes here |
-|---|---|
-| `src/content/blog/` | Articles, news, posts |
-| `src/content/docs/` | Documentation, guides |
-| `src/content/data/` | CSV, JSON or YAML data files |
+```bash
+npm run add-collection
+```
 
-#### Creating a blog post
+This asks for a name (e.g. `blog`) and a type (blog / docs / generic), then creates the schema in `src/content.config.ts`, a sample content file, and listing + detail page templates — everything you need to see it working immediately at `npm run dev`.
 
-Create a new file, for example `src/content/blog/my-first-post.md`, and paste this template:
+#### Adding a content file
+
+Once a collection exists, add content to it the same way:
+
+```bash
+npm run add-content
+```
+
+Or create the file by hand, e.g. `src/content/blog/my-first-post.md`:
 
 ```markdown
 ---
@@ -117,70 +119,44 @@ No extra copy steps needed — s:CMS handles the rest.
 
 ---
 
-### Step 4 — Create a new collection (optional)
+### Step 4 — Customise the navigation menu
 
-If `blog` and `docs` do not fit your needs, you can create your own collection. The following example creates a `projects` collection.
-
-**4a.** Create the folder `src/content/projects/` and add a Markdown file inside it, e.g. `project-one.md`:
-
-```markdown
----
-title: 'Project One'
-description: 'A short description'
-date: 2026-01-01
----
-
-Project details here.
-```
-
-**4b.** Open `src/content.config.ts` and register the new collection by adding a few lines:
-
-```ts
-import { defineCollection, z } from 'astro:content';
-import { glob } from 'astro/loaders';
-
-const projectsCollection = defineCollection({
-  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/projects' }),
-  schema: z.object({
-    title: z.string(),
-    description: z.string(),
-    date: z.coerce.date(),
-  }),
-});
-
-export const collections = {
-  blog: blogCollection,
-  docs: docsCollection,
-  data: dataCollection,
-  projects: projectsCollection, // ← add this line
-};
-```
-
-**4c.** Create the page `src/pages/projects/index.astro` to list all projects. Use the existing `src/pages/blog/index.astro` as a starting point — copy it, then replace every occurrence of `'blog'` with `'projects'` and adjust the title text.
-
----
-
-### Step 5 — Customise the navigation menu
-
-Open `src/layouts/BaseLayout.astro`. Near the top you will find a `menuItems` array — edit it to add or remove links:
+Open `src/layouts/BaseLayout.astro` and find the `<BSNavbar>` tag. A freshly created site starts with an empty menu (`menuItems={[]}`) — replace it with your links:
 
 ```js
-const menuItems = [
-  { href: '/',         label: 'Home',     isActive: currentPath === '/' },
-  { href: '/blog',     label: 'Blog',     isActive: currentPath.startsWith('/blog') },
-  { href: '/projects', label: 'Projects', isActive: currentPath.startsWith('/projects') },
-];
+<BSNavbar
+  client:load
+  menuItems={[
+    { href: '/', label: 'Home' },
+    { href: '/blog', label: 'Blog' },
+  ]}
+  currentPath={currentPath}
+  ...
+/>
 ```
+
+Each entry needs a `label` and, usually, an `href`. The active link is worked out automatically from the current page — no `isActive` flag to set. Entries can also nest via `children` (up to 3 levels) for dropdown menus, e.g. `{ label: 'Docs', children: [{ href: '/docs/guides/getting-started', label: 'Getting Started' }] }`.
 
 ---
 
-### Step 6 — Publish to GitHub Pages
+### Step 5 — Publish to GitHub Pages
 
-**6a.** In your repository on GitHub, go to **Settings → Pages**. Under "Source", select **"GitHub Actions"**.
+**5a.** Create a new, empty repository on [GitHub](https://github.com/new), then push your site to it:
 
-**6b.** The template already includes a working deploy workflow at `.github/workflows/deploy.yml` — you don't need to create anything. It builds with `npm run build` and publishes `dist/` on every push to `main`. Open it if you want to customize the Node version or add build steps.
+```bash
+git init
+git add .
+git commit -m "Initial site setup"
+git branch -M main
+git remote add origin https://github.com/YOUR-USERNAME/my-site.git
+git push -u origin main
+```
 
-**6c.** If your repository is not at the root of a domain (e.g. it will live at `https://username.github.io/my-site` rather than `https://username.github.io`), open `src/user.config.mjs` and also set the `base` path:
+**5b.** In your repository on GitHub, go to **Settings → Pages**. Under "Source", select **"GitHub Actions"**.
+
+**5c.** `scms-create` already included a working deploy workflow at `.github/workflows/deploy.yml` — you don't need to create anything. It builds with `npm run build` and publishes `dist/` on every push to `main`. Open it if you want to customize the Node version or add build steps.
+
+**5d.** If your repository is not at the root of a domain (e.g. it will live at `https://username.github.io/my-site` rather than `https://username.github.io`), open `src/user.config.mjs` and also set the `base` path:
 
 ```js
 export const userConfig = {
@@ -189,15 +165,7 @@ export const userConfig = {
 };
 ```
 
-**6d.** Commit and push everything to GitHub:
-
-```bash
-git add .
-git commit -m "Initial site setup"
-git push
-```
-
-GitHub Actions will build and deploy your site automatically. After about a minute, visit `https://YOUR-USERNAME.github.io/my-site` — your site is live.
+Commit and push this change too — GitHub Actions will build and deploy your site automatically. After about a minute, visit `https://YOUR-USERNAME.github.io/my-site` — your site is live.
 
 From now on, every time you push a change to the `main` branch, the site rebuilds and publishes itself.
 
@@ -208,8 +176,9 @@ From now on, every time you push a change to the `main` branch, the site rebuild
 | Task | What to edit |
 |---|---|
 | Site title, description, author | `src/user.config.mjs` |
-| Navigation links | `src/layouts/BaseLayout.astro` |
-| Blog posts | `src/content/blog/*.md` |
-| Documentation pages | `src/content/docs/*.md` |
-| Register a new collection | `src/content.config.ts` |
+| Navigation links | `src/layouts/BaseLayout.astro` (the `menuItems` prop on `<BSNavbar>`) |
+| Add a content collection | `npm run add-collection` |
+| Add a content file | `npm run add-content` |
+| Register a collection by hand | `src/content.config.ts` |
 | Global colours and fonts | `src/styles/global.css` |
+| Update the framework | `npm update @lad-sapienza/scms-core` |
