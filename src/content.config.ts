@@ -71,9 +71,31 @@ const menuCollection = defineCollection({
   schema: z.array(menuItemSchema),
 });
 
+// Recursive schema for a dictionary value: a string leaf, or a nested
+// object of further dictionary values (e.g. `dataTb.pagination.next`).
+type DictionaryValue = string | { [key: string]: DictionaryValue };
+const dictionaryValueSchema: z.ZodType<DictionaryValue> = z.lazy(() =>
+  z.union([z.string(), z.record(z.string(), dictionaryValueSchema)])
+);
+
+// Schema for src/content/data/i18n/{locale}.yaml — this site's own
+// translation dictionary. Only needs keys the site wants to add (nav,
+// footer, page copy) or override (a component's own key, e.g.
+// `dataTb.searchPlaceholder`) — anything omitted falls back through the
+// default locale to @lad-sapienza/scms-core's built-in English strings.
+// See @lad-sapienza/scms-core/components/i18n for the resolution mechanism.
+const i18nCollection = defineCollection({
+  loader: glob({
+    pattern: '*.yaml',
+    base: './src/content/data/i18n',
+  }),
+  schema: z.record(z.string(), dictionaryValueSchema),
+});
+
 // Export all collections
 export const collections = {
   blog: blogCollection,
   docs: docsCollection,
   menu: menuCollection,
+  i18n: i18nCollection,
 };
