@@ -24,6 +24,34 @@
   --bs-gray-900: #241f1a;
   --bs-link-color: #a8431e;
   --bs-link-hover-color: #c96a41;
+
+  /* Fixed dark-ink footer band, deliberately independent of theme — see
+     BaseLayout.astro's <footer>. Not overridden under [data-bs-theme="dark"]
+     on purpose: it must render the same in both modes, so it can't reuse
+     --bs-heading-color once that token flips to a light value in dark mode. */
+  --scms-footer-bg: #241f1a;
+}
+
+/* Editorial design system, dark mode: warm ink instead of warm paper — same
+   terracotta identity, lightened for contrast against a dark background
+   rather than reused as-is (the light-mode value reads muddy on dark). */
+[data-bs-theme="dark"] {
+  --bs-primary: #e2814f;
+  --bs-secondary: #a89984;
+  --bs-success: #7fa686;
+  --bs-body-color: #cabfae;
+  --bs-body-bg: #1b1613;
+  --bs-heading-color: #f3e9da;
+  --bs-border-color: #3a3128;
+  --bs-dark: #f3e9da;
+  --bs-light: #241e19;
+  --bs-tertiary-bg: #241e19;
+  --bs-gray-100: #2c2419;
+  --bs-gray-700: #a99d8c;
+  --bs-gray-800: #ede0cd;
+  --bs-gray-900: #12100d;
+  --bs-link-color: #e2814f;
+  --bs-link-hover-color: #f0a06e;
 }
 
 body {
@@ -263,6 +291,35 @@ a:hover {
 .dropdown-item:hover {
   background: var(--bs-gray-100);
   color: var(--bs-primary);
+}
+
+/*
+ * Dark-mode overrides for rules above that use a literal hex value instead
+ * of a custom property (so they don't pick up the [data-bs-theme="dark"]
+ * block automatically), plus two hover states that reuse --bs-heading-color
+ * as a background under the assumption it's always dark ink — true in light
+ * mode, not in dark mode where that token becomes light cream instead.
+ */
+[data-bs-theme="dark"] .card {
+  background: #241e19;
+}
+
+[data-bs-theme="dark"] .btn-primary:hover {
+  background: #ef9a6b;
+  border-color: #ef9a6b;
+}
+
+[data-bs-theme="dark"] .btn-outline-secondary:hover {
+  color: #1b1613;
+}
+
+[data-bs-theme="dark"] .form-control:focus,
+[data-bs-theme="dark"] .form-select:focus {
+  box-shadow: 0 0 0 0.2rem rgba(226, 129, 79, 0.18);
+}
+
+[data-bs-theme="dark"] .dropdown-menu {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
 }
 
 /* Responsive mobile optimization */
