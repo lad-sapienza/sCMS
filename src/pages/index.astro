@@ -1,74 +1,22 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import { DEFAULT_LOCALE } from '../utils/i18n';
 
 export const prerender = true;
 
-const title = 's:CMS by LAD';
-const description = 'A modern static site Content Management System developed and maintained by LAD: Laboratorio di Archeologia Digitale alla Sapienza.';
+const target = `/${DEFAULT_LOCALE}/`;
 ---
-
-<BaseLayout title={title} description={description}>
-  <div class="mx-auto" style="max-width: 920px;">
-    <p class="text-uppercase mb-4" style="font-size: 0.75rem; letter-spacing: 0.14em; color: var(--bs-gray-700);">
-      Laboratorio di Archeologia Digitale &middot; Sapienza
-    </p>
-    <h1 style="font-size: 3.5rem; line-height: 1.05;">{title}</h1>
-    <p class="lead mt-4" style="max-width: 680px; color: var(--bs-gray-700);">
-      {description}
-    </p>
-  </div>
-
-  <hr class="my-5" style="border-color: var(--bs-border-color);" />
-
-  <div class="mx-auto" style="max-width: 760px;">
-    <p style="font-size: 1.125rem; line-height: 1.75;">
-      s:CMS is an open source, ready-to-use content management system for{' '}
-      <a href="https://www.cloudflare.com/en-gb/learning/performance/static-site-generator/" target="_blank" rel="noreferrer">generating static sites</a>{' '}
-      powered by <a href="https://astro.build/" target="_blank" rel="noreferrer">Astro</a>. It provides
-      data-oriented components for easily <strong>connecting</strong>, <strong>displaying</strong>,
-      and <strong>analyzing</strong> research data stored in databases, flat files, or remote sources.
-      Features include interactive maps, searchable tables, and (soon) charts.
-    </p>
-    <p style="font-size: 1.125rem; line-height: 1.75;">
-      Our goal is to enable researchers to publish rich data portals online, pulling information from
-      a wide range of sources — static files, remote services, or online databases. We build
-      components — reusing well-known open source projects — to make integration seamless and offer
-      a simplified workflow for securely publishing content.
-    </p>
-  </div>
-
-  <div class="row g-5 mt-2 pt-5" style="max-width: 920px; margin-left: auto; margin-right: auto; border-top: 1px solid var(--bs-border-color);">
-    <div class="col-12 col-md-6">
-      <h2 style="font-size: 1.75rem;">Why static sites?</h2>
-      <p style="color: var(--bs-gray-700);">
-        Static sites are fast, secure, and durable: no databases to manage, no code that gets
-        outdated, no performance issues. Once you build and deploy your site, you can be confident
-        it will keep working.
-      </p>
-    </div>
-    <div class="col-12 col-md-6">
-      <h2 style="font-size: 1.75rem;">What can I do with s:CMS?</h2>
-      <p style="color: var(--bs-gray-700);">
-        Set up a fully working, secure website in minutes. Combine static pages, text, and images
-        with rich data pulled in real time from remote databases or self-hosted static files. Build
-        maps and fully searchable tables. Customize the layout and look &amp; feel to fit your needs.
-      </p>
-    </div>
-  </div>
-
-  <div class="mx-auto mt-5 pt-3" style="max-width: 760px;">
-    <blockquote class="ps-4" style="border-left: 2px solid var(--bs-primary); margin: 0;">
-      <p style="font-family: var(--font-serif); font-style: italic; font-size: 1.5rem; line-height: 1.5; margin: 0; font-weight: 400;">
-        Think of s:CMS as the public, fully customizable front-end of your research
-        database — now powered by Astro.
-      </p>
-    </blockquote>
-  </div>
-
-  <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mt-5 pt-5" style="max-width: 920px; margin-left: auto; margin-right: auto; border-top: 1px solid var(--bs-border-color);">
-    <h2 class="m-0" style="font-size: 1.5rem;">Ready to get started?</h2>
-    <a href="/docs/guides/getting-started" class="btn btn-primary">
-      Read the Getting Started guide
-    </a>
-  </div>
-</BaseLayout>
+<!doctype html>
+<html lang={DEFAULT_LOCALE}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="refresh" content={`0; url=${target}`} />
+    <link rel="canonical" href={target} />
+    <title>s:CMS</title>
+  </head>
+  <body>
+    <p>Redirecting to <a href={target}>{target}</a>…</p>
+    <script is:inline define:vars={{ target }}>
+      window.location.replace(target);
+    </script>
+  </body>
+</html>

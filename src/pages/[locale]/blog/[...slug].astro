@@ -1,49 +1,70 @@
 ---
 import { getCollection, render } from 'astro:content';
 import { type CollectionEntry } from 'astro:content';
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { LOCALES, localizeCollection } from '../../../utils/i18n';
 
 export const prerender = true;
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
-  
-  return posts.map((post) => ({
-    params: { slug: post.id },
-    props: { post },
+  const localized = localizeCollection(posts, 'blog', LOCALES);
+
+  return localized.map(({ locale, slug, entry, isFallback }) => ({
+    params: { locale, slug },
+    props: { post: entry, isFallback },
   }));
 }
 
 interface Props {
   post: CollectionEntry<'blog'>;
+  isFallback: boolean;
 }
 
-const { post } = Astro.props;
+const { locale } = Astro.params;
+const { post, isFallback } = Astro.props;
 const { Content } = await render(post);
 
-const formattedDate = post.data.date.toLocaleDateString('en-US', {
+const dateLocale = locale === 'it' ? 'it-IT' : 'en-US';
+const formattedDate = post.data.date.toLocaleDateString(dateLocale, {
   year: 'numeric',
   month: 'long',
   day: 'numeric'
 });
+
+const copy: Record<string, { back: string; backAll: string; by: string }> = {
+  en: { back: '← Back to Blog', backAll: '← Back to all posts', by: 'By' },
+  it: { back: '← Torna al blog', backAll: '← Torna a tutti gli articoli', by: 'Di' },
+};
+const t = copy[locale];
+const fallbackNotice: Record<string, string> = {
+  en: "This post isn't translated yet — showing the English version.",
+  it: "Questo articolo non è ancora tradotto — viene mostrata la versione inglese.",
+};
 ---
 
-<BaseLayout title={post.data.title} description={post.data.description}>
+<BaseLayout locale={locale} title={post.data.title} description={post.data.description}>
   <main class="container py-5">
     <article>
       <!-- Blog post header -->
       <div class="mb-5 border-bottom pb-4">
         <div class="mb-3 text-end">
-          <a 
-            href="/blog" 
+          <a
+            href={`/${locale}/blog`}
             class="btn btn-outline-primary text-decoration-none"
           >
-            ← Back to Blog
+            {t.back}
           </a>
         </div>
 
+        {isFallback && (
+          <div class="alert alert-warning small" role="status">
+            {fallbackNotice[locale]}
+          </div>
+        )}
+
         <h1 class="mb-4">{post.data.title}</h1>
-        
+
         <p class="lead text-muted">
           {post.data.description}
         </p>
@@ -52,11 +73,11 @@ const formattedDate = post.data.date.toLocaleDateString('en-US', {
           <time datetime={post.data.date.toISOString()}>
             {formattedDate}
           </time>
-          
+
           {post.data.author && (
             <>
               <span>·</span>
-              <span>By {post.data.author}</span>
+              <span>{t.by} {post.data.author}</span>
             </>
           )}
         </div>
@@ -80,10 +101,10 @@ const formattedDate = post.data.date.toLocaleDateString('en-US', {
       <!-- Back to blog link -->
       <div class="mt-5 border-top pt-4">
         <a
-          href="/blog"
+          href={`/${locale}/blog`}
           class="btn btn-link text-primary text-decoration-none p-0"
         >
-          ← Back to all posts
+          {t.backAll}
         </a>
       </div>
     </article>

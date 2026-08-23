@@ -5,23 +5,27 @@ import { siteMetadata } from "../user.config.mjs"
 import packageJson from "../../package.json"
 
 import BSNavbar from "@lad-sapienza/scms-core/components/BSNavbar"
+import ThemeToggle from "@lad-sapienza/scms-core/components/ThemeToggle"
+import LocaleSwitcher from "@lad-sapienza/scms-core/components/LocaleSwitcher"
 import { getEntry } from 'astro:content'
+import { LOCALES, LOCALE_LABELS, type Locale, withLocalePrefix } from '../utils/i18n'
 
 interface Props {
+  locale: Locale
   title?: string
   description?: string
 }
 
-const { title = siteMetadata.title, description = siteMetadata.description } =
+const { locale, title = siteMetadata.title, description = siteMetadata.description } =
   Astro.props
 
 const currentPath = Astro.url.pathname
-const menuEntry = await getEntry('menu', 'menu')
-const menuItems = menuEntry?.data ?? []
+const menuEntry = await getEntry('menu', `${locale}/menu`)
+const menuItems = withLocalePrefix(menuEntry?.data ?? [], locale)
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={locale}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -45,11 +49,12 @@ const menuItems = menuEntry?.data ?? []
       }}
       brand={{
         text: siteMetadata.title,
-        link: "/",
+        link: `/${locale}/`,
         cssClasses: "fw-bold",
       }}
     />
-
+    <ThemeToggle client:load />
+    <LocaleSwitcher client:load locales={[...LOCALES]} currentLocale={locale} labels={LOCALE_LABELS} />
 
     <main
       class="container flex-grow-1"
@@ -59,7 +64,7 @@ const menuItems = menuEntry?.data ?? []
     </main>
 
     <!-- Footer -->
-    <footer class="py-5 mt-auto" style="background: var(--bs-heading-color); color: #d8cfc2;">
+    <footer class="py-5 mt-auto" style="background: var(--scms-footer-bg); color: #d8cfc2;">
       <div class="container">
         <div class="d-flex align-items-center justify-content-between flex-wrap gap-4">
           <div>

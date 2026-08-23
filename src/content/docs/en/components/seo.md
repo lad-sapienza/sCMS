@@ -136,7 +136,6 @@ interface SEOProps {
 ## Related Components
 
 - **TableOfContents**: For article navigation
-- **MarkdownLayout**: Common layout using SEO component
 - **BaseLayout**: Foundation layout with SEO integration
 
-See the [component demos](/datatable-demo) for live examples of SEO integration.
+See the [component demos](/en/docs) for live examples of SEO integration.

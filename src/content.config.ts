@@ -59,10 +59,13 @@ const menuItemSchema: z.ZodType<MenuItem> = z.lazy(() =>
   })
 );
 
-// Schema for src/content/data/menu.yaml — top-level array of menu items
+// Schema for src/content/data/{locale}/menu.yaml — one menu per language,
+// top-level array of menu items. hrefs stay locale-agnostic (prefixed with
+// the current locale at render time — see src/utils/i18n.ts); only `label`
+// needs translating per locale.
 const menuCollection = defineCollection({
   loader: glob({
-    pattern: 'menu.yaml',
+    pattern: '*/menu.yaml',
     base: './src/content/data',
   }),
   schema: z.array(menuItemSchema),

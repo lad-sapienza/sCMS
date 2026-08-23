@@ -95,7 +95,6 @@ interface TableOfContentsProps {
 ## Related Components
 
 - **SEO**: For page metadata and structured navigation
-- **MarkdownLayout**: Common layout that can include TOC
 - **BaseLayout**: Foundation layout for TOC integration
 
-See the [documentation demo](/docs) for live examples of TableOfContents usage.
+See the [documentation demo](/en/docs) for live examples of TableOfContents usage.
