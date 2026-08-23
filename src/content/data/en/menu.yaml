@@ -29,10 +29,14 @@
           label: Map
         - href: /docs/components/zotero-geoviewer
           label: Zotero GeoViewer
+        - href: /docs/components/record
+          label: Record
         - href: /docs/components/seo
           label: SEO
         - href: /docs/components/tableofcontents
           label: Table of Contents
+        - href: /docs/components/redirect-page
+          label: RedirectPage
     - href: /docs
       label: All docs
 
