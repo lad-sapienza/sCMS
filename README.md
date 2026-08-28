@@ -264,3 +264,13 @@ s:CMS is developed and maintained by [LAD: Laboratorio di Archeologia Digitale a
 
 - GitHub Issues: [lad-sapienza/sCMS](https://github.com/lad-sapienza/sCMS/issues)
 - Previous Gatsby version: [lad-sapienza/scms](https://github.com/lad-sapienza/scms)
+
+----
+
+
+## Build with s:CMS
+- [LAD](https://lad-sapienza.it) The official website of the Laboratory of Digital Archaeology at Sapienza
+- [FortNet](https://fortnet.lad-sapienza.it/) The website, atlas and more of PRIN 2022 Research Project Fortnet: Fortification and population network in coastal Chaonia, Northern Epirus (Albania) between Iron Age and the Medieval period: a longue durée approach to the study of settlements, economic and defensive systems
+- [Borderscape](https://lad-sapienza.github.io/borderscape/) Website and WebGIS of Borderscape Project: State Formation and Settlement Patterns in the Ancient Egyptian Southern Border, 4th-3rd millennia BCE
+- [ELAMortuary](https://lad-sapienza.github.io/elamortuary/) Website and data portal of the project Villages to Empire: 4,000 Years of Death and Society in Elam (4500-525 BCE) carried out by Yasmina Wicks, in the frame of a Marie Skłodowska-Curie Individual Fellowship hosted by Università di Napoli, “L’Orientale” (2022-2024). The project research and database were funded by the European Union’s Horizon 2020 research and innovation programme under the Marie Skłodowska-Curie grant agreement No. 892581 — ELAMortuary.
+
