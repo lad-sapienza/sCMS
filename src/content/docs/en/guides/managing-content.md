@@ -47,12 +47,13 @@ The script will:
    | `docs` | `title`, `description`, `order`, `category`, `draft` |
    | `generic` | `title`, `description`, `draft` |
 
-4. Create or update these files automatically:
+4. Ask for **language folders** — leave blank for a single-language collection, or enter locale codes (e.g. `en, it`) to scaffold the sample file once per language folder. See [Multilingual collections](#multilingual-collections) below.
+5. Create or update these files automatically:
 
    | File | What changes |
    |------|--------------|
    | `src/content.config.ts` | New `defineCollection` block added; name registered in the `collections` export |
-   | `src/content/<name>/sample-*.md` | A ready-to-edit sample file with pre-filled frontmatter |
+   | `src/content/<name>/sample-*.md` | A ready-to-edit sample file with pre-filled frontmatter (one per language folder for a multilingual collection: `src/content/<name>/en/sample-*.md`, …) |
    | `src/pages/<name>/index.astro` | Listing page for all entries in the collection |
    | `src/pages/<name>/[...slug].astro` | Detail page for individual entries |
 
@@ -72,9 +73,10 @@ The script will:
 
 1. List all collections that already have a content directory.
 2. Ask which **collection** to add the file to (by name or number).
-3. Ask for the **file format** — `md` or `mdx` (defaults to whichever format is already used in that collection).
-4. Ask for a **slug** — this becomes the file name and the URL path. You can include subfolders (e.g. `2026/my-first-post` → saved as `src/content/blog/2026/my-first-post.md` and reachable at `/blog/2026/my-first-post`).
-5. Prompt for each **frontmatter field** declared in the schema, with smart defaults:
+3. If the collection is organised into language folders (`src/content/<collection>/en/…`, `.../it/…`), ask **which language** the new file belongs in — a single locale, a comma-separated subset, or `all` to write an identical starting file into every language folder. Collections that aren't split by language skip this step. See [Multilingual collections](#multilingual-collections) below.
+4. Ask for the **file format** — `md` or `mdx` (defaults to whichever format is already used in that collection).
+5. Ask for a **slug** — this becomes the file name and the URL path. You can include subfolders (e.g. `2026/my-first-post` → saved as `src/content/blog/2026/my-first-post.md` and reachable at `/blog/2026/my-first-post`).
+6. Prompt for each **frontmatter field** declared in the schema, with smart defaults:
    - `date` fields default to today's date
    - `author` defaults to your `git config user.name`
    - `draft` defaults to `true`
@@ -168,6 +170,27 @@ You can add, rename, or remove fields in `src/content.config.ts` at any time. Re
 
 1. Update every existing content file to include (or remove) the changed field, or mark new fields as `.optional()` so old files remain valid.
 2. Update the listing and detail page templates to display the new field.
+
+---
+
+## Multilingual collections
+
+A site that serves more than one language keeps a collection's content in **per-language sub-folders**:
+
+```
+src/content/docs/
+├── en/
+│   └── guides/getting-started.md
+└── it/
+    └── guides/getting-started.md
+```
+
+There is no configuration flag for this — the scaffolding scripts detect it purely from the folder layout. A collection is treated as multilingual when every sub-folder inside it is a locale code (`en`, `it`, `pt-BR`, …) and no content files sit loose at the collection root.
+
+- **`npm run add-collection`** asks for the locale codes up front and writes one sample file into each `src/content/<name>/<locale>/` folder.
+- **`npm run add-content`** notices the language folders and asks which one the new file belongs in. Choosing `all` (or a comma-separated subset) writes the **same** starting file into each language folder — the frontmatter and body are identical copies for you to translate by hand afterwards. The `[i18n] Missing "<locale>" translation …` build warning tells you which pages are still untranslated.
+
+The generated listing/detail pages under `src/pages/<name>/` render a single language. On a multilingual site, adapt them to your locale routing (this project uses one `src/pages/[locale]/…` dynamic-route layer — see `src/utils/i18n.ts`).
 
 ---
 

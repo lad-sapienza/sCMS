@@ -204,11 +204,11 @@ Two CLI scripts help you add content without editing config files by hand.
 
 ### `npm run add-collection`
 
-Scaffolds a complete new content collection: updates `src/content.config.ts`, creates a sample content file, and generates listing and detail page templates.
+Scaffolds a complete new content collection: updates `src/content.config.ts`, creates a sample content file, and generates listing and detail page templates. For a multilingual site it can also take a list of locale codes (e.g. `en, it`) and scaffold one sample per language folder.
 
 ### `npm run add-content`
 
-Adds a single content file to an existing collection, prompting for frontmatter fields based on the Zod schema.
+Adds a single content file to an existing collection, prompting for frontmatter fields based on the Zod schema. When the collection is organised into per-language folders (`src/content/<collection>/en/…`, `.../it/…`), it asks which language the file belongs in — a single locale, or `all`. See [Managing Content](src/content/docs/en/guides/managing-content.md#multilingual-collections).
 
 ---
 

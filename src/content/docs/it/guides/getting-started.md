@@ -76,6 +76,8 @@ Una volta che una collection esiste, aggiungere contenuto funziona allo stesso m
 npm run add-content
 ```
 
+Se la collection è organizzata in cartelle per lingua, lo script chiede anche in quale lingua va inserito il file (una singola lingua, oppure `all`). Vedi [Gestione dei contenuti](managing-content.md#multilingual-collections) per i dettagli.
+
 Oppure crea il file a mano, es. `src/content/blog/il-mio-primo-post.md`:
 
 ```markdown

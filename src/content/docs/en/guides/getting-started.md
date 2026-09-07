@@ -76,6 +76,8 @@ Once a collection exists, add content to it the same way:
 npm run add-content
 ```
 
+If the collection is organised into per-language folders, the script also asks which language the file belongs in (a single locale, or `all`). See [Managing Content](managing-content.md#multilingual-collections) for details.
+
 Or create the file by hand, e.g. `src/content/blog/my-first-post.md`:
 
 ```markdown
