@@ -34,6 +34,29 @@ npm install @lad-sapienza/scms-core@<version>
 npm install @lad-sapienza/scms-core@alpha
 ```
 
+## Peer dependencies
+
+`@lad-sapienza/scms-core` declares `astro`, `react`, `react-dom` and `maplibre-gl` as **peer dependencies**: they're not bundled inside the package, they're listed directly in your own `package.json` (the scaffold puts them there, and there's exactly one copy of each in your tree). `npm update @lad-sapienza/scms-core` bumps the framework *within the range those peers already allow*. When a framework release requires a **new major** of one of them, npm can't satisfy it against your old range and `npm install` stops with an `ERESOLVE` peer-conflict error until you bump that peer in your own `package.json` too.
+
+### MapLibre GL JS 5 → 6 (`@lad-sapienza/scms-core@0.1.0-alpha.11`)
+
+This release moves the `Map` component to MapLibre GL JS v6. If your site is still on `maplibre-gl` v5, update both lines together:
+
+```jsonc
+// package.json
+"dependencies": {
+  "@lad-sapienza/scms-core": "^0.1.0-alpha.11",
+  "maplibre-gl": "^6.7.0"
+}
+```
+
+```bash
+npm install
+npm run build
+```
+
+What changes for your site: MapLibre v6 renders through **WebGL2** (supported by every current browser; the map won't render where WebGL2 is unavailable or disabled), and it no longer auto-loads its Web Worker — but `scms-core` wires the worker up for you, so there's nothing to configure. No `Map` prop or API changes.
+
 ## After Updating
 
 ```bash
