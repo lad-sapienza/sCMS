@@ -9,7 +9,9 @@ import { Map } from '@lad-sapienza/scms-core/components/Map';
 import TableOfContents from '@lad-sapienza/scms-core/components/TableOfContents/TableOfContents.astro';
 import Example from '@components/Example.astro';
 
-The `Map` component renders an interactive map using [MapLibre GL JS](https://maplibre.org/). Overlay layers — GeoJSON, CSV, Directus, a generic API, or raster XYZ/WMS tiles — can be added via the `overlayLayers` prop or shorthand props like `geojson`, `csv`, `directus`, etc. Layers can include searchable fields for advanced filtering.
+The `Map` component renders an interactive map using [MapLibre GL JS](https://maplibre.org/) (v6). Overlay layers — GeoJSON, CSV, Directus, a generic API, or raster XYZ/WMS tiles — can be added via the `overlayLayers` prop or shorthand props like `geojson`, `csv`, `directus`, etc. Layers can include searchable fields for advanced filtering.
+
+**Requirements:** MapLibre GL JS v6 needs **WebGL2** (supported by every current browser; the map can't render where WebGL2 is unavailable or disabled). The MapLibre Web Worker is configured automatically by `@lad-sapienza/scms-core`, so a consuming site needs no bundler or worker setup of its own.
 
 <TableOfContents title="On this page" />
 

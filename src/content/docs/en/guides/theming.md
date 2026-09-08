@@ -92,6 +92,8 @@ The top navigation (`BSNavbar`, from `@lad-sapienza/scms-core/components/BSNavba
 
 Core components (`DataTb`, `Map`, `Gallery`, etc.) render mostly plain HTML with Bootstrap classes, so global overrides in `global.css` apply to them too. A few components pull in their own third-party CSS (e.g. MapLibre GL, PhotoSwipe) for functionality that Bootstrap doesn't cover (map controls, the lightbox) — those are scoped to the component and won't conflict with your theme.
 
+`Map` is built on MapLibre GL JS v6, which renders through **WebGL2** — the canvas itself isn't styleable with CSS, and the map won't render on a browser without WebGL2 support.
+
 ## Best practices
 
 1. **Override `--bs-*` variables first** — it's the fastest way to get consistent brand colors across every Bootstrap-based component.
