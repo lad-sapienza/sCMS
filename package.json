@@ -10,6 +10,7 @@
     "astro": "astro",
     "add-collection": "scms-add-collection",
     "add-content": "scms-add-content",
+    "images": "scms-optimize-images",
     "test": "vitest run",
     "test:watch": "vitest"
   },

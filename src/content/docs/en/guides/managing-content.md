@@ -194,6 +194,49 @@ The generated listing/detail pages under `src/pages/<name>/` render a single lan
 
 ---
 
+## Optimizing images
+
+Images dropped next to your content (`src/content/…`) are served as they are, so a few 5 MB photos can make a page heavy. The `scms-optimize-images` command keeps them light:
+
+```bash
+npm run images              # convert, delete the originals, rewrite references
+npm run images -- --dry-run # show the estimated savings, touch nothing
+npm run images -- --check   # touch nothing; exit 1 if something is left to convert
+```
+
+It converts every JPG/PNG to WebP (long side at most 2000 px, never enlarged), deletes the original and rewrites every reference in your `.md`/`.mdx` files — frontmatter such as `image:`, `![](…)`, relative and absolute paths. An image whose WebP would not be lighter is left as it is, and the verdict is saved in `.scms-optimize-images.json` (commit it) so it is not re-encoded on every run. WebP files already larger than the maximum are scaled down in place.
+
+On a multilingual site, pages in a non-default language usually reuse the images of the default-language page. Declare the languages in `src/user.config.mjs` so the command can follow those references:
+
+```js
+export const userConfig = {
+  i18n: { defaultLocale: 'en', locales: ['en', 'it'] },
+  images: {
+    maxSize: 2000,   // px, long side
+    quality: 82,     // WebP quality for JPGs
+    exclude: [],     // folders to leave alone
+  },
+};
+```
+
+All the `images` options and their defaults are listed in the [scms-core README](https://github.com/lad-sapienza/scms-core#image-optimization).
+
+**References from code are never rewritten.** If an `.astro`/`.tsx` file points at an image that was converted (`<img src="/about/team.jpg">`), the command reports file and line and exits with an error, until you change it to the `.webp` path.
+
+To make the build fail when an unoptimized image slips in, run the check before every build. It never modifies any file:
+
+```json
+{
+  "scripts": {
+    "prebuild": "scms-optimize-images --check"
+  }
+}
+```
+
+An optional pre-commit hook that checks only the staged images is described in the scms-core README.
+
+---
+
 ## Using MDX for richer content
 
 If you choose the `.mdx` format, content files can import and render any component:

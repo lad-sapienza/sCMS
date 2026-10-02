@@ -8,6 +8,9 @@
  */
 
 export const userConfig = {
+  // Site languages (used by scms-optimize-images to follow image references across languages)
+  i18n: { defaultLocale: 'en', locales: ['en', 'it'] },
+
   // Site URL (required for sitemap and canonical URLs)
   site: 'https://scms.lad-sapienza.it',
   
