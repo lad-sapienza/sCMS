@@ -1,5 +1,4 @@
-import { useRecordFetcher } from '@lad-sapienza/scms-core/components/Record/useRecordFetcher';
-import { Field, Image, RecordProvider } from '@lad-sapienza/scms-core/components/Record';
+import { Field, Image, RecordProvider, useRecordFetcher } from '@lad-sapienza/scms-core/components/Record';
 import ExampleRow from './ExampleRow';
 
 export default function RecordView() {

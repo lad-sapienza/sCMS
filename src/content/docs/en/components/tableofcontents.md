@@ -14,7 +14,7 @@ Automatically generates navigation from page headings with smooth scrolling, pro
 
 ```astro
 ---
-import { TableOfContents } from '@lad-sapienza/scms-core/components/TableOfContents';
+import TableOfContents from '@lad-sapienza/scms-core/components/TableOfContents/TableOfContents.astro';
 ---
 
 <!-- Auto-detect headings -->
