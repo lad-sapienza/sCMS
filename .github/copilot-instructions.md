@@ -46,7 +46,7 @@ Framework components are a normal package import, not an alias: `import { DataTb
 | `BSNavbar` | `default BSNavbar` | No — pure React, use `client:load` |
 | `DataTb` | `DataTb`, `CsvSource`, `JsonSource`, `DirectusSource`, `ApiSource` | Yes — `.astro` wrapper available |
 | `Gallery` | `Gallery` | Astro component, usable from `.astro` files and MDX bodies alike |
-| `Map` | `MapComponent` | No — pure React, use `client:idle` |
+| `Map` | `Map` | No — pure React, use `client:idle` |
 | `Map/Search` | `SearchUI`, `SearchUISimple`, `SearchUIAdvanced` | No — pure React |
 | `Record` | `RecordProvider`, `Field`, `Image`, `RecordFetcher`, `useRecordFetcher`, `getValueByDotPath` | No — pure React |
 | `SEO` | `default SEO` | Astro component |
