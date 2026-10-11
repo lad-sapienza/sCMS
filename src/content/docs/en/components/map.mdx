@@ -9,7 +9,7 @@ import { Map } from '@lad-sapienza/scms-core/components/Map';
 import TableOfContents from '@lad-sapienza/scms-core/components/TableOfContents/TableOfContents.astro';
 import Example from '@components/Example.astro';
 
-The `Map` component renders an interactive map using [MapLibre GL JS](https://maplibre.org/) (v6). Overlay layers — GeoJSON, CSV, Directus, a generic API, or raster XYZ/WMS tiles — can be added via the `overlayLayers` prop or shorthand props like `geojson`, `csv`, `directus`, etc. Layers can include searchable fields for advanced filtering.
+The `Map` component renders an interactive map using [MapLibre GL JS](https://maplibre.org/) (v6). Overlay layers — inline `markers`, GeoJSON, CSV, Directus, a generic API, or raster XYZ/WMS tiles — can be added via the `overlayLayers` prop or shorthand props like `geojson`, `csv`, `directus`, etc. Layers can include searchable fields for advanced filtering.
 
 **Requirements:** MapLibre GL JS v6 needs **WebGL2** (supported by every current browser; the map can't render where WebGL2 is unavailable or disabled). The MapLibre Web Worker is configured automatically by `@lad-sapienza/scms-core`, so a consuming site needs no bundler or worker setup of its own.
 
@@ -111,6 +111,59 @@ The `Map` component renders an interactive map using [MapLibre GL JS](https://ma
     fullscreenControl='top-right'
     layerControl='top-right'
     baseLayers={['EsriSatellite', 'GoogleTerrain']}
+  />
+</Example>
+
+---
+
+<Example title="Quick markers (one site, or a few)">
+  <Fragment slot="intro">
+    Use `markers` to drop one or a few points straight onto the map — no data file needed. Handy to show the geographic context of a single site. Each marker takes `lng`, `lat` and an optional `label` shown in a popup. The map fits to the markers automatically; set `markersZoom` to centre on them at a fixed zoom instead (useful for a single site).
+
+    Pass a single object for one marker, or an array for several.
+  </Fragment>
+  <Fragment slot="code">
+  ```jsx
+  {/* A single site, at a fixed zoom */}
+  <Map
+    client:only="react"
+    height="400px"
+    markers={{ lng: 12.4964, lat: 41.9028, label: 'Rome' }}
+    markersZoom={9}
+    baseLayers={['EsriSatellite', 'EsriStreets']}
+  />
+
+  {/* A few sites, fitted to their extent */}
+  <Map
+    client:only="react"
+    height="400px"
+    markers={[
+      { lng: 12.4964, lat: 41.9028, label: 'Rome' },
+      { lng: 14.2681, lat: 40.8518, label: 'Naples' },
+      { lng: 11.2558, lat: 43.7696, label: 'Florence' }
+    ]}
+    baseLayers={['EsriSatellite', 'EsriStreets']}
+  />
+  ```
+  </Fragment>
+
+  <Map
+    client:only="react"
+    height="400px"
+    markers={{ lng: 12.4964, lat: 41.9028, label: 'Rome' }}
+    markersZoom={9}
+    baseLayers={['EsriSatellite', 'EsriStreets']}
+  />
+
+  <Map
+    client:only="react"
+    height="400px"
+    markers={[
+      { lng: 12.4964, lat: 41.9028, label: 'Rome' },
+      { lng: 14.2681, lat: 40.8518, label: 'Naples' },
+      { lng: 11.2558, lat: 43.7696, label: 'Florence' }
+    ]}
+    baseLayers={['EsriSatellite', 'EsriStreets']}
   />
 </Example>
 
@@ -609,6 +662,8 @@ The `Map` component renders an interactive map using [MapLibre GL JS](https://ma
 | `center` | `string` | — | Initial center as `"lng,lat,zoom"` |
 | `baseLayers` | `BaseLayerConfig[] \| BasemapKey[]` | — | Base layers (use shorthand keys or full config objects) |
 | `overlayLayers` | `OverlayLayerConfig[]` | — | Independent, toggleable overlay layers |
+| `markers` | `{ lng, lat, label? } \| array` | — | One or a few inline points, no data file needed |
+| `markersZoom` | `number` | — | Fixed zoom for the markers (centres on them instead of fitting their extent) |
 | `geojson` | shorthand | — | Shorthand for a single GeoJSON layer |
 | `csv` | shorthand | — | Shorthand for a single CSV layer |
 | `directus` | shorthand | — | Shorthand for a single Directus layer |
