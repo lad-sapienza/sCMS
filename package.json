@@ -24,7 +24,7 @@
   "dependencies": {
     "@astrojs/check": "^0.9.10",
     "@astrojs/markdown-remark": "^7.3.2",
-    "@lad-sapienza/scms-core": "^0.1.0",
+    "@lad-sapienza/scms-core": "^0.2.0",
     "astro": "^7.3.8",
     "bootstrap": "^5.3.8",
     "maplibre-gl": "^6.13.0",
@@ -37,8 +37,5 @@
     "@types/react-dom": "^19.3.0",
     "sass": "^1.105.1",
     "typescript": "^5.9.3"
-  },
-  "overrides": {
-    "@vitejs/plugin-react": "^5.1.4"
   }
 }
