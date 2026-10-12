@@ -19,6 +19,8 @@
           label: Deployment
         - href: /docs/guides/updating
           label: Updating
+        - href: /docs/guides/automatic-updates
+          label: Automatic Updates
     - label: Components
       children:
         - href: /docs/components/datatb

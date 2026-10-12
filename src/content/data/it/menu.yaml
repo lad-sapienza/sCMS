@@ -19,6 +19,8 @@
           label: Pubblicazione
         - href: /docs/guides/updating
           label: Aggiornamenti
+        - href: /docs/guides/automatic-updates
+          label: Aggiornamenti automatici
     - label: Componenti
       children:
         - href: /docs/components/datatb
