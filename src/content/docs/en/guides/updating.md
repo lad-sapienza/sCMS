@@ -14,6 +14,8 @@ npm update @lad-sapienza/scms-core
 
 That's it. The framework layer (`DataTb`, `Map`, `Gallery`, `ZoteroGeoViewer`, `Record`, the Astro integrations, and the `scms-add-collection`/`scms-add-content` scaffolding commands) is an ordinary npm package, `@lad-sapienza/scms-core`. Updating it is exactly like updating any other dependency — there's no custom script, no protected folder to worry about, and nothing in `src/` is ever touched, because the framework was never part of this repository in the first place.
 
+> **Prefer not to do this by hand?** GitHub can open, test and even merge these updates for you. See [Automatic Updates](automatic-updates.md).
+
 ## Checking What's New
 
 Before updating, see what version you're on and what's available:

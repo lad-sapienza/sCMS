@@ -245,6 +245,7 @@ See [Updating](src/content/docs/guides/updating.md) for checking what's new and 
 | Theming | [guides/theming.md](src/content/docs/guides/theming.md) |
 | Deployment | [guides/deployment.md](src/content/docs/guides/deployment.md) |
 | Updating | [guides/updating.md](src/content/docs/guides/updating.md) |
+| Automatic Updates | [guides/automatic-updates.md](src/content/docs/guides/automatic-updates.md) |
 
 ---
 

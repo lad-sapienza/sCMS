@@ -339,4 +339,4 @@ Your content and customizations in `src/` are **never touched**, because the fra
 
 ---
 
-Need help? Check out [docs/UPDATING.md](docs/UPDATING.md) for detailed instructions!
+Need help? Check out the [Updating](updating.md) guide for detailed instructions, or [Automatic Updates](automatic-updates.md) to let GitHub do it for you.
