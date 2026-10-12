@@ -1,0 +1,21 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      # s:CMS core on its own, so a new release gets its own PR
+      scms:
+        patterns:
+          - "@lad-sapienza/*"
+      # Everything else, minor and patch together; majors arrive as separate PRs
+      minor-and-patch:
+        update-types:
+          - minor
+          - patch
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
