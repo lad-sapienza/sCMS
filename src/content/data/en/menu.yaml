@@ -13,6 +13,8 @@
           label: Getting Started
         - href: /docs/guides/architecture
           label: Architecture
+        - href: /docs/guides/managing-content
+          label: Managing Content
         - href: /docs/guides/theming
           label: Theming
         - href: /docs/guides/deployment
