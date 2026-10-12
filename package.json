@@ -10,9 +10,7 @@
     "astro": "astro",
     "add-collection": "scms-add-collection",
     "add-content": "scms-add-content",
-    "images": "scms-optimize-images",
-    "test": "vitest run",
-    "test:watch": "vitest"
+    "images": "scms-optimize-images"
   },
   "keywords": [
     "astro",
@@ -38,8 +36,7 @@
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "sass": "^1.105.1",
-    "typescript": "^5.9.3",
-    "vitest": "^4.1.11"
+    "typescript": "^5.9.3"
   },
   "overrides": {
     "@vitejs/plugin-react": "^5.1.4"
