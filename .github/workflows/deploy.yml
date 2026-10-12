@@ -40,10 +40,9 @@ jobs:
         run: npm run build
         env:
           # Used by the Directus demos in the docs. PUBLIC_* values end up in
-          # the client bundle, so the token must be read-only. The GATSBY_*
-          # names are the legacy secrets, kept as a fallback.
-          PUBLIC_DIRECTUS_URL: ${{ secrets.PUBLIC_DIRECTUS_URL || secrets.GATSBY_DIRECTUS_ENDPOINT }}
-          PUBLIC_DIRECTUS_TOKEN: ${{ secrets.PUBLIC_DIRECTUS_TOKEN || secrets.GATSBY_DIRECTUS_TOKEN }}
+          # the client bundle, so the token must be read-only.
+          PUBLIC_DIRECTUS_URL: ${{ secrets.PUBLIC_DIRECTUS_URL }}
+          PUBLIC_DIRECTUS_TOKEN: ${{ secrets.PUBLIC_DIRECTUS_TOKEN }}
 
       - name: Upload Pages artifact
         if: github.event_name != 'pull_request'
