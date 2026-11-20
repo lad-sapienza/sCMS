@@ -321,6 +321,24 @@ export default {
 - Built-in caching enabled automatically
 - Clear cache in settings if needed
 
+## Archiving a finished project (Zenodo)
+
+Common in academic research sites: the project ends, its grant-funded database (Directus/bdus5) stops being maintained, but the site is still expected to work — and ideally to remain citable with a DOI. Three deployment profiles map onto this:
+
+| Profile | Record pages | Keeps working after the database is retired? |
+|---|---|---|
+| **Dynamic** | Client-side fetch (`RecordFetcher`/`useRecordFetcher`) | No |
+| **Semi-dynamic** (the common case — bulk data via a content collection, single records still fetched live) | Client-side fetch | No, for record pages specifically |
+| **Static/frozen** | Pre-rendered at build time (`recordStaticPaths`) | Yes — zero runtime dependency on anything |
+
+The static/frozen profile isn't a toggle you flip — it's a build-time content collection (`directusLoader`/`bdusLoader`, already covered in [Managing Content](managing-content.md)) plus `recordStaticPaths` for the record pages instead of `RecordFetcher`. See [Record Components](../components/record.md) → "Static record pages" for the exact recipe and the `getStaticPaths` pattern, and "Which one?" there for picking the right profile per page.
+
+Once the build truly has no runtime dependency, archiving it is close to literal — a static folder of files:
+
+1. Add a `CITATION.cff` describing the project and its authors (Zenodo reads this to pre-fill the deposit).
+2. Enable the GitHub repository at [zenodo.org/account/settings/github](https://zenodo.org/account/settings/github) — a one-time, no-code step.
+3. Cut a GitHub **Release** whenever you want to freeze a snapshot. Zenodo archives it automatically and assigns a DOI; a later release of the same repo becomes a new version under the same Zenodo record (so later corrections stay linked to, and versioned against, the original).
+
 ## Keeping s:CMS Up-to-Date
 
 The s:CMS framework layer is the `@lad-sapienza/scms-core` npm package — updating it is an ordinary dependency update, not a custom script.
