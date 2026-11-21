@@ -1,0 +1,208 @@
+---
+title: Nested Search
+description: Advanced search with nested AND/OR groups — emits a Directus/bdus5 filter, restorable from a URL, with live examples for every prop.
+order: 33
+category: components
+---
+
+import TableOfContents from '@lad-sapienza/scms-core/components/TableOfContents/TableOfContents.astro';
+import Example from '@components/Example.astro';
+import NestedSearchDemo from '@components/NestedSearchDemo.tsx';
+
+`SearchUINested` is an advanced search form where conditions are grouped with **AND / OR**, and groups can contain further groups — for example *name contains "amphora" AND (material is ceramic OR material is glass)*. It produces a Directus/bdus5 filter object (`_and`, `_or`, `_icontains`, …) you can pass straight to a `bdus` or `directus` source.
+
+It complements `SearchUI`/`SearchUIAdvanced` (one flat list of conditions, used by `Map`'s `searchInFields`) and does not replace them. The nested output is **not** used by `Map`: the map's search is flat by design.
+
+<TableOfContents title="On this page" />
+
+---
+
+## Live Examples
+
+<Example title="Basic usage">
+  <Fragment slot="intro">
+    `fields` is the only required prop together with `onSearch`. Each key is the field name in your data source (it ends up in the filter); `type` selects the operators (`text` is the default). Use the **All / Any** buttons to switch a group between AND and OR, **Add group** to nest, and submit to see what `onSearch` receives.
+
+    Note `flat`: when the tree has no nested groups and uses only simple operators, you also get the same `{ connector, filters }` shape `SearchUI` produces.
+  </Fragment>
+  <Fragment slot="code">
+  ```jsx
+  import { SearchUINested } from '@lad-sapienza/scms-core/components/Search';
+
+  const fields = {
+    name:     { label: 'Name' },                      // text (default)
+    material: { label: 'Material', type: 'select',   // predefined values
+                values: ['ceramic', 'bronze', 'stone', 'glass'] },
+    height:   { label: 'Height (cm)', type: 'number' },
+    notes:    { label: 'Notes' },
+  };
+
+  <SearchUINested
+    client:only="react"
+    fields={fields}
+    onSearch={({ filter, flat, serialized }) => {
+      // filter: { _and: [...] } | null (empty search)
+      // flat:   { connector, filters } | undefined
+      // serialized: compact JSON, see "Restoring a search"
+    }}
+  />
+  ```
+  </Fragment>
+
+  <NestedSearchDemo client:only="react" variant="basic" />
+</Example>
+
+<Example title="Custom operators, transformValue and buildFilter">
+  <Fragment slot="intro">
+    Three per-field hooks cover site-specific needs without changing the component:
+
+    - `ops` restricts (or replaces) the operators offered; `opLabels` names custom ones and `twoValueOps` says which take a second value.
+    - `transformValue(value, cond)` rewrites what the user typed before it enters the filter (here: accents stripped, lower-case).
+    - `buildFilter(cond)` replaces the filter for that field entirely — here a date range stored as two columns, searched by interval overlap. Return `null` while the condition is incomplete.
+
+    Try *Period overlaps 100 to 200*, and *Name contains "Èrôs"* (arrives as `eros`).
+  </Fragment>
+  <Fragment slot="code">
+  ```jsx
+  const fields = {
+    name: {
+      label: 'Name',
+      transformValue: (v) =>
+        v.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase(),
+    },
+    height: { label: 'Height (cm)', type: 'number',
+              ops: ['eq', 'ge', 'le', 'between'] },
+    period: {
+      label: 'Period (years)',
+      type: 'date',
+      ops: ['overlap', 'within'],
+      opLabels: { overlap: 'overlaps', within: 'includes the year' },
+      twoValueOps: ['overlap'],
+      buildFilter: (c) => {
+        const lo = Number(c.v);
+        if (c.v.trim() === '' || isNaN(lo)) return null;
+        const hi = c.v2.trim() === '' ? lo : Number(c.v2);
+        return c.o === 'within'
+          ? { _and: [{ year_from: { _lte: lo } }, { year_to: { _gte: lo } }] }
+          : { _and: [{ year_from: { _lte: hi } }, { year_to: { _gte: lo } }] };
+      },
+    },
+  };
+  ```
+  </Fragment>
+
+  <NestedSearchDemo client:only="react" variant="custom" />
+</Example>
+
+<Example title="Restoring a search (initialQuery, onChange)">
+  <Fragment slot="intro">
+    `onChange` fires on every edit and `serialized` is a compact JSON string, so a site can keep a shareable URL up to date (`?q=…`) and pass it back as `initialQuery` on load. Invalid input (broken JSON, an unknown field, an operator the field doesn't offer, an absurdly deep tree) gives an empty search — it never throws.
+
+    The component never touches `location` itself: reading and writing the URL is the site's job.
+  </Fragment>
+  <Fragment slot="code">
+  ```jsx
+  const q = new URLSearchParams(location.search).get('q');
+
+  <SearchUINested
+    client:only="react"
+    fields={fields}
+    initialQuery={q}                       // string | group | null
+    onChange={({ serialized }) => {
+      const p = new URLSearchParams(location.search);
+      p.set('q', serialized);
+      history.replaceState(null, '', `?${p}`);
+    }}
+    onSearch={({ filter }) => runQuery(filter)}
+  />
+  ```
+  </Fragment>
+
+  <NestedSearchDemo client:only="react" variant="restored" />
+</Example>
+
+<Example title="submitOnEnter, showSummary, isLoading">
+  <Fragment slot="intro">
+    Here Enter in a text field does **not** submit (`submitOnEnter={false}`) and the plain-language summary line is hidden (`showSummary={false}`). `isLoading` disables every control and shows a spinner on the submit button while your query runs.
+  </Fragment>
+  <Fragment slot="code">
+  ```jsx
+  <SearchUINested
+    client:only="react"
+    fields={fields}
+    submitOnEnter={false}
+    showSummary={false}
+    isLoading={loading}
+    onSearch={...}
+  />
+  ```
+  </Fragment>
+
+  <NestedSearchDemo client:only="react" variant="options" />
+</Example>
+
+---
+
+## Using the filter
+
+The `filter` is in the vocabulary both Directus and bdus5 already accept, so it goes into a source as is:
+
+```jsx
+// Directus collection
+<DataTb client:only="react"
+  source={{ type: 'directus', config: { url, token }, collection: 'finds', filter }} />
+
+// bdus5 table (same filter vocabulary)
+<DataTb client:only="react"
+  source={{ type: 'bdus', tb: 'finds', config: { baseUrl, apiKey }, filter }} />
+```
+
+The `directus={{ table, queryString }}` / `bdus={{ tb, queryString }}` shorthands take a query string, not a filter object — use the `source` form above (or build the `filter[...]` query string yourself) with this component.
+
+When `filter` is `null` the search is empty: omit the filter.
+
+---
+
+## Props API
+
+### SearchUINestedProps
+
+| Prop | Type | Description |
+|---|---|---|
+| `fields` | `Record<string, NestedField>` | **Required.** Searchable fields; the key is the field name in the data source |
+| `onSearch` | `(result: NestedSearchResult) => void` | **Required.** Called on submit |
+| `onChange` | `(result: NestedSearchResult) => void` | Called on every edit |
+| `initialQuery` | `string \| NestedGroup \| null` | A serialised search or a group; invalid input gives an empty search |
+| `isLoading` | `boolean` | Disables the controls and shows a spinner (default `false`) |
+| `submitOnEnter` | `boolean` | Enter in a text input submits (default `true`) |
+| `showSummary` | `boolean` | Show the plain-language summary line (default `true`) |
+
+### NestedField
+
+| Prop | Type | Description |
+|---|---|---|
+| `label` | `string` | Text shown in the field menu |
+| `type` | `'text' \| 'select' \| 'number' \| 'date'` | Default `text`. Decides operators and value conversion (numbers become numbers) |
+| `values` | `string[]` | Predefined values: a menu replaces the text input |
+| `ops` | `string[]` | Operators offered, replacing the type's defaults |
+| `opLabels` | `Record<string, string>` | Labels for operator names without a built-in one |
+| `twoValueOps` | `string[]` | Operators taking a second value (default: `between`) |
+| `transformValue` | `(value, cond) => string` | Rewrites a typed value before it enters the filter |
+| `buildFilter` | `(cond) => object \| null` | Replaces the filter for this field; `null` = incomplete |
+
+Built-in operators: `contains` (`_icontains`), `starts` (`_starts_with`), `eq`, `neq`, `ge` (`_gte`), `le` (`_lte`), `between` (`_gte` + `_lte`), `empty`, `nempty`. Defaults per type: `text` → contains, starts, eq, empty, nempty; `select` → eq, neq, empty, nempty; `number` and `date` → eq, ge, le, between, empty, nempty. For text and select, *empty* matches both `null` and `''`; for numbers and dates only `null`.
+
+### NestedSearchResult
+
+| Prop | Type | Description |
+|---|---|---|
+| `filter` | `object \| null` | Directus/bdus5 filter; `null` if the search is empty. Incomplete conditions and empty groups are dropped |
+| `flat` | `{ connector, filters } \| undefined` | Same shape as `SearchUI`'s query; only for trees without nested groups and with simple operators (no `between`, `empty`, custom ops, `buildFilter`) |
+| `group` | `NestedGroup` | The tree |
+| `serialized` | `string` | Compact JSON, for a URL parameter / `initialQuery` |
+
+---
+
+## Translations
+
+UI text goes through the i18n system under the `search.nested.*` keys (English built in). To translate or override, add them to your dictionary — see the [Italian dictionary](https://github.com/lad-sapienza/sCMS/blob/main/src/content/data/i18n/it.yaml) of this site for a complete example.

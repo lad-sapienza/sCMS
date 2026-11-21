@@ -31,6 +31,8 @@
           label: Gallery
         - href: /docs/components/map
           label: Map
+        - href: /docs/components/search-nested
+          label: Ricerca annidata
         - href: /docs/components/zotero-geoviewer
           label: Zotero GeoViewer
         - href: /docs/components/record

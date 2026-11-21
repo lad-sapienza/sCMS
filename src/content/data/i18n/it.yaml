@@ -49,6 +49,35 @@ map:
       and: "E"
       or: "O"
 
+search:
+  nested:
+    all: "Tutte"
+    any: "Una qualsiasi"
+    conditionsOf: "tra queste condizioni"
+    groupOperator: "Operatore del gruppo"
+    addCondition: "Aggiungi condizione"
+    addGroup: "Aggiungi gruppo"
+    remove: "Rimuovi condizione"
+    removeGroup: "Rimuovi gruppo"
+    field: "Campo"
+    operator: "Operatore"
+    value: "Valore"
+    valueTo: "Valore massimo"
+    to: "a"
+    and: "E"
+    or: "O"
+    summary: "Ricerca:"
+    ops:
+      contains: "contiene"
+      starts: "inizia con"
+      eq: "è"
+      neq: "non è"
+      ge: "è almeno"
+      le: "è al massimo"
+      between: "è tra"
+      empty: "è vuoto"
+      nempty: "non è vuoto"
+
 gallery:
   openImage: "Apri immagine: {alt}"
 
